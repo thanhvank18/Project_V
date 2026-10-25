@@ -2,6 +2,8 @@
 
 React + TypeScript + Phaser 4.2.1. Giao diện tiếng Việt, học từ tiếng Anh bằng đạn chữ trong thế giới Cute Zombie Arcade. Frontend triển khai trên Vercel; API từ điển đọc trên Railway.
 
+[Chơi ngay](https://project-v-swart.vercel.app) · [API health](https://projectv-production.up.railway.app/health) · [Hướng dẫn triển khai](DEPLOYMENT.md)
+
 ## Chạy trên máy
 
 Yêu cầu Node.js 22.12+ và pnpm. Tại thư mục dự án:

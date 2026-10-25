@@ -188,10 +188,10 @@ Bảng màu kết hợp nền xanh than, chữ kem ấm và phản hồi xanh mi
 
 **Display Font:** Bungee, fallback sans-serif. **Body Font:** Be Vietnam Pro, fallback sans-serif. Font bundle qua `@fontsource`: Bungee 400; Be Vietnam Pro 400, 500, 600 và 700. Không có font mono riêng.
 
-Bungee dùng cho tên game, tiêu đề màn bắt đầu, điểm số và đếm ngược. Tiêu đề dialog dùng Be Vietnam Pro đậm, cùng họ với nghĩa từ, hướng dẫn, nút và sổ từ để giữ dấu tiếng Việt rõ.
+Bungee dùng cho tên game, điểm số và đếm ngược. Màn bắt đầu hiện tập trung vào điều khiển và lựa chọn anh hùng. Tiêu đề dialog dùng Be Vietnam Pro đậm, cùng họ với nghĩa từ, hướng dẫn, nút và sổ từ để giữ dấu tiếng Việt rõ.
 
 - `display` co theo chiều rộng container sân khấu (`cqw`); `wordmark` dành cho header; `result-score` dùng trong tổng kết.
-- `headline` dành cho dialog. `body` mô tả đoạn trong dialog; `menu-body` dành cho đoạn giới thiệu màn bắt đầu, giới hạn 44ch.
+- `headline` dành cho dialog. `body` mô tả đoạn trong dialog; `display` và `menu-body` là token còn từ phiên bản menu có tiêu đề/đoạn giới thiệu trước đây.
 - `button`, `label` và `keyboard` mô tả điều khiển thường dùng. Token `target-prompt` và `typing-input` ghi giá trị desktop sau override cuối stylesheet.
 - Trên desktop, prompt chính giữ tối thiểu 17 px, input 18 px, gợi ý 12 px, nhãn loại địch/trạng thái nhập 11 px và chỉ dẫn phím/nhãn HUD 10 px. Các giá trị `clamp()` vẫn tăng theo sân khấu trong giới hạn đã định.
 - Số thời gian, HP, kỷ lục và thống kê dùng tabular numerals ở những vùng đã khai báo trong CSS.
@@ -203,7 +203,7 @@ Trên desktop (từ 761 px), khung ứng dụng căn giữa với padding ngang 
 
 Khung game gồm meta 37 px, sân khấu tỷ lệ 16:9 và footer 46 px. Phaser dùng viewport logic 1280×720, scale FIT và căn giữa, nhìn vào thế giới đường phố hữu hạn dài 6400 px. Camera bám mượt người chơi, chặn ở hai biên; các vùng phố cũ, công viên, ga bỏ hoang, bờ sông và nhà máy dùng pixel art hiện có cùng đạo cụ pixel dựng bằng mã. Canvas và ảnh vật phẩm dùng `image-rendering: pixelated`. Page footer desktop có padding 16 px phía trên và 18 px phía dưới.
 
-Màn bắt đầu đặt nội dung ở trái (6%, cách trên 13%), note ở góc phải phía dưới và dải thông tin ở đáy. Khi chơi, HUD bám trên; dock nhập nằm giữa đáy, chiếm 50% chiều ngang; vật phẩm nằm góc trái đáy. Boss HUD nằm giữa phía trên. Nhãn địch được giữ trong biên canvas và bố trí theo tầng để hạn chế đè nhau.
+Màn bắt đầu giữ cụm điều khiển bên trái (cách trái 6%, cách trên 40%): nút Bắt đầu sinh tồn cùng Tập đấu Boss và Cách chơi. Bên phải là lưới chọn 9 anh hùng. Menu đã bỏ tiêu đề, khẩu hiệu, số lượng từ, đoạn quảng bá và dải `menu-bottom` để cảnh chơi có khoảng thở. Quy tắc học và hướng dẫn chi tiết nằm trong Cách chơi. Khi chơi, HUD bám trên; dock nhập nằm giữa đáy, chiếm 50% chiều ngang; vật phẩm nằm góc trái đáy. Boss HUD nằm giữa phía trên. Nhãn địch được giữ trong biên canvas và bố trí theo tầng để hạn chế đè nhau.
 
 Các khoảng cách dùng nhiều là 8, 10, 12, 16, 20, 24 và 32 px; overlay dùng thêm `%` và `cqw` để giữ vị trí theo cảnh. Dialog giới hạn cao 85vh; sổ từ có cuộn riêng (340 px, danh sách trong tổng kết 180 px).
 
@@ -215,9 +215,9 @@ Các khoảng cách dùng nhiều là 8, 10, 12, 16, 20, 24 và 32 px; overlay d
 
 ## Elevation & Depth
 
-Chiều sâu đến từ mặt nền tối, viền 1 px và shadow cục bộ. Menu dùng gradient tối từ trái sang phải để chữ tách khỏi tranh thành phố. Dock nhập, note và nút có shadow nhẹ; dialog có shadow rộng và backdrop tối. Không có backdrop blur trong giao diện hiện tại.
+Chiều sâu đến từ mặt nền tối, viền 1 px và shadow cục bộ. Menu dùng gradient tối từ trái sang phải để điều khiển tách khỏi tranh thành phố. Dock nhập và nút có shadow nhẹ; dialog có shadow rộng và backdrop tối. Không có backdrop blur trong giao diện hiện tại.
 
-Giá trị shadow chính xác nằm trong `extensions.shadows` của sidecar: nút chính (`primary-button`), khung game (`game-wrap`), note (`menu-note`), dock nhập (`typing-dock`), vật phẩm (`inventory-item`) và dialog (`modal`). Focus là một trạng thái điều khiển riêng.
+Giá trị shadow chính xác nằm trong `extensions.shadows` của sidecar: nút chính (`primary-button`), khung game (`game-wrap`), dock nhập (`typing-dock`), vật phẩm (`inventory-item`) và dialog (`modal`). Token `menu-note` còn từ menu trước đây. Focus là một trạng thái điều khiển riêng.
 
 ## Shapes
 
@@ -245,11 +245,11 @@ Mọi hit chữ có hiệu lực đặt lại khựng 300 ms cho địch không 
 
 Dialog HTML gốc mở bằng `showModal()` và có tiêu đề cùng nút đóng. Pause giữ từ đang nhập/vật phẩm; mất focus cửa sổ, ẩn trang hoặc focus rời sân khấu đều gọi pause. Help và bộ từ mở sau khi pause trận; đóng chúng đưa người chơi về màn pause nếu trận đang dừng. Tiếp tục đi qua đếm ngược 2 giây; khi trở lại trạng thái chơi, focus về ô nhập.
 
-Ứng dụng có trạng thái nạp từ điển trước khi tạo App/cảnh chơi. Nếu JSON cục bộ không tải hoặc kiểm tra được, hiển thị lỗi và nút **Thử lại**, không âm thầm dùng bộ 240 từ để báo hoàn thành sớm. Menu hiển thị số từ mới còn lại trên toàn bộ bank CSV hợp lệ; bộ từ mẫu không ghi đè nghĩa nguồn. Đây là từ điển chơi được hữu hạn đã lọc, không dùng cách gọi “toàn bộ tiếng Anh”. Tập đấu Boss bị vô hiệu hóa khi còn dưới 9 từ dài mới, kèm lý do; không gợi ý vẫn có thể vào Boss hoặc tự lặp từ đã dùng.
+Ứng dụng có trạng thái nạp từ điển trước khi tạo App/cảnh chơi. Nếu nguồn JSON đã cấu hình không tải hoặc kiểm tra được, hiển thị lỗi và nút **Thử lại**, không âm thầm dùng bộ 240 từ để báo hoàn thành sớm. Bộ từ mẫu không ghi đè nghĩa nguồn; số lượng từ không đặt lên menu. Đây là từ điển chơi được hữu hạn đã lọc, không dùng cách gọi “toàn bộ tiếng Anh”. Tập đấu Boss bị vô hiệu hóa khi còn dưới 9 từ dài mới, kèm lý do; không gợi ý vẫn có thể vào Boss hoặc tự lặp từ đã dùng.
 
 Sổ **Từ đã gặp** liệt kê mọi từ đã được đưa ra, kể cả chưa hoàn thành hoặc thuộc trận bỏ dở. Có ô tìm theo từ/nghĩa, phân trang 50 mục, nút trước/sau và trạng thái không tìm thấy riêng với sổ trống. Danh sách chỉ lọc/sắp xếp khi mở sổ hoặc thay dữ liệu/từ khóa; khi đóng, snapshot HUD không quét toàn bộ bank ở tần suất 10 Hz. Nhật ký `zvs-seen-words-v2:` chia bucket theo tiền tố, ghi đồng bộ lúc câu đố xuất hiện mà không tuần tự hóa lại cả từ điển. Migration đọc nhật ký v1 và `progress.words` cũ, giữ đáp án chính/alias đã chuẩn hóa; thống kê hoàn thành/lỗi/điểm chỉ lưu khi trận kết thúc. Nhãn phải phân biệt “đã gặp” với “đã hoàn thành”, không diễn đạt thành chứng nhận đã thuộc từ.
 
-Tổng kết hiển thị điểm, số zombie, từ hoàn thành, độ chính xác, WPM, combo cao nhất và tối đa 10 từ sai/chưa hoàn thành để đọc lại. Trận sau chỉ dùng từ chưa gặp, không tự chèn từ yếu hoặc đến lịch ôn. Theo quyết định **“hết từ điển là thắng”**, chỉ khi toàn bộ bank đã tải không còn từ mới và địch/projectile còn lại giải quyết xong mới hiển thị chiến thắng; không dùng mốc 240, không trình bày như chết và không tự tái chế bộ từ. Lỗi lưu nhật ký được báo rõ vì có thể ảnh hưởng chính sách không lặp sau reload. Bộ đếm từ dùng cache của WordDeck, không quét bank theo frame để cập nhật chữ trên menu/HUD.
+Tổng kết hiển thị điểm, số zombie, từ hoàn thành, độ chính xác, WPM, combo cao nhất và tối đa 10 từ sai/chưa hoàn thành để đọc lại. Trận sau chỉ dùng từ chưa gặp, không tự chèn từ yếu hoặc đến lịch ôn. Theo quyết định **“hết từ điển là thắng”**, chỉ khi toàn bộ bank đã tải không còn từ mới và địch/projectile còn lại giải quyết xong mới hiển thị chiến thắng; không dùng mốc 240, không trình bày như chết và không tự tái chế bộ từ. Lỗi lưu nhật ký được báo rõ vì có thể ảnh hưởng chính sách không lặp sau reload. Bộ đếm từ dùng cache của WordDeck, không quét bank theo frame.
 
 ### Motion and sound controls
 
@@ -263,15 +263,15 @@ Tùy chọn giảm chuyển động khởi tạo từ lựa chọn đã lưu ho�
 
 Kích thước nhân vật trong sân chơi giảm 15%, cùng một hệ số cho hero/quái/Boss; điểm neo chân và hiệu ứng cùng tỉ lệ. Nhãn quái xếp trên hai hàng, tránh vùng HUD kỹ năng và Boss, giữ nhãn mục tiêu đang chọn.
 
-Thanh thông tin phía trên sân chơi hiển thị **BẬC 1/10** và tiến độ **0/20 từ**, cập nhật bằng từ hoàn thành trong trận. Tên bậc thông báo nhẹ qua `aria-live` khi đổi, thanh progress có nhãn và giá trị; không thêm hiệu ứng nhấp nháy. Chữ 11px và đường progress 4px, bo 2px giữ kiểu HUD gọn đang dùng; màu lấy từ ink/muted/accent hiện tại. Bậc thật của từ nằm cạnh từ loại ở dock mục tiêu. Menu nêu rõ trận mới bắt đầu dễ và mỗi 20 từ tăng bậc.
+Khi đang chơi, thanh thông tin phía trên sân chơi giữ **BẬC 1/10** và tiến độ **0/20 từ**, cập nhật bằng từ hoàn thành trong trận. Tên bậc thông báo nhẹ qua `aria-live` khi đổi, thanh progress có nhãn và giá trị; không thêm hiệu ứng nhấp nháy. Chữ 11px và đường progress 4px, bo 2px giữ kiểu HUD gọn đang dùng; màu lấy từ ink/muted/accent hiện tại. Bậc thật của từ nằm cạnh từ loại ở dock mục tiêu. Quy tắc trận mới bắt đầu dễ và mỗi 20 từ tăng bậc được giải thích trong Cách chơi.
 
 Sổ từ có hai select gốc cho từ loại và bậc khó; nhãn, focus và empty state rõ ràng, sắp từ dễ đến khó trước thứ tự chữ cái. Bộ lọc chỉ tác động danh sách đã gặp, không đổi pool gameplay hoặc làm lộ từ chưa gặp. Trên màn hẹp, hai select xếp dọc.
 
-Menu giữ nội dung bắt đầu ở trái, thêm radio chọn 9 anh hùng dạng lưới 3×3 ở phải. Ảnh portrait native dùng nearest-neighbor, mỗi lựa chọn có tên và dấu check; viền vàng cùng trạng thái checked báo lựa chọn, focus xanh ngọc độc lập. Native radio hỗ trợ Tab và phím mũi tên. Mô tả kỹ năng cùng số chữ cần tích nằm dưới lưới, không thêm hộp thoại xác nhận. Lựa chọn được nhớ khi tải lại.
+Menu giữ cụm bắt đầu ở cột trái, tại 40% chiều cao sân khấu, và radio chọn 9 anh hùng dạng lưới 3×3 ở phải. Ảnh portrait native dùng nearest-neighbor, mỗi lựa chọn có tên và dấu check; viền vàng cùng trạng thái checked báo lựa chọn, focus xanh ngọc độc lập. Native radio hỗ trợ Tab và phím mũi tên. Mô tả kỹ năng cùng số chữ cần tích nằm dưới lưới, không thêm hộp thoại xác nhận. Lựa chọn được nhớ khi tải lại.
 
 HUD thêm tên kỹ năng, số chữ đúng/threshold và thanh progress dưới HP. Kỹ năng tự kích, không thêm phím lấy mất ký tự nhập từ. Hiệu lực kéo dài có số giây còn lại. Hiệu ứng vũ khí và kỹ năng nằm ở lớp thế giới, chừa khoảng giữa cho glyph; Reduced Motion giữ dấu hiệu tĩnh và fade. Xem CHARACTER_ROSTER.md cho đủ chín khả năng.
 
-Footer hiển thị tên nguồn từ điển đang được nạp, rút gọn khi chật; liên kết Nguồn từ điển dẫn tới xuất xứ và báo cáo thực, không gán nguồn Wiktionary cho CSV cục bộ.
+Footer khung game giữ Hướng dẫn và Toàn màn hình; tên nguồn từ điển cùng liên kết nguồn đã được bỏ khỏi footer. Xuất xứ và báo cáo vẫn nằm trong tài liệu nguồn cùng `public/vocabulary/attribution.md`. Page footer chỉ giữ ghi chú prototype và tiến trình lưu trên trình duyệt, đã bỏ khẩu hiệu.
 
 ## Do's and Don'ts
 

@@ -1,6 +1,9 @@
 # Triển khai
 
-Frontend Vite/React chạy trên **Vercel**. **Railway** chạy API Node.js chỉ đọc từ điển đã đóng gói. Hai dịch vụ dùng cùng repository và thư mục gốc dự án. Chưa có URL live được ghi trong tài liệu này.
+Frontend Vite/React chạy trên **Vercel**. **Railway** chạy API Node.js chỉ đọc từ điển đã đóng gói. Hai dịch vụ dùng cùng repository và thư mục gốc dự án.
+
+- [Mở game](https://project-v-swart.vercel.app)
+- [Kiểm tra API đang chạy](https://projectv-production.up.railway.app/health)
 
 ## Chạy local
 
@@ -29,9 +32,11 @@ VITE_API_URL=http://127.0.0.1:3001
 
 ## Railway: API từ điển
 
-Kết nối repository với service Railway, chọn thư mục gốc repository. Cấu hình `railway.json` ở gốc dùng `Dockerfile` cùng vị trí và health check `/health`. Container chỉ cần server cùng `public/vocabulary/en-vi.json`; không cần cài dependency Node bên ngoài.
+Kết nối repository với service Railway, chọn thư mục gốc repository. Railway tự phát hiện `Dockerfile` ở gốc. Container chỉ cần server cùng `public/vocabulary/en-vi.json`; không cần cài dependency Node bên ngoài.
 
-Railway cấp `PORT`; server lắng nghe `0.0.0.0` trên cổng đó. Giá trị 3001 là mặc định khi chạy local. Sau khi deploy, tạo public domain và kiểm tra `/health` trả HTTP 200 trước khi nối frontend.
+Service hiện tại không áp dụng `railway.json`: Railway đánh dấu Config-as-Code là deprecated và không cho service mới bật từ 28/08/2026. File này được giữ làm tham khảo. Các giá trị đang dùng được đặt trực tiếp trong Dashboard: health check **`/health`**, timeout **120 giây**, restart policy **On Failure**, tối đa **3 lần thử lại**. Khi tạo service mới, nhập các giá trị này trong Dashboard.
+
+Railway cấp `PORT`; server lắng nghe `0.0.0.0` trên cổng đó. Giá trị 3001 là mặc định khi chạy local. Origin API hiện tại là `https://projectv-production.up.railway.app`; kiểm tra [health endpoint](https://projectv-production.up.railway.app/health) trả HTTP 200 trước khi nối frontend.
 
 `CORS_ORIGINS` là biến tùy chọn của Railway. Mặc định `*` cho API dữ liệu công khai, chỉ đọc. Có thể đặt danh sách origin frontend chính xác, phân cách bằng dấu phẩy; mỗi origin gồm giao thức và host, không có đường dẫn. Thêm origin local hoặc preview nếu muốn chúng gọi API khi đã giới hạn CORS.
 
@@ -39,7 +44,7 @@ Railway cấp `PORT`; server lắng nghe `0.0.0.0` trên cổng đó. Giá trị
 
 Import cùng repository, chọn thư mục gốc. `vercel.json` đã đặt framework Vite, lệnh cài `pnpm install --frozen-lockfile`, build `pnpm build` và thư mục đầu ra `dist`.
 
-Trong Environment Variables, đặt `VITE_API_URL` bằng **origin HTTPS thực tế của service Railway** cho môi trường cần triển khai. Frontend tự nối `/api/vocabulary`; giá trị cấu hình chỉ cần origin. Biến này được đưa vào bundle lúc build, nên thay đổi cần build/deploy lại.
+Trong Environment Variables, đặt `VITE_API_URL=https://projectv-production.up.railway.app` cho môi trường cần triển khai. Frontend tự nối `/api/vocabulary`; giá trị cấu hình chỉ cần origin. Biến này được đưa vào bundle lúc build, nên thay đổi cần build/deploy lại.
 
 Nếu để trống `VITE_API_URL`, bản Vercel dùng từ điển tĩnh đi kèm. Khi đã cấu hình API mà API lỗi, giao diện báo lỗi tải và cho thử lại; không tự đổi sang bản tĩnh.
 
