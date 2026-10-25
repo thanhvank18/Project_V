@@ -1,0 +1,1469 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "local-csv",
+    "name": "English - Vietnamese.csv (người dùng cung cấp)",
+    "localFile": "Dic/English - Vietnamese.csv",
+    "sha256": "ed9abf18f5b3c257f8bb08b7e3e2fedf6be126ed3b021843c5316ee082db4353",
+    "encoding": "utf-16le",
+    "license": "Không kèm thông tin giấy phép trong file người dùng cung cấp",
+    "snapshot": "sha256:ed9abf18f5b3",
+    "inputBytes": 25650056,
+    "importerVersion": "csv-3-preferred-senses",
+    "classification": {
+      "method": {
+        "version": "frequency-sense-2",
+        "name": "Estimated game learning levels from subtitle commonness and source-sense complexity",
+        "rankBands": [
+          500,
+          1500,
+          3500,
+          7000,
+          12000,
+          20000,
+          35000,
+          50000
+        ],
+        "absentBaseLevel": 9,
+        "lootMapping": "levels 1–3 => difficulty 1; 4–6 => 2; 7–10 => 3",
+        "basicSenseSelection": "For the small authored starter set, prefer only an already present CSV sense matching both the basic-meaning guard and an allowed explicit source POS; audit every changed selection. Otherwise retain source meaning and apply a non-basic-sense floor where needed.",
+        "limitation": "Heuristic ordering, not CEFR, a validated learning assessment, or a semantic review of every CSV definition. Frequency refers to the English token; explicit source labels and basic-sense guards adjust sense-level difficulty.",
+        "penalties": {
+          "technicalDomain": {
+            "add": 2,
+            "minimum": 4
+          },
+          "subjectDomain": {
+            "add": 1,
+            "minimum": 3
+          },
+          "archaic": {
+            "add": 2,
+            "minimum": 7
+          },
+          "literary": {
+            "add": 1,
+            "minimum": 5
+          },
+          "slang": {
+            "add": 1,
+            "minimum": 4
+          },
+          "abbreviation": {
+            "add": 1,
+            "minimum": 6
+          },
+          "affix": {
+            "add": 1,
+            "minimum": 7
+          },
+          "unspecifiedPOS": {
+            "add": 1,
+            "minimum": 4
+          },
+          "knownStarterNonBasicSense": {
+            "add": 0,
+            "minimum": 4
+          },
+          "length": "10–13 letters adds 1 only when frequency base >=3; 14–18 adds 2. Common top-1500 tokens receive no length penalty."
+        }
+      },
+      "frequencySource": {
+        "version": 1,
+        "name": "FrequencyWords English 2018 top 50,000",
+        "author": "Hermit Dave / FrequencyWords contributors",
+        "repository": "https://github.com/hermitdave/FrequencyWords",
+        "commit": "525f9b560de45753a5ea01069454e72e9aa541c6",
+        "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/en/en_50k.txt",
+        "readmeUrl": "https://github.com/hermitdave/FrequencyWords/blob/525f9b560de45753a5ea01069454e72e9aa541c6/README.md#license",
+        "localFile": "assets/dictionary-grading/en_50k-2018.txt",
+        "sha256": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+        "entries": 50000,
+        "license": "CC-BY-SA-4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "corpus": "OpenSubtitles2018 tokenized English",
+        "corpusUrl": "https://opus.nlpl.eu/OpenSubtitles2018.php",
+        "verifiedAt": "2026-10-25",
+        "changes": "Source frequency file retained byte-for-byte. English ranks inform separate estimated game learning levels; no frequency text supplies or replaces Vietnamese translations.",
+        "limitations": "Subtitle lemma/token frequency is not a CEFR assessment and does not directly measure familiarity of a particular Vietnamese sense. Missing words are outside this top-50k list, not known to have zero use. The user-provided CSV has its own unchanged provenance and unspecified license."
+      },
+      "stats": {
+        "words": 70696,
+        "frequencyMatches": 20884,
+        "outsideTop50000": 49812,
+        "starterOverrides": 70,
+        "byLevel": {
+          "1": 452,
+          "2": 751,
+          "3": 1213,
+          "4": 1915,
+          "5": 2298,
+          "6": 3333,
+          "7": 4656,
+          "8": 4220,
+          "9": 22312,
+          "10": 29546
+        },
+        "byLevelAndPartOfSpeech": {
+          "1": {
+            "adjective": 92,
+            "adverb": 44,
+            "preposition": 10,
+            "conjunction": 5,
+            "pronoun": 12,
+            "noun": 236,
+            "verb": 49,
+            "interjection": 3,
+            "determiner": 1
+          },
+          "2": {
+            "adverb": 45,
+            "verb": 57,
+            "noun": 465,
+            "adjective": 166,
+            "conjunction": 4,
+            "preposition": 4,
+            "pronoun": 9,
+            "interjection": 1
+          },
+          "3": {
+            "adjective": 244,
+            "noun": 827,
+            "adverb": 44,
+            "verb": 90,
+            "preposition": 2,
+            "interjection": 4,
+            "pronoun": 2
+          },
+          "4": {
+            "noun": 1240,
+            "adverb": 51,
+            "adjective": 411,
+            "verb": 137,
+            "interjection": 12,
+            "preposition": 6,
+            "unspecified": 54,
+            "conjunction": 2,
+            "pronoun": 2
+          },
+          "5": {
+            "noun": 1520,
+            "verb": 154,
+            "adjective": 504,
+            "adverb": 68,
+            "interjection": 16,
+            "unspecified": 34,
+            "pronoun": 1,
+            "conjunction": 1
+          },
+          "6": {
+            "verb": 268,
+            "noun": 2096,
+            "adjective": 767,
+            "adverb": 103,
+            "unspecified": 58,
+            "interjection": 11,
+            "abbreviation": 24,
+            "preposition": 5,
+            "pronoun": 1
+          },
+          "7": {
+            "adverb": 151,
+            "noun": 2844,
+            "verb": 402,
+            "adjective": 1146,
+            "unspecified": 72,
+            "abbreviation": 14,
+            "interjection": 15,
+            "preposition": 5,
+            "numeral": 1,
+            "prefix": 1,
+            "pronoun": 4,
+            "conjunction": 1
+          },
+          "8": {
+            "unspecified": 127,
+            "noun": 2524,
+            "verb": 320,
+            "adjective": 1017,
+            "adverb": 190,
+            "interjection": 6,
+            "preposition": 3,
+            "abbreviation": 26,
+            "prefix": 6,
+            "numeral": 1
+          },
+          "9": {
+            "noun": 12769,
+            "adjective": 5923,
+            "verb": 2573,
+            "adverb": 869,
+            "unspecified": 97,
+            "conjunction": 1,
+            "abbreviation": 29,
+            "preposition": 8,
+            "interjection": 38,
+            "numeral": 1,
+            "pronoun": 2,
+            "suffix": 1,
+            "prefix": 1
+          },
+          "10": {
+            "noun": 15640,
+            "unspecified": 2398,
+            "adjective": 8660,
+            "adverb": 1335,
+            "verb": 1280,
+            "abbreviation": 205,
+            "preposition": 3,
+            "numeral": 1,
+            "interjection": 8,
+            "suffix": 1,
+            "prefix": 9,
+            "conjunction": 3,
+            "pronoun": 3
+          }
+        },
+        "reasonCounts": {
+          "frequency-rank": 20884,
+          "unspecified-source-pos": 2840,
+          "subject-labelled-source-sense": 4697,
+          "outside-frequency-top-50000": 49812,
+          "spelling-length": 26446,
+          "technical-source-sense": 4792,
+          "literary-register": 296,
+          "abbreviation": 298,
+          "archaic-or-rare-register": 380,
+          "authored-basic-sense-guard": 70,
+          "slang-register": 436,
+          "affix": 19
+        }
+      }
+    },
+    "stats": {
+      "sourceRecords": 103864,
+      "physicalLines": 103866,
+      "blankRows": 1,
+      "eligibleRecords": 77828,
+      "duplicateHeadwordRows": 483,
+      "duplicateAnswers": 422,
+      "words": 70696,
+      "longWords": 55245,
+      "missingPosRows": 2840,
+      "shortenedMeanings": 134,
+      "referenceSenses": 8855,
+      "syntaxRepairedRows": 11,
+      "recoveredPronunciationRows": 440,
+      "byPartOfSpeech": {
+        "unspecified": 2840,
+        "noun": 40161,
+        "adverb": 2900,
+        "adjective": 18930,
+        "verb": 5330,
+        "abbreviation": 298,
+        "interjection": 114,
+        "preposition": 46,
+        "numeral": 4,
+        "conjunction": 17,
+        "pronoun": 36,
+        "prefix": 17,
+        "suffix": 2,
+        "determiner": 1
+      },
+      "byDifficulty": {
+        "1": 2416,
+        "2": 7546,
+        "3": 60734
+      },
+      "exclusions": {
+        "length": 352,
+        "reference-only": 6503,
+        "unsupported-characters": 13819,
+        "phrase": 11724,
+        "non-phonetic-annotation": 53,
+        "duplicate-answer": 422,
+        "ambiguous-columns": 55,
+        "malformed-csv": 88,
+        "no-usable-meaning": 109,
+        "meaning-over-120-without-boundary": 43
+      },
+      "byLearningLevel": {
+        "1": 452,
+        "2": 751,
+        "3": 1213,
+        "4": 1915,
+        "5": 2298,
+        "6": 3333,
+        "7": 4656,
+        "8": 4220,
+        "9": 22312,
+        "10": 29546
+      },
+      "preferredSourceSenseSelections": 5
+    },
+    "archive": "assets/dictionary-csv/full-entries.jsonl.gz",
+    "importedAt": "2026-10-25T12:23:50.981Z"
+  },
+  "stats": {
+    "sourceRecords": 103864,
+    "physicalLines": 103866,
+    "blankRows": 1,
+    "eligibleRecords": 77828,
+    "duplicateHeadwordRows": 483,
+    "duplicateAnswers": 422,
+    "words": 70696,
+    "longWords": 55245,
+    "missingPosRows": 2840,
+    "shortenedMeanings": 134,
+    "referenceSenses": 8855,
+    "syntaxRepairedRows": 11,
+    "recoveredPronunciationRows": 440,
+    "byPartOfSpeech": {
+      "unspecified": 2840,
+      "noun": 40161,
+      "adverb": 2900,
+      "adjective": 18930,
+      "verb": 5330,
+      "abbreviation": 298,
+      "interjection": 114,
+      "preposition": 46,
+      "numeral": 4,
+      "conjunction": 17,
+      "pronoun": 36,
+      "prefix": 17,
+      "suffix": 2,
+      "determiner": 1
+    },
+    "byDifficulty": {
+      "1": 2416,
+      "2": 7546,
+      "3": 60734
+    },
+    "exclusions": {
+      "length": 352,
+      "reference-only": 6503,
+      "unsupported-characters": 13819,
+      "phrase": 11724,
+      "non-phonetic-annotation": 53,
+      "duplicate-answer": 422,
+      "ambiguous-columns": 55,
+      "malformed-csv": 88,
+      "no-usable-meaning": 109,
+      "meaning-over-120-without-boundary": 43
+    },
+    "byLearningLevel": {
+      "1": 452,
+      "2": 751,
+      "3": 1213,
+      "4": 1915,
+      "5": 2298,
+      "6": 3333,
+      "7": 4656,
+      "8": 4220,
+      "9": 22312,
+      "10": 29546
+    },
+    "preferredSourceSenseSelections": 5
+  },
+  "classification": {
+    "method": {
+      "version": "frequency-sense-2",
+      "name": "Estimated game learning levels from subtitle commonness and source-sense complexity",
+      "rankBands": [
+        500,
+        1500,
+        3500,
+        7000,
+        12000,
+        20000,
+        35000,
+        50000
+      ],
+      "absentBaseLevel": 9,
+      "lootMapping": "levels 1–3 => difficulty 1; 4–6 => 2; 7–10 => 3",
+      "basicSenseSelection": "For the small authored starter set, prefer only an already present CSV sense matching both the basic-meaning guard and an allowed explicit source POS; audit every changed selection. Otherwise retain source meaning and apply a non-basic-sense floor where needed.",
+      "limitation": "Heuristic ordering, not CEFR, a validated learning assessment, or a semantic review of every CSV definition. Frequency refers to the English token; explicit source labels and basic-sense guards adjust sense-level difficulty.",
+      "penalties": {
+        "technicalDomain": {
+          "add": 2,
+          "minimum": 4
+        },
+        "subjectDomain": {
+          "add": 1,
+          "minimum": 3
+        },
+        "archaic": {
+          "add": 2,
+          "minimum": 7
+        },
+        "literary": {
+          "add": 1,
+          "minimum": 5
+        },
+        "slang": {
+          "add": 1,
+          "minimum": 4
+        },
+        "abbreviation": {
+          "add": 1,
+          "minimum": 6
+        },
+        "affix": {
+          "add": 1,
+          "minimum": 7
+        },
+        "unspecifiedPOS": {
+          "add": 1,
+          "minimum": 4
+        },
+        "knownStarterNonBasicSense": {
+          "add": 0,
+          "minimum": 4
+        },
+        "length": "10–13 letters adds 1 only when frequency base >=3; 14–18 adds 2. Common top-1500 tokens receive no length penalty."
+      }
+    },
+    "frequencySource": {
+      "version": 1,
+      "name": "FrequencyWords English 2018 top 50,000",
+      "author": "Hermit Dave / FrequencyWords contributors",
+      "repository": "https://github.com/hermitdave/FrequencyWords",
+      "commit": "525f9b560de45753a5ea01069454e72e9aa541c6",
+      "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/en/en_50k.txt",
+      "readmeUrl": "https://github.com/hermitdave/FrequencyWords/blob/525f9b560de45753a5ea01069454e72e9aa541c6/README.md#license",
+      "localFile": "assets/dictionary-grading/en_50k-2018.txt",
+      "sha256": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+      "entries": 50000,
+      "license": "CC-BY-SA-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "corpus": "OpenSubtitles2018 tokenized English",
+      "corpusUrl": "https://opus.nlpl.eu/OpenSubtitles2018.php",
+      "verifiedAt": "2026-10-25",
+      "changes": "Source frequency file retained byte-for-byte. English ranks inform separate estimated game learning levels; no frequency text supplies or replaces Vietnamese translations.",
+      "limitations": "Subtitle lemma/token frequency is not a CEFR assessment and does not directly measure familiarity of a particular Vietnamese sense. Missing words are outside this top-50k list, not known to have zero use. The user-provided CSV has its own unchanged provenance and unspecified license."
+    },
+    "stats": {
+      "words": 70696,
+      "frequencyMatches": 20884,
+      "outsideTop50000": 49812,
+      "starterOverrides": 70,
+      "byLevel": {
+        "1": 452,
+        "2": 751,
+        "3": 1213,
+        "4": 1915,
+        "5": 2298,
+        "6": 3333,
+        "7": 4656,
+        "8": 4220,
+        "9": 22312,
+        "10": 29546
+      },
+      "byLevelAndPartOfSpeech": {
+        "1": {
+          "adjective": 92,
+          "adverb": 44,
+          "preposition": 10,
+          "conjunction": 5,
+          "pronoun": 12,
+          "noun": 236,
+          "verb": 49,
+          "interjection": 3,
+          "determiner": 1
+        },
+        "2": {
+          "adverb": 45,
+          "verb": 57,
+          "noun": 465,
+          "adjective": 166,
+          "conjunction": 4,
+          "preposition": 4,
+          "pronoun": 9,
+          "interjection": 1
+        },
+        "3": {
+          "adjective": 244,
+          "noun": 827,
+          "adverb": 44,
+          "verb": 90,
+          "preposition": 2,
+          "interjection": 4,
+          "pronoun": 2
+        },
+        "4": {
+          "noun": 1240,
+          "adverb": 51,
+          "adjective": 411,
+          "verb": 137,
+          "interjection": 12,
+          "preposition": 6,
+          "unspecified": 54,
+          "conjunction": 2,
+          "pronoun": 2
+        },
+        "5": {
+          "noun": 1520,
+          "verb": 154,
+          "adjective": 504,
+          "adverb": 68,
+          "interjection": 16,
+          "unspecified": 34,
+          "pronoun": 1,
+          "conjunction": 1
+        },
+        "6": {
+          "verb": 268,
+          "noun": 2096,
+          "adjective": 767,
+          "adverb": 103,
+          "unspecified": 58,
+          "interjection": 11,
+          "abbreviation": 24,
+          "preposition": 5,
+          "pronoun": 1
+        },
+        "7": {
+          "adverb": 151,
+          "noun": 2844,
+          "verb": 402,
+          "adjective": 1146,
+          "unspecified": 72,
+          "abbreviation": 14,
+          "interjection": 15,
+          "preposition": 5,
+          "numeral": 1,
+          "prefix": 1,
+          "pronoun": 4,
+          "conjunction": 1
+        },
+        "8": {
+          "unspecified": 127,
+          "noun": 2524,
+          "verb": 320,
+          "adjective": 1017,
+          "adverb": 190,
+          "interjection": 6,
+          "preposition": 3,
+          "abbreviation": 26,
+          "prefix": 6,
+          "numeral": 1
+        },
+        "9": {
+          "noun": 12769,
+          "adjective": 5923,
+          "verb": 2573,
+          "adverb": 869,
+          "unspecified": 97,
+          "conjunction": 1,
+          "abbreviation": 29,
+          "preposition": 8,
+          "interjection": 38,
+          "numeral": 1,
+          "pronoun": 2,
+          "suffix": 1,
+          "prefix": 1
+        },
+        "10": {
+          "noun": 15640,
+          "unspecified": 2398,
+          "adjective": 8660,
+          "adverb": 1335,
+          "verb": 1280,
+          "abbreviation": 205,
+          "preposition": 3,
+          "numeral": 1,
+          "interjection": 8,
+          "suffix": 1,
+          "prefix": 9,
+          "conjunction": 3,
+          "pronoun": 3
+        }
+      },
+      "reasonCounts": {
+        "frequency-rank": 20884,
+        "unspecified-source-pos": 2840,
+        "subject-labelled-source-sense": 4697,
+        "outside-frequency-top-50000": 49812,
+        "spelling-length": 26446,
+        "technical-source-sense": 4792,
+        "literary-register": 296,
+        "abbreviation": 298,
+        "archaic-or-rare-register": 380,
+        "authored-basic-sense-guard": 70,
+        "slang-register": 436,
+        "affix": 19
+      }
+    },
+    "artifacts": {
+      "csv": "public/vocabulary/learning-levels.csv",
+      "audit": "assets/dictionary-grading/word-grades.jsonl.gz"
+    }
+  },
+  "preferredSourceSenseSelections": [
+    {
+      "answer": "bread",
+      "sourceRow": 11146,
+      "reason": "Existing CSV sense matches the authored basic-sense guard and an allowed explicit source POS",
+      "oldSelected": {
+        "meaning": "làm thủng",
+        "partOfSpeech": "verb",
+        "fullMeaning": "làm thủng"
+      },
+      "newSelected": {
+        "meaning": "bánh mì",
+        "partOfSpeech": "noun",
+        "fullMeaning": "bánh mì"
+      }
+    },
+    {
+      "answer": "bridge",
+      "sourceRow": 11299,
+      "reason": "Existing CSV sense matches the authored basic-sense guard and an allowed explicit source POS",
+      "oldSelected": {
+        "meaning": "(đánh bài) brit",
+        "partOfSpeech": "noun",
+        "fullMeaning": "(đánh bài) brit"
+      },
+      "newSelected": {
+        "meaning": "cái cầu",
+        "partOfSpeech": "noun",
+        "fullMeaning": "cái cầu"
+      }
+    },
+    {
+      "answer": "pen",
+      "sourceRow": 65836,
+      "reason": "Existing CSV sense matches the authored basic-sense guard and an allowed explicit source POS",
+      "oldSelected": {
+        "meaning": "bút lông chim (ngỗng)",
+        "partOfSpeech": "noun",
+        "fullMeaning": "bút lông chim (ngỗng)"
+      },
+      "newSelected": {
+        "meaning": "bút, ngòi bút",
+        "partOfSpeech": "noun",
+        "fullMeaning": "bút, ngòi bút"
+      }
+    },
+    {
+      "answer": "school",
+      "sourceRow": 79668,
+      "reason": "Existing CSV sense matches the authored basic-sense guard and an allowed explicit source POS",
+      "oldSelected": {
+        "meaning": "đàn cá, bầy cá",
+        "partOfSpeech": "noun",
+        "fullMeaning": "đàn cá, bầy cá"
+      },
+      "newSelected": {
+        "meaning": "trường học, học đường",
+        "partOfSpeech": "noun",
+        "fullMeaning": "trường học, học đường"
+      }
+    },
+    {
+      "answer": "snow",
+      "sourceRow": 84386,
+      "reason": "Existing CSV sense matches the authored basic-sense guard and an allowed explicit source POS",
+      "oldSelected": {
+        "meaning": "(hàng hải), (sử học) thuyền xnau (thuyền buồm nhỏ)",
+        "partOfSpeech": "noun",
+        "fullMeaning": "(hàng hải), (sử học) thuyền xnau (thuyền buồm nhỏ)"
+      },
+      "newSelected": {
+        "meaning": "tuyết",
+        "partOfSpeech": "noun",
+        "fullMeaning": "tuyết"
+      }
+    }
+  ],
+  "rules": {
+    "answer": "Single lowercase ASCII word, 3–18 letters; verified pronunciation suffix removed",
+    "meaning": "Prefer an existing CSV basic sense for the small authored starter set only when both sense and explicit source POS match its guard; otherwise first usable source sense. Each changed selection is audited. ≤120 characters at source punctuation boundaries.",
+    "duplicates": "Prefer an explicit lexical POS over abbreviation or unspecified POS; prefer an existing guarded basic sense, then a complete pronunciation entry on equal POS quality; otherwise retain source order",
+    "unspecified": "Source does not identify POS; no POS inferred from spelling",
+    "references": "Reference-only senses are not copied across related headwords",
+    "quality": "Structural import of user-provided source; no external translation or claim of full semantic review",
+    "difficulty": "Frequency and source-sense estimated learningLevel 1–10; loot difficulty derived from bands 1–3, 4–6, 7–10. Not CEFR."
+  },
+  "exclusionSamples": {
+    "length": [
+      {
+        "row": 3,
+        "english": "d",
+        "fullMeaning": "(thông tục)|- (viết tắt) của had,  should,  would"
+      },
+      {
+        "row": 4,
+        "english": "em",
+        "fullMeaning": " danh từ|- (thông tục) (viết tắt) của them"
+      },
+      {
+        "row": 6,
+        "english": "ll",
+        "fullMeaning": "(vt của will)"
+      },
+      {
+        "row": 7,
+        "english": "s",
+        "fullMeaning": "(viết tắt) của is,  has,  us,  does|- (thông tục) (như) is|= it s raining|+ trời mưa|= what s the matter?|+ cái gì đấy?|= she s gone|+ cô ta đã đi khỏi|- (thông tục) (như) has|= he s done it|+ anh ấy đã làm việc đó rồi|- (thông tục) (như) us|- let s go|- nào chúng ta đi thôi|- (thông tục) (như) does|= what s he say about it?|+ ý kiến của anh ấy về việc đó như thế nào?"
+      },
+      {
+        "row": 16,
+        "english": "un",
+        "fullMeaning": " danh từ|- <thgt>(như one) một"
+      },
+      {
+        "row": 17,
+        "english": "ve",
+        "fullMeaning": "(vt của have)"
+      },
+      {
+        "row": 50,
+        "english": "a [ei, ə]",
+        "fullMeaning": "  danh từ,  số nhiều as,  as|- (thông tục) loại a, hạng nhất, hạng tốt nhất hạng rất tốt|=his health is a|+ sức khoẻ anh ta vào loại a|- (âm nhạc) la|=a sharp|+ la thăng|=a flat|+ la giáng|- người giả định thứ nhất; trường hợp giả định thứ nhất|=from a to z|+ từ đầu đến đuôi, tường tận|=not to know a from b|+ không biết tí gì cả; một chữ bẻ đôi cũng không biết|*  mạo từ|- một; một (như kiểu); một (nào đó)|=a very cold day|+ một ngày rất lạn"
+      },
+      {
+        "row": 80,
+        "english": "aa",
+        "fullMeaning": "(alcoholics anonymous) hội cai rượu|- (automobile association) hội ô tô"
+      }
+    ],
+    "reference-only": [
+      {
+        "row": 5,
+        "english": "gainst",
+        "fullMeaning": " giới từ|- (thơ ca) (như) against"
+      },
+      {
+        "row": 8,
+        "english": "shun",
+        "fullMeaning": "interj|- ((viết tắt) của attention) nghiêm!"
+      },
+      {
+        "row": 9,
+        "english": "tec",
+        "fullMeaning": "xem tec"
+      },
+      {
+        "row": 10,
+        "english": "tis",
+        "fullMeaning": "(vt của it is)"
+      },
+      {
+        "row": 11,
+        "english": "twas",
+        "fullMeaning": "(vt của it was)"
+      },
+      {
+        "row": 12,
+        "english": "tween",
+        "fullMeaning": " giới từ|- (vt của between)"
+      },
+      {
+        "row": 13,
+        "english": "twere",
+        "fullMeaning": "(vt của it were)"
+      },
+      {
+        "row": 14,
+        "english": "twill",
+        "fullMeaning": "(viết tắt) của it will"
+      }
+    ],
+    "unsupported-characters": [
+      {
+        "row": 18,
+        "english": "-th",
+        "fullMeaning": "hình thái ở một số danh từ gốc động từ; tính từ chỉ :hoạt động kết quả hoạt động :|- growth|- sự phát triển;|- tilth|- sự trồng trọt;|- tình trạng hoặc phẩm chất :|- health|- sức khoẻ;|- youth|- tuổi trẻ;|- (hay eth) h"
+      },
+      {
+        "row": 19,
+        "english": "-trichous",
+        "fullMeaning": "hình thái ghép tạo tính từ|- có lông kiểu nào đấy|= peritrichous|+ có vành lông rung"
+      },
+      {
+        "row": 20,
+        "english": "-tron",
+        "fullMeaning": "hậu tố tạo danh từ có nghĩa|- ống chân không|- magnetron|- manhêtron|- biện pháp xử lý các hạt trong nguyên tử|- cyclotron|- xiclotron"
+      },
+      {
+        "row": 21,
+        "english": "-trophin",
+        "fullMeaning": "hình thái ghép có nghĩa|- chất kích thích|= gonadotrophin hocmon|+ kích thích tuyến sinh dục"
+      },
+      {
+        "row": 22,
+        "english": "-tude",
+        "fullMeaning": "hậu tố tạo danh từ|- sự, tính chất|- altitude|- độ cao|- plenitude|- sự đầy đủ"
+      },
+      {
+        "row": 23,
+        "english": "-ty",
+        "fullMeaning": "hậu tố để tạo những con số có bao nhiêu lần mười|- twenty|- hai mươi|- fifty|- năm mươi|- hậu tố tạo danh từ chỉ tính chất, điều kiện|- puberty|- tuổi dậy thì|- cruelty|- tính tàn ác"
+      },
+      {
+        "row": 24,
+        "english": "-way",
+        "fullMeaning": "hình thái cấu tạo các phó từ gốc tính từ và danh từ chỉ cách thức hành động; phương hướng và vị trí|- broadways|- theo chiều rộng, chiều ngang|- longways|- theo chiều dài|- lengthways|- theo chiều dọc|- endways|- đuôi về "
+      },
+      {
+        "row": 63,
+        "english": "a-bomb [eibɔm]",
+        "fullMeaning": "  danh từ|- bom nguyên tử"
+      }
+    ],
+    "phrase": [
+      {
+        "row": 25,
+        "english": "1 to 1 relationship",
+        "fullMeaning": "(tech) quan hệ 1 đối 1"
+      },
+      {
+        "row": 26,
+        "english": "1 to many relationship",
+        "fullMeaning": "(tech) quan hệ 1 đối nhiều"
+      },
+      {
+        "row": 27,
+        "english": "1-byte character",
+        "fullMeaning": "(tech) ký tự 1 bai"
+      },
+      {
+        "row": 28,
+        "english": "1-byte character code",
+        "fullMeaning": "(tech) mã ký tự 1 bai"
+      },
+      {
+        "row": 29,
+        "english": "1-byte character set",
+        "fullMeaning": "(tech) bộ ký tự 1 bai"
+      },
+      {
+        "row": 30,
+        "english": "1-byte character string",
+        "fullMeaning": "(tech) chuỗi ký tự 1 bai"
+      },
+      {
+        "row": 31,
+        "english": "2-way device",
+        "fullMeaning": "(tech) thiết bị 2 chiều/thu phát"
+      },
+      {
+        "row": 32,
+        "english": "2d (two dimension)",
+        "fullMeaning": "(tech) hai chiều, nhị thứ nguyên, phẳng"
+      }
+    ],
+    "non-phonetic-annotation": [
+      {
+        "row": 64,
+        "english": "a-d = a [d = a-d (analog-to-digital)]",
+        "fullMeaning": "#- (tech) đổi  dạng sóng (dạng tương tự) sang dạng số"
+      },
+      {
+        "row": 554,
+        "english": "ac [dc receiver]",
+        "fullMeaning": "#- (tech) máy thu chạy điện xoay chiều-một chiều = universal receiver||@ac/dc ringing|- (tech) phép gọi điện xoay chiều-một chiều"
+      },
+      {
+        "row": 687,
+        "english": "access [space trade - off model]",
+        "fullMeaning": "#- (econ) mô hình đánh đổi không gian hay mô hình tiếp cận.|+ một mô hình lý thuyết được sử dụng (chủ yếu) trong phân tích địa điểm dân cư ở các vùng đô thị, giải thích các hình thái vị trí do đánh đổi giữa khả năng tiếp cận của một địa điểm tới trung tâm của vùng và không gian của địa điểm đó."
+      },
+      {
+        "row": 3119,
+        "english": "am [fm receiver]",
+        "fullMeaning": "#- (tech) máy thu biến điệu biên-tần||@am/fm tuner|- (tech) bộ điều hưởng biên-tần"
+      },
+      {
+        "row": 13874,
+        "english": "cd (compact disk [disc)]",
+        "fullMeaning": "#- (tech) đĩa gọn, đĩa cd"
+      },
+      {
+        "row": 15027,
+        "english": "choir-boy [choir-boy]",
+        "fullMeaning": "#-boy/|*  danh từ|- lễ sinh (hát ở giáo đường)"
+      },
+      {
+        "row": 18880,
+        "english": "constraint (informal [formal)]",
+        "fullMeaning": "#- (econ) hạn chế / ràng buộc (không chính thức/ chính thức) ngoài quy định/ theo quy định."
+      },
+      {
+        "row": 22308,
+        "english": "dasd (direct access storage device) [dahzz-dee]",
+        "fullMeaning": " = disk drive,(tech) ổ đĩa cứng"
+      }
+    ],
+    "duplicate-answer": [
+      {
+        "row": 358,
+        "english": "abscissa",
+        "fullMeaning": "(econ) hoành độ|+ giá trị trên trục hoành (trục x) của một điểm trên đồ thị hai chiều."
+      },
+      {
+        "row": 381,
+        "english": "absenteeism",
+        "fullMeaning": "(econ) trốn việc, sự nghỉ làm không có lý do|+ sự nghỉ làm, mặc dù các điều khoản của hợp đồng lao động yêu cầu người lao động phải đi làm và hợp đồng vẫn còn giá trị."
+      },
+      {
+        "row": 499,
+        "english": "abstinence",
+        "fullMeaning": "(econ) nhịn chi tiêu.|+ một thuật ngữ miêu tả sự cần thiết giảm bớt tiêu dùng hiện tại để tích luỹ tư bản."
+      },
+      {
+        "row": 638,
+        "english": "accelerator",
+        "fullMeaning": "(econ) gia số|+ xem accelerator principle."
+      },
+      {
+        "row": 665,
+        "english": "acceptance",
+        "fullMeaning": "(econ) chấp nhận thanh toán.|+ hành vi chấp nhận một hối phiếu do cá nhân hay cơ quan nhận hối phiếu thực hiện, bao gồm ký hối phiếu và thường ký trên mặt hối phiếu."
+      },
+      {
+        "row": 810,
+        "english": "account",
+        "fullMeaning": "(econ) tài khoản.|+ 1.một ghi chép giao dịch giữa hai bên giao dịch có thể là hai bộ phận của một doanh nghiệp và là yếu tố cơ bản trong tất cả các hệ thống giao dịch kinh doanh. 2.các giai đoạn, thường là hai tuần, theo đó năm kinh doanh của sở chứng khoán london được chia ra và qua các giai đoạn này, việc thanh toán các giao dịch trừ giao dịch chứng khoán viền vàng được tiến hành."
+      },
+      {
+        "row": 1635,
+        "english": "advance",
+        "fullMeaning": "(econ) tiền ứng trước.|+ một khoản vay hoặc dựa vào luồng tiền đã xác định hoặc dự kiến. (xem bank loan)."
+      },
+      {
+        "row": 1697,
+        "english": "advertising",
+        "fullMeaning": "(econ) quảng cáo.|+ hoạt động của một hãng nhằm thúc đẩy việc bán sản phẩm của mình, mục tiêu chính là tăng số lượng người tiêu dùng thích những sản phẩm của hãng hơn những hãng khác."
+      }
+    ],
+    "ambiguous-columns": [
+      {
+        "row": 360,
+        "english": "abscissa",
+        "fullMeaning": " abscissae,hoành độ"
+      },
+      {
+        "row": 2532,
+        "english": "aleph",
+        "fullMeaning": " alef,alep"
+      },
+      {
+        "row": 3647,
+        "english": "analog",
+        "fullMeaning": " analogue,(tech) tương tự, liên biến, dạng sóng, liên tục"
+      },
+      {
+        "row": 3671,
+        "english": "analyser",
+        "fullMeaning": " analyzer,(tech) bộ phân tích, máy phân tích"
+      },
+      {
+        "row": 7939,
+        "english": "bagehot",
+        "fullMeaning": " walter,(econ) (1826-1877).|+ là biên tập viên và đồng biên tập viên của tờ the economist từ 1860-1877. ông là nhà bình luận có ảnh hưởng lớn đương thời và tác phẩm của ông hiện vẫn được trích dẫn rộng rãi. tác phẩm nổi tiếng nhất của ông là phố lombard: miêu tả về thị trường tiền tệ(1873)."
+      },
+      {
+        "row": 9125,
+        "english": "bentham",
+        "fullMeaning": "jeremy,(econ) 1748-một nhà khoa học xã hội người anh"
+      },
+      {
+        "row": 14310,
+        "english": "chamberlin",
+        "fullMeaning": " edward,(econ) (1899-1967)|+ một nhà kinh tế người mỹ nổi tiếng với lý thuyết cạnh tranh độc quyền (1933). trong lý thuyết này, ông đã phân tích tình hình thị trường giữa cạnh tranh hoàn hảo và độc quyền độc lập với công trình ở anh của joaobinson. ông cho rằng các hãng cạnh tranh với nhau vì cầu nối với sản phẩm của họ bị tác động bởi sự tồn tại của các hãng khác, nhưng mỗi hãng lại có mức độ độc quyền nào đó vì chúng có ca"
+      },
+      {
+        "row": 19662,
+        "english": "core",
+        "fullMeaning": " the,(econ) giá gốc.|+ xem game theory."
+      }
+    ],
+    "malformed-csv": [
+      {
+        "row": 1887,
+        "fullMeaning": "affirmative acknowledge = affirmative response #"
+      },
+      {
+        "row": 2437,
+        "fullMeaning": "ajutage #???"
+      },
+      {
+        "row": 2906,
+        "fullMeaning": "alpha character = alphabetic character #"
+      },
+      {
+        "row": 2907,
+        "fullMeaning": "alpha code = alphabetic code #"
+      },
+      {
+        "row": 2925,
+        "fullMeaning": "alpha type = alphabetic type #"
+      },
+      {
+        "row": 2926,
+        "fullMeaning": "alpha value = alphabetic value #"
+      },
+      {
+        "row": 2946,
+        "fullMeaning": "alphabetical order = alphabetic order #"
+      },
+      {
+        "row": 2952,
+        "fullMeaning": "alphameric = alphanumeric #"
+      }
+    ],
+    "no-usable-meaning": [
+      {
+        "row": 2716,
+        "english": "allegedly",
+        "fullMeaning": " phó từ"
+      },
+      {
+        "row": 6091,
+        "english": "asexual [æsekjuəl]",
+        "fullMeaning": "  tính từ|- (sinh vật học)|=asexual reproduction|+ sinh sản vô tính"
+      },
+      {
+        "row": 8622,
+        "english": "bated",
+        "fullMeaning": " tính từ"
+      },
+      {
+        "row": 9046,
+        "english": "bellied",
+        "fullMeaning": " tính từ"
+      },
+      {
+        "row": 9980,
+        "english": "blessedly",
+        "fullMeaning": " phó từ"
+      },
+      {
+        "row": 12282,
+        "english": "caboodle [kəbu:dl]",
+        "fullMeaning": "  danh từ|- (từ lóng)|=the whoole caboodle|+ cả bọn, cả lũ, cả lô, cả mớ"
+      },
+      {
+        "row": 13047,
+        "english": "capt [kæpt]",
+        "fullMeaning": "  danh từ,  (viết tắt) của captain"
+      },
+      {
+        "row": 14271,
+        "english": "chaise [ʃeiz]",
+        "fullMeaning": "  danh từ (từ cổ,nghĩa cổ)"
+      }
+    ],
+    "meaning-over-120-without-boundary": [
+      {
+        "row": 3927,
+        "english": "angary [æɳgəri]",
+        "fullMeaning": "  danh từ|- (pháp lý) quyền sử hoại (quyền sung công hoặc triệt phá có bồi thường tài sản của một nước trung lập nằm trên đất một nước có chiến tranh)"
+      },
+      {
+        "row": 6061,
+        "english": "ascii",
+        "fullMeaning": "(vt của america standard code for information interchange)tên một bộ ký tự dùng cho máy tính bao gồm 96 chữ thường và hoa cộng với 32 ký tự điều khiển không in ra"
+      },
+      {
+        "row": 7652,
+        "english": "babittry [bæbitri]",
+        "fullMeaning": "  danh từ|- tư tưởng ba-bít (nhân vật tiểu thuyết, trung thành với tư tưởng, lý tưởng của gia cấp tiểu tư sản, tự mãn với lối sống khá giả của mình)"
+      },
+      {
+        "row": 16031,
+        "english": "clipart",
+        "fullMeaning": "hình rời (một tập hợp các hình đồ họa được lưu trữ trên đựa để sử dụng trong các chương trình dàn trang hoặc chương trình đồ họa giới thiệu)"
+      },
+      {
+        "row": 35608,
+        "english": "fixedpoint",
+        "fullMeaning": "dấu phảy cố định: cách biểu diện các số thập phân sử dụng một số xác định vị trí sao cho dấu phảy ngăn cách phần nguyên và phần lồ chiếm một vị trí cố định"
+      },
+      {
+        "row": 42226,
+        "english": "hamiltonian",
+        "fullMeaning": " danh từ|- người theo hoặc ủng hộ những nguyên tắc hoặc tư tưởng của hamilton (có một chính phủ trung ương mạnh tập trung quyền lực ở mỹ, khuyến khích (kinh tế) (công nghiệp) và (thương nghiệp), nói chung không tin ở khả năng và trí tuệ của người bình dân)"
+      },
+      {
+        "row": 43868,
+        "english": "hobbit",
+        "fullMeaning": " danh từ|- giống người tưởng tượng của những người ăn hang ở lỗ hình thể giống như người nhưng chỉ cao bằng nửa người (trong tiểu thuyết của jrr tolkien + 1973, nhà văn anh)"
+      },
+      {
+        "row": 43950,
+        "english": "holdout [houldaut]",
+        "fullMeaning": "  danh từ|- (từ mỹ,nghĩa mỹ),  (thông tục) đấu thủ nhà nghề (bóng đá, bóng chày...) không ký giao kèo khi đến hạn để đòi điều kiện cao hơn"
+      }
+    ]
+  },
+  "mappings": [
+    {
+      "row": 81,
+      "english": "aaa",
+      "id": "csv-aaa",
+      "answer": "aaa",
+      "meaning": "(amateur athletic association) hội thể thao không chuyên",
+      "category": "Chưa rõ từ loại",
+      "partOfSpeech": "unspecified",
+      "difficulty": 3,
+      "learningLevel": 8
+    },
+    {
+      "row": 83,
+      "english": "aardvark",
+      "id": "csv-aardvark",
+      "answer": "aardvark",
+      "meaning": "(động vật) lợn đất",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 9
+    },
+    {
+      "row": 84,
+      "english": "aardwolf",
+      "id": "csv-aardwolf",
+      "answer": "aardwolf",
+      "meaning": "<động> chó sói đất (nam phi)",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 9
+    },
+    {
+      "row": 85,
+      "english": "aasvogel [ɑ:sfougəl]",
+      "id": "csv-aasvogel",
+      "answer": "aasvogel",
+      "meaning": "(động vật học) con kên kên (nam phi)",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 10
+    },
+    {
+      "row": 87,
+      "english": "aba [ɑ:bə]",
+      "id": "csv-aba",
+      "answer": "aba",
+      "meaning": "áo aba (áo ngoài giống hình cái túi người a-rập)",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 8
+    },
+    {
+      "row": 88,
+      "english": "abac",
+      "id": "csv-abac",
+      "answer": "abac",
+      "meaning": "bàn tính, toán đồ, bản đồ tính",
+      "category": "Chưa rõ từ loại",
+      "partOfSpeech": "unspecified",
+      "difficulty": 3,
+      "learningLevel": 10
+    },
+    {
+      "row": 89,
+      "english": "abaca",
+      "id": "csv-abaca",
+      "answer": "abaca",
+      "meaning": "vải dệt bằng tơ chuối abaca ở philipin",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 9
+    },
+    {
+      "row": 90,
+      "english": "abaci [æbəkəs]",
+      "id": "csv-abaci",
+      "answer": "abaci",
+      "meaning": "bàn tính",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 9
+    },
+    {
+      "row": 91,
+      "english": "abacist",
+      "id": "csv-abacist",
+      "answer": "abacist",
+      "meaning": "người gãy bàn phím",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 9
+    },
+    {
+      "row": 92,
+      "english": "aback [əbæk]",
+      "id": "csv-aback",
+      "answer": "aback",
+      "meaning": "lùi lại, trở lại phía sau",
+      "category": "Trạng từ",
+      "partOfSpeech": "adverb",
+      "difficulty": 3,
+      "learningLevel": 7
+    },
+    {
+      "row": 93,
+      "english": "abacterial",
+      "id": "csv-abacterial",
+      "answer": "abacterial",
+      "meaning": "không do vi khuẩn gây ra",
+      "category": "Tính từ",
+      "partOfSpeech": "adjective",
+      "difficulty": 3,
+      "learningLevel": 10
+    },
+    {
+      "row": 94,
+      "english": "abaction",
+      "id": "csv-abaction",
+      "answer": "abaction",
+      "meaning": "(từ pháp) việc gia súc bị bắt trộm",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 9
+    },
+    {
+      "row": 95,
+      "english": "abactus",
+      "id": "csv-abactus",
+      "answer": "abactus",
+      "meaning": "bị trụy thai",
+      "category": "Tính từ",
+      "partOfSpeech": "adjective",
+      "difficulty": 3,
+      "learningLevel": 9
+    },
+    {
+      "row": 96,
+      "english": "abacus [æbəkəs]",
+      "id": "csv-abacus",
+      "answer": "abacus",
+      "meaning": "bàn tính",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 8
+    },
+    {
+      "row": 97,
+      "english": "abaddon [əbædən]",
+      "id": "csv-abaddon",
+      "answer": "abaddon",
+      "meaning": "âm ti, địa ngục",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 8
+    },
+    {
+      "row": 98,
+      "english": "abaft [əbɑ:ft]",
+      "id": "csv-abaft",
+      "answer": "abaft",
+      "meaning": "(hàng hải) ở phía sau bánh lái, gần phía bánh lái",
+      "category": "Trạng từ",
+      "partOfSpeech": "adverb",
+      "difficulty": 3,
+      "learningLevel": 10
+    },
+    {
+      "row": 99,
+      "english": "abalienate",
+      "id": "csv-abalienate",
+      "answer": "abalienate",
+      "meaning": "nhường lại tài sản",
+      "category": "Động từ",
+      "partOfSpeech": "verb",
+      "difficulty": 3,
+      "learningLevel": 10
+    },
+    {
+      "row": 100,
+      "english": "abalienation",
+      "id": "csv-abalienation",
+      "answer": "abalienation",
+      "meaning": "sự nhường lại tài sản",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 10
+    },
+    {
+      "row": 101,
+      "english": "abalone [,æbəlouni]",
+      "id": "csv-abalone",
+      "answer": "abalone",
+      "meaning": "(từ mỹ,nghĩa mỹ) bào ngư",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 7
+    },
+    {
+      "row": 102,
+      "english": "abampere",
+      "id": "csv-abampere",
+      "answer": "abampere",
+      "meaning": "(tech) abampe, ampe tuyệt đối (đơn vị cường độ tuyệt đối của dòng điện, 1 abampe = 10 ampe)",
+      "category": "Chưa rõ từ loại",
+      "partOfSpeech": "unspecified",
+      "difficulty": 3,
+      "learningLevel": 10
+    },
+    {
+      "row": 137,
+      "english": "abbreviation [ə,bri:vieiʃn]",
+      "id": "csv-abbreviation",
+      "answer": "abbreviation",
+      "meaning": "sự tóm tắt, sự rút ngắn (cuộc đi thăm...)",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 9
+    },
+    {
+      "row": 688,
+      "english": "access [ækses]",
+      "id": "csv-access",
+      "answer": "access",
+      "meaning": "lối vào, cửa vào, đường vào",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 1,
+      "learningLevel": 3
+    },
+    {
+      "row": 4271,
+      "english": "ant [ænt]",
+      "id": "csv-ant",
+      "answer": "ant",
+      "meaning": "(động vật học) con kiến",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 2,
+      "learningLevel": 6
+    },
+    {
+      "row": 5222,
+      "english": "apple [æpl]",
+      "id": "csv-apple",
+      "answer": "apple",
+      "meaning": "quả táo",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 1,
+      "learningLevel": 1
+    },
+    {
+      "row": 37709,
+      "english": "friendly [frendli]",
+      "id": "csv-friendly",
+      "answer": "friendly",
+      "meaning": "thân mật, thân thiết, thân thiện",
+      "category": "Tính từ",
+      "partOfSpeech": "adjective",
+      "difficulty": 1,
+      "learningLevel": 3
+    },
+    {
+      "row": 44835,
+      "english": "hurtful [hə:tful]",
+      "id": "csv-hurtful",
+      "answer": "hurtful",
+      "meaning": "có hại, gây tổn hại, gây tổn thương",
+      "category": "Tính từ",
+      "partOfSpeech": "adjective",
+      "difficulty": 2,
+      "learningLevel": 6
+    },
+    {
+      "row": 50107,
+      "english": "its [its]",
+      "id": "csv-its",
+      "answer": "its",
+      "meaning": "của cái đó, của điều đó, của con vật đó",
+      "category": "Tính từ",
+      "partOfSpeech": "adjective",
+      "difficulty": 1,
+      "learningLevel": 1
+    },
+    {
+      "row": 73814,
+      "english": "quickly [kwikli]",
+      "id": "csv-quickly",
+      "answer": "quickly",
+      "meaning": "nhanh, nhanh chóng",
+      "category": "Trạng từ",
+      "partOfSpeech": "adverb",
+      "difficulty": 1,
+      "learningLevel": 2
+    },
+    {
+      "row": 78218,
+      "english": "run [rʌn]",
+      "id": "csv-run",
+      "answer": "run",
+      "meaning": "sự chạy",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 1,
+      "learningLevel": 1
+    },
+    {
+      "row": 82690,
+      "english": "shun [ʃʌn]",
+      "id": "csv-shun",
+      "answer": "shun",
+      "meaning": "tránh, xa lánh, lảng xa",
+      "category": "Động từ",
+      "partOfSpeech": "verb",
+      "difficulty": 2,
+      "learningLevel": 6
+    },
+    {
+      "row": 91961,
+      "english": "the [ði:, ði, ðə]",
+      "id": "csv-the",
+      "answer": "the",
+      "meaning": "cái, con, người...",
+      "category": "Từ hạn định",
+      "partOfSpeech": "determiner",
+      "difficulty": 1,
+      "learningLevel": 1
+    },
+    {
+      "row": 95063,
+      "english": "twill [twil]",
+      "id": "csv-twill",
+      "answer": "twill",
+      "meaning": "vải chéo, vải chéo go",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 3,
+      "learningLevel": 9
+    },
+    {
+      "row": 101848,
+      "english": "water [wɔ:tə]",
+      "id": "csv-water",
+      "answer": "water",
+      "meaning": "nước",
+      "category": "Danh từ",
+      "partOfSpeech": "noun",
+      "difficulty": 1,
+      "learningLevel": 1
+    }
+  ],
+  "historyAliasWords": 1,
+  "archiveRows": 103864
+}

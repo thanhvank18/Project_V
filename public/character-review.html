@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>42 nhân vật · Zombie Vocabulary Survival</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101b24;--panel:#182832;--ink:#f5eedc;--muted:#b5c6c9;--line:#3e5660;--accent:#ffc35a;--focus:#77ddc6}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:32px 24px 64px}h1{font-size:28px;margin:0 0 8px}h2{font-size:20px;margin:32px 0 12px}p{color:var(--muted);margin:8px 0 20px}a{color:var(--focus);text-underline-offset:4px}:focus-visible{outline:3px solid var(--focus);outline-offset:4px}button,select,input{font:inherit}button,select{border:1px solid var(--line);border-radius:6px;background:#253a43;color:var(--ink);min-height:44px;padding:8px 12px}button{cursor:pointer}button:hover,select:hover{background:#344a51}button:disabled{opacity:.5;cursor:default}button[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}label{display:grid;gap:6px;font-weight:600}.selectors{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}.preview{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,1fr);gap:24px;align-items:center;background:var(--panel);border:1px solid var(--line);padding:20px}canvas{display:block;width:100%;height:auto;image-rendering:pixelated;background:#172a32}.details strong{font-size:20px;color:var(--accent)}.details p{margin:8px 0}.transport{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:20px 0}.transport label{display:flex;align-items:center;margin-left:auto;font-weight:400}input[type=range]{accent-color:var(--accent);width:100%;min-height:44px}.scrub{display:flex;justify-content:space-between;gap:20px}.scrub output{font-variant-numeric:tabular-nums}.roster{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}.roster button{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0;padding:12px 6px;font-size:12px;line-height:1.4}.roster img{width:64px;height:64px;object-fit:contain;image-rendering:pixelated}.roster span{min-height:2.8em;display:flex;align-items:center;text-align:center}#status{min-height:24px}footer{border-top:1px solid var(--line);margin-top:32px;padding-top:20px}.error{color:#ffad99}@media(max-width:700px){main{padding:24px 16px}.preview{grid-template-columns:1fr}.roster{grid-template-columns:repeat(3,minmax(0,1fr))}.selectors{grid-template-columns:1fr}.transport label{margin-left:0}}
+  </style>
+</head>
+<body><main>
+  <h1>Nhân vật và animation</h1>
+  <p>Toàn bộ nhân vật từ hai pack Tiny RPG. Bản xem này dùng đúng sprite, thời lượng từng khung, tỉ lệ và điểm neo đã đăng ký trong game.</p>
+  <div class="selectors"><label>Nhân vật<select id="character" disabled></select></label><label>Chuyển động<select id="action"><option value="idle">Đứng yên</option><option value="move">Di chuyển / bay</option><option value="attack">Tấn công</option><option value="hurt">Trúng đòn</option><option value="death">Bị hạ</option></select></label></div>
+  <p id="status" role="status">Đang tải danh sách…</p>
+  <div class="preview"><canvas id="preview" width="480" height="360" aria-label="Xem trước animation nhân vật"></canvas><div class="details"><strong id="name"></strong><p id="role"></p><p id="meta"></p><p id="contact"></p><p>Đường xanh là mặt đất. Đổi hướng để kiểm tra cả hai phía; dừng và kéo thanh để xem từng khung.</p></div></div>
+  <div class="transport"><button id="play" disabled>Phát</button><button id="previous" disabled>Khung trước</button><button id="next" disabled>Khung sau</button><button id="flip" aria-pressed="false" disabled>Đổi hướng</button><label>Tốc độ<select id="speed"><option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option></select></label></div>
+  <label class="scrub" for="frame">Khung hình <output id="frame-label">0 / 0</output></label><input id="frame" type="range" min="0" max="0" value="0" step="1" disabled>
+  <h2 id="heroes-heading">Anh hùng</h2><div class="roster" id="heroes" aria-labelledby="heroes-heading"></div>
+  <h2 id="enemies-heading">Quái vật</h2><div class="roster" id="enemies" aria-labelledby="enemies-heading"></div>
+  <footer><a href="/">Về game và chọn nhân vật</a></footer>
+</main><script type="module">
+  const $ = id => document.getElementById(id);
+  const controls = ['play','previous','next','flip','frame'];
+  const kinds = { normal:'Quái thường', runner:'Quái nhanh', armored:'Quái giáp', tank:'Boss bảo hộ' };
+  const actionNames = {idle:'Đứng yên',move:'Di chuyển / bay',attack:'Tấn công',hurt:'Trúng đòn',death:'Bị hạ'};
+  let catalog, character, sprite, image, elapsed=0, last=0, request=0, playing=false, flipped=false;
+  const total = () => sprite.durations.reduce((sum,n)=>sum+n,0);
+  function frameAt(time){let t=Math.max(0,time);if(sprite.loop)t%=total();for(let i=0;i<sprite.durations.length;i++){if(t<sprite.durations[i])return i;t-=sprite.durations[i];}return sprite.durations.length-1;}
+  function stop(){playing=false;$('play').textContent='Phát';}
+  function render(){
+    if(!image)return;
+    const ctx=$('preview').getContext('2d'),frame=frameAt(elapsed),edge=sprite.size*character.displayScale;
+    ctx.clearRect(0,0,480,360);ctx.imageSmoothingEnabled=false;ctx.save();
+    if(flipped){ctx.translate(480,0);ctx.scale(-1,1);}
+    ctx.drawImage(image,frame*sprite.size,0,sprite.size,sprite.size,240-edge*character.originX,300-edge*character.originY,edge,edge);ctx.restore();
+    ctx.strokeStyle='#77ddc6';ctx.beginPath();ctx.moveTo(0,300.5);ctx.lineTo(480,300.5);ctx.stroke();
+    $('frame').value=frame;$('frame-label').textContent=`${frame+1} / ${sprite.durations.length}`;
+    const contact=sprite.releaseFrame??sprite.attackContactFrame;
+    $('contact').textContent=contact==null?'':`Khung ${contact+1}: ${sprite.releaseFrame!=null?'phóng chữ':'va chạm'} · ${frame<contact?'lấy đà':frame===contact?'tiếp xúc':'thu đòn'}`;
+  }
+  function seek(frame){stop();elapsed=sprite.durations.slice(0,frame).reduce((sum,n)=>sum+n,0)+.01;render();}
+  async function choose(){
+    const token=++request;stop();image=null;elapsed=0;controls.forEach(id=>$(id).disabled=true);
+    character=catalog.characters.find(c=>c.id===$('character').value);sprite=catalog.sprites.find(s=>s.key===character.actions[$('action').value]);
+    $('status').className='';$('status').textContent='Đang tải animation…';
+    $('name').textContent=character.label;$('role').textContent=`${character.name} · ${character.faction==='hero'?'Phe thiện · Có thể chọn':kinds[character.enemyKind]}`;
+    document.querySelectorAll('[data-character]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.character===character.id)));
+    try{const loaded=await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('Không tải được spritesheet.'));img.src=sprite.path;});if(token!==request)return;image=loaded;$('frame').max=sprite.durations.length-1;controls.forEach(id=>$(id).disabled=false);$('meta').textContent=`${sprite.durations.length} khung · ${total()} ms · ${sprite.loop?'Lặp':'Một lần'} · ${sprite.size} × ${sprite.size} px`;$('status').textContent=`${character.label} — ${actionNames[$('action').value]}`;render();}
+    catch(error){if(token!==request)return;$('status').className='error';$('status').textContent=error.message;}
+  }
+  $('character').addEventListener('change',choose);$('action').addEventListener('change',()=>{if(catalog)void choose();});
+  $('play').addEventListener('click',()=>{if(!playing&&!sprite.loop&&elapsed>=total())elapsed=0;playing=!playing;$('play').textContent=playing?'Tạm dừng':'Phát';last=performance.now();});
+  $('previous').addEventListener('click',()=>seek((frameAt(elapsed)+sprite.durations.length-1)%sprite.durations.length));
+  $('next').addEventListener('click',()=>seek((frameAt(elapsed)+1)%sprite.durations.length));
+  $('frame').addEventListener('input',()=>seek(Number($('frame').value)));
+  $('flip').addEventListener('click',()=>{flipped=!flipped;$('flip').setAttribute('aria-pressed',String(flipped));render();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
+  function tick(time){if(playing&&image){elapsed+=Math.min(50,time-last)*Number($('speed').value);if(!sprite.loop&&elapsed>=total())stop();render();}last=time;requestAnimationFrame(tick);}requestAnimationFrame(tick);
+  try{const response=await fetch('/art/characters/catalog.json');if(!response.ok)throw new Error('Chưa tải được danh sách nhân vật.');catalog=await response.json();for(const c of catalog.characters){const option=document.createElement('option');option.value=c.id;option.textContent=`${c.label} · ${c.faction==='hero'?'Anh hùng':kinds[c.enemyKind]}`;$('character').append(option);const button=document.createElement('button');button.dataset.character=c.id;button.setAttribute('aria-pressed','false');const img=document.createElement('img');img.src=c.portrait;img.alt='';img.loading='lazy';const label=document.createElement('span');label.textContent=c.label;button.append(img,label);button.addEventListener('click',()=>{$('character').value=c.id;void choose();});$(c.faction==='hero'?'heroes':'enemies').append(button);}$('character').disabled=false;$('character').value='soldier';$('heroes-heading').textContent=`Anh hùng (${catalog.characters.filter(c=>c.faction==='hero').length})`;$('enemies-heading').textContent=`Quái vật (${catalog.characters.filter(c=>c.faction==='enemy').length})`;await choose();}
+  catch(error){$('status').className='error';$('status').textContent=error.message;}
+</script></body>
+</html>

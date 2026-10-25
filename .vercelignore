@@ -1,0 +1,16 @@
+.git/
+.serena/
+.impeccable/
+node_modules/
+dist/
+assets/
+new_asset/
+Dic/
+Sound/
+zoombie1/
+bunble/
+backend/
+*.log
+*.zip
+*.aseprite
+.env*

@@ -1,0 +1,307 @@
+{
+  "version": 1,
+  "kind": "local-csv",
+  "name": "English - Vietnamese.csv (người dùng cung cấp)",
+  "localFile": "Dic/English - Vietnamese.csv",
+  "sha256": "ed9abf18f5b3c257f8bb08b7e3e2fedf6be126ed3b021843c5316ee082db4353",
+  "encoding": "utf-16le",
+  "license": "Không kèm thông tin giấy phép trong file người dùng cung cấp",
+  "snapshot": "sha256:ed9abf18f5b3",
+  "inputBytes": 25650056,
+  "importerVersion": "csv-3-preferred-senses",
+  "classification": {
+    "method": {
+      "version": "frequency-sense-2",
+      "name": "Estimated game learning levels from subtitle commonness and source-sense complexity",
+      "rankBands": [
+        500,
+        1500,
+        3500,
+        7000,
+        12000,
+        20000,
+        35000,
+        50000
+      ],
+      "absentBaseLevel": 9,
+      "lootMapping": "levels 1–3 => difficulty 1; 4–6 => 2; 7–10 => 3",
+      "basicSenseSelection": "For the small authored starter set, prefer only an already present CSV sense matching both the basic-meaning guard and an allowed explicit source POS; audit every changed selection. Otherwise retain source meaning and apply a non-basic-sense floor where needed.",
+      "limitation": "Heuristic ordering, not CEFR, a validated learning assessment, or a semantic review of every CSV definition. Frequency refers to the English token; explicit source labels and basic-sense guards adjust sense-level difficulty.",
+      "penalties": {
+        "technicalDomain": {
+          "add": 2,
+          "minimum": 4
+        },
+        "subjectDomain": {
+          "add": 1,
+          "minimum": 3
+        },
+        "archaic": {
+          "add": 2,
+          "minimum": 7
+        },
+        "literary": {
+          "add": 1,
+          "minimum": 5
+        },
+        "slang": {
+          "add": 1,
+          "minimum": 4
+        },
+        "abbreviation": {
+          "add": 1,
+          "minimum": 6
+        },
+        "affix": {
+          "add": 1,
+          "minimum": 7
+        },
+        "unspecifiedPOS": {
+          "add": 1,
+          "minimum": 4
+        },
+        "knownStarterNonBasicSense": {
+          "add": 0,
+          "minimum": 4
+        },
+        "length": "10–13 letters adds 1 only when frequency base >=3; 14–18 adds 2. Common top-1500 tokens receive no length penalty."
+      }
+    },
+    "frequencySource": {
+      "version": 1,
+      "name": "FrequencyWords English 2018 top 50,000",
+      "author": "Hermit Dave / FrequencyWords contributors",
+      "repository": "https://github.com/hermitdave/FrequencyWords",
+      "commit": "525f9b560de45753a5ea01069454e72e9aa541c6",
+      "url": "https://raw.githubusercontent.com/hermitdave/FrequencyWords/525f9b560de45753a5ea01069454e72e9aa541c6/content/2018/en/en_50k.txt",
+      "readmeUrl": "https://github.com/hermitdave/FrequencyWords/blob/525f9b560de45753a5ea01069454e72e9aa541c6/README.md#license",
+      "localFile": "assets/dictionary-grading/en_50k-2018.txt",
+      "sha256": "5351ff405b1126ef555791dd4d9798a48e3e9a501a9fc481a9da957752cfb458",
+      "entries": 50000,
+      "license": "CC-BY-SA-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "corpus": "OpenSubtitles2018 tokenized English",
+      "corpusUrl": "https://opus.nlpl.eu/OpenSubtitles2018.php",
+      "verifiedAt": "2026-10-25",
+      "changes": "Source frequency file retained byte-for-byte. English ranks inform separate estimated game learning levels; no frequency text supplies or replaces Vietnamese translations.",
+      "limitations": "Subtitle lemma/token frequency is not a CEFR assessment and does not directly measure familiarity of a particular Vietnamese sense. Missing words are outside this top-50k list, not known to have zero use. The user-provided CSV has its own unchanged provenance and unspecified license."
+    },
+    "stats": {
+      "words": 70696,
+      "frequencyMatches": 20884,
+      "outsideTop50000": 49812,
+      "starterOverrides": 70,
+      "byLevel": {
+        "1": 452,
+        "2": 751,
+        "3": 1213,
+        "4": 1915,
+        "5": 2298,
+        "6": 3333,
+        "7": 4656,
+        "8": 4220,
+        "9": 22312,
+        "10": 29546
+      },
+      "byLevelAndPartOfSpeech": {
+        "1": {
+          "adjective": 92,
+          "adverb": 44,
+          "preposition": 10,
+          "conjunction": 5,
+          "pronoun": 12,
+          "noun": 236,
+          "verb": 49,
+          "interjection": 3,
+          "determiner": 1
+        },
+        "2": {
+          "adverb": 45,
+          "verb": 57,
+          "noun": 465,
+          "adjective": 166,
+          "conjunction": 4,
+          "preposition": 4,
+          "pronoun": 9,
+          "interjection": 1
+        },
+        "3": {
+          "adjective": 244,
+          "noun": 827,
+          "adverb": 44,
+          "verb": 90,
+          "preposition": 2,
+          "interjection": 4,
+          "pronoun": 2
+        },
+        "4": {
+          "noun": 1240,
+          "adverb": 51,
+          "adjective": 411,
+          "verb": 137,
+          "interjection": 12,
+          "preposition": 6,
+          "unspecified": 54,
+          "conjunction": 2,
+          "pronoun": 2
+        },
+        "5": {
+          "noun": 1520,
+          "verb": 154,
+          "adjective": 504,
+          "adverb": 68,
+          "interjection": 16,
+          "unspecified": 34,
+          "pronoun": 1,
+          "conjunction": 1
+        },
+        "6": {
+          "verb": 268,
+          "noun": 2096,
+          "adjective": 767,
+          "adverb": 103,
+          "unspecified": 58,
+          "interjection": 11,
+          "abbreviation": 24,
+          "preposition": 5,
+          "pronoun": 1
+        },
+        "7": {
+          "adverb": 151,
+          "noun": 2844,
+          "verb": 402,
+          "adjective": 1146,
+          "unspecified": 72,
+          "abbreviation": 14,
+          "interjection": 15,
+          "preposition": 5,
+          "numeral": 1,
+          "prefix": 1,
+          "pronoun": 4,
+          "conjunction": 1
+        },
+        "8": {
+          "unspecified": 127,
+          "noun": 2524,
+          "verb": 320,
+          "adjective": 1017,
+          "adverb": 190,
+          "interjection": 6,
+          "preposition": 3,
+          "abbreviation": 26,
+          "prefix": 6,
+          "numeral": 1
+        },
+        "9": {
+          "noun": 12769,
+          "adjective": 5923,
+          "verb": 2573,
+          "adverb": 869,
+          "unspecified": 97,
+          "conjunction": 1,
+          "abbreviation": 29,
+          "preposition": 8,
+          "interjection": 38,
+          "numeral": 1,
+          "pronoun": 2,
+          "suffix": 1,
+          "prefix": 1
+        },
+        "10": {
+          "noun": 15640,
+          "unspecified": 2398,
+          "adjective": 8660,
+          "adverb": 1335,
+          "verb": 1280,
+          "abbreviation": 205,
+          "preposition": 3,
+          "numeral": 1,
+          "interjection": 8,
+          "suffix": 1,
+          "prefix": 9,
+          "conjunction": 3,
+          "pronoun": 3
+        }
+      },
+      "reasonCounts": {
+        "frequency-rank": 20884,
+        "unspecified-source-pos": 2840,
+        "subject-labelled-source-sense": 4697,
+        "outside-frequency-top-50000": 49812,
+        "spelling-length": 26446,
+        "technical-source-sense": 4792,
+        "literary-register": 296,
+        "abbreviation": 298,
+        "archaic-or-rare-register": 380,
+        "authored-basic-sense-guard": 70,
+        "slang-register": 436,
+        "affix": 19
+      }
+    }
+  },
+  "stats": {
+    "sourceRecords": 103864,
+    "physicalLines": 103866,
+    "blankRows": 1,
+    "eligibleRecords": 77828,
+    "duplicateHeadwordRows": 483,
+    "duplicateAnswers": 422,
+    "words": 70696,
+    "longWords": 55245,
+    "missingPosRows": 2840,
+    "shortenedMeanings": 134,
+    "referenceSenses": 8855,
+    "syntaxRepairedRows": 11,
+    "recoveredPronunciationRows": 440,
+    "byPartOfSpeech": {
+      "unspecified": 2840,
+      "noun": 40161,
+      "adverb": 2900,
+      "adjective": 18930,
+      "verb": 5330,
+      "abbreviation": 298,
+      "interjection": 114,
+      "preposition": 46,
+      "numeral": 4,
+      "conjunction": 17,
+      "pronoun": 36,
+      "prefix": 17,
+      "suffix": 2,
+      "determiner": 1
+    },
+    "byDifficulty": {
+      "1": 2416,
+      "2": 7546,
+      "3": 60734
+    },
+    "exclusions": {
+      "length": 352,
+      "reference-only": 6503,
+      "unsupported-characters": 13819,
+      "phrase": 11724,
+      "non-phonetic-annotation": 53,
+      "duplicate-answer": 422,
+      "ambiguous-columns": 55,
+      "malformed-csv": 88,
+      "no-usable-meaning": 109,
+      "meaning-over-120-without-boundary": 43
+    },
+    "byLearningLevel": {
+      "1": 452,
+      "2": 751,
+      "3": 1213,
+      "4": 1915,
+      "5": 2298,
+      "6": 3333,
+      "7": 4656,
+      "8": 4220,
+      "9": 22312,
+      "10": 29546
+    },
+    "preferredSourceSenseSelections": 5
+  },
+  "archive": "assets/dictionary-csv/full-entries.jsonl.gz",
+  "importedAt": "2026-10-25T12:23:50.981Z",
+  "outputBytes": 12382032,
+  "report": "csv-import-report.json"
+}

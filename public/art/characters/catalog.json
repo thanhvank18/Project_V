@@ -1,0 +1,4495 @@
+{
+  "version": 1,
+  "sourcePacks": [
+    "Tiny RPG Character Asset Pack 01 v2.0 -Full 22 Characters",
+    "Tiny RPG Character Asset Pack 02 -Full 20 Characters"
+  ],
+  "characters": [
+    {
+      "id": "archer",
+      "name": "Archer",
+      "label": "Cung thủ",
+      "faction": "hero",
+      "portrait": "/art/characters/archer/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 17,
+      "bodyWidth": 22,
+      "hitOffset": {
+        "x": 1,
+        "y": -9
+      },
+      "actions": {
+        "idle": "archer-idle",
+        "move": "archer-move",
+        "attack": "archer-attack",
+        "hurt": "archer-hurt",
+        "death": "archer-death"
+      }
+    },
+    {
+      "id": "armored-axeman",
+      "name": "Armored Axeman",
+      "label": "Chiến binh rìu",
+      "faction": "hero",
+      "portrait": "/art/characters/armored-axeman/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 19,
+      "bodyWidth": 19,
+      "hitOffset": {
+        "x": 3,
+        "y": -10
+      },
+      "actions": {
+        "idle": "armored-axeman-idle",
+        "move": "armored-axeman-move",
+        "attack": "armored-axeman-attack",
+        "hurt": "armored-axeman-hurt",
+        "death": "armored-axeman-death"
+      }
+    },
+    {
+      "id": "armored-orc",
+      "name": "Armored Orc",
+      "label": "Orc bọc giáp",
+      "faction": "enemy",
+      "enemyKind": "armored",
+      "portrait": "/art/characters/armored-orc/portrait.png",
+      "displayScale": 6.58,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 19,
+      "bodyWidth": 25,
+      "hitOffset": {
+        "x": 3,
+        "y": -10
+      },
+      "actions": {
+        "idle": "armored-orc-idle",
+        "move": "armored-orc-move",
+        "attack": "armored-orc-attack",
+        "hurt": "armored-orc-hurt",
+        "death": "armored-orc-death"
+      }
+    },
+    {
+      "id": "armored-skeleton",
+      "name": "Armored Skeleton",
+      "label": "Bộ xương bọc giáp",
+      "faction": "enemy",
+      "enemyKind": "armored",
+      "portrait": "/art/characters/armored-skeleton/portrait.png",
+      "displayScale": 5.43,
+      "originX": 0.5,
+      "originY": 0.58,
+      "bodyHeight": 23,
+      "bodyWidth": 18,
+      "hitOffset": {
+        "x": 3,
+        "y": -12
+      },
+      "actions": {
+        "idle": "armored-skeleton-idle",
+        "move": "armored-skeleton-move",
+        "attack": "armored-skeleton-attack",
+        "hurt": "armored-skeleton-hurt",
+        "death": "armored-skeleton-death"
+      }
+    },
+    {
+      "id": "bat",
+      "name": "Bat",
+      "label": "Dơi",
+      "faction": "enemy",
+      "enemyKind": "runner",
+      "portrait": "/art/characters/bat/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.6,
+      "bodyHeight": 11,
+      "bodyWidth": 22,
+      "hitOffset": {
+        "x": -1,
+        "y": -17
+      },
+      "actions": {
+        "idle": "bat-idle",
+        "move": "bat-move",
+        "attack": "bat-attack",
+        "hurt": "bat-hurt",
+        "death": "bat-death"
+      }
+    },
+    {
+      "id": "black-knight-a",
+      "name": "Black Knight_A",
+      "label": "Kỵ sĩ đen A",
+      "faction": "enemy",
+      "enemyKind": "armored",
+      "portrait": "/art/characters/black-knight-a/portrait.png",
+      "displayScale": 5,
+      "originX": 0.5,
+      "originY": 0.58,
+      "bodyHeight": 30,
+      "bodyWidth": 16,
+      "hitOffset": {
+        "x": 2,
+        "y": -13
+      },
+      "actions": {
+        "idle": "black-knight-a-idle",
+        "move": "black-knight-a-move",
+        "attack": "black-knight-a-attack",
+        "hurt": "black-knight-a-hurt",
+        "death": "black-knight-a-death"
+      }
+    },
+    {
+      "id": "black-knight-b",
+      "name": "Black Knight_B",
+      "label": "Kỵ sĩ đen B",
+      "faction": "enemy",
+      "enemyKind": "armored",
+      "portrait": "/art/characters/black-knight-b/portrait.png",
+      "displayScale": 6.25,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 20,
+      "bodyWidth": 19,
+      "hitOffset": {
+        "x": 0,
+        "y": -11
+      },
+      "actions": {
+        "idle": "black-knight-b-idle",
+        "move": "black-knight-b-move",
+        "attack": "black-knight-b-attack",
+        "hurt": "black-knight-b-hurt",
+        "death": "black-knight-b-death"
+      }
+    },
+    {
+      "id": "black-knight-c",
+      "name": "Black Knight_C",
+      "label": "Kỵ sĩ đen C",
+      "faction": "enemy",
+      "enemyKind": "armored",
+      "portrait": "/art/characters/black-knight-c/portrait.png",
+      "displayScale": 5,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 27,
+      "bodyWidth": 39,
+      "hitOffset": {
+        "x": 3,
+        "y": -13
+      },
+      "actions": {
+        "idle": "black-knight-c-idle",
+        "move": "black-knight-c-move",
+        "attack": "black-knight-c-attack",
+        "hurt": "black-knight-c-hurt",
+        "death": "black-knight-c-death"
+      }
+    },
+    {
+      "id": "blood-monster-a",
+      "name": "Blood Monster_A",
+      "label": "Quái vật máu A",
+      "faction": "enemy",
+      "enemyKind": "tank",
+      "portrait": "/art/characters/blood-monster-a/portrait.png",
+      "displayScale": 12,
+      "originX": 0.5,
+      "originY": 0.58,
+      "bodyHeight": 15,
+      "bodyWidth": 20,
+      "hitOffset": {
+        "x": 2,
+        "y": -9
+      },
+      "actions": {
+        "idle": "blood-monster-a-idle",
+        "move": "blood-monster-a-move",
+        "attack": "blood-monster-a-attack",
+        "hurt": "blood-monster-a-hurt",
+        "death": "blood-monster-a-death"
+      }
+    },
+    {
+      "id": "blood-monster-b",
+      "name": "Blood Monster_B",
+      "label": "Quái vật máu B",
+      "faction": "enemy",
+      "enemyKind": "tank",
+      "portrait": "/art/characters/blood-monster-b/portrait.png",
+      "displayScale": 12,
+      "originX": 0.5,
+      "originY": 0.6,
+      "bodyHeight": 14,
+      "bodyWidth": 14,
+      "hitOffset": {
+        "x": 3,
+        "y": -14
+      },
+      "actions": {
+        "idle": "blood-monster-b-idle",
+        "move": "blood-monster-b-move",
+        "attack": "blood-monster-b-attack",
+        "hurt": "blood-monster-b-hurt",
+        "death": "blood-monster-b-death"
+      }
+    },
+    {
+      "id": "demon-a",
+      "name": "Demon_A",
+      "label": "Ác quỷ A",
+      "faction": "enemy",
+      "enemyKind": "runner",
+      "portrait": "/art/characters/demon-a/portrait.png",
+      "displayScale": 5.5,
+      "originX": 0.5,
+      "originY": 0.59,
+      "bodyHeight": 20,
+      "bodyWidth": 20,
+      "hitOffset": {
+        "x": 3,
+        "y": -11
+      },
+      "actions": {
+        "idle": "demon-a-idle",
+        "move": "demon-a-move",
+        "attack": "demon-a-attack",
+        "hurt": "demon-a-hurt",
+        "death": "demon-a-death"
+      }
+    },
+    {
+      "id": "demon-b",
+      "name": "Demon_B",
+      "label": "Ác quỷ B",
+      "faction": "enemy",
+      "enemyKind": "armored",
+      "portrait": "/art/characters/demon-b/portrait.png",
+      "displayScale": 6.94,
+      "originX": 0.5,
+      "originY": 0.58,
+      "bodyHeight": 18,
+      "bodyWidth": 18,
+      "hitOffset": {
+        "x": 2,
+        "y": -10
+      },
+      "actions": {
+        "idle": "demon-b-idle",
+        "move": "demon-b-move",
+        "attack": "demon-b-attack",
+        "hurt": "demon-b-hurt",
+        "death": "demon-b-death"
+      }
+    },
+    {
+      "id": "demon-c",
+      "name": "Demon_C",
+      "label": "Ác quỷ C",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/demon-c/portrait.png",
+      "displayScale": 5.24,
+      "originX": 0.5,
+      "originY": 0.56,
+      "bodyHeight": 21,
+      "bodyWidth": 31,
+      "hitOffset": {
+        "x": 3,
+        "y": -13
+      },
+      "actions": {
+        "idle": "demon-c-idle",
+        "move": "demon-c-move",
+        "attack": "demon-c-attack",
+        "hurt": "demon-c-hurt",
+        "death": "demon-c-death"
+      }
+    },
+    {
+      "id": "demon-d",
+      "name": "Demon_D",
+      "label": "Ác quỷ D",
+      "faction": "enemy",
+      "enemyKind": "tank",
+      "portrait": "/art/characters/demon-d/portrait.png",
+      "displayScale": 8.75,
+      "originX": 0.5,
+      "originY": 0.58,
+      "bodyHeight": 24,
+      "bodyWidth": 25,
+      "hitOffset": {
+        "x": 3,
+        "y": -13
+      },
+      "actions": {
+        "idle": "demon-d-idle",
+        "move": "demon-d-move",
+        "attack": "demon-d-attack",
+        "hurt": "demon-d-hurt",
+        "death": "demon-d-death"
+      }
+    },
+    {
+      "id": "demon-e",
+      "name": "Demon_E",
+      "label": "Ác quỷ E",
+      "faction": "enemy",
+      "enemyKind": "runner",
+      "portrait": "/art/characters/demon-e/portrait.png",
+      "displayScale": 5,
+      "originX": 0.5,
+      "originY": 0.59,
+      "bodyHeight": 23,
+      "bodyWidth": 46,
+      "hitOffset": {
+        "x": 3,
+        "y": -12
+      },
+      "actions": {
+        "idle": "demon-e-idle",
+        "move": "demon-e-move",
+        "attack": "demon-e-attack",
+        "hurt": "demon-e-hurt",
+        "death": "demon-e-death"
+      }
+    },
+    {
+      "id": "demoness-a",
+      "name": "Demoness_A",
+      "label": "Nữ quỷ A",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/demoness-a/portrait.png",
+      "displayScale": 4.8,
+      "originX": 0.5,
+      "originY": 0.58,
+      "bodyHeight": 26,
+      "bodyWidth": 34,
+      "hitOffset": {
+        "x": 3,
+        "y": -13
+      },
+      "actions": {
+        "idle": "demoness-a-idle",
+        "move": "demoness-a-move",
+        "attack": "demoness-a-attack",
+        "hurt": "demoness-a-hurt",
+        "death": "demoness-a-death"
+      }
+    },
+    {
+      "id": "demoness-b",
+      "name": "Demoness_B",
+      "label": "Nữ quỷ B",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/demoness-b/portrait.png",
+      "displayScale": 4.8,
+      "originX": 0.5,
+      "originY": 0.59,
+      "bodyHeight": 23,
+      "bodyWidth": 24,
+      "hitOffset": {
+        "x": -1,
+        "y": -13
+      },
+      "actions": {
+        "idle": "demoness-b-idle",
+        "move": "demoness-b-move",
+        "attack": "demoness-b-attack",
+        "hurt": "demoness-b-hurt",
+        "death": "demoness-b-death"
+      }
+    },
+    {
+      "id": "elite-orc",
+      "name": "Elite Orc",
+      "label": "Orc tinh nhuệ",
+      "faction": "enemy",
+      "enemyKind": "armored",
+      "portrait": "/art/characters/elite-orc/portrait.png",
+      "displayScale": 5.43,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 23,
+      "bodyWidth": 28,
+      "hitOffset": {
+        "x": 3,
+        "y": -12
+      },
+      "actions": {
+        "idle": "elite-orc-idle",
+        "move": "elite-orc-move",
+        "attack": "elite-orc-attack",
+        "hurt": "elite-orc-hurt",
+        "death": "elite-orc-death"
+      }
+    },
+    {
+      "id": "eyeball-monster",
+      "name": "Eyeball Monster",
+      "label": "Quái vật nhãn cầu",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/eyeball-monster/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.58,
+      "bodyHeight": 13,
+      "bodyWidth": 15,
+      "hitOffset": {
+        "x": 0,
+        "y": -7
+      },
+      "actions": {
+        "idle": "eyeball-monster-idle",
+        "move": "eyeball-monster-move",
+        "attack": "eyeball-monster-attack",
+        "hurt": "eyeball-monster-hurt",
+        "death": "eyeball-monster-death"
+      }
+    },
+    {
+      "id": "flame-golem",
+      "name": "Flame Golem",
+      "label": "Khổng lồ lửa",
+      "faction": "enemy",
+      "enemyKind": "tank",
+      "portrait": "/art/characters/flame-golem/portrait.png",
+      "displayScale": 8,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 28,
+      "bodyWidth": 32,
+      "hitOffset": {
+        "x": 2,
+        "y": -13
+      },
+      "actions": {
+        "idle": "flame-golem-idle",
+        "move": "flame-golem-move",
+        "attack": "flame-golem-attack",
+        "hurt": "flame-golem-hurt",
+        "death": "flame-golem-death"
+      }
+    },
+    {
+      "id": "ghostfire",
+      "name": "Ghostfire",
+      "label": "Lửa ma",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/ghostfire/portrait.png",
+      "displayScale": 5,
+      "originX": 0.5,
+      "originY": 0.6,
+      "bodyHeight": 22,
+      "bodyWidth": 13,
+      "hitOffset": {
+        "x": 2,
+        "y": -20
+      },
+      "actions": {
+        "idle": "ghostfire-idle",
+        "move": "ghostfire-move",
+        "attack": "ghostfire-attack",
+        "hurt": "ghostfire-hurt",
+        "death": "ghostfire-death"
+      }
+    },
+    {
+      "id": "greatsword-skeleton",
+      "name": "Greatsword Skeleton",
+      "label": "Bộ xương đại kiếm",
+      "faction": "enemy",
+      "enemyKind": "armored",
+      "portrait": "/art/characters/greatsword-skeleton/portrait.png",
+      "displayScale": 6.58,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 19,
+      "bodyWidth": 31,
+      "hitOffset": {
+        "x": -3,
+        "y": -10
+      },
+      "actions": {
+        "idle": "greatsword-skeleton-idle",
+        "move": "greatsword-skeleton-move",
+        "attack": "greatsword-skeleton-attack",
+        "hurt": "greatsword-skeleton-hurt",
+        "death": "greatsword-skeleton-death"
+      }
+    },
+    {
+      "id": "hellbat",
+      "name": "Hellbat",
+      "label": "Dơi địa ngục",
+      "faction": "enemy",
+      "enemyKind": "runner",
+      "portrait": "/art/characters/hellbat/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.6,
+      "bodyHeight": 11,
+      "bodyWidth": 22,
+      "hitOffset": {
+        "x": -1,
+        "y": -17
+      },
+      "actions": {
+        "idle": "hellbat-idle",
+        "move": "hellbat-move",
+        "attack": "hellbat-attack",
+        "hurt": "hellbat-hurt",
+        "death": "hellbat-death"
+      }
+    },
+    {
+      "id": "hellhound",
+      "name": "Hellhound",
+      "label": "Chó địa ngục",
+      "faction": "enemy",
+      "enemyKind": "runner",
+      "portrait": "/art/characters/hellhound/portrait.png",
+      "displayScale": 6.88,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 16,
+      "bodyWidth": 29,
+      "hitOffset": {
+        "x": 0,
+        "y": -9
+      },
+      "actions": {
+        "idle": "hellhound-idle",
+        "move": "hellhound-move",
+        "attack": "hellhound-attack",
+        "hurt": "hellhound-hurt",
+        "death": "hellhound-death"
+      }
+    },
+    {
+      "id": "knight",
+      "name": "Knight",
+      "label": "Hiệp sĩ",
+      "faction": "hero",
+      "portrait": "/art/characters/knight/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 18,
+      "bodyWidth": 26,
+      "hitOffset": {
+        "x": 3,
+        "y": -10
+      },
+      "actions": {
+        "idle": "knight-idle",
+        "move": "knight-move",
+        "attack": "knight-attack",
+        "hurt": "knight-hurt",
+        "death": "knight-death"
+      }
+    },
+    {
+      "id": "knight-templar",
+      "name": "Knight Templar",
+      "label": "Hiệp sĩ dòng Đền",
+      "faction": "hero",
+      "portrait": "/art/characters/knight-templar/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 17,
+      "bodyWidth": 27,
+      "hitOffset": {
+        "x": 3,
+        "y": -9
+      },
+      "actions": {
+        "idle": "knight-templar-idle",
+        "move": "knight-templar-move",
+        "attack": "knight-templar-attack",
+        "hurt": "knight-templar-hurt",
+        "death": "knight-templar-death"
+      }
+    },
+    {
+      "id": "lancer",
+      "name": "Lancer",
+      "label": "Thương thủ",
+      "faction": "hero",
+      "portrait": "/art/characters/lancer/portrait.png",
+      "displayScale": 5.5,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 37,
+      "bodyWidth": 35,
+      "hitOffset": {
+        "x": 0,
+        "y": -13
+      },
+      "actions": {
+        "idle": "lancer-idle",
+        "move": "lancer-move",
+        "attack": "lancer-attack",
+        "hurt": "lancer-hurt",
+        "death": "lancer-death"
+      }
+    },
+    {
+      "id": "lava-slime",
+      "name": "Lava Slime",
+      "label": "Quái nhầy dung nham",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/lava-slime/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 14,
+      "bodyWidth": 23,
+      "hitOffset": {
+        "x": -2,
+        "y": -8
+      },
+      "actions": {
+        "idle": "lava-slime-idle",
+        "move": "lava-slime-move",
+        "attack": "lava-slime-attack",
+        "hurt": "lava-slime-hurt",
+        "death": "lava-slime-death"
+      }
+    },
+    {
+      "id": "minotaur",
+      "name": "Minotaur",
+      "label": "Quái vật đầu bò",
+      "faction": "enemy",
+      "enemyKind": "tank",
+      "portrait": "/art/characters/minotaur/portrait.png",
+      "displayScale": 10.5,
+      "originX": 0.5,
+      "originY": 0.59,
+      "bodyHeight": 20,
+      "bodyWidth": 30,
+      "hitOffset": {
+        "x": 3,
+        "y": -12
+      },
+      "actions": {
+        "idle": "minotaur-idle",
+        "move": "minotaur-move",
+        "attack": "minotaur-attack",
+        "hurt": "minotaur-hurt",
+        "death": "minotaur-death"
+      }
+    },
+    {
+      "id": "necromancer",
+      "name": "Necromancer",
+      "label": "Pháp sư gọi hồn",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/necromancer/portrait.png",
+      "displayScale": 4.8,
+      "originX": 0.5,
+      "originY": 0.61,
+      "bodyHeight": 30,
+      "bodyWidth": 30,
+      "hitOffset": {
+        "x": -3,
+        "y": -14
+      },
+      "actions": {
+        "idle": "necromancer-idle",
+        "move": "necromancer-move",
+        "attack": "necromancer-attack",
+        "hurt": "necromancer-hurt",
+        "death": "necromancer-death"
+      }
+    },
+    {
+      "id": "orc",
+      "name": "Orc",
+      "label": "Orc",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/orc/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 15,
+      "bodyWidth": 22,
+      "hitOffset": {
+        "x": 3,
+        "y": -8
+      },
+      "actions": {
+        "idle": "orc-idle",
+        "move": "orc-move",
+        "attack": "orc-attack",
+        "hurt": "orc-hurt",
+        "death": "orc-death"
+      }
+    },
+    {
+      "id": "orc-rider",
+      "name": "Orc rider",
+      "label": "Kỵ binh Orc",
+      "faction": "enemy",
+      "enemyKind": "runner",
+      "portrait": "/art/characters/orc-rider/portrait.png",
+      "displayScale": 5,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 28,
+      "bodyWidth": 32,
+      "hitOffset": {
+        "x": 3,
+        "y": -13
+      },
+      "actions": {
+        "idle": "orc-rider-idle",
+        "move": "orc-rider-move",
+        "attack": "orc-rider-attack",
+        "hurt": "orc-rider-hurt",
+        "death": "orc-rider-death"
+      }
+    },
+    {
+      "id": "priest",
+      "name": "Priest",
+      "label": "Tu sĩ",
+      "faction": "hero",
+      "portrait": "/art/characters/priest/portrait.png",
+      "displayScale": 6.9,
+      "originX": 0.5,
+      "originY": 0.58,
+      "bodyHeight": 20,
+      "bodyWidth": 16,
+      "hitOffset": {
+        "x": 2,
+        "y": -11
+      },
+      "actions": {
+        "idle": "priest-idle",
+        "move": "priest-move",
+        "attack": "priest-attack",
+        "hurt": "priest-hurt",
+        "death": "priest-death"
+      }
+    },
+    {
+      "id": "skeleton",
+      "name": "Skeleton",
+      "label": "Bộ xương",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/skeleton/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 15,
+      "bodyWidth": 26,
+      "hitOffset": {
+        "x": 3,
+        "y": -8
+      },
+      "actions": {
+        "idle": "skeleton-idle",
+        "move": "skeleton-move",
+        "attack": "skeleton-attack",
+        "hurt": "skeleton-hurt",
+        "death": "skeleton-death"
+      }
+    },
+    {
+      "id": "skeleton-archer",
+      "name": "Skeleton Archer",
+      "label": "Cung thủ xương",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/skeleton-archer/portrait.png",
+      "displayScale": 5.24,
+      "originX": 0.5,
+      "originY": 0.59,
+      "bodyHeight": 21,
+      "bodyWidth": 21,
+      "hitOffset": {
+        "x": 2,
+        "y": -11
+      },
+      "actions": {
+        "idle": "skeleton-archer-idle",
+        "move": "skeleton-archer-move",
+        "attack": "skeleton-archer-attack",
+        "hurt": "skeleton-archer-hurt",
+        "death": "skeleton-archer-death"
+      }
+    },
+    {
+      "id": "slime",
+      "name": "Slime",
+      "label": "Quái nhầy",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/slime/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 11,
+      "bodyWidth": 23,
+      "hitOffset": {
+        "x": -2,
+        "y": -7
+      },
+      "actions": {
+        "idle": "slime-idle",
+        "move": "slime-move",
+        "attack": "slime-attack",
+        "hurt": "slime-hurt",
+        "death": "slime-death"
+      }
+    },
+    {
+      "id": "soldier",
+      "name": "Soldier",
+      "label": "Người lính",
+      "faction": "hero",
+      "portrait": "/art/characters/soldier/portrait.png",
+      "displayScale": 6.57,
+      "originX": 0.5,
+      "originY": 0.6,
+      "bodyHeight": 21,
+      "bodyWidth": 17,
+      "hitOffset": {
+        "x": -1,
+        "y": -11
+      },
+      "actions": {
+        "idle": "soldier-idle",
+        "move": "soldier-move",
+        "attack": "soldier-attack",
+        "hurt": "soldier-hurt",
+        "death": "soldier-death"
+      }
+    },
+    {
+      "id": "swordsman",
+      "name": "Swordsman",
+      "label": "Kiếm sĩ",
+      "faction": "hero",
+      "portrait": "/art/characters/swordsman/portrait.png",
+      "displayScale": 6.57,
+      "originX": 0.5,
+      "originY": 0.6,
+      "bodyHeight": 21,
+      "bodyWidth": 24,
+      "hitOffset": {
+        "x": 3,
+        "y": -11
+      },
+      "actions": {
+        "idle": "swordsman-idle",
+        "move": "swordsman-move",
+        "attack": "swordsman-attack",
+        "hurt": "swordsman-hurt",
+        "death": "swordsman-death"
+      }
+    },
+    {
+      "id": "warlock",
+      "name": "Warlock",
+      "label": "Thuật sĩ hắc ám",
+      "faction": "enemy",
+      "enemyKind": "normal",
+      "portrait": "/art/characters/warlock/portrait.png",
+      "displayScale": 4.8,
+      "originX": 0.5,
+      "originY": 0.58,
+      "bodyHeight": 24,
+      "bodyWidth": 21,
+      "hitOffset": {
+        "x": 0,
+        "y": -13
+      },
+      "actions": {
+        "idle": "warlock-idle",
+        "move": "warlock-move",
+        "attack": "warlock-attack",
+        "hurt": "warlock-hurt",
+        "death": "warlock-death"
+      }
+    },
+    {
+      "id": "werebear",
+      "name": "Werebear",
+      "label": "Người gấu",
+      "faction": "enemy",
+      "enemyKind": "tank",
+      "portrait": "/art/characters/werebear/portrait.png",
+      "displayScale": 12,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 17,
+      "bodyWidth": 19,
+      "hitOffset": {
+        "x": 1,
+        "y": -9
+      },
+      "actions": {
+        "idle": "werebear-idle",
+        "move": "werebear-move",
+        "attack": "werebear-attack",
+        "hurt": "werebear-hurt",
+        "death": "werebear-death"
+      }
+    },
+    {
+      "id": "werewolf",
+      "name": "Werewolf",
+      "label": "Người sói",
+      "faction": "enemy",
+      "enemyKind": "runner",
+      "portrait": "/art/characters/werewolf/portrait.png",
+      "displayScale": 6.88,
+      "originX": 0.5,
+      "originY": 0.57,
+      "bodyHeight": 16,
+      "bodyWidth": 27,
+      "hitOffset": {
+        "x": 3,
+        "y": -9
+      },
+      "actions": {
+        "idle": "werewolf-idle",
+        "move": "werewolf-move",
+        "attack": "werewolf-attack",
+        "hurt": "werewolf-hurt",
+        "death": "werewolf-death"
+      }
+    },
+    {
+      "id": "wizard",
+      "name": "Wizard",
+      "label": "Pháp sư",
+      "faction": "hero",
+      "portrait": "/art/characters/wizard/portrait.png",
+      "displayScale": 7,
+      "originX": 0.5,
+      "originY": 0.58,
+      "bodyHeight": 19,
+      "bodyWidth": 17,
+      "hitOffset": {
+        "x": 1,
+        "y": -10
+      },
+      "actions": {
+        "idle": "wizard-idle",
+        "move": "wizard-move",
+        "attack": "wizard-attack",
+        "hurt": "wizard-hurt",
+        "death": "wizard-death"
+      }
+    }
+  ],
+  "sprites": [
+    {
+      "key": "archer-idle",
+      "path": "/art/characters/archer/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "archer-move",
+      "path": "/art/characters/archer/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "archer-attack",
+      "path": "/art/characters/archer/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 6,
+      "releaseFrame": 6,
+      "projectileOffset": {
+        "x": 9,
+        "y": -8
+      }
+    },
+    {
+      "key": "archer-hurt",
+      "path": "/art/characters/archer/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "archer-death",
+      "path": "/art/characters/archer/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "armored-axeman-idle",
+      "path": "/art/characters/armored-axeman/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "armored-axeman-move",
+      "path": "/art/characters/armored-axeman/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "armored-axeman-attack",
+      "path": "/art/characters/armored-axeman/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 4,
+      "releaseFrame": 4,
+      "projectileOffset": {
+        "x": 14,
+        "y": -8
+      }
+    },
+    {
+      "key": "armored-axeman-hurt",
+      "path": "/art/characters/armored-axeman/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "armored-axeman-death",
+      "path": "/art/characters/armored-axeman/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "armored-orc-idle",
+      "path": "/art/characters/armored-orc/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "armored-orc-move",
+      "path": "/art/characters/armored-orc/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "armored-orc-attack",
+      "path": "/art/characters/armored-orc/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 4,
+      "releaseFrame": 4
+    },
+    {
+      "key": "armored-orc-hurt",
+      "path": "/art/characters/armored-orc/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "armored-orc-death",
+      "path": "/art/characters/armored-orc/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "armored-skeleton-idle",
+      "path": "/art/characters/armored-skeleton/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "armored-skeleton-move",
+      "path": "/art/characters/armored-skeleton/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "armored-skeleton-attack",
+      "path": "/art/characters/armored-skeleton/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58,
+      "attackContactFrame": 4,
+      "releaseFrame": 4
+    },
+    {
+      "key": "armored-skeleton-hurt",
+      "path": "/art/characters/armored-skeleton/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "armored-skeleton-death",
+      "path": "/art/characters/armored-skeleton/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "bat-idle",
+      "path": "/art/characters/bat/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "bat-move",
+      "path": "/art/characters/bat/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "bat-attack",
+      "path": "/art/characters/bat/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "bat-hurt",
+      "path": "/art/characters/bat/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "bat-death",
+      "path": "/art/characters/bat/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "black-knight-a-idle",
+      "path": "/art/characters/black-knight-a/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "black-knight-a-move",
+      "path": "/art/characters/black-knight-a/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "black-knight-a-attack",
+      "path": "/art/characters/black-knight-a/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58,
+      "attackContactFrame": 5,
+      "releaseFrame": 5
+    },
+    {
+      "key": "black-knight-a-hurt",
+      "path": "/art/characters/black-knight-a/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "black-knight-a-death",
+      "path": "/art/characters/black-knight-a/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "black-knight-b-idle",
+      "path": "/art/characters/black-knight-b/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "black-knight-b-move",
+      "path": "/art/characters/black-knight-b/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "black-knight-b-attack",
+      "path": "/art/characters/black-knight-b/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 4,
+      "releaseFrame": 4
+    },
+    {
+      "key": "black-knight-b-hurt",
+      "path": "/art/characters/black-knight-b/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "black-knight-b-death",
+      "path": "/art/characters/black-knight-b/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "black-knight-c-idle",
+      "path": "/art/characters/black-knight-c/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "black-knight-c-move",
+      "path": "/art/characters/black-knight-c/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "black-knight-c-attack",
+      "path": "/art/characters/black-knight-c/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 5,
+      "releaseFrame": 5
+    },
+    {
+      "key": "black-knight-c-hurt",
+      "path": "/art/characters/black-knight-c/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "black-knight-c-death",
+      "path": "/art/characters/black-knight-c/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "blood-monster-a-idle",
+      "path": "/art/characters/blood-monster-a/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "blood-monster-a-move",
+      "path": "/art/characters/blood-monster-a/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "blood-monster-a-attack",
+      "path": "/art/characters/blood-monster-a/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58,
+      "attackContactFrame": 4,
+      "releaseFrame": 4
+    },
+    {
+      "key": "blood-monster-a-hurt",
+      "path": "/art/characters/blood-monster-a/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "blood-monster-a-death",
+      "path": "/art/characters/blood-monster-a/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "blood-monster-b-idle",
+      "path": "/art/characters/blood-monster-b/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "blood-monster-b-move",
+      "path": "/art/characters/blood-monster-b/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "blood-monster-b-attack",
+      "path": "/art/characters/blood-monster-b/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "blood-monster-b-hurt",
+      "path": "/art/characters/blood-monster-b/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "blood-monster-b-death",
+      "path": "/art/characters/blood-monster-b/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "demon-a-idle",
+      "path": "/art/characters/demon-a/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demon-a-move",
+      "path": "/art/characters/demon-a/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demon-a-attack",
+      "path": "/art/characters/demon-a/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "demon-a-hurt",
+      "path": "/art/characters/demon-a/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demon-a-death",
+      "path": "/art/characters/demon-a/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demon-b-idle",
+      "path": "/art/characters/demon-b/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demon-b-move",
+      "path": "/art/characters/demon-b/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demon-b-attack",
+      "path": "/art/characters/demon-b/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58,
+      "attackContactFrame": 6,
+      "releaseFrame": 6
+    },
+    {
+      "key": "demon-b-hurt",
+      "path": "/art/characters/demon-b/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demon-b-death",
+      "path": "/art/characters/demon-b/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demon-c-idle",
+      "path": "/art/characters/demon-c/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.56
+    },
+    {
+      "key": "demon-c-move",
+      "path": "/art/characters/demon-c/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.56
+    },
+    {
+      "key": "demon-c-attack",
+      "path": "/art/characters/demon-c/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.56,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "demon-c-hurt",
+      "path": "/art/characters/demon-c/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.56
+    },
+    {
+      "key": "demon-c-death",
+      "path": "/art/characters/demon-c/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.56
+    },
+    {
+      "key": "demon-d-idle",
+      "path": "/art/characters/demon-d/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demon-d-move",
+      "path": "/art/characters/demon-d/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demon-d-attack",
+      "path": "/art/characters/demon-d/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58,
+      "attackContactFrame": 7,
+      "releaseFrame": 7
+    },
+    {
+      "key": "demon-d-hurt",
+      "path": "/art/characters/demon-d/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demon-d-death",
+      "path": "/art/characters/demon-d/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demon-e-idle",
+      "path": "/art/characters/demon-e/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demon-e-move",
+      "path": "/art/characters/demon-e/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demon-e-attack",
+      "path": "/art/characters/demon-e/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59,
+      "attackContactFrame": 5,
+      "releaseFrame": 5
+    },
+    {
+      "key": "demon-e-hurt",
+      "path": "/art/characters/demon-e/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demon-e-death",
+      "path": "/art/characters/demon-e/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demoness-a-idle",
+      "path": "/art/characters/demoness-a/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demoness-a-move",
+      "path": "/art/characters/demoness-a/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demoness-a-attack",
+      "path": "/art/characters/demoness-a/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58,
+      "attackContactFrame": 5,
+      "releaseFrame": 5
+    },
+    {
+      "key": "demoness-a-hurt",
+      "path": "/art/characters/demoness-a/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demoness-a-death",
+      "path": "/art/characters/demoness-a/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "demoness-b-idle",
+      "path": "/art/characters/demoness-b/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demoness-b-move",
+      "path": "/art/characters/demoness-b/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demoness-b-attack",
+      "path": "/art/characters/demoness-b/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59,
+      "attackContactFrame": 5,
+      "releaseFrame": 5
+    },
+    {
+      "key": "demoness-b-hurt",
+      "path": "/art/characters/demoness-b/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "demoness-b-death",
+      "path": "/art/characters/demoness-b/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "elite-orc-idle",
+      "path": "/art/characters/elite-orc/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "elite-orc-move",
+      "path": "/art/characters/elite-orc/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "elite-orc-attack",
+      "path": "/art/characters/elite-orc/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "elite-orc-hurt",
+      "path": "/art/characters/elite-orc/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "elite-orc-death",
+      "path": "/art/characters/elite-orc/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "eyeball-monster-idle",
+      "path": "/art/characters/eyeball-monster/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "eyeball-monster-move",
+      "path": "/art/characters/eyeball-monster/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "eyeball-monster-attack",
+      "path": "/art/characters/eyeball-monster/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58,
+      "attackContactFrame": 6,
+      "releaseFrame": 6
+    },
+    {
+      "key": "eyeball-monster-hurt",
+      "path": "/art/characters/eyeball-monster/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "eyeball-monster-death",
+      "path": "/art/characters/eyeball-monster/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "flame-golem-idle",
+      "path": "/art/characters/flame-golem/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "flame-golem-move",
+      "path": "/art/characters/flame-golem/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "flame-golem-attack",
+      "path": "/art/characters/flame-golem/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 6,
+      "releaseFrame": 6
+    },
+    {
+      "key": "flame-golem-hurt",
+      "path": "/art/characters/flame-golem/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "flame-golem-death",
+      "path": "/art/characters/flame-golem/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "ghostfire-idle",
+      "path": "/art/characters/ghostfire/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "ghostfire-move",
+      "path": "/art/characters/ghostfire/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "ghostfire-attack",
+      "path": "/art/characters/ghostfire/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "ghostfire-hurt",
+      "path": "/art/characters/ghostfire/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "ghostfire-death",
+      "path": "/art/characters/ghostfire/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "greatsword-skeleton-idle",
+      "path": "/art/characters/greatsword-skeleton/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "greatsword-skeleton-move",
+      "path": "/art/characters/greatsword-skeleton/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "greatsword-skeleton-attack",
+      "path": "/art/characters/greatsword-skeleton/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "greatsword-skeleton-hurt",
+      "path": "/art/characters/greatsword-skeleton/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "greatsword-skeleton-death",
+      "path": "/art/characters/greatsword-skeleton/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "hellbat-idle",
+      "path": "/art/characters/hellbat/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "hellbat-move",
+      "path": "/art/characters/hellbat/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "hellbat-attack",
+      "path": "/art/characters/hellbat/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "hellbat-hurt",
+      "path": "/art/characters/hellbat/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "hellbat-death",
+      "path": "/art/characters/hellbat/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "hellhound-idle",
+      "path": "/art/characters/hellhound/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "hellhound-move",
+      "path": "/art/characters/hellhound/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "hellhound-attack",
+      "path": "/art/characters/hellhound/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 5,
+      "releaseFrame": 5
+    },
+    {
+      "key": "hellhound-hurt",
+      "path": "/art/characters/hellhound/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "hellhound-death",
+      "path": "/art/characters/hellhound/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "knight-idle",
+      "path": "/art/characters/knight/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "knight-move",
+      "path": "/art/characters/knight/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "knight-attack",
+      "path": "/art/characters/knight/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 3,
+      "releaseFrame": 3,
+      "projectileOffset": {
+        "x": 14,
+        "y": -9
+      }
+    },
+    {
+      "key": "knight-hurt",
+      "path": "/art/characters/knight/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "knight-death",
+      "path": "/art/characters/knight/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "knight-templar-idle",
+      "path": "/art/characters/knight-templar/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "knight-templar-move",
+      "path": "/art/characters/knight-templar/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "knight-templar-attack",
+      "path": "/art/characters/knight-templar/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 4,
+      "releaseFrame": 4,
+      "projectileOffset": {
+        "x": 18,
+        "y": -9
+      }
+    },
+    {
+      "key": "knight-templar-hurt",
+      "path": "/art/characters/knight-templar/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "knight-templar-death",
+      "path": "/art/characters/knight-templar/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "lancer-idle",
+      "path": "/art/characters/lancer/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "lancer-move",
+      "path": "/art/characters/lancer/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "lancer-attack",
+      "path": "/art/characters/lancer/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 3,
+      "releaseFrame": 3,
+      "projectileOffset": {
+        "x": 20,
+        "y": -9
+      }
+    },
+    {
+      "key": "lancer-hurt",
+      "path": "/art/characters/lancer/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "lancer-death",
+      "path": "/art/characters/lancer/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "lava-slime-idle",
+      "path": "/art/characters/lava-slime/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "lava-slime-move",
+      "path": "/art/characters/lava-slime/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "lava-slime-attack",
+      "path": "/art/characters/lava-slime/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "lava-slime-hurt",
+      "path": "/art/characters/lava-slime/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "lava-slime-death",
+      "path": "/art/characters/lava-slime/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "minotaur-idle",
+      "path": "/art/characters/minotaur/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "minotaur-move",
+      "path": "/art/characters/minotaur/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "minotaur-attack",
+      "path": "/art/characters/minotaur/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59,
+      "attackContactFrame": 5,
+      "releaseFrame": 5
+    },
+    {
+      "key": "minotaur-hurt",
+      "path": "/art/characters/minotaur/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "minotaur-death",
+      "path": "/art/characters/minotaur/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "necromancer-idle",
+      "path": "/art/characters/necromancer/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.61
+    },
+    {
+      "key": "necromancer-move",
+      "path": "/art/characters/necromancer/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.61
+    },
+    {
+      "key": "necromancer-attack",
+      "path": "/art/characters/necromancer/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.61,
+      "attackContactFrame": 5,
+      "releaseFrame": 5
+    },
+    {
+      "key": "necromancer-hurt",
+      "path": "/art/characters/necromancer/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.61
+    },
+    {
+      "key": "necromancer-death",
+      "path": "/art/characters/necromancer/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.61
+    },
+    {
+      "key": "orc-idle",
+      "path": "/art/characters/orc/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "orc-move",
+      "path": "/art/characters/orc/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "orc-attack",
+      "path": "/art/characters/orc/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "orc-hurt",
+      "path": "/art/characters/orc/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "orc-death",
+      "path": "/art/characters/orc/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "orc-rider-idle",
+      "path": "/art/characters/orc-rider/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "orc-rider-move",
+      "path": "/art/characters/orc-rider/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "orc-rider-attack",
+      "path": "/art/characters/orc-rider/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 4,
+      "releaseFrame": 4
+    },
+    {
+      "key": "orc-rider-hurt",
+      "path": "/art/characters/orc-rider/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "orc-rider-death",
+      "path": "/art/characters/orc-rider/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "priest-idle",
+      "path": "/art/characters/priest/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "priest-move",
+      "path": "/art/characters/priest/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "priest-attack",
+      "path": "/art/characters/priest/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58,
+      "attackContactFrame": 4,
+      "releaseFrame": 4,
+      "projectileOffset": {
+        "x": 13,
+        "y": -12
+      }
+    },
+    {
+      "key": "priest-hurt",
+      "path": "/art/characters/priest/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "priest-death",
+      "path": "/art/characters/priest/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "skeleton-idle",
+      "path": "/art/characters/skeleton/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "skeleton-move",
+      "path": "/art/characters/skeleton/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "skeleton-attack",
+      "path": "/art/characters/skeleton/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "skeleton-hurt",
+      "path": "/art/characters/skeleton/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "skeleton-death",
+      "path": "/art/characters/skeleton/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "skeleton-archer-idle",
+      "path": "/art/characters/skeleton-archer/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "skeleton-archer-move",
+      "path": "/art/characters/skeleton-archer/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "skeleton-archer-attack",
+      "path": "/art/characters/skeleton-archer/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59,
+      "attackContactFrame": 6,
+      "releaseFrame": 6
+    },
+    {
+      "key": "skeleton-archer-hurt",
+      "path": "/art/characters/skeleton-archer/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "skeleton-archer-death",
+      "path": "/art/characters/skeleton-archer/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.59
+    },
+    {
+      "key": "slime-idle",
+      "path": "/art/characters/slime/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "slime-move",
+      "path": "/art/characters/slime/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "slime-attack",
+      "path": "/art/characters/slime/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 3,
+      "releaseFrame": 3
+    },
+    {
+      "key": "slime-hurt",
+      "path": "/art/characters/slime/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "slime-death",
+      "path": "/art/characters/slime/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "soldier-idle",
+      "path": "/art/characters/soldier/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "soldier-move",
+      "path": "/art/characters/soldier/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "soldier-attack",
+      "path": "/art/characters/soldier/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6,
+      "attackContactFrame": 7,
+      "releaseFrame": 7,
+      "projectileOffset": {
+        "x": 8,
+        "y": -10
+      }
+    },
+    {
+      "key": "soldier-hurt",
+      "path": "/art/characters/soldier/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "soldier-death",
+      "path": "/art/characters/soldier/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "swordsman-idle",
+      "path": "/art/characters/swordsman/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "swordsman-move",
+      "path": "/art/characters/swordsman/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "swordsman-attack",
+      "path": "/art/characters/swordsman/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6,
+      "attackContactFrame": 3,
+      "releaseFrame": 3,
+      "projectileOffset": {
+        "x": 14,
+        "y": -9
+      }
+    },
+    {
+      "key": "swordsman-hurt",
+      "path": "/art/characters/swordsman/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "swordsman-death",
+      "path": "/art/characters/swordsman/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.6
+    },
+    {
+      "key": "warlock-idle",
+      "path": "/art/characters/warlock/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "warlock-move",
+      "path": "/art/characters/warlock/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "warlock-attack",
+      "path": "/art/characters/warlock/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58,
+      "attackContactFrame": 4,
+      "releaseFrame": 4
+    },
+    {
+      "key": "warlock-hurt",
+      "path": "/art/characters/warlock/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "warlock-death",
+      "path": "/art/characters/warlock/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "werebear-idle",
+      "path": "/art/characters/werebear/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "werebear-move",
+      "path": "/art/characters/werebear/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "werebear-attack",
+      "path": "/art/characters/werebear/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 5,
+      "releaseFrame": 5
+    },
+    {
+      "key": "werebear-hurt",
+      "path": "/art/characters/werebear/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "werebear-death",
+      "path": "/art/characters/werebear/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "werewolf-idle",
+      "path": "/art/characters/werewolf/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "werewolf-move",
+      "path": "/art/characters/werewolf/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "werewolf-attack",
+      "path": "/art/characters/werewolf/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57,
+      "attackContactFrame": 5,
+      "releaseFrame": 5
+    },
+    {
+      "key": "werewolf-hurt",
+      "path": "/art/characters/werewolf/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "werewolf-death",
+      "path": "/art/characters/werewolf/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.57
+    },
+    {
+      "key": "wizard-idle",
+      "path": "/art/characters/wizard/idle.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "wizard-move",
+      "path": "/art/characters/wizard/move.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": true,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "wizard-attack",
+      "path": "/art/characters/wizard/attack.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58,
+      "attackContactFrame": 2,
+      "releaseFrame": 2,
+      "projectileOffset": {
+        "x": 12,
+        "y": -12
+      }
+    },
+    {
+      "key": "wizard-hurt",
+      "path": "/art/characters/wizard/hurt.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    },
+    {
+      "key": "wizard-death",
+      "path": "/art/characters/wizard/death.png",
+      "size": 100,
+      "durations": [
+        100,
+        100,
+        100,
+        600
+      ],
+      "loop": false,
+      "originX": 0.5,
+      "originY": 0.58
+    }
+  ]
+}

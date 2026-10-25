@@ -1,0 +1,57 @@
+{
+  "music": [
+    {
+      "id": "pixel-song-03",
+      "title": "Pixel Song 3",
+      "url": "/audio/music/pixel-song-03.mp3",
+      "duration": 50.808163
+    },
+    {
+      "id": "pixel-song-07",
+      "title": "Pixel Song 7",
+      "url": "/audio/music/pixel-song-07.mp3",
+      "duration": 34.925714
+    },
+    {
+      "id": "pixel-song-12",
+      "title": "Pixel Song 12",
+      "url": "/audio/music/pixel-song-12.mp3",
+      "duration": 31.764898
+    },
+    {
+      "id": "pixel-song-16",
+      "title": "Pixel Song 16",
+      "url": "/audio/music/pixel-song-16.mp3",
+      "duration": 50.729796
+    },
+    {
+      "id": "pixel-song-21",
+      "title": "Pixel Song 21",
+      "url": "/audio/music/pixel-song-21.mp3",
+      "duration": 60.316735
+    },
+    {
+      "id": "pixel-song-27",
+      "title": "Pixel Song 27",
+      "url": "/audio/music/pixel-song-27.mp3",
+      "duration": 31.764898
+    }
+  ],
+  "sfx": {
+    "kill": {
+      "url": "/audio/sfx/pixel-death.mp3",
+      "volume": 0.38,
+      "duration": 1.985306
+    },
+    "boss-slam": {
+      "url": "/audio/sfx/pixel-explosion.mp3",
+      "volume": 0.55,
+      "duration": 0.470204
+    },
+    "game-over": {
+      "url": "/audio/sfx/pixel-game-over.mp3",
+      "volume": 0.6,
+      "duration": 2.481633
+    }
+  }
+}

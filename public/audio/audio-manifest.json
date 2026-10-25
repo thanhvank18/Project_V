@@ -1,0 +1,471 @@
+{
+  "version": 1,
+  "sourceDirectory": "Sound",
+  "sourceCount": 12,
+  "inspection": "MPEG frame/header inspection; not an auditory review. No decoding, normalization, or recompression.",
+  "durationCaveat": "Frame-sample duration includes possible encoder delay/padding.",
+  "music": [
+    {
+      "id": "pixel-song-03",
+      "title": "Pixel Song 3",
+      "url": "/audio/music/pixel-song-03.mp3",
+      "duration": 50.808163
+    },
+    {
+      "id": "pixel-song-07",
+      "title": "Pixel Song 7",
+      "url": "/audio/music/pixel-song-07.mp3",
+      "duration": 34.925714
+    },
+    {
+      "id": "pixel-song-12",
+      "title": "Pixel Song 12",
+      "url": "/audio/music/pixel-song-12.mp3",
+      "duration": 31.764898
+    },
+    {
+      "id": "pixel-song-16",
+      "title": "Pixel Song 16",
+      "url": "/audio/music/pixel-song-16.mp3",
+      "duration": 50.729796
+    },
+    {
+      "id": "pixel-song-21",
+      "title": "Pixel Song 21",
+      "url": "/audio/music/pixel-song-21.mp3",
+      "duration": 60.316735
+    },
+    {
+      "id": "pixel-song-27",
+      "title": "Pixel Song 27",
+      "url": "/audio/music/pixel-song-27.mp3",
+      "duration": 31.764898
+    }
+  ],
+  "sfx": {
+    "kill": {
+      "url": "/audio/sfx/pixel-death.mp3",
+      "volume": 0.38,
+      "duration": 1.985306
+    },
+    "boss-slam": {
+      "url": "/audio/sfx/pixel-explosion.mp3",
+      "volume": 0.55,
+      "duration": 0.470204
+    },
+    "game-over": {
+      "url": "/audio/sfx/pixel-game-over.mp3",
+      "volume": 0.6,
+      "duration": 2.481633
+    }
+  },
+  "sources": [
+    {
+      "localFile": "Sound/alphix-game-over-417465.mp3",
+      "bytes": 98638,
+      "codec": "MPEG Layer III",
+      "duration": 3.082449,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        2
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 118,
+      "sha256": "536179a285cecdf54a53b96515c89c9b1e7906c6ced91b37359ee362e5f90e6a",
+      "mpegSha256": "536179a285cecdf54a53b96515c89c9b1e7906c6ced91b37359ee362e5f90e6a",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "unselected",
+      "rationale": "Unverified generic effect or alternate game-over; source retained."
+    },
+    {
+      "localFile": "Sound/freesound_community-pixel-death-66829.mp3",
+      "bytes": 63529,
+      "codec": "MPEG Layer III",
+      "duration": 1.985306,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 76,
+      "sha256": "8f3b7b5f432b41334ca8c4ae56d2b8e03082477157cd253c895d1fd79eddeb55",
+      "mpegSha256": "8f3b7b5f432b41334ca8c4ae56d2b8e03082477157cd253c895d1fd79eddeb55",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "sfx",
+      "cue": "kill",
+      "url": "/audio/sfx/pixel-death.mp3",
+      "rationale": "Tentative mapping from supplied filename; no auditory review."
+    },
+    {
+      "localFile": "Sound/freesound_community-pixel-song-12-72532.mp3",
+      "bytes": 1016476,
+      "codec": "MPEG Layer III",
+      "duration": 31.764898,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 1216,
+      "sha256": "89bd02a2238dfaa8de2cf6ac7d85dbee4ca670c6de8ae5b833824a4dc39c96d1",
+      "mpegSha256": "89bd02a2238dfaa8de2cf6ac7d85dbee4ca670c6de8ae5b833824a4dc39c96d1",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "music",
+      "id": "pixel-song-12",
+      "url": "/audio/music/pixel-song-12.mp3"
+    },
+    {
+      "localFile": "Sound/freesound_community-pixel-song-16-31697.mp3",
+      "bytes": 1623353,
+      "codec": "MPEG Layer III",
+      "duration": 50.729796,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 1942,
+      "sha256": "54d30e1042979937702d3f55b40c28281ed3236be1b678e2a72103b1f6f50a5c",
+      "mpegSha256": "54d30e1042979937702d3f55b40c28281ed3236be1b678e2a72103b1f6f50a5c",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "music",
+      "id": "pixel-song-16",
+      "url": "/audio/music/pixel-song-16.mp3"
+    },
+    {
+      "localFile": "Sound/freesound_community-pixel-song-21-72593.mp3",
+      "bytes": 1930135,
+      "codec": "MPEG Layer III",
+      "duration": 60.316735,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 2309,
+      "sha256": "b1639b497d5dddcea725940e88d1c5de9534569acad4746bd224e8018fcda0a1",
+      "mpegSha256": "b1639b497d5dddcea725940e88d1c5de9534569acad4746bd224e8018fcda0a1",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "music",
+      "id": "pixel-song-21",
+      "url": "/audio/music/pixel-song-21.mp3"
+    },
+    {
+      "localFile": "Sound/freesound_community-pixel-song-27-72476.mp3",
+      "bytes": 1016476,
+      "codec": "MPEG Layer III",
+      "duration": 31.764898,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 1216,
+      "sha256": "00914150efc68aa14591024d30f499c1cfe305d53efeef45a3aaac7b87550c5b",
+      "mpegSha256": "00914150efc68aa14591024d30f499c1cfe305d53efeef45a3aaac7b87550c5b",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "music",
+      "id": "pixel-song-27",
+      "url": "/audio/music/pixel-song-27.mp3"
+    },
+    {
+      "localFile": "Sound/freesound_community-pixel-song-3-72687.mp3",
+      "bytes": 1625861,
+      "codec": "MPEG Layer III",
+      "duration": 50.808163,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 1945,
+      "sha256": "b9ccd97c43154dd217ed06f4337a9c97ebc48052a8c7023cf7c98f85e5d4df78",
+      "mpegSha256": "b9ccd97c43154dd217ed06f4337a9c97ebc48052a8c7023cf7c98f85e5d4df78",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "music",
+      "id": "pixel-song-03",
+      "url": "/audio/music/pixel-song-03.mp3"
+    },
+    {
+      "localFile": "Sound/freesound_community-pixel-song-7-72685.mp3",
+      "bytes": 1117622,
+      "codec": "MPEG Layer III",
+      "duration": 34.925714,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 1337,
+      "sha256": "fcff521dffccb76223dfd2b91c3651859a19277ba7d303d995dee0d5d6875191",
+      "mpegSha256": "fcff521dffccb76223dfd2b91c3651859a19277ba7d303d995dee0d5d6875191",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "music",
+      "id": "pixel-song-07",
+      "url": "/audio/music/pixel-song-07.mp3"
+    },
+    {
+      "localFile": "Sound/freesound_community-pixel-sound-effect-2-103306.mp3",
+      "bytes": 407092,
+      "codec": "MPEG Layer III",
+      "duration": 12.721633,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 487,
+      "sha256": "b46def141cf88e8acffb6d934ef4b9c5ecaef083ec17141791fa261789704bb7",
+      "mpegSha256": "b46def141cf88e8acffb6d934ef4b9c5ecaef083ec17141791fa261789704bb7",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "unselected",
+      "rationale": "Unverified generic effect or alternate game-over; source retained."
+    },
+    {
+      "localFile": "Sound/freesound_community-pixel-sound-effect-4-82881.mp3",
+      "bytes": 101982,
+      "codec": "MPEG Layer III",
+      "duration": 3.186939,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 122,
+      "sha256": "47b32dc55ba3c3074b059c8c47105f5c40402db06f418f16ecd060c98493cde8",
+      "mpegSha256": "47b32dc55ba3c3074b059c8c47105f5c40402db06f418f16ecd060c98493cde8",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "unselected",
+      "rationale": "Unverified generic effect or alternate game-over; source retained."
+    },
+    {
+      "localFile": "Sound/lumora_studios-pixel-explosion-319166.mp3",
+      "bytes": 15046,
+      "codec": "MPEG Layer III",
+      "duration": 0.470204,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 18,
+      "sha256": "aaff5f9bcc8ec6df2ada5d2c37b595876e66e2653b298e0f98f93d8e8bd53dc3",
+      "mpegSha256": "aaff5f9bcc8ec6df2ada5d2c37b595876e66e2653b298e0f98f93d8e8bd53dc3",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "sfx",
+      "cue": "boss-slam",
+      "url": "/audio/sfx/pixel-explosion.mp3",
+      "rationale": "Tentative mapping from supplied filename; no auditory review."
+    },
+    {
+      "localFile": "Sound/lumora_studios-pixel-game-over-319170.mp3",
+      "bytes": 79412,
+      "codec": "MPEG Layer III",
+      "duration": 2.481633,
+      "durationMethod": "sum-of-complete-mpeg-frame-samples",
+      "sampleRates": [
+        44100
+      ],
+      "channels": [
+        1
+      ],
+      "bitrates": [
+        256000
+      ],
+      "frameCount": 95,
+      "sha256": "0ff88620909b6ced8665766bc4d2cd09f6d3f08882dbcfafe1a037ef7ce08bbc",
+      "mpegSha256": "0ff88620909b6ced8665766bc4d2cd09f6d3f08882dbcfafe1a037ef7ce08bbc",
+      "id3v1": false,
+      "id3v2": false,
+      "leadingBytes": 0,
+      "trailingBytes": 0,
+      "metadata": {
+        "title": null,
+        "artist": null,
+        "sourceUrl": null,
+        "tags": "no-ID3-tags"
+      },
+      "license": "Không kèm thông tin giấy phép trong thư mục người dùng cung cấp",
+      "status": "sfx",
+      "cue": "game-over",
+      "url": "/audio/sfx/pixel-game-over.mp3",
+      "rationale": "Tentative mapping from supplied filename; no auditory review."
+    }
+  ],
+  "byteDuplicateGroups": [],
+  "mpegDuplicateGroups": [],
+  "omittedCues": [
+    "letter",
+    "jam",
+    "impact",
+    "player-hurt",
+    "pickup",
+    "skill",
+    "victory"
+  ]
+}
