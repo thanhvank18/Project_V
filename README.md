@@ -1,4 +1,4 @@
-# Zombie Vocabulary Survival
+# Project_V — Zombie Vocabulary Survival
 
 React + TypeScript + Phaser 4.2.1. Giao diện tiếng Việt, học từ tiếng Anh bằng đạn chữ trong thế giới Cute Zombie Arcade. Frontend triển khai trên Vercel; API từ điển đọc trên Railway.
 
