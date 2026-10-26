@@ -157,7 +157,7 @@ Phaser + React + TypeScript là phương án được đề xuất sau so sánh 
 - Tách input, simulation và presentation; dùng thời gian theo delta/timer gameplay, không đếm frame.
 - Pool đạn/particle khi cần; dọn listener, timer và asset khi restart/unmount.
 
-Three.js không nằm trong stack 2D đề xuất. Backend và hosting chưa chọn. Không thêm tài khoản hoặc gửi dữ liệu học ra ngoài nếu chưa được yêu cầu.
+Three.js không nằm trong stack 2D này. Frontend triển khai Vercel; backend Railway giữ API từ điển và phòng co-op theo yêu cầu ngày 26/10/2026. Không có tài khoản; lịch sử từ đã gặp được chia sẻ cho máy chủ phòng để tránh lặp từ cho cả đội.
 
 ## Tiêu chí nghiệm thu prototype sau này
 
@@ -174,6 +174,20 @@ Three.js không nằm trong stack 2D đề xuất. Backend và hosting chưa ch�
 - Dữ liệu học đúng theo từ, khôi phục sau reload; không có số liệu học giả.
 - Đáp án chính/alias không lặp trong hoặc giữa các trận; bỏ dở và reload vẫn giữ nhật ký đã gặp, bao gồm dữ liệu `progress.words` cũ.
 - Tank giữ đủ 9 từ dài mới, Armored giữ 2; từ dự trữ chưa xuất hiện được trả lại pool khi không dùng, không ghi vào nhật ký.
-- Hết từ mới chỉ hoàn thành sau khi hết địch/projectile; menu báo số còn lại, Tập đấu Boss cần 9 từ dài mới, không tự tái chế từ.
+- Hết từ mới chỉ hoàn thành sau khi hết địch/projectile; Tập đấu Boss cần 9 từ dài mới, không tự tái chế từ.
+
+## Chiến thuật và co-op — 26/10/2026
+
+Chín anh hùng giữ vũ khí/kỹ năng riêng và có lợi thế vị trí (giữ xa, đứng gần, xuyên hàng, bảo hộ tại chỗ hoặc hỗ trợ hồi phục). Phần mô tả chiến thuật nằm dưới chọn hero. Kỹ năng không tự giải từ chưa gõ.
+
+Boss có ba giai đoạn theo số lớp giáp còn lại. Từ giai đoạn hai, luân phiên đập đất và lao theo đoạn đường đã khóa lúc lấy đà. Bóng/vùng báo trước cùng mốc simulation cho phép né thật; Boss miễn khựng. Quái bổ sung vai trò khiên, bắn xa và triệu hồi, xuất hiện theo đội hình với giới hạn số lượng. Quái triệu hồi tối đa hai lượt; không tạo bầy vô hạn vượt giới hạn.
+
+Thùng nổ xuất hiện sau sáu từ hoàn thành, dùng một từ mới từ cùng kho, chọn bằng Enter ở gần rồi gõ. Vụ nổ đẩy lùi/làm khựng và phá bớt giáp, không tự ghi hoàn thành từ quái khác. Enter cũng đóng/mở cổng gần khi input trống; cổng chặn quái thường, Boss có thể phá. Điểm hồi phục cần đứng trong vùng hai giây, hồi 15 HP/lần, ba lượt dùng.
+
+Chuỗi từ chính xác tích Nhịp chiến đấu tối đa năm bậc, tăng điểm và tốc độ di chuyển có giới hạn. Gõ sai giảm một bậc; ngừng hoàn thành từ đủ lâu làm nhịp giảm dần. Hiệu ứng chữ và âm thanh tăng vừa phải theo nhịp; không làm khó đọc.
+
+Tổng kết chọn ba từ thật sự đã gặp, ưu tiên có ví dụ khớp nghĩa/từ loại và từ cần xem lại. Ví dụ lấy đúng nhánh nghĩa trong CSV hoặc câu ngắn biên soạn có guard nghĩa/từ loại. Từ không có ví dụ phù hợp vẫn hiện nghĩa, không tạo câu máy móc. Sổ từ có nghe phát âm tiếng Anh qua giọng trình duyệt, yêu thích và bộ lọc; yêu thích/ôn lại không đưa từ vào lại pool chơi.
+
+Mỗi lần vào có phòng riêng với PIN sáu số; nhập PIN để vào sảnh người khác. Tối đa bốn người, không chọn cùng hero. Chủ phòng bắt đầu và có thể mở lại sảnh sau trận. Cùng một thế giới/quái/kho từ/điểm đội; HP, vị trí, input, vật phẩm và kỹ năng theo từng người. Từ được giữ độc quyền ngay khi chọn, nhả khi hoàn thành lớp từ/đổi mục tiêu/mất kết nối/rời phòng. Người hết HP chờ đồng đội; thua khi cả đội hết HP. Lịch sử tránh lặp của đội là hợp lịch sử thành viên; từ mới xuất hiện được lưu cho tất cả.
 - Reduced Motion giữ nguyên luật và thời gian gameplay.
 - Đo hiệu năng trên thiết bị/browser mục tiêu sau khi xác định cấu hình; không cam kết FPS khi chưa đo.

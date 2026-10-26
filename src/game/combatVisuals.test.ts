@@ -42,6 +42,13 @@ describe('combat visual timing', () => {
     expect(glyphScaleForDistance(900)).toBe(glyphScaleForDistance(450));
   });
 
+  it('adds bounded momentum growth without losing distance growth or the letter size limit', () => {
+    expect(glyphScaleForDistance(100, 3)).toBeGreaterThan(glyphScaleForDistance(100, 0));
+    expect(glyphScaleForDistance(100, 5)).toBeLessThan(glyphScaleForDistance(400, 5));
+    expect(glyphScaleForDistance(900, 100) * 22).toBeLessThanOrEqual(46.2);
+    expect(glyphScaleForDistance(200, -10)).toBe(glyphScaleForDistance(200));
+  });
+
   it('stops dizziness at thirty HP and keeps reduced-motion feedback completely static', () => {
     expect(lowHealthVisuals(30, 1000, true).severity).toBe(0);
     expect(lowHealthVisuals(100, 1000, true).outerAlpha).toBe(0);

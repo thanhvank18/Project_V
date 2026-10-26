@@ -139,6 +139,10 @@ Từ điển được nạp và kiểm tra trước cảnh chơi; không thêm l
 
 ## Checklist kiểm tra prototype
 
+Bổ sung 26/10/2026: Boss dùng footprint khóa từ lúc lấy đà cho đập đất/lao tới; quái bắn xa báo vị trí đạn sẽ trúng. Đội hình có dấu vai trò riêng, phân biệt khiên bảo hộ với mục tiêu đang thuộc đồng đội. Thùng/cổng/vùng hồi phục gắn tọa độ thế giới, có trạng thái dùng hết/mở/đóng và tiến độ đứng hồi phục.
+
+Đồng đội co-op dùng cùng sprite pack, có tên/màu/HP riêng. Sự kiện gắn playerId/sourceX để chữ bay từ đúng người; đòn của đồng đội không làm hero cục bộ quay hướng hoặc nhận hiệu ứng bị thương. Người hết HP giữ pose gục. Nhịp chiến đấu tăng nhẹ kích thước/vệt glyph và cao độ âm thanh; vẫn giữ giới hạn đọc chữ và Reduced Motion.
+
 - Một phím đúng tạo đúng một phát có hiệu lực, glyph không lật.
 - Đạn chạm tạo feedback đúng mục tiêu và thời điểm.
 - Backspace/gõ lại/giữ phím không tạo hiệu lực lặp.

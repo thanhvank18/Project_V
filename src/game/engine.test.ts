@@ -12,6 +12,11 @@ function playing(mode: 'survival' | 'boss' = 'survival') {
 }
 function target(engine: GameEngine): Enemy { return engine.enemies.find((enemy) => enemy.id === engine.targetId)!; }
 function solve(engine: GameEngine, enemy = target(engine)) {
+  if (!enemy) {
+    const object = engine.worldObjects.find(entry => -entry.id === engine.targetId && entry.challenge)!;
+    for (const letter of object.challenge!.word.answer.slice(engine.snapshot().input.length)) engine.typeKey(letter);
+    return;
+  }
   engine.targetId = enemy.id;
   const prefix = engine.snapshot().input;
   const answer = answersFor(enemy.challenge.word).find((word) => word.startsWith(prefix))!;
@@ -326,20 +331,20 @@ describe('attack presentation events', () => {
         engine.step(10);
         const windup = engine.drainEvents().find((event) => event.type === 'attack');
         expect(windup).toMatchObject({ enemyId: boss.id, enemyKind: 'tank', bossPhase: phase,
-          x: boss.x, targetX: PLAYER_X, radius: BOSS_SLAM_RANGE, duration });
+          x: boss.x, targetX: boss.x, attackKind: 'slam', radius: BOSS_SLAM_RANGE, duration });
         engine.step(duration - 1);
         expect(engine.drainEvents().some((event) => event.type === 'attack-impact')).toBe(false);
         engine.step(1);
         const events = engine.drainEvents();
         expect(events.filter((event) => event.type === 'attack-impact')).toEqual([expect.objectContaining({
-          enemyId: boss.id, enemyKind: 'tank', x: boss.x, targetX: PLAYER_X,
+          enemyId: boss.id, enemyKind: 'tank', x: boss.x, targetX: boss.x,
           radius: BOSS_SLAM_RANGE, bossPhase: phase, hit: inside, damage: inside ? damage : 0,
         })]);
         expect(events.filter((event) => event.type === 'player-hurt')).toHaveLength(inside ? 1 : 0);
       }
     });
 
-  it('captures the player position at impact after movement rather than reusing the windup target', () => {
+  it('keeps the slam center locked while testing the actual player position at impact', () => {
     const engine = playing('boss');
     const boss = target(engine);
     boss.x = 1000;
@@ -350,9 +355,9 @@ describe('attack presentation events', () => {
     engine.setMovement(1);
     engine.step(1500);
     const impact = engine.drainEvents().find((event) => event.type === 'attack-impact')!;
-    expect(windup.targetX).toBe(640);
-    expect(impact.targetX).toBe(engine.playerX);
-    expect(impact.targetX).toBe(820);
+    expect(windup.targetX).toBe(1000);
+    expect(impact.targetX).toBe(1000);
+    expect(engine.playerX).toBe(820);
     expect(impact.hit).toBe(true);
   });
 
@@ -981,7 +986,7 @@ describe('strict nonrepeating vocabulary', () => {
     for (let iteration = 0; iteration < WORDS.length * 5 && engine.snapshot().phase === 'playing'; iteration++) {
       for (const enemy of engine.enemies) { enemy.speed = 0; enemy.nextAttackAt = 1e9; }
       const selected = engine.enemies.find((enemy) => enemy.id === engine.targetId && enemy.state === 'alive');
-      if (selected) { solve(engine, selected); engine.step(400); }
+      if (selected || engine.snapshot().target?.kind === 'barrel') { solve(engine, selected); engine.step(400); }
       else engine.step(1200);
     }
     expect(engine.snapshot().phase).toBe('over');

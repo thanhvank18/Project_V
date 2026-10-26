@@ -6,13 +6,16 @@ import { actionElapsedMs, attackAnticipationFrame, attackContactFrame, attackRec
 import { getEnemyCharacter, getHeroCharacter, type CharacterDefinition } from './characterCatalog';
 import { layoutEnemyLabels, type EnemyLabelRequest } from './enemyLabelLayout';
 import { HeroAttackEffects } from './HeroAttackEffects';
+import { TacticalWorldEffects, type TelegraphVisual, type RoleVisual } from './TacticalWorldEffects';
+import { AlliedHeroes, partyColor, partyName } from './AlliedHeroes';
 import { getHeroSkill } from './heroSkills';
 import { GameAudio, type AudioState } from './GameAudio';
 import { audioCueForEvent } from './combatAudio';
 import { BOSS_SLAM_RANGE, canTargetEnemy, WORLD_WIDTH } from './engine';
 import { createWorldBackdrop } from './worldBackdrop';
+import { CHARGE_RADIUS, RANGED_RADIUS } from './tacticalRules';
 import { PART_OF_SPEECH_LABELS } from './vocabulary';
-import type { Enemy, EnginePort, GameEvent, ItemKind, Snapshot } from './types';
+import type { Enemy, EnginePort, GameEvent, ItemKind, Snapshot, WorldObject } from './types';
 
 export interface RenderOptions { reducedMotion: boolean; muted: boolean; heroId?: string; musicVolume?: number; sfxVolume?: number }
 interface Action { key: string; start: number; until: number; offset: number; priority: boolean; hold: boolean }
@@ -39,6 +42,7 @@ interface EnemyView {
   flashUntil: number;
   staggerStart: number;
   staggerDuration: number;
+  staggerDirection: number;
   freezeFrame: { key: string; frame: number } | null;
   attackImpactStart: number;
   recoveryLastClock: number;
@@ -53,6 +57,9 @@ interface Letter {
   ghosts: Phaser.GameObjects.Text[];
   shotId?: number;
   enemyId: number;
+  worldObjectId?: number;
+  momentum: number;
+  playerId?: string;
   start: number;
   impactAt: number;
   x0: number;
@@ -68,6 +75,7 @@ interface Pickup {
   icon: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text; item: ItemKind;
   x: number; y: number; start: number;
 }
+type WorldView = Pick<EnemyView, 'label' | 'plate' | 'descriptor' | 'prompt' | 'meaning' | 'hint' | 'lastText'> & { caption: Phaser.GameObjects.Text };
 
 const PLAYER_X = 640;
 const GROUND = 490;
@@ -95,6 +103,9 @@ export class SurvivalScene extends Phaser.Scene {
   private heroHurtDirection = 1;
   private attackEffects!: AttackEffects;
   private heroAttackEffects = new HeroAttackEffects();
+  private tacticalEffects?: TacticalWorldEffects;
+  private worldViews = new Map<number, WorldView>();
+  private allies?: AlliedHeroes;
   private skillSequence = 0;
   private cameraX = 0;
   private lastPlayerX = 640;
@@ -102,6 +113,7 @@ export class SurvivalScene extends Phaser.Scene {
   private heroFacing = 1;
   private heroGaitPhase = 0;
   private heroWalking = false;
+  private heroLastMoveClock = -1000;
   private heroShotFacing = 1;
   private heroKickStart = -1000;
   private enemies = new Map<number, EnemyView>();
@@ -166,6 +178,8 @@ export class SurvivalScene extends Phaser.Scene {
     this.shields = this.inWorld(this.add.graphics().setDepth(13));
     this.hazards = this.inWorld(this.add.graphics().setDepth(1));
     this.attackEffects = new AttackEffects(this, this.world);
+    this.tacticalEffects = new TacticalWorldEffects(this, this.world);
+    this.allies = new AlliedHeroes(this, this.world);
     this.dizziness = this.add.graphics().setDepth(13);
     this.offscreenTarget = this.add.text(0, 382, '', { fontFamily: FONT, fontSize: '12px', fontStyle: 'bold', color: '#f6d79d', stroke: '#172b36', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(21).setVisible(false);
     this.inWorld(this.add.rectangle(PLAYER_X, GROUND + 26, 2, 10, 0xf6c372, 0.8).setDepth(2));
@@ -209,14 +223,16 @@ export class SurvivalScene extends Phaser.Scene {
     if (this.engine.clock < this.lastEngineClock || (snapshot.phase === 'playing' && before.phase === 'menu') || (snapshot.phase === 'menu' && this.lastPhase !== 'menu')) this.resetVisuals();
     if (snapshot.phase === 'menu') this.syncHeroSelection();
     this.lastEngineClock = this.engine.clock;
-    if (snapshot.phase === 'playing') {
+    if (snapshot.phase === 'playing' || snapshot.party && snapshot.phase === 'paused') {
       const desiredCamera = Phaser.Math.Clamp(this.engine.playerX - 640, 0, WORLD_WIDTH - 1280);
       this.cameraX += (desiredCamera - this.cameraX) * (1 - Math.exp(-dt / 160));
     }
-    if (snapshot.phase !== 'paused' && snapshot.phase !== 'countdown') this.visualClock += dt;
+    if (snapshot.party || snapshot.phase !== 'paused' && snapshot.phase !== 'countdown') this.visualClock += dt;
+    this.allies?.render(snapshot.party?.players ?? [], snapshot.party?.selfId ?? '', this.engine.clock);
     for (const event of this.engine.drainEvents()) this.handleEvent(event);
     this.renderHero(snapshot);
     this.renderEnemies(snapshot);
+    this.renderTactics(snapshot);
     this.renderLetters();
     this.renderEffects();
     this.attackEffects.render(this.visualClock, this.options.reducedMotion);
@@ -244,10 +260,15 @@ export class SurvivalScene extends Phaser.Scene {
     for (const pickup of this.pickups) { pickup.icon.destroy(); pickup.label.destroy(); }
     this.letters = []; this.effects = []; this.floats = []; this.heroAction = null;
     this.impacts = []; this.pickups = []; this.heroFacing = this.heroShotFacing = 1; this.heroGaitPhase = 0; this.heroWalking = false; this.heroKickStart = -1000; this.shakeStart = -1000;
+    this.heroLastMoveClock = -1000;
     this.slamShakeStart = this.heroHurtStart = -1000;
     this.slamShakeStrength = 0;
     this.attackEffects.reset();
     this.heroAttackEffects.reset();
+    this.tacticalEffects?.reset();
+    this.allies?.reset();
+    for (const view of this.worldViews.values()) { view.label.destroy(true); view.caption.destroy(); }
+    this.worldViews.clear();
     this.skillSequence = 0;
     this.cameraX = Phaser.Math.Clamp(this.engine.playerX - 640, 0, WORLD_WIDTH - 1280);
     this.lastPlayerX = this.engine.playerX;
@@ -293,10 +314,19 @@ export class SurvivalScene extends Phaser.Scene {
   }
 
   private renderHero(snapshot: Snapshot): void {
+    if (snapshot.party && this.heroCharacter.id !== snapshot.hero.id) {
+      this.heroCharacter = getHeroCharacter(snapshot.hero.id);
+      this.heroAction = null;
+      const shadow = characterShadow(this.heroCharacter);
+      this.heroShadow.setDisplaySize(shadow.width, shadow.height);
+    }
+    if (snapshot.party && snapshot.hp <= 0 && this.heroAction?.key !== this.heroCharacter.actions.death) this.heroAction = this.action(this.heroCharacter.actions.death, undefined, 0, true, true);
     const travelled = Math.abs(this.engine.playerX - this.lastPlayerX);
-    const moving = snapshot.phase === 'playing' && travelled > 0.1;
-    if (snapshot.phase !== 'paused' && snapshot.phase !== 'countdown') this.heroWalking = moving;
-    if (moving) {
+    const positionChanged = travelled > .1;
+    if (positionChanged) this.heroLastMoveClock = this.engine.clock;
+    const moving = snapshot.phase === 'playing' && (positionChanged || Boolean(snapshot.party) && this.engine.clock - this.heroLastMoveClock < 80);
+    if (snapshot.party || snapshot.phase !== 'paused' && snapshot.phase !== 'countdown') this.heroWalking = moving;
+    if (moving && positionChanged) {
       this.heroFacing = this.engine.playerX < this.lastPlayerX ? -1 : 1;
     }
     this.heroGaitPhase = gaitPhaseAfterDistance(this.heroGaitPhase, travelled, 84, moving);
@@ -338,7 +368,7 @@ export class SurvivalScene extends Phaser.Scene {
     const label = this.add.container(enemy.x, 290, [plate, descriptor, prompt, meaning, hint]).setDepth(20);
     const protectedLabel = this.add.text(enemy.x, GROUND - (isBoss ? 207 : 128), '◆ Được Tank che chắn', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#b8def3', stroke: '#172b3b', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(21).setVisible(false);
     const slamLabel = this.add.text(enemy.x, GROUND + 46, 'VÙNG ĐẬP ĐẤT · NÉ SANG BÊN', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#ffd1a4', stroke: '#33242a', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(22).setVisible(false);
-    return { character, sprite, shadow, label, plate, descriptor, prompt, meaning, hint, protectedLabel, slamLabel, action: null, born: this.visualClock, dyingAt: null, lastX: enemy.x, gaitPhase: (enemy.id * 0.381966) % 1, lastKind: enemy.kind, labelWidth: width, lastText: '', flashUntil: 0, staggerStart: 0, staggerDuration: 0, freezeFrame: null, attackImpactStart: -1000, recoveryLastClock: this.visualClock, attackDirection: 1, attackOrigin: enemy.x, attackDuration: isBoss ? 1500 : 500 };
+    return { character, sprite, shadow, label, plate, descriptor, prompt, meaning, hint, protectedLabel, slamLabel, action: null, born: this.visualClock, dyingAt: null, lastX: enemy.x, gaitPhase: (enemy.id * 0.381966) % 1, lastKind: enemy.kind, labelWidth: width, lastText: '', flashUntil: 0, staggerStart: 0, staggerDuration: 0, staggerDirection: 1, freezeFrame: null, attackImpactStart: -1000, recoveryLastClock: this.visualClock, attackDirection: 1, attackOrigin: enemy.x, attackDuration: isBoss ? 1500 : 500 };
   }
 
   private beginDeath(view: EnemyView): void {
@@ -386,7 +416,9 @@ export class SurvivalScene extends Phaser.Scene {
       view.lastX = enemy.x;
       view.sprite.x = enemy.x;
       view.sprite.y = GROUND;
-      view.sprite.setFlipX(enemy.x > this.engine.playerX);
+      const living = snapshot.party?.players.filter(player => player.hp > 0);
+      const aggroX = living?.length ? living.reduce((nearest, player) => Math.abs(player.x - enemy.x) < Math.abs(nearest.x - enemy.x) ? player : nearest).x : this.engine.playerX;
+      view.sprite.setFlipX(enemy.x > aggroX);
       view.shadow.x = enemy.x;
       const stunned = enemy.kind !== 'tank' && enemy.stunUntil > this.engine.clock;
       const target = enemy.id === this.engine.targetId;
@@ -409,10 +441,12 @@ export class SurvivalScene extends Phaser.Scene {
       view.recoveryLastClock = this.visualClock;
       const impactAge = this.visualClock - view.attackImpactStart;
       const recoveringAttack = attackActive && impactAge >= 0 && impactAge < 260;
+      if (preparingAttack && (enemy.attackKind === 'charge' || enemy.attackKind === 'ranged')) view.sprite.setFlipX((enemy.attackTargetX ?? this.engine.playerX) < (enemy.attackStartX ?? enemy.x));
+      else if (recoveringAttack) view.sprite.setFlipX(view.attackDirection < 0);
       if (view.action?.key === attackKey && !preparingAttack && !recoveringAttack) view.action = null;
       const action = view.action;
       // Advance only for genuine locomotion. Knockback, attacks and stun must not spin the feet.
-      if (snapshot.phase === 'playing' && (enemy.state === 'alive' || isBoss) && !action && !stunned && !frozen && !preparingAttack && !recoveringAttack) {
+      if ((snapshot.phase === 'playing' || snapshot.party) && (enemy.state === 'alive' || isBoss) && !action && !stunned && !frozen && !preparingAttack && !recoveringAttack) {
         view.gaitPhase = (view.gaitPhase + travelled / GAIT_STRIDE[enemy.kind]) % 1;
       }
       if (!frozen) view.freezeFrame = null;
@@ -433,9 +467,9 @@ export class SurvivalScene extends Phaser.Scene {
       const baseScale = character.displayScale;
       const staggerProgress = (this.engine.clock - view.staggerStart) / Math.max(1, view.staggerDuration);
       const recoil = !isBoss && stunned && !this.options.reducedMotion ? Math.sin(Math.min(1, staggerProgress * 4) * Math.PI / 2) * (1 - Math.max(0, staggerProgress - 0.7) / 0.3) : 0;
-      const outward = enemy.x >= this.engine.playerX ? 1 : -1;
-      view.sprite.x += outward * recoil * 4;
-      view.sprite.setScale(baseScale * (1 + recoil * 0.035), baseScale * (1 - recoil * 0.025)).setAngle(outward * recoil * 2.5);
+      const outward = enemy.x >= (enemy.attackTargetX ?? aggroX) ? 1 : -1;
+      view.sprite.x += view.staggerDirection * recoil * 4;
+      view.sprite.setScale(baseScale * (1 + recoil * 0.035), baseScale * (1 - recoil * 0.025)).setAngle(view.staggerDirection * recoil * 2.5);
       if (!stunned && !frozen && !this.options.reducedMotion) {
         if (recoveringAttack) {
           const settle = (1 - impactAge / 260) ** 2;
@@ -458,10 +492,14 @@ export class SurvivalScene extends Phaser.Scene {
       const word = enemy.challenge.word;
       const visibleHint = target ? snapshot.target?.hint ?? ''
         : enemy.challenge.kind === 'hint' || enemy.challenge.kind === 'translate' ? enemy.challenge.hint : '';
-      const content = `${enemy.challenge.prompt}|${visibleHint}|${word.meaning}|${word.partOfSpeech}|${enemy.hp}|${target}|${enemy.bossPhase}`;
+      const owner = snapshot.party?.players.find(player => player.id !== snapshot.party!.selfId && player.hp > 0 && player.connected !== false && player.targetId === enemy.id);
+      if (owner) view.protectedLabel.setVisible(onscreen).setText(`${partyName(owner)} đang khóa`).setColor(`#${partyColor(snapshot.party!.players, owner.id).toString(16).padStart(6, '0')}`);
+      else view.protectedLabel.setText('Được khiên che chắn').setColor('#b8def3');
+      const content = `${enemy.challenge.prompt}|${visibleHint}|${word.meaning}|${word.partOfSpeech}|${enemy.hp}|${target}|${enemy.bossPhase}|${enemy.role}|${owner?.id}`;
       if (content !== view.lastText) {
         view.lastText = content;
-        view.descriptor.setText(`${PART_OF_SPEECH_LABELS[word.partOfSpeech]}${enemy.kind === 'armored' ? `  ·  GIÁP ${enemy.hp}/${enemy.maxHp}` : isBoss ? `  ·  PHASE ${enemy.bossPhase}` : ''}`);
+        const role = enemy.role === 'shield' ? 'HỘ VỆ' : enemy.role === 'ranged' ? 'XẠ THỦ' : enemy.role === 'summoner' ? 'TRIỆU HỒI' : '';
+        view.descriptor.setText(`${PART_OF_SPEECH_LABELS[word.partOfSpeech]}${role ? ` · ${role}` : ''}${enemy.kind === 'armored' ? ` · GIÁP ${enemy.hp}/${enemy.maxHp}` : isBoss ? ` · PHASE ${enemy.bossPhase}` : ''}`);
         const isMeaningPrompt = enemy.challenge.prompt.trim().toLocaleLowerCase('vi') === word.meaning.trim().toLocaleLowerCase('vi');
         // Above-head labels stay compact; the selected dock retains the full dictionary definition.
         const shortMeaning = word.meaning.length > 46 ? `${word.meaning.slice(0, 43).replace(/\s+\S*$/, '')}…` : word.meaning;
@@ -474,18 +512,19 @@ export class SurvivalScene extends Phaser.Scene {
         view.prompt.y = isMeaningPrompt ? -5 : -20;
         view.meaning.y = 12;
         view.hint.y = isMeaningPrompt ? 28 : 35;
-        view.plate.setStrokeStyle(target ? 2 : 1, target ? 0xf6c372 : KIND_COLORS[enemy.kind], target ? 1 : 0.5);
+        view.plate.setStrokeStyle(target || owner ? 2 : 1, target ? 0xf6c372 : owner ? partyColor(snapshot.party!.players, owner.id) : KIND_COLORS[enemy.kind], target || owner ? 1 : 0.5);
         view.descriptor.setColor(target ? '#f6c372' : '#a5b8bd');
       }
-      if (isBoss) this.drawTankShield(enemy, character);
+      if (isBoss || enemy.role === 'shield' && enemy.hp > 1) this.drawTankShield(enemy, character);
       else if (protectedByTank) this.drawProtectedShield(enemy, character);
       const preparingSlam = isBoss && enemy.attackUntil > this.engine.clock;
       view.slamLabel.setVisible(false);
       if (preparingSlam) {
         const duration = view.attackDuration;
         const remaining = enemy.attackUntil - this.engine.clock;
-        this.drawSlamTelegraph(enemy, Phaser.Math.Clamp(1 - remaining / duration, 0, 1));
-        view.slamLabel.setVisible(onscreen && (remaining > duration - 450 || remaining < 280)).setX(Phaser.Math.Clamp(screenEnemyX, 160, 1120));
+        if (!this.tacticalEffects) this.drawSlamTelegraph(enemy, Phaser.Math.Clamp(1 - remaining / duration, 0, 1));
+        view.slamLabel.setText(enemy.attackKind === 'charge' ? 'XUNG PHONG · RA NGOÀI LÀN' : 'ĐẬP ĐẤT · VÙNG ĐÃ KHÓA');
+        view.slamLabel.setVisible(onscreen && (remaining > duration - 450 || remaining < 280)).setX(Phaser.Math.Clamp(this.screenX(enemy.attackTargetX ?? enemy.x), 160, 1120));
       }
       if (!onscreen && !target) continue;
       if (!onscreen && target) {
@@ -506,7 +545,17 @@ export class SurvivalScene extends Phaser.Scene {
         this.reticle.lineBetween(enemy.x + 8, GROUND - height - 8, enemy.x + 13, GROUND - height - 3);
       }
     }
-    for (const placement of layoutEnemyLabels(labelRequests, !!snapshot.boss)) {
+    this.prepareWorldLabels(snapshot, labelRequests);
+    const included = labelRequests.sort((a, b) => Number(b.selected) - Number(a.selected) || Number(b.boss) - Number(a.boss)).slice(0, 6);
+    const labelIds = new Set(included.map(request => request.id));
+    for (const [id, view] of this.enemies) if (!labelIds.has(id)) view.label.setVisible(false);
+    for (const placement of layoutEnemyLabels(included, !!snapshot.boss)) {
+      if (placement.id < 0) {
+        this.worldViews.get(-placement.id)?.label.setPosition(placement.x, placement.y);
+        const object = this.engine.worldObjects?.find(candidate => candidate.id === -placement.id);
+        if (object) this.lines.lineStyle(2, 0xf6c372, .7).lineBetween(placement.x, placement.y + 53, this.screenX(object.x), GROUND - 48);
+        continue;
+      }
       const view = this.enemies.get(placement.id)!;
       const enemy = this.engine.enemies.find(candidate => candidate.id === placement.id)!;
       view.label.setPosition(placement.x, placement.y);
@@ -520,50 +569,115 @@ export class SurvivalScene extends Phaser.Scene {
     }
   }
 
+  private createWorldView(object: WorldObject): WorldView {
+    const width = 238;
+    const plate = this.add.rectangle(0, 0, width, 106, 0x12252f, .97).setStrokeStyle(2, 0xf6c372, .9);
+    const descriptor = this.add.text(-width / 2 + 13, -43, '', { fontFamily: FONT, fontSize: '11px', color: '#f6c372', resolution: 2 });
+    const prompt = this.add.text(0, -20, '', { fontFamily: FONT, fontSize: '19px', fontStyle: 'bold', color: '#f4f1df', align: 'center', wordWrap: { width: width - 24 }, resolution: 2 }).setOrigin(.5);
+    const meaning = this.add.text(0, 12, '', { fontFamily: FONT, fontSize: '13px', color: '#d1ded2', align: 'center', wordWrap: { width: width - 24 }, resolution: 2 }).setOrigin(.5);
+    const hint = this.add.text(0, 35, '', { fontFamily: FONT, fontSize: '12px', color: '#9ed6c2', resolution: 2 }).setOrigin(.5);
+    const label = this.add.container(0, 292, [plate, descriptor, prompt, meaning, hint]).setDepth(20).setVisible(false);
+    const caption = this.inWorld(this.add.text(object.x, GROUND + 34, '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#d7e5ce', stroke: '#172b36', strokeThickness: 4, resolution: 2 }).setOrigin(.5).setDepth(21));
+    return { label, plate, descriptor, prompt, meaning, hint, caption, lastText: '' };
+  }
+
+  private prepareWorldLabels(snapshot: Snapshot, requests: EnemyLabelRequest[]): void {
+    const objects = this.engine.worldObjects ?? [];
+    for (const [id, view] of this.worldViews) if (!objects.some(object => object.id === id)) {
+      view.label.destroy(true); view.caption.destroy(); this.worldViews.delete(id);
+    }
+    for (const object of objects) {
+      let view = this.worldViews.get(object.id);
+      if (!view) { view = this.createWorldView(object); this.worldViews.set(object.id, view); }
+      const selected = snapshot.target?.worldObjectId === object.id && snapshot.target.kind === 'barrel';
+      const sx = this.screenX(object.x), nearby = snapshot.world?.nearby?.id === object.id;
+      const usable = object.kind !== 'barrel' || object.state !== 'used';
+      view.caption.setVisible(sx > 0 && sx < 1280 && !selected && usable);
+      const name = object.kind === 'barrel' ? (object.state === 'active' ? 'Thùng nổ · Tab để chọn' : 'Thùng nổ · chưa sẵn sàng') : object.kind === 'gate' ? (object.state === 'closed' ? 'Cổng đóng' : 'Cổng mở') : `Trạm hồi phục · ${object.charges} lượt`;
+      view.caption.setText(`${name}${nearby && object.kind === 'gate' ? ' · Enter' : ''}`);
+      view.label.setVisible(selected);
+      if (!selected || !snapshot.target) continue;
+      const target = snapshot.target;
+      const isMeaning = target.prompt.trim().toLocaleLowerCase('vi') === target.meaning.trim().toLocaleLowerCase('vi');
+      const shortMeaning = target.meaning.length > 46 ? `${target.meaning.slice(0, 43).replace(/\s+\S*$/, '')}…` : target.meaning;
+      view.descriptor.setText(`${PART_OF_SPEECH_LABELS[target.partOfSpeech]} · THÙNG NỔ`);
+      view.prompt.setText(isMeaning ? shortMeaning : target.prompt);
+      view.prompt.setFontSize(isMeaning || target.length > 12 ? 16 : 19);
+      view.meaning.setText(isMeaning ? '' : shortMeaning);
+      view.hint.setText(target.hint);
+      requests.push({ id: -object.id, width: 238, desiredX: sx, boss: false, selected: true });
+    }
+  }
+
+  private renderTactics(snapshot: Snapshot): void {
+    const telegraphs: TelegraphVisual[] = [];
+    const roles: RoleVisual[] = [];
+    for (const enemy of this.engine.enemies) {
+      if (enemy.state !== 'alive') continue;
+      const view = this.enemies.get(enemy.id);
+      roles.push({ x: enemy.x, role: enemy.role ?? 'melee', height: characterVisualHeight(view?.character ?? getEnemyCharacter(enemy.appearanceId, enemy.kind)), direction: enemy.x >= this.engine.playerX ? -1 : 1, formationId: enemy.formationId });
+      const kind = enemy.attackKind ?? (enemy.kind === 'tank' ? 'slam' : 'melee');
+      if (enemy.attackUntil <= this.engine.clock || kind === 'melee') continue;
+      telegraphs.push({ kind, x: enemy.attackStartX ?? enemy.x, targetX: enemy.attackTargetX ?? enemy.x,
+        from: enemy.attackStartX ?? enemy.x, to: enemy.attackTargetX ?? enemy.x,
+        radius: kind === 'charge' ? CHARGE_RADIUS : kind === 'ranged' ? RANGED_RADIUS : BOSS_SLAM_RANGE,
+        phase: enemy.bossPhase, progress: Phaser.Math.Clamp(1 - (enemy.attackUntil - this.engine.clock) / (view?.attackDuration ?? 1500), 0, 1) });
+    }
+    this.tacticalEffects?.render(this.visualClock, this.options.reducedMotion, snapshot.phase === 'menu' ? [] : this.engine.worldObjects ?? [],
+      snapshot.phase === 'menu' ? [] : telegraphs, snapshot.phase === 'menu' ? [] : roles, this.cameraX, snapshot.target?.worldObjectId);
+  }
+
   private handleEvent(event: GameEvent): void {
+    const snapshot = this.engine.snapshot();
+    const actor = event.playerId ? snapshot.party?.players.find(player => player.id === event.playerId) : undefined;
+    const ownEvent = !snapshot.party || !event.playerId || event.playerId === snapshot.party.selfId;
+    if (snapshot.party) this.allies?.record(event, snapshot.party.players, snapshot.party.selfId, this.engine.clock);
     const enemy = this.engine.enemies.find(item => item.id === event.enemyId);
     const view = event.enemyId !== undefined ? this.enemies.get(event.enemyId) : undefined;
     const x = event.x ?? enemy?.x ?? view?.lastX ?? this.engine.playerX;
     const cue = audioCueForEvent(event);
-    if (cue) this.gameAudio?.play(cue, { pan: Phaser.Math.Clamp((x - this.engine.playerX) / 640, -0.7, 0.7) });
+    const soundX = event.type === 'shot' ? event.sourceX ?? actor?.x ?? this.engine.playerX : x;
+    if (cue) this.gameAudio?.play(cue, { pan: Phaser.Math.Clamp((soundX - this.engine.playerX) / 640, -0.7, 0.7), momentum: ownEvent ? snapshot.momentum?.level ?? 0 : 0 });
     if (event.type === 'shot') {
-      const sign = x < this.engine.playerX ? -1 : 1;
-      if (Math.abs(this.engine.playerX - this.lastPlayerX) <= 0.1) this.heroFacing = sign;
-      const shootKey = this.heroCharacter.actions.attack;
+      const momentum = ownEvent ? snapshot.momentum?.level ?? 0 : 0;
+      const firingCharacter = ownEvent ? this.heroCharacter : getHeroCharacter(event.heroId ?? actor?.heroId);
+      const sourceX = event.sourceX ?? actor?.x ?? this.engine.playerX;
+      const sign = x < sourceX ? -1 : 1;
+      if (ownEvent && Math.abs(this.engine.playerX - this.lastPlayerX) <= 0.1) this.heroFacing = sign;
+      const shootKey = firingCharacter.actions.attack;
       const shootAsset = SPRITE_BY_KEY.get(shootKey);
       const shootTiming = rangedShotTiming(shootAsset);
-      if (this.visualClock - this.heroHurtStart >= 180) this.heroAction = this.action(shootKey, shootTiming.duration, shootTiming.offset);
-      this.heroShotFacing = sign;
-      this.heroKickStart = this.visualClock;
-      const glyphStyle = { fontFamily: FONT, fontSize: '22px', fontStyle: 'bold', color: event.effective === false ? '#bdd1c4' : '#fff3be', stroke: '#1b3033', strokeThickness: 4, resolution: 2 };
-      const origin = projectileOrigin(this.engine.playerX, GROUND, sign, this.heroCharacter.displayScale, shootAsset?.projectileOffset);
+      if (ownEvent && this.visualClock - this.heroHurtStart >= 180) this.heroAction = this.action(shootKey, shootTiming.duration, shootTiming.offset);
+      if (ownEvent) { this.heroShotFacing = sign; this.heroKickStart = this.visualClock; }
+      const glyphStyle = { fontFamily: FONT, fontSize: '22px', fontStyle: 'bold', color: event.effective === false ? '#bdd1c4' : momentum >= 3 ? '#ffe197' : '#fff3be', stroke: '#1b3033', strokeThickness: 4, resolution: 2 };
+      const origin = projectileOrigin(sourceX, GROUND, sign, firingCharacter.displayScale, shootAsset?.projectileOffset);
       const glyph = this.inWorld(this.add.text(origin.x, origin.y, event.glyph ?? '', glyphStyle).setOrigin(0.5).setDepth(18));
       const ghosts = [0.2, 0.09].map(alpha => this.inWorld(this.add.text(glyph.x, glyph.y, event.glyph ?? '', glyphStyle).setOrigin(0.5).setDepth(17).setAlpha(alpha)));
       const firedAt = event.firedAt ?? this.engine.clock;
       const targetCharacter = view?.character ?? getEnemyCharacter(enemy?.appearanceId, enemy?.kind ?? 'normal');
-      const contact = characterHitPoint(x, GROUND, targetCharacter, -sign);
-      this.letters.push({ heroId: this.heroCharacter.id, targetCharacter, object: glyph, ghosts, shotId: event.shotId, enemyId: event.enemyId ?? -1, start: firedAt, impactAt: event.impactAt ?? firedAt + (event.duration ?? 220), x0: glyph.x, y0: glyph.y, x1: contact.x, y1: contact.y, effective: event.effective !== false });
+      const contact = event.worldObjectId !== undefined ? { x, y: GROUND - 26 } : characterHitPoint(x, GROUND, targetCharacter, -sign);
+      this.letters.push({ heroId: firingCharacter.id, playerId: event.playerId, targetCharacter, object: glyph, ghosts, shotId: event.shotId, enemyId: event.enemyId ?? -1, worldObjectId: event.worldObjectId, momentum, start: firedAt, impactAt: event.impactAt ?? firedAt + (event.duration ?? 220), x0: glyph.x, y0: glyph.y, x1: contact.x, y1: contact.y, effective: event.effective !== false });
       this.addEffect('effects-letter-impact', glyph.x, glyph.y, 0.25, sign < 0);
     } else if (event.type === 'jam') {
-      this.heroAction = this.action(this.heroCharacter.actions.idle, 300, 0, true);
-      this.float('CẠCH!', this.engine.playerX + (this.hero.flipX ? -80 : 80), GROUND - 95, '#ff9b88', 500);
-    } else if (event.type === 'hit') {
+      if (ownEvent) { this.heroAction = this.action(this.heroCharacter.actions.idle, 300, 0, true); this.float('CẠCH!', this.engine.playerX + (this.hero.flipX ? -80 : 80), GROUND - 95, '#ff9b88', 500); }
+    } else if (event.type === 'hit' || event.type === 'world-hit') {
       // Resolve the matching projectile on the authoritative engine hit, never by animation callback.
-      const shot = this.letters.find(letter => event.shotId !== undefined ? letter.shotId === event.shotId : letter.enemyId === event.enemyId && letter.object.text === event.glyph);
+      const shot = this.letters.find(letter => (!event.playerId || letter.playerId === event.playerId) && (event.shotId !== undefined ? letter.shotId === event.shotId : letter.enemyId === event.enemyId && letter.object.text === event.glyph));
       const character = shot?.targetCharacter ?? view?.character ?? getEnemyCharacter(enemy?.appearanceId, enemy?.kind ?? 'normal');
-      const contact = characterHitPoint(x, GROUND, character, x > this.engine.playerX ? -1 : 1);
+      const contact = event.worldObjectId !== undefined ? { x, y: GROUND - 26 } : characterHitPoint(x, GROUND, character, x > (shot?.x0 ?? actor?.x ?? this.engine.playerX) ? -1 : 1);
       if (shot) {
         shot.object.setPosition(contact.x, contact.y);
         this.destroyLetter(shot);
         this.letters = this.letters.filter(letter => letter !== shot);
       }
       const distance = shot ? Math.hypot(contact.x - shot.x0, contact.y - shot.y0) : 0;
-      this.impacts.push({ x: contact.x, y: contact.y, start: this.visualClock, seed: event.shotId ?? 0, power: glyphScaleForDistance(distance) });
+      this.impacts.push({ x: contact.x, y: contact.y, start: this.visualClock, seed: event.shotId ?? 0, power: glyphScaleForDistance(distance, shot?.momentum ?? 0) });
       if (this.impacts.length > 32) this.impacts.shift();
       if (view) view.flashUntil = this.visualClock + 60;
       if (view && (enemy?.kind ?? view.lastKind) !== 'tank' && (event.duration ?? 0) > 0) {
         view.staggerStart = event.impactAt ?? this.engine.clock;
         view.staggerDuration = event.duration!;
+        view.staggerDirection = x >= (shot?.x0 ?? actor?.x ?? this.engine.playerX) ? 1 : -1;
         view.action = this.action(view.character.actions.hurt, Math.max(1, (enemy?.stunUntil ?? this.engine.clock + event.duration!) - this.engine.clock));
       }
     } else if (event.type === 'enemy-death' || event.type === 'boss-defeat') {
@@ -578,10 +692,8 @@ export class SurvivalScene extends Phaser.Scene {
       else if (view) view.action = this.action(view.character.actions.hurt);
       this.float(view?.lastKind === 'tank' ? 'PHÁ LỚP' : 'VỠ GIÁP', x, GROUND - 155, '#c4c5f6', 650);
     } else if (event.type === 'player-hurt') {
-      this.heroAction = this.action(this.heroCharacter.actions.hurt, undefined, 0, true);
-      this.shakeStart = this.visualClock;
-      this.heroHurtStart = this.visualClock;
-      this.heroHurtDirection = (event.x ?? this.engine.playerX) >= (event.sourceX ?? this.engine.playerX - 1) ? 1 : -1;
+      if (ownEvent) { this.heroAction = this.action(this.heroCharacter.actions.hurt, undefined, 0, true); this.shakeStart = this.visualClock; this.heroHurtStart = this.visualClock; this.heroHurtDirection = (event.x ?? this.engine.playerX) >= (event.sourceX ?? this.engine.playerX - 1) ? 1 : -1; }
+      this.attackEffects.recordContact(event, this.visualClock, characterHitPoint(event.x ?? actor?.x ?? this.engine.playerX, GROUND, ownEvent ? this.heroCharacter : getHeroCharacter(actor?.heroId), this.heroFacing));
       this.float(event.damage !== undefined ? `−${event.damage} HP` : '− HP', event.x ?? this.engine.playerX, GROUND - 150, '#ff9c8e', 650);
     } else if (event.type === 'boss-phase') {
       if (view) this.reactToBossLayer(view, event.type);
@@ -611,21 +723,32 @@ export class SurvivalScene extends Phaser.Scene {
       }
       if (view?.lastKind === 'tank') this.float('CẨN THẬN!', x, GROUND - 235, '#ffa58d', 550);
     } else if (event.type === 'attack-impact') {
-      const heroContact = characterHitPoint(event.targetX ?? this.engine.playerX, GROUND, this.heroCharacter, this.heroFacing);
-      this.attackEffects.record(event, this.visualClock, heroContact);
+      const heroContact = characterHitPoint(event.targetX ?? this.engine.playerX, GROUND, ownEvent ? this.heroCharacter : getHeroCharacter(actor?.heroId), this.heroFacing);
+      this.attackEffects.record(snapshot.party || event.attackKind ? { ...event, hit: false } : event, this.visualClock, heroContact);
       if (view) {
         view.attackImpactStart = this.visualClock;
         view.recoveryLastClock = this.visualClock;
-        view.attackOrigin = x;
+        view.attackOrigin = event.attackKind === 'charge' ? enemy?.x ?? x : x;
         view.attackDirection = (event.targetX ?? this.engine.playerX) >= x ? 1 : -1;
         const attackKey = view.character.actions.attack;
         view.action = this.action(attackKey, 260);
         this.setSpritePose(view.sprite, attackKey, attackContactFrame(SPRITE_BY_KEY.get(attackKey)), view.character);
       }
-      if (event.enemyKind === 'tank') {
+      if (event.enemyKind === 'tank' && !snapshot.party) {
         this.slamShakeStrength = Phaser.Math.Clamp(1 - Math.abs(x - this.engine.playerX) / 800, 0, 1);
         this.slamShakeStart = this.visualClock;
       }
+    } else if (event.type === 'world-explosion') {
+      this.tacticalEffects?.emit('explosion', x, this.visualClock, event.radius ?? 220);
+      this.gameAudio?.play('boss-slam');
+      this.float('THÙNG NỔ!', x, GROUND - 85, '#ffcb8d', 700);
+    } else if (event.type === 'world-interact') {
+      this.tacticalEffects?.emit(event.worldKind === 'healing-zone' ? 'heal' : 'gate', x, this.visualClock, event.radius ?? 80);
+      this.gameAudio?.play('pickup');
+    } else if (event.type === 'formation') {
+      this.tacticalEffects?.emit('summon', x, this.visualClock, 75);
+    } else if (event.type === 'momentum') {
+      if ((event.value ?? 0) > 0) { this.float(`HOÀN HẢO · NHỊP ${event.value}`, actor?.x ?? this.engine.playerX, GROUND - characterVisualHeight(getHeroCharacter(actor?.heroId ?? this.heroCharacter.id)) - 20, '#ffe19d', 850); this.gameAudio?.play('skill'); }
     } else if (event.type === 'game-over') {
       this.heroAction = this.action(this.heroCharacter.actions.death, undefined, 0, true, true);
     } else if (event.type === 'vocabulary-complete') {
@@ -639,15 +762,17 @@ export class SurvivalScene extends Phaser.Scene {
     this.bulletFx.clear();
     this.letters = this.letters.filter(letter => {
       const p = Phaser.Math.Clamp((this.engine.clock - letter.start) / Math.max(1, letter.impactAt - letter.start), 0, 1);
-      const target = this.engine.enemies.find(enemy => enemy.id === letter.enemyId);
+      const object = letter.worldObjectId !== undefined ? this.engine.worldObjects?.find(candidate => candidate.id === letter.worldObjectId) : undefined;
+      const target = letter.worldObjectId === undefined ? this.engine.enemies.find(enemy => enemy.id === letter.enemyId) : undefined;
+      if (object) { letter.x1 = object.x; letter.y1 = GROUND - 26; }
       if (target) {
-        const contact = characterHitPoint(target.x, GROUND, letter.targetCharacter, target.x > this.engine.playerX ? -1 : 1);
+        const contact = characterHitPoint(target.x, GROUND, letter.targetCharacter, target.x > letter.x0 ? -1 : 1);
         letter.x1 = contact.x;
         letter.y1 = contact.y;
       }
       if (p >= 1) { this.destroyLetter(letter); return false; }
       const point = flightPoint(letter, p, this.options.reducedMotion);
-      const scale = glyphScaleForDistance(Math.hypot(point.x - letter.x0, point.y - letter.y0));
+      const scale = glyphScaleForDistance(Math.hypot(point.x - letter.x0, point.y - letter.y0), letter.momentum ?? 0);
       letter.object.setPosition(point.x, point.y).setScale(scale);
       for (let index = 0; index < letter.ghosts.length; index++) {
         const ghost = letter.ghosts[index];
@@ -776,6 +901,8 @@ export class SurvivalScene extends Phaser.Scene {
   }
 
   private float(value: string, x: number, y: number, color: string, duration: number): void {
+    if (x < this.cameraX - 80 || x > this.cameraX + 1360) return;
+    if (this.floats.length >= 24) this.floats.shift()!.text.destroy();
     const text = this.add.text(Phaser.Math.Clamp(this.screenX(x), 115, 1165), y, value, { fontFamily: FONT, fontSize: '13px', fontStyle: 'bold', color, stroke: '#10212a', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(23);
     this.floats.push({ text, start: this.visualClock, x, y, duration });
   }

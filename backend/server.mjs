@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 import { gzip } from 'node:zlib';
+import roomRuntime from './rooms.bundle.cjs';
 
 const compress = promisify(gzip);
 const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -175,6 +176,9 @@ export async function startServer({ port = parsePort(process.env.PORT), root = P
       else { response.writeHead(500, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); response.end('{"error":"Request failed"}'); }
     }
   });
+  const rooms = roomRuntime.attachRooms(server, JSON.parse(vocabulary.body.toString('utf8')).words, { corsOrigins });
+  server.roomHub = rooms.hub;
+  server.closeRooms = rooms.close;
   server.requestTimeout = 30_000;
   server.headersTimeout = 10_000;
   await new Promise((resolve, reject) => {
@@ -188,6 +192,7 @@ export async function startServer({ port = parsePort(process.env.PORT), root = P
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   startServer().then(server => {
     const shutdown = () => {
+      server.closeRooms();
       server.close(error => { if (error) process.exitCode = 1; });
       const deadline = setTimeout(() => server.closeAllConnections(), 10_000);
       deadline.unref();

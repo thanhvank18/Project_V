@@ -67,6 +67,18 @@ function setup(customCatalog = catalog) {
 }
 
 describe('streamed music lifecycle', () => {
+  it('raises momentum letter pitch within a small bound while retaining mute and voice limits', async () => {
+    const h = setup(); await h.start();
+    h.audio.play('letter', { momentum: 0 }); h.advance(100);
+    h.audio.play('letter', { momentum: 500 });
+    const low = (h.context.oscillators[0].frequency.setValueAtTime.mock.calls[0] as unknown as [number, number])[0];
+    const high = (h.context.oscillators[1].frequency.setValueAtTime.mock.calls[0] as unknown as [number, number])[0];
+    expect(high).toBeGreaterThan(low); expect(high / low).toBeLessThanOrEqual(1.151);
+    h.advance(100); h.audio.play('letter', { momentum: 5 });
+    expect(h.context.oscillators).toHaveLength(2);
+    h.audio.configure({ muted: true }); h.advance(100); h.audio.play('letter', { momentum: 5 });
+    expect(h.context.oscillators).toHaveLength(2); h.audio.destroy();
+  });
   it('creates one inspectable stream, waits for a gesture, and never decodes songs or churns per frame', async () => {
     const h = setup();
     expect(h.media.dataset.role).toBe('background-music');

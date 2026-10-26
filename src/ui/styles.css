@@ -125,3 +125,73 @@
 .audio-modal .audio-mute{display:flex;width:100%;margin-top:0}
 .audio-modal .audio-muted-note{margin-top:10px;color:var(--accent);font-size:13px;line-height:1.7}
 @media(max-width:480px){.audio-modal{max-height:calc(100dvh - 32px)}.audio-track-status{font-size:12px}.audio-current>strong{font-size:16px}}
+
+/* The notebook keeps vocabulary detail outside the battlefield. */
+.learning-review{margin:8px 0 12px}
+.learning-word{padding:18px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.learning-word:first-child{padding-top:8px}
+.learning-word-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.learning-word-heading h3,.summary-modal .learning-word-heading h3{font-size:20px;line-height:1.4;color:#ffe0a1;margin:0}
+.learning-word-heading>div>span{display:block;margin-top:2px;font-size:11px;color:var(--muted)}
+.learning-word-actions{display:flex;gap:2px;flex-shrink:0}
+.learning-word-actions .icon-button{width:44px;height:44px;border:1px solid var(--line)}
+.learning-word-actions .favorite-button.selected{color:var(--accent);border-color:#8b784e;background:#30362e}
+.learning-word .learning-word-meaning{margin-top:10px;color:var(--ink);font-size:14px;line-height:1.65}
+.learning-example{margin:14px 0 12px;padding:0 0 0 12px;border-left:1px solid #849d8c}
+.learning-example p:first-child{color:#e3eedb;font-size:14px;line-height:1.65}
+.learning-example p+p{margin-top:4px;font-size:12px;color:var(--muted)}
+.learning-word-foot{display:flex;justify-content:space-between;gap:12px;margin-top:10px;color:var(--muted);font-size:10px}
+.learning-word-foot a{flex-shrink:0;color:#c0e6d3}
+.collection-favorite-filter{min-height:44px;margin-top:-8px}
+.collection-favorite-filter.selected{color:var(--accent)}
+.learning-status,.learning-storage-warning,.learning-load-error{margin:8px 0 12px}
+.learning-status:empty{display:none}
+.modal .learning-storage-warning{color:#ffd092;font-size:12px}
+.learning-load-state{padding:16px 0}
+.hero-skill-description>p:not(.hero-current){font-size:clamp(10px,.95cqw,13px);line-height:1.6;min-height:0}
+.hero-skill-description .hero-tactics{margin-top:8px;padding-top:7px;border-top:1px solid var(--line);color:#d0ebdc}
+.momentum-hud{position:absolute;top:14%;right:3%;width:20%;font-size:clamp(10px,.8cqw,12px);color:#ffe0a1;pointer-events:none}
+.momentum-hud>div:first-child{display:flex;gap:5px;align-items:center}
+.momentum-hud strong{font-size:inherit;font-weight:600}
+.momentum-hud>div>span{margin-left:auto;font-variant-numeric:tabular-nums}
+.momentum-track{height:4px;margin-top:6px;background:#405048}
+.momentum-track>span{display:block;height:100%;background:var(--accent)}
+.world-interaction,.world-healing{position:absolute;left:50%;bottom:35%;transform:translateX(-50%);background:#182832f5;border:1px solid #86a894;border-radius:5px;padding:8px 12px;color:var(--ink);box-shadow:0 4px 14px #081b2960}
+.world-interaction{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;align-items:center;min-height:44px;font-size:12px}
+.world-interaction>kbd{grid-row:span 2}.world-interaction small{font-size:10px;color:var(--muted)}
+.world-interaction:hover:enabled{border-color:var(--accent);background:#2d403a}
+.world-healing{display:flex;align-items:center;gap:7px;overflow:hidden;font-size:12px;color:#b8efd3;pointer-events:none}
+.world-healing>i{position:absolute;bottom:0;left:0;height:3px;background:#91dbb3}
+@media(max-width:760px){.momentum-hud,.world-interaction,.world-healing{display:none}.learning-word-heading h3,.summary-modal .learning-word-heading h3{font-size:18px}.learning-word-foot{flex-wrap:wrap}}
+
+/* Invitations and hero choices share the existing start screen. */
+.menu-copy.has-lobby{top:7%;left:5%;width:43%;max-height:88%;overflow:auto;padding:0 4px 4px 0}
+.has-lobby .start-button{width:100%;margin-top:15px;min-height:44px;font-size:clamp(12px,1.1cqw,15px);padding:10px}
+.has-lobby .menu-secondary{margin-top:7px;gap:18px}
+.multiplayer-lobby{font-size:12px;color:var(--ink)}
+.lobby-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.lobby-heading h2{display:flex;align-items:center;gap:8px;font-size:clamp(14px,1.4cqw,18px);font-weight:700}
+.lobby-heading>span{color:var(--muted);font-variant-numeric:tabular-nums}
+.lobby-code{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:5px 0}
+.lobby-code>label{color:var(--muted);font-size:11px}
+.lobby-code input{width:6.3em;min-width:0;border:0;background:transparent;color:var(--accent);font-size:clamp(20px,2.4cqw,30px);font-weight:700;letter-spacing:.13em;font-variant-numeric:tabular-nums;caret-color:var(--accent)}
+.lobby-code .icon-button{margin-left:auto;min-width:36px}
+.lobby-roster{display:grid;grid-template-columns:1fr 1fr;gap:8px;list-style:none;padding:0;margin:12px 0}
+.lobby-roster>li{display:flex;gap:7px;align-items:center;min-width:0}
+.lobby-roster img{width:35px;height:35px;object-fit:contain;image-rendering:pixelated}
+.lobby-roster strong{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;overflow-wrap:anywhere}
+.lobby-roster .is-self strong{color:#b8efd3}
+.lobby-roster span{display:block;font-size:10px;color:var(--muted)}
+.lobby-join{display:flex;gap:7px;margin-top:12px}
+.lobby-join input{width:100%;min-width:0;min-height:40px;border:1px solid #58716b;border-radius:4px;background:#10242d;color:var(--ink);padding:8px 9px;font-size:11px;caret-color:var(--accent)}
+.lobby-join input::placeholder{color:#b5c6c9}
+.lobby-join .button{font-size:11px;min-height:40px;padding:7px 10px;flex-shrink:0}
+.lobby-footer{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--muted);font-size:10px;margin-top:4px}
+.lobby-footer .text-button{font-size:10px;min-height:32px}
+.lobby-feedback{font-size:11px;color:#ffd092;margin-top:8px;line-height:1.65}
+.lobby-connection{display:flex;align-items:center;gap:7px;min-height:40px;color:var(--muted)}
+.solo-lobby{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.hero-card>span{flex-direction:column;gap:2px}.hero-card>span>small{font-size:9px;font-weight:400;color:var(--muted)}
+.hero-taken{cursor:not-allowed}.hero-taken .hero-card{background:#17232c;border-color:#344650}.hero-taken img{opacity:.4}.hero-taken:hover .hero-card{border-color:#344650;background:#17232c}
+.hero-option input:disabled+.hero-card{cursor:default;opacity:.65}
+@media(min-width:761px) and (max-height:760px){.lobby-heading{margin-bottom:6px}.lobby-roster{margin:8px 0;gap:5px}.lobby-roster img{width:29px;height:29px}.lobby-join{margin-top:8px}.has-lobby .start-button{margin-top:7px}.hero-skill-description .hero-tactics{margin-top:4px;padding-top:4px}.hero-skill-description>p:not(.hero-current){font-size:10px;line-height:1.45}}

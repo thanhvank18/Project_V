@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { GameEngine, JAM_MS } from './engine';
-import type { Enemy, LearningLevel, Progress, Word } from './types';
+import type { Challenge, Enemy, LearningLevel, Progress, Word, WorldObject } from './types';
 
 function gradedBank(level: LearningLevel, count = 60, long = false): Word[] {
   return Array.from({ length: count }, (_, index) => {
@@ -9,18 +9,23 @@ function gradedBank(level: LearningLevel, count = 60, long = false): Word[] {
   });
 }
 
-function waitForTarget(engine: GameEngine): Enemy {
+type PlayableTarget = Enemy | (Omit<WorldObject, 'kind' | 'challenge'> & { kind: 'barrel'; challenge: Challenge });
+
+function waitForTarget(engine: GameEngine): PlayableTarget {
   for (let count = 0; count < 30; count++) {
     for (const enemy of engine.enemies) { enemy.speed = 0; enemy.nextAttackAt = 1e9; }
     const selected = engine.enemies.find(enemy => enemy.id === engine.targetId && enemy.state === 'alive');
     if (selected) return selected;
+    const barrel = engine.worldObjects.find(object => object.kind === 'barrel' && -object.id === engine.targetId
+      && object.state === 'active' && !object.resolving && object.challenge);
+    if (barrel) return barrel as PlayableTarget;
     engine.step(500);
   }
   throw new Error('No playable target spawned');
 }
 
 function solve(engine: GameEngine, enemy = waitForTarget(engine)): void {
-  engine.targetId = enemy.id;
+  engine.targetId = enemy.kind === 'barrel' ? -enemy.id : enemy.id;
   for (const letter of enemy.challenge.word.answer.slice(engine.snapshot().input.length)) engine.typeKey(letter);
 }
 
@@ -40,7 +45,8 @@ describe('run-local learning progression in the engine', () => {
       expect(engine.snapshot().learning).toEqual({ level: 1 + Math.floor(completed / 20),
         progress: completed % 20, step: 20, nextLevelAt: (1 + Math.floor(completed / 20)) * 20 });
       // Completion counts before its final projectile kills the enemy.
-      expect(enemy.state).toBe('resolving');
+      if (enemy.kind === 'barrel') expect(enemy.resolving).toBe(true);
+      else expect(enemy.state).toBe('resolving');
       engine.step(400);
     }
     expect(exposed.filter(entry => entry.completed < 20).every(entry => entry.level === 1)).toBe(true);

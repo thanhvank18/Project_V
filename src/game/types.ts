@@ -1,6 +1,14 @@
 import type { HeroSkillVisualKind } from './heroSkills';
 
 export type EnemyKind = 'normal' | 'runner' | 'armored' | 'tank';
+export type EnemyRole = 'melee' | 'shield' | 'ranged' | 'summoner';
+export type AttackKind = 'melee' | 'slam' | 'charge' | 'ranged' | 'summon';
+export type WorldObjectKind = 'barrel' | 'gate' | 'healing-zone';
+export interface WorldObject {
+  id: number; kind: WorldObjectKind; x: number; radius: number;
+  state: 'idle' | 'active' | 'used' | 'open' | 'closed';
+  charges: number; progress: number; challenge?: Challenge; resolving?: boolean;
+}
 export type ChallengeKind = 'scramble' | 'missing' | 'translate' | 'hint';
 export type Phase = 'menu' | 'playing' | 'paused' | 'countdown' | 'over';
 export type ItemKind = 'health' | 'freeze' | 'damage' | 'shield';
@@ -26,6 +34,10 @@ export interface Enemy {
   id: number; kind: EnemyKind; x: number; side: -1 | 1; speed: number;
   /** Cosmetic identity; optional for legacy fixtures and snapshots. */
   appearanceId?: string;
+  role?: EnemyRole; formationId?: number;
+  summons?: number; attackSequence?: number;
+  attackKind?: AttackKind; attackTargetX?: number; attackStartX?: number;
+  attackTargetPlayerId?: string;
   freezeUntil?: number; slowUntil?: number; slowFactor?: number;
   hp: number; maxHp: number; challenge: Challenge;
   state: 'alive' | 'resolving'; stunUntil: number; immuneUntil: number;
@@ -46,12 +58,15 @@ export interface Progress {
   words: Record<string, WordResult & { lastSeen: number; nextReview: number }>;
   seenWords?: Record<string, number>;
 }
+export interface PartyMember { id: string; name?: string; heroId: string }
+export interface PartyPlayer extends PartyMember { x: number; hp: number; targetId: number | null; connected?: boolean }
 export interface Snapshot {
   phase: Phase; hp: number; playerX: number; score: number; combo: number; bestCombo: number;
   kills: number; words: number; elapsed: number; input: string; locked: boolean;
   jamRemaining: number; countdown: number; enemyCount: number;
   target: null | {
-    id: number; kind: EnemyKind; prompt: string; hint: string; type: ChallengeKind; length: number;
+    id: number; kind: EnemyKind | 'barrel'; prompt: string; hint: string; type: ChallengeKind; length: number;
+    worldObjectId?: number;
     meaning: string; partOfSpeech: PartOfSpeech; difficulty: WordDifficulty; learningLevel?: LearningLevel;
     appearanceId?: string; name?: string; label?: string;
   };
@@ -61,13 +76,19 @@ export interface Snapshot {
   vocabulary: { remaining: number; total: number; bossReady: boolean };
   hero: { id: string; skillName: string; charge: number; threshold: number; activeRemaining: number };
   learning: LearningProgress;
+  momentum?: { level: number; streak: number; multiplier: number; remaining: number };
+  world?: { nearby: { id: number; kind: WorldObjectKind; label: string; charges: number; state: WorldObject['state'] } | null; healingProgress: number };
+  party?: { selfId: string; players: PartyPlayer[] };
 }
 export interface GameEvent {
-  type: 'shot' | 'jam' | 'hit' | 'enemy-death' | 'armor-break' | 'player-hurt' | 'boss-warning' | 'boss-phase' | 'boss-defeat' | 'game-over' | 'vocabulary-complete' | 'pickup' | 'attack' | 'attack-impact' | 'hero-skill';
+  type: 'shot' | 'jam' | 'hit' | 'enemy-death' | 'armor-break' | 'player-hurt' | 'boss-warning' | 'boss-phase' | 'boss-defeat' | 'game-over' | 'vocabulary-complete' | 'pickup' | 'attack' | 'attack-impact' | 'hero-skill' | 'world-interact' | 'world-hit' | 'world-explosion' | 'formation' | 'momentum';
   enemyId?: number; x?: number; glyph?: string; duration?: number; effective?: boolean;
   shotId?: number; challengeId?: number; firedAt?: number; impactAt?: number; item?: ItemKind;
   enemyKind?: EnemyKind; bossPhase?: number; targetX?: number; sourceX?: number;
   hit?: boolean; damage?: number; radius?: number;
+  attackKind?: AttackKind; laneFrom?: number; laneTo?: number; role?: EnemyRole; formationId?: number;
+  worldObjectId?: number; worldKind?: WorldObjectKind; state?: WorldObject['state'];
+  playerId?: string;
   heroId?: string; skillId?: string; visualKind?: HeroSkillVisualKind;
   targets?: { enemyId: number; x: number }[]; value?: number; skillPhase?: 'activate' | 'block';
 }
@@ -89,6 +110,14 @@ export interface HeroSkillEvent extends GameEvent {
 }
 export interface EnginePort {
   clock: number; playerX: number; enemies: Enemy[]; targetId: number | null;
+  worldObjects?: WorldObject[];
+  interactWorld?(): void;
+  readonly players?: readonly PartyPlayer[];
+  configureParty?(members: readonly PartyMember[]): void;
+  commandAs?<T>(playerId: string, action: () => T): T | undefined;
+  snapshotFor?(playerId: string): Snapshot;
+  removePartyPlayer?(playerId: string): void;
+  setPartyConnected?(playerId: string, connected: boolean): void;
   start(mode?: 'survival' | 'boss'): void;
   setHero(id?: string): void;
   setMovement(direction: -1 | 0 | 1): void;

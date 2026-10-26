@@ -2,6 +2,7 @@
 !Dockerfile
 !backend/
 !backend/*.mjs
+!backend/*.cjs
 !public/
 !public/vocabulary/
 !public/vocabulary/en-vi.json

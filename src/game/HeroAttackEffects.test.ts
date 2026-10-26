@@ -98,4 +98,22 @@ describe('hero weapon and skill presentation', () => {
     effects.drawProjectile(graphics(g), { ...shot('wizard'), target: { x: NaN, y: 0 } });
     expect(g.draws).toEqual([]);
   });
+
+  it.each(['wizard', 'armored-axeman'])('centres %s area feedback on the actual target and shows its radius', heroId => {
+    const effects = new HeroAttackEffects(), g = new GraphicsCollector();
+    effects.emitSkill({ heroId, x: 500, targetX: 900, y: 490, radius: 150, at: 0 });
+    effects.drawSkills(graphics(g), 40, true);
+    expect(g.draws.some(draw => draw.shape === 'ellipse' && draw.coordinates[0] === 900 && draw.coordinates[2] === 300)).toBe(true);
+    expect(g.draws.every(draw => draw.coordinates[0] > 700)).toBe(true);
+  });
+  it('keeps a self-area around its caster and does not pin an immune target when the engine supplied no victims', () => {
+    const effects = new HeroAttackEffects(), g = new GraphicsCollector();
+    effects.emitSkill({ heroId: 'swordsman', x: 500, targetX: 900, y: 490, radius: 160, at: 0 });
+    effects.drawSkills(graphics(g), 40, true);
+    expect(g.draws.some(draw => draw.shape === 'ellipse' && draw.coordinates[0] === 500 && draw.coordinates[2] === 320)).toBe(true);
+    effects.reset(); g.clear();
+    effects.emitSkill({ heroId: 'soldier', x: 500, targetX: 900, y: 490, at: 0, targets: [] });
+    effects.drawSkills(graphics(g), 40, false);
+    expect(g.draws.some(draw => draw.shape === 'circle' && draw.coordinates[0] === 900)).toBe(false);
+  });
 });

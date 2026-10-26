@@ -54,6 +54,24 @@ function impact(kind: EnemyKind, hit = true): AttackImpactEvent {
 const geometry = (draws: Draw[]) => draws.map(({ shape, coordinates }) => ({ shape, coordinates }));
 const opacity = (draws: Draw[]) => draws.reduce((sum, draw) => sum + draw.alpha, 0);
 
+describe('positional attack effects', () => {
+  it('draws a locked charge trail without inventing player contact on a whiff', () => {
+    const h = harness();
+    h.effects.record({ ...impact('tank', false), attackKind: 'charge', laneFrom: 400, laneTo: 900, targetX: 900 }, 0);
+    h.effects.render(40, true); const early = geometry(h.ground.draws);
+    expect(h.foreground.draws).toEqual([]);
+    expect(h.ground.draws.some(draw => draw.shape === 'line' && draw.coordinates[0] === 400 && draw.coordinates[2] === 900)).toBe(true);
+    h.effects.render(160, true); expect(geometry(h.ground.draws)).toEqual(early);
+  });
+  it('places a ranged whiff at its locked point and uses no melee claw geometry', () => {
+    const h = harness();
+    h.effects.record({ ...impact('normal', false), attackKind: 'ranged', targetX: 930 }, 0);
+    h.effects.render(40, false);
+    expect(h.foreground.draws.some(draw => draw.shape === 'ellipse' && draw.coordinates[0] === 930)).toBe(true);
+    expect(h.all().some(draw => draw.shape === 'triangle')).toBe(false);
+  });
+});
+
 function intersectsPlayer(draw: Draw, x: number): boolean {
   if (draw.alpha <= 0) return false;
   const c = draw.coordinates;

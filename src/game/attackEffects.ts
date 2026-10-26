@@ -1,11 +1,13 @@
 import type Phaser from 'phaser';
-import type { EnemyKind, GameEvent } from './types';
+import type { AttackKind, EnemyKind, GameEvent } from './types';
 
 const GROUND = 490;
 const MAX_IMPACTS = 24;
 interface AttackImpact {
   kind: EnemyKind; x: number; targetX: number; contactX: number; contactY: number; hit: boolean; radius: number;
   phase: number; start: number; seed: number;
+  attackKind?: AttackKind; laneFrom?: number; laneTo?: number;
+  contactOnly?: boolean;
 }
 
 /** Two shared drawing surfaces, bounded bursts, and no timers independent of the game clock. */
@@ -31,7 +33,16 @@ export class AttackEffects {
     this.impacts.push({ kind: event.enemyKind, x: event.x, targetX: event.targetX ?? event.x,
       contactX: targetPoint?.x ?? event.targetX ?? event.x, contactY: targetPoint?.y ?? GROUND - 65,
       hit: event.hit === true, radius: event.radius ?? 0, phase: event.bossPhase ?? 1,
-      start: clock, seed: event.enemyId ?? 0 });
+      start: clock, seed: event.enemyId ?? 0, attackKind: event.attackKind, laneFrom: event.laneFrom, laneTo: event.laneTo });
+    if (this.impacts.length > MAX_IMPACTS) this.impacts.shift();
+  }
+
+  /** Multiplayer AoE reports victims individually; the aggregate slam must not invent a victim. */
+  recordContact(event: GameEvent, clock: number, point: { x: number; y: number }): void {
+    if (event.type !== 'player-hurt') return;
+    this.impacts.push({ kind: event.enemyKind ?? 'normal', x: event.sourceX ?? point.x, targetX: point.x,
+      contactX: point.x, contactY: point.y, hit: true, radius: 0, phase: event.bossPhase ?? 1,
+      start: clock, seed: event.enemyId ?? 0, contactOnly: true });
     if (this.impacts.length > MAX_IMPACTS) this.impacts.shift();
   }
 
@@ -40,13 +51,38 @@ export class AttackEffects {
     this.foreground.clear();
     this.impacts = this.impacts.filter(impact => {
       const age = clock - impact.start;
-      const lifetime = reduced ? 240 : impact.kind === 'tank' ? 820 : 320;
+      const lifetime = impact.contactOnly ? reduced ? 180 : 280 : reduced ? 240 : impact.kind === 'tank' ? 820 : 320;
       if (age < 0 || age >= lifetime) return false;
-      if (impact.kind === 'tank') this.slam(impact, age, reduced);
+      if (impact.contactOnly) { this.contact(impact, age, reduced); return true; }
+      if (impact.attackKind === 'charge') this.charge(impact, age, reduced);
+      else if (impact.attackKind === 'ranged' || impact.attackKind === 'summon') this.spell(impact, age, reduced);
+      else if (impact.kind === 'tank') this.slam(impact, age, reduced);
       else this.swipe(impact, age, reduced);
       if (impact.hit && age < (reduced ? 180 : 280)) this.contact(impact, age, reduced);
       return true;
     });
+  }
+
+  private charge(impact: AttackImpact, age: number, reduced: boolean): void {
+    const g = this.ground;
+    const from = impact.laneFrom ?? impact.x, to = impact.laneTo ?? impact.targetX;
+    const direction = to >= from ? 1 : -1, p = Math.min(1, age / 520), fade = (1 - p) ** 1.5;
+    const width = Math.abs(to - from);
+    g.lineStyle(reduced ? 2 : 4, impact.phase >= 3 ? 0xffa095 : 0xffcc89, fade * .8);
+    for (const dy of [-4, 8, 20]) g.lineBetween(from, GROUND + dy, to, GROUND + dy);
+    if (!reduced) for (let i = 0; i < Math.min(14, Math.ceil(width / 35)); i++) {
+      const x = from + direction * Math.min(width, i * 35);
+      g.fillStyle(0xf3c18c, fade * .6).fillRect(x, GROUND + 13 - p * 16, 5, 4);
+    }
+  }
+
+  private spell(impact: AttackImpact, age: number, reduced: boolean): void {
+    const g = this.foreground, p = Math.min(1, age / 320), fade = (1 - p) ** 1.4;
+    const x = impact.attackKind === 'summon' ? impact.x : impact.targetX;
+    const y = impact.attackKind === 'summon' ? GROUND - 12 : GROUND - 50;
+    const r = reduced ? 9 : 9 + p * 20;
+    g.lineStyle(2, 0xe5b9f1, fade * .8).strokeEllipse(x, y, r * 2, r, 20);
+    for (const side of [-1, 1]) g.fillStyle(0xc6a1ef, fade).fillRect(x + side * r, y - r * .3, 3, 7);
   }
 
   private swipe(impact: AttackImpact, age: number, reduced: boolean): void {

@@ -14,7 +14,8 @@ export function flightPoint(path: FlightPath, progress: number, reducedMotion: b
 export const bodyY = (boss: boolean): number => 490 - (boss ? 120 : 64);
 
 /** Growth follows distance actually travelled, so short-range shots stay compact. */
-export const glyphScaleForDistance = (distance: number): number => 1 + Math.max(0, Math.min(450, distance)) / 450 * 0.82;
+export const glyphScaleForDistance = (distance: number, momentum = 0): number =>
+  Math.min(2.1, (1 + Math.max(0, Math.min(450, distance)) / 450 * 0.82) * (1 + Math.max(0, Math.min(5, momentum)) * .035));
 
 export function hurtFrame(elapsed: number, duration: number): number {
   const p = elapsed / Math.max(1, duration);

@@ -1,0 +1,230 @@
+import { GameEngine } from './engine';
+import { getHeroCharacter } from './characterCatalog';
+import { historyKeysFor } from './vocabulary';
+import type { Enemy, EnginePort, GameEvent, ItemKind, Progress, Snapshot, Word, WorldObject } from './types';
+
+export interface RoomState {
+  status: 'connecting' | 'lobby' | 'playing' | 'disconnected' | 'offline';
+  pin: string; selfId: string; hostId: string;
+  players: { id: string; name: string; heroId: string; connected: boolean }[];
+  error: string;
+}
+const SESSION_KEY = 'zvs-room-session-v1';
+const initialRoom = (): RoomState => ({ status: 'connecting', pin: '', selfId: '', hostId: '', players: [], error: '' });
+
+export function roomSocketUrl(apiUrl = import.meta.env.VITE_API_URL, locationUrl = location.href): string {
+  const url = new URL(apiUrl?.trim() || locationUrl);
+  if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search && apiUrl || url.hash && apiUrl) throw new Error('Invalid room API URL');
+  url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+  url.pathname = `${apiUrl ? url.pathname.replace(/\/+$/, '') : ''}/api/rooms`;
+  url.search = ''; url.hash = '';
+  return url.toString();
+}
+
+/** The scene reads this port for either local play or the server-owned shared simulation. */
+export class RoomClient implements EnginePort {
+  private local: GameEngine;
+  private state = initialRoom();
+  private listeners = new Set<(room: RoomState) => void>();
+  private socket: WebSocket | null = null;
+  private remote: Snapshot | null = null;
+  private remoteEnemies: Enemy[] = [];
+  private remoteObjects: WorldObject[] = [];
+  private events: GameEvent[] = [];
+  private remoteClock = 0;
+  private displayClock = 0;
+  private sequence = 0;
+  private preferredHero = 'soldier';
+  private pendingHero = '';
+  private resumeToken = '';
+  private seen = new Set<string>();
+  private words: Map<string, Word>;
+  private historyAnswers = new Map<string, string[]>();
+  private disposed = false;
+  private localPaused = false;
+  private reconnects = 0;
+  private retryTimer?: ReturnType<typeof setTimeout>;
+  private heartbeat?: ReturnType<typeof setInterval>;
+  private timeout?: ReturnType<typeof setTimeout>;
+  private movement: -1 | 0 | 1 = 0;
+
+  constructor(progress: Progress, private onWordSeen: (word: Word) => void, bank: readonly Word[]) {
+    this.words = new Map(bank.map(word => [word.answer, word]));
+    for (const word of bank) for (const key of historyKeysFor(word)) {
+      const answers = this.historyAnswers.get(key);
+      if (answers) answers.push(word.answer); else this.historyAnswers.set(key, [word.answer]);
+    }
+    this.local = new GameEngine(Math.random, progress, word => { this.seen.add(word.answer); this.onWordSeen(word); }, bank);
+    this.setProgress(progress);
+    try { this.resumeToken = sessionStorage.getItem(SESSION_KEY) ?? ''; } catch { /* Reconnection remains optional. */ }
+  }
+
+  get room(): RoomState { return this.state; }
+  get clock(): number { return this.state.status === 'offline' ? this.local.clock : this.displayClock; }
+  get playerX(): number { return this.remote?.playerX ?? this.local.playerX; }
+  get enemies(): Enemy[] { return this.remote ? this.remoteEnemies : this.local.enemies; }
+  get targetId(): number | null { return this.remote?.target?.id ?? (this.remote ? null : this.local.targetId); }
+  get worldObjects(): WorldObject[] { return this.remote ? this.remoteObjects : this.local.worldObjects; }
+  get players() { return this.remote?.party?.players ?? []; }
+
+  subscribeRoom(listener: (room: RoomState) => void): () => void {
+    this.listeners.add(listener); listener(this.state);
+    return () => { this.listeners.delete(listener); };
+  }
+  private update(patch: Partial<RoomState>): void {
+    this.state = { ...this.state, ...patch };
+    for (const listener of this.listeners) listener(this.state);
+  }
+  private send(message: object): boolean {
+    if (this.socket?.readyState !== WebSocket.OPEN || this.socket.bufferedAmount > 128 * 1024) return false;
+    this.socket.send(JSON.stringify(message)); return true;
+  }
+  private command(command: object): void {
+    if (!this.remote || this.remote.phase !== 'playing' || this.localPaused || this.state.status !== 'playing') return;
+    this.send({ type: 'command', seq: this.sequence++, command });
+  }
+
+  connect(): void {
+    if (this.socket && (this.socket.readyState === WebSocket.OPEN || this.socket.readyState === WebSocket.CONNECTING)) return;
+    this.disposed = false; clearTimeout(this.retryTimer); clearTimeout(this.timeout);
+    this.update({ status: 'connecting', error: '' });
+    let socket: WebSocket;
+    try { socket = new WebSocket(roomSocketUrl()); }
+    catch { this.update({ status: 'disconnected', error: 'Chưa kết nối được máy chủ phòng.' }); return; }
+    this.socket = socket;
+    socket.onopen = () => {
+      if (this.socket !== socket) return;
+      this.send({ type: 'hello', resumeToken: this.resumeToken, heroId: this.preferredHero, seen: [...this.seen] });
+    };
+    socket.onmessage = event => {
+      if (this.socket !== socket || this.disposed) return;
+      try { this.receive(JSON.parse(event.data)); }
+      catch { this.update({ error: 'Dữ liệu phòng chưa hợp lệ. Hãy kết nối lại.' }); }
+    };
+    socket.onerror = () => { /* onclose owns reconnection and the visible message. */ };
+    socket.onclose = event => {
+      if (this.socket !== socket || this.disposed || this.state.status === 'offline') return;
+      this.socket = null; this.movement = 0; clearInterval(this.heartbeat); clearTimeout(this.timeout);
+      this.update({ status: 'disconnected', error: event.code === 4001 ? 'Phiên này đang mở ở kết nối khác.' : 'Mất kết nối. Đang thử nối lại; trận vẫn tiếp tục trên máy chủ.' });
+      if (event.code !== 4001 && this.reconnects++ < 6) this.retryTimer = setTimeout(() => this.connect(), Math.min(3000, this.reconnects * 500));
+    };
+    this.timeout = setTimeout(() => { if (this.state.status === 'connecting') { socket.close(); this.update({ status: 'disconnected', error: 'Máy chủ phòng chưa phản hồi. Hãy thử lại hoặc chơi riêng.' }); } }, 10_000);
+    clearInterval(this.heartbeat);
+    this.heartbeat = setInterval(() => { if (this.movement) this.command({ kind: 'move', direction: this.movement }); }, 400);
+  }
+
+  private receive(message: Record<string, any>): void {
+    if (message.type === 'session') {
+      this.resumeToken = message.token; this.sequence = Math.max(this.sequence, message.nextSeq ?? 0);
+      try { sessionStorage.setItem(SESSION_KEY, this.resumeToken); } catch { /* No credential is required to keep this socket open. */ }
+      return;
+    }
+    if (message.type === 'error') { this.pendingHero = ''; this.update({ error: String(message.error) }); return; }
+    if (message.type === 'replaced') { this.disposed = true; this.update({ status: 'disconnected', error: String(message.error) }); return; }
+    if (message.type === 'room') {
+      clearTimeout(this.timeout); this.reconnects = 0;
+      const room = message.room as RoomState;
+      const changedRoom = room.pin !== this.state.pin;
+      const hero = room.players.find(player => player.id === room.selfId)?.heroId;
+      if (hero) { this.preferredHero = hero; this.pendingHero = ''; }
+      if (changedRoom || room.status === 'lobby') {
+        this.remote = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
+        this.remoteClock = this.displayClock = 0; this.localPaused = false; this.movement = 0;
+        this.local.toMenu(); this.local.setHero(hero);
+        this.syncLocalSeen();
+      }
+      this.update(room); return;
+    }
+    if (message.type === 'seen' && Array.isArray(message.words)) {
+      for (const answer of message.words) {
+        const word = this.words.get(answer);
+        if (!word || this.seen.has(answer)) continue;
+        this.seen.add(answer); this.onWordSeen(word);
+      }
+      return;
+    }
+    if (message.type === 'frame' && message.snapshot && Array.isArray(message.enemies)) {
+      const fresh = message.snapshot as Snapshot;
+      if (fresh.elapsed < (this.remote?.elapsed ?? 0) || fresh.summary?.id !== this.remote?.summary?.id) this.events = [];
+      this.remote = fresh;
+      this.remoteClock = this.displayClock = message.clock;
+      this.remoteEnemies = message.enemies.map((enemy: Enemy) => ({ ...enemy,
+        challenge: { ...enemy.challenge, credited: new Set(enemy.challenge.credited as unknown as number[]) } }));
+      this.remoteObjects = (message.worldObjects ?? []).map((object: WorldObject) => ({ ...object,
+        ...(object.challenge ? { challenge: { ...object.challenge, credited: new Set(object.challenge.credited as unknown as number[]) } } : {}) }));
+      this.events.push(...message.events ?? []);
+      if (this.events.length > 512) this.events.splice(0, this.events.length - 512);
+      if (fresh.phase === 'over') { this.localPaused = false; this.movement = 0; }
+    }
+  }
+
+  setProgress(progress: Progress): void {
+    this.local.setProgress(progress);
+    for (const key of [...Object.keys(progress.seenWords ?? {}), ...Object.keys(progress.words)]) {
+      for (const answer of this.historyAnswers.get(key.trim().toLowerCase()) ?? []) this.seen.add(answer);
+    }
+  }
+  setHero(id?: string): void {
+    const heroId = getHeroCharacter(id).id;
+    this.preferredHero = heroId;
+    if (this.state.status === 'offline') { this.local.setHero(heroId); return; }
+    const current = this.state.players.find(player => player.id === this.state.selfId)?.heroId;
+    if (this.state.status !== 'lobby' || current === heroId || this.pendingHero === heroId) return;
+    this.pendingHero = heroId;
+    if (!this.send({ type: 'hero', heroId })) this.pendingHero = '';
+  }
+  start(mode: 'survival' | 'boss' = 'survival'): void {
+    if (this.state.status === 'offline') this.local.start(mode);
+    else { this.localPaused = false; this.send({ type: 'start', mode }); }
+  }
+  setMovement(direction: -1 | 0 | 1): void {
+    if (this.state.status === 'offline') this.local.setMovement(direction);
+    else { this.movement = direction; this.command({ kind: 'move', direction }); }
+  }
+  step(deltaMs: number): void {
+    if (this.state.status === 'offline') this.local.step(deltaMs);
+    else if (this.remote?.phase === 'playing') this.displayClock = Math.min(this.remoteClock + 50, this.displayClock + deltaMs);
+  }
+  typeKey(key: string): void { if (this.state.status === 'offline') this.local.typeKey(key); else this.command({ kind: 'type', key }); }
+  cycleTarget(direction = 1): void { if (this.state.status === 'offline') this.local.cycleTarget(direction); else this.command({ kind: 'cycle', direction: direction < 0 ? -1 : 1 }); }
+  useItem(item: ItemKind): void { if (this.state.status === 'offline') this.local.useItem(item); else this.command({ kind: 'item', item }); }
+  interactWorld(): void { if (this.state.status === 'offline') this.local.interactWorld(); else this.command({ kind: 'interact' }); }
+  pause(): void {
+    if (this.state.status === 'offline') this.local.pause();
+    else if (this.remote?.phase === 'playing') { this.setMovement(0); this.localPaused = true; }
+  }
+  resume(): void { if (this.state.status === 'offline') this.local.resume(); else if (this.state.status === 'playing') this.localPaused = false; }
+  toMenu(): void {
+    if (this.state.status === 'offline') this.local.toMenu();
+    else if (this.remote?.phase === 'over' && this.state.hostId === this.state.selfId) this.returnToLobby();
+    else this.createRoom();
+  }
+  returnToLobby(): void { this.send({ type: 'lobby' }); }
+  snapshot(): Snapshot {
+    if (!this.remote) return this.local.snapshot();
+    return (this.localPaused || this.state.status === 'disconnected' || this.state.status === 'connecting') && this.remote.phase === 'playing'
+      ? { ...this.remote, phase: 'paused' } : this.remote;
+  }
+  drainEvents(): GameEvent[] {
+    if (this.state.status === 'offline') return this.local.drainEvents();
+    const events = this.events; this.events = []; return events;
+  }
+  joinRoom(pin: string): void { this.send({ type: 'join', pin: pin.trim() }); }
+  createRoom(): void {
+    if (this.socket?.readyState === WebSocket.OPEN && !this.disposed) this.send({ type: 'create' });
+    else { this.resumeToken = ''; this.reconnects = 0; this.connect(); }
+  }
+  playOffline(): void {
+    this.dispose(); this.remote = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
+    this.local.toMenu(); this.local.setHero(this.preferredHero);
+    this.syncLocalSeen();
+    this.update({ ...initialRoom(), status: 'offline' });
+  }
+  dispose(): void {
+    this.disposed = true; clearInterval(this.heartbeat); clearTimeout(this.retryTimer); clearTimeout(this.timeout);
+    this.socket?.close(); this.socket = null; this.movement = 0;
+  }
+  private syncLocalSeen(): void {
+    this.local.setProgress({ highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: Object.fromEntries([...this.seen].map(answer => [answer, 1])) });
+  }
+}

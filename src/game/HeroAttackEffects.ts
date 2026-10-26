@@ -148,13 +148,17 @@ export class HeroAttackEffects {
   private drawSkill(g: Graphics, skill: HeroSkillVisual, progress: number, reduced: boolean): void {
     const size = clamp((skill.height ?? 136) / 136, .65, 1.6);
     const direction = skill.direction === undefined ? (skill.targetX ?? skill.x + 1) >= skill.x ? 1 : -1 : skill.direction < 0 ? -1 : 1;
-    const x = skill.x, ground = skill.y, y = ground - clamp(skill.height ?? 136, 90, 220) * .5;
+    const areaAtTarget = skill.heroId === 'wizard' || skill.heroId === 'armored-axeman';
+    const x = areaAtTarget ? skill.targetX ?? skill.x : skill.x;
+    const ground = skill.y, y = ground - clamp(skill.height ?? 136, 90, 220) * .5;
+    const radius = Number.isFinite(skill.radius) ? clamp(skill.radius!, 0, 380) : 0;
     const fade = (1 - progress) ** 1.3;
     const motion = reduced ? 0 : Math.sin(Math.min(1, progress * 1.4) * Math.PI / 2);
     const spread = (26 + motion * 36) * size;
     const color = skill.heroId === 'wizard' ? colors.blue : skill.heroId === 'priest' ? colors.green
       : skill.heroId === 'soldier' ? colors.blue : colors.gold;
     const alpha = fade * (reduced ? .5 : .75);
+    if ((areaAtTarget || skill.heroId === 'swordsman' || skill.heroId === 'knight-templar') && radius > 0) g.lineStyle(1.5, color, alpha * .7).strokeEllipse(x, ground + 4, radius * 2, 28, 32);
     // The reduced version keeps the same emblem fixed in space and only fades its alpha.
     if (reduced) {
       g.lineStyle(2, color, alpha).strokeEllipse(x, ground - 4, 90 * size, 22 * size, 24);
@@ -173,10 +177,10 @@ export class HeroAttackEffects {
     }
     switch (skill.heroId) {
       case 'archer':
-        for (let ray = -1; ray <= 1; ray++) arrow(g, { x: x + direction * spread, y: y + ray * 18 * size }, direction, ray * .08, .85 * size, colors.gold, alpha);
+        for (let ray = -1; ray <= 1; ray++) arrow(g, { x: x + ((skill.targetX ?? x + direction * 180) - x) * Math.min(1, progress * 2.4), y: y + ray * 18 * size }, direction, ray * .08, .85 * size, colors.gold, alpha);
         break;
       case 'soldier': {
-        const targets = skill.targets?.length ? skill.targets : [{ x: skill.targetX ?? x + direction * 115 * size, y }];
+        const targets = skill.targets ?? [{ x: skill.targetX ?? x + direction * 115 * size, y }];
         for (const target of targets) {
           const ty = target.y ?? ground - 65;
           g.lineStyle(2, colors.blue, alpha).strokeCircle(target.x, ty, (12 + motion * 8) * size);
@@ -202,8 +206,10 @@ export class HeroAttackEffects {
       case 'lancer':
         for (let ray = -1; ray <= 1; ray++) {
           const sy = y + ray * 12 * size;
-          stroke(g, colors.silver, alpha * (ray ? .45 : 1), ray ? 1.5 : 3, { x: x + direction * 20 * size, y: sy }, { x: x + direction * (70 + motion * 135) * size, y: sy });
-          diamond(g, x + direction * (70 + motion * 135) * size, sy, (ray ? 3 : 7) * size, colors.silver, alpha);
+          const reach = clamp(Math.abs((skill.targetX ?? x + direction * 205 * size) - x), 70 * size, 700);
+          const endX = x + direction * (30 * size + motion * (reach - 30 * size));
+          stroke(g, colors.silver, alpha * (ray ? .45 : 1), ray ? 1.5 : 3, { x: x + direction * 20 * size, y: sy }, { x: endX, y: sy });
+          diamond(g, endX, sy, (ray ? 3 : 7) * size, colors.silver, alpha);
         }
         break;
       case 'priest':

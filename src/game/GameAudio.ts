@@ -146,7 +146,7 @@ export class GameAudio {
     this.reconcile();
   }
 
-  play(cue: AudioCue, opts: { pan?: number } = {}): void {
+  play(cue: AudioCue, opts: { pan?: number; momentum?: number } = {}): void {
     const context = this.context;
     if (!this.canPlayCue(cue) || !context || context.state !== 'running' || !this.master) return;
     const now = this.now();
@@ -177,11 +177,13 @@ export class GameAudio {
     } else {
       const tone = TONES[cue];
       const node = source as OscillatorNode;
+      const momentum = cue === 'letter' && Number.isFinite(opts.momentum) ? Math.max(0, Math.min(5, opts.momentum!)) : 0;
+      const pitch = 1 + momentum * .03;
       node.type = tone.type;
-      node.frequency.setValueAtTime(tone.frequency, at);
-      node.frequency.exponentialRampToValueAtTime(tone.end, at + tone.seconds);
+      node.frequency.setValueAtTime(tone.frequency * pitch, at);
+      node.frequency.exponentialRampToValueAtTime(tone.end * pitch, at + tone.seconds);
       duration = tone.seconds;
-      gain.gain.setValueAtTime(tone.gain, at);
+      gain.gain.setValueAtTime(tone.gain * (1 + momentum * .025), at);
       gain.gain.exponentialRampToValueAtTime(.001, at + duration);
     }
     if (!(duration > 0)) { source.disconnect(); gain.disconnect(); panner?.disconnect(); return; }
