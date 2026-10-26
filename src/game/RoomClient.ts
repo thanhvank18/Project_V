@@ -1,6 +1,9 @@
 import { GameEngine } from './engine';
 import { getHeroCharacter } from './characterCatalog';
 import { historyKeysFor } from './vocabulary';
+import type { Language } from '../i18n';
+import { vocabularyForLanguage } from './englishDictionary';
+import { localizeSnapshot } from './localization';
 import type { Enemy, EnginePort, GameEvent, ItemKind, Progress, Snapshot, Word, WorldObject } from './types';
 
 export interface RoomState {
@@ -8,9 +11,11 @@ export interface RoomState {
   pin: string; selfId: string; hostId: string;
   players: { id: string; name: string; heroId: string; connected: boolean }[];
   error: string;
+  language: Language;
+  languagePending?: boolean;
 }
 const SESSION_KEY = 'zvs-room-session-v1';
-const initialRoom = (): RoomState => ({ status: 'connecting', pin: '', selfId: '', hostId: '', players: [], error: '' });
+const initialRoom = (language: Language = 'vi'): RoomState => ({ status: 'connecting', pin: '', selfId: '', hostId: '', players: [], error: '', language, languagePending: false });
 
 export function roomSocketUrl(apiUrl = import.meta.env.VITE_API_URL, locationUrl = location.href): string {
   const url = new URL(apiUrl?.trim() || locationUrl);
@@ -36,6 +41,7 @@ export class RoomClient implements EnginePort {
   private sequence = 0;
   private preferredHero = 'soldier';
   private pendingHero = '';
+  private pendingLanguage: Language | null = null;
   private resumeToken = '';
   private seen = new Set<string>();
   private words: Map<string, Word>;
@@ -47,14 +53,16 @@ export class RoomClient implements EnginePort {
   private heartbeat?: ReturnType<typeof setInterval>;
   private timeout?: ReturnType<typeof setTimeout>;
   private movement: -1 | 0 | 1 = 0;
+  private progress: Progress;
 
-  constructor(progress: Progress, private onWordSeen: (word: Word) => void, bank: readonly Word[]) {
+  constructor(progress: Progress, private onWordSeen: (word: Word) => void, bank: readonly Word[], language: Language = 'vi') {
+    this.state = initialRoom(language); this.progress = progress;
     this.words = new Map(bank.map(word => [word.answer, word]));
     for (const word of bank) for (const key of historyKeysFor(word)) {
       const answers = this.historyAnswers.get(key);
       if (answers) answers.push(word.answer); else this.historyAnswers.set(key, [word.answer]);
     }
-    this.local = new GameEngine(Math.random, progress, word => { this.seen.add(word.answer); this.onWordSeen(word); }, bank);
+    this.local = this.createLocal(language);
     this.setProgress(progress);
     try { this.resumeToken = sessionStorage.getItem(SESSION_KEY) ?? ''; } catch { /* Reconnection remains optional. */ }
   }
@@ -94,7 +102,7 @@ export class RoomClient implements EnginePort {
     this.socket = socket;
     socket.onopen = () => {
       if (this.socket !== socket) return;
-      this.send({ type: 'hello', resumeToken: this.resumeToken, heroId: this.preferredHero, seen: [...this.seen] });
+      this.send({ type: 'hello', resumeToken: this.resumeToken, heroId: this.preferredHero, seen: [...this.seen], language: this.state.language });
     };
     socket.onmessage = event => {
       if (this.socket !== socket || this.disposed) return;
@@ -104,8 +112,8 @@ export class RoomClient implements EnginePort {
     socket.onerror = () => { /* onclose owns reconnection and the visible message. */ };
     socket.onclose = event => {
       if (this.socket !== socket || this.disposed || this.state.status === 'offline') return;
-      this.socket = null; this.movement = 0; clearInterval(this.heartbeat); clearTimeout(this.timeout);
-      this.update({ status: 'disconnected', error: event.code === 4001 ? 'Phiên này đang mở ở kết nối khác.' : 'Mất kết nối. Đang thử nối lại; trận vẫn tiếp tục trên máy chủ.' });
+      this.socket = null; this.movement = 0; this.pendingLanguage = null; clearInterval(this.heartbeat); clearTimeout(this.timeout);
+      this.update({ status: 'disconnected', languagePending: false, error: event.code === 4001 ? 'Phiên này đang mở ở kết nối khác.' : 'Mất kết nối. Đang thử nối lại; trận vẫn tiếp tục trên máy chủ.' });
       if (event.code !== 4001 && this.reconnects++ < 6) this.retryTimer = setTimeout(() => this.connect(), Math.min(3000, this.reconnects * 500));
     };
     this.timeout = setTimeout(() => { if (this.state.status === 'connecting') { socket.close(); this.update({ status: 'disconnected', error: 'Máy chủ phòng chưa phản hồi. Hãy thử lại hoặc chơi riêng.' }); } }, 10_000);
@@ -119,12 +127,15 @@ export class RoomClient implements EnginePort {
       try { sessionStorage.setItem(SESSION_KEY, this.resumeToken); } catch { /* No credential is required to keep this socket open. */ }
       return;
     }
-    if (message.type === 'error') { this.pendingHero = ''; this.update({ error: String(message.error) }); return; }
+    if (message.type === 'error') { this.pendingHero = ''; this.pendingLanguage = null; this.update({ error: String(message.error), languagePending: false }); return; }
     if (message.type === 'replaced') { this.disposed = true; this.update({ status: 'disconnected', error: String(message.error) }); return; }
     if (message.type === 'room') {
       clearTimeout(this.timeout); this.reconnects = 0;
       const room = message.room as RoomState;
+      room.language = room.language === 'en' ? 'en' : 'vi';
+      if (room.language !== this.state.language) this.local = this.createLocal(room.language);
       const changedRoom = room.pin !== this.state.pin;
+      if (changedRoom || room.language === this.pendingLanguage || room.hostId !== room.selfId) this.pendingLanguage = null;
       const hero = room.players.find(player => player.id === room.selfId)?.heroId;
       if (hero) { this.preferredHero = hero; this.pendingHero = ''; }
       if (changedRoom || room.status === 'lobby') {
@@ -133,7 +144,7 @@ export class RoomClient implements EnginePort {
         this.local.toMenu(); this.local.setHero(hero);
         this.syncLocalSeen();
       }
-      this.update(room); return;
+      this.update({ ...room, languagePending: this.pendingLanguage !== null }); return;
     }
     if (message.type === 'seen' && Array.isArray(message.words)) {
       for (const answer of message.words) {
@@ -159,10 +170,30 @@ export class RoomClient implements EnginePort {
   }
 
   setProgress(progress: Progress): void {
+    this.progress = progress;
     this.local.setProgress(progress);
     for (const key of [...Object.keys(progress.seenWords ?? {}), ...Object.keys(progress.words)]) {
       for (const answer of this.historyAnswers.get(key.trim().toLowerCase()) ?? []) this.seen.add(answer);
     }
+  }
+  setLanguage(language: Language): void {
+    if (!['vi', 'en'].includes(language) || (language === this.state.language && !this.pendingLanguage)) return;
+    if ((this.remote && this.remote.phase !== 'menu') || this.state.status === 'playing' || (this.state.status === 'lobby' && this.state.hostId !== this.state.selfId)) return;
+    if (this.state.status === 'offline' && this.local.snapshot().phase !== 'menu') return;
+    if (this.state.status === 'lobby') {
+      if (language === this.pendingLanguage) return;
+      if (this.send({ type: 'language', language })) { this.pendingLanguage = language; this.update({ languagePending: true, error: '' }); }
+      return;
+    }
+    this.local = this.createLocal(language); this.syncLocalSeen();
+    this.update({ language });
+  }
+  private createLocal(language: Language): GameEngine {
+    const local = new GameEngine(Math.random, this.progress, word => {
+      this.seen.add(word.answer); this.onWordSeen(this.words.get(word.answer) ?? word);
+    }, vocabularyForLanguage([...this.words.values()], language));
+    local.setHero(this.preferredHero);
+    return local;
   }
   setHero(id?: string): void {
     const heroId = getHeroCharacter(id).id;
@@ -201,9 +232,10 @@ export class RoomClient implements EnginePort {
   }
   returnToLobby(): void { this.send({ type: 'lobby' }); }
   snapshot(): Snapshot {
-    if (!this.remote) return this.local.snapshot();
-    return (this.localPaused || this.state.status === 'disconnected' || this.state.status === 'connecting') && this.remote.phase === 'playing'
-      ? { ...this.remote, phase: 'paused' } : this.remote;
+    const snapshot = !this.remote ? this.local.snapshot()
+      : (this.localPaused || this.state.status === 'disconnected' || this.state.status === 'connecting') && this.remote.phase === 'playing'
+        ? { ...this.remote, phase: 'paused' as const } : this.remote;
+    return localizeSnapshot(snapshot, this.state.language);
   }
   drainEvents(): GameEvent[] {
     if (this.state.status === 'offline') return this.local.drainEvents();
@@ -218,7 +250,7 @@ export class RoomClient implements EnginePort {
     this.dispose(); this.remote = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
     this.local.toMenu(); this.local.setHero(this.preferredHero);
     this.syncLocalSeen();
-    this.update({ ...initialRoom(), status: 'offline' });
+    this.update({ ...initialRoom(this.state.language), status: 'offline' });
   }
   dispose(): void {
     this.disposed = true; clearInterval(this.heartbeat); clearTimeout(this.retryTimer); clearTimeout(this.timeout);

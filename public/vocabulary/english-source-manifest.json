@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "sourceCatalog": {
+    "path": "public/vocabulary/en-vi.json",
+    "entries": 70696,
+    "sha256": "c7603530843a260b0d3d6bffe18a3f5daafc11ebd319b6db1ba998c841062c33",
+    "originalCsvSha256": "ed9abf18f5b3c257f8bb08b7e3e2fedf6be126ed3b021843c5316ee082db4353"
+  },
+  "sources": [
+    {
+      "name": "Open English WordNet 2025",
+      "url": "https://en-word.net/",
+      "downloadUrl": "https://en-word.net/static/english-wordnet-2025-json.zip",
+      "license": "CC-BY-4.0; underlying Princeton WordNet License",
+      "snapshot": "2025-edition",
+      "sha256": "7d749f6e2c39e6970e4997839dcf6e42fd281f3c2fae0171d2192bae8cfa4b51"
+    },
+    {
+      "name": "English Wiktionary via Kaikki / Wiktextract",
+      "url": "https://kaikki.org/dictionary/English/",
+      "downloadUrl": "https://kaikki.org/dictionary/English/kaikki.org-dictionary-English.jsonl.gz",
+      "snapshot": "2026-10-21 extraction; 2026-10-01 enwiktionary dump",
+      "license": "CC-BY-SA-4.0",
+      "sha256": "cabb3a13b7179d5f8c5909e06b1dcd2e2ae6465d05f35de56509a5b4e2bf0a49"
+    }
+  ],
+  "frozenSources": [
+    {
+      "path": "scripts/data/kaikki-game-senses-20261021.json.gz",
+      "bytes": 10570856,
+      "sha256": "6a4fd81b558cfae8955b1f7431668b66d3c14d26359929bbbeec0232ea4a2793",
+      "license": "CC-BY-SA-4.0",
+      "sourceSha256": "cabb3a13b7179d5f8c5909e06b1dcd2e2ae6465d05f35de56509a5b4e2bf0a49"
+    },
+    {
+      "path": "scripts/data/kaikki-reference-senses-20261021.json.gz",
+      "bytes": 653875,
+      "sha256": "6d7c7adab2b5cb35007c93b086b49d4a2db4fb522b874d915114b31056356ec8",
+      "license": "CC-BY-SA-4.0",
+      "sourceSha256": "cabb3a13b7179d5f8c5909e06b1dcd2e2ae6465d05f35de56509a5b4e2bf0a49"
+    },
+    {
+      "path": "scripts/data/kaikki-supplement-canonical-20261021.json.gz",
+      "bytes": 12986,
+      "sha256": "058903b691bc6c7d3b36521f22821e34a78edce39ed6fd9c6c7e45d322f3c002",
+      "license": "CC-BY-SA-4.0",
+      "sourceSha256": "cabb3a13b7179d5f8c5909e06b1dcd2e2ae6465d05f35de56509a5b4e2bf0a49"
+    }
+  ],
+  "editions": [
+    {
+      "path": "scripts/data/vietnamese-corrections.json",
+      "bytes": 175353,
+      "sha256": "c84a99da82efa8cc91a18aab6357101fdddb27fc34bb26b6b0249f2a1b25f358",
+      "entries": 309,
+      "exclusions": 0
+    },
+    {
+      "path": "scripts/data/vietnamese-source-repairs.json",
+      "bytes": 422176,
+      "sha256": "efec6e1efa9eeff1273926a782fb99c9c72e1b711376a49a79854060bc5604cd",
+      "entries": 876,
+      "exclusions": 0
+    },
+    {
+      "path": "scripts/data/english-long-clues.json",
+      "bytes": 92595,
+      "sha256": "a209590baef14796a4b81480b389bb7c427ba8478fccfafae8f834c31a28d155",
+      "entries": 164,
+      "exclusions": 0
+    },
+    {
+      "path": "scripts/data/english-variant-clues.json",
+      "bytes": 226521,
+      "sha256": "5be7f62fbc573785a79566bca077dffcc0f30d6f5fa24f1497fc70e7d534cab0",
+      "entries": 269,
+      "exclusions": 0
+    },
+    {
+      "path": "scripts/data/english-pos-repairs.json",
+      "bytes": 99243,
+      "sha256": "1b659cce66ba61a4d23f3062c76128621c0b4328b69f6afdd32e8fec9cb6cbf5",
+      "entries": 143,
+      "exclusions": 0
+    },
+    {
+      "path": "scripts/data/english-supplement.json",
+      "bytes": 381170,
+      "sha256": "45a57893d1166791dca195fa06afd0141c8e55693cab1b199984b66fc491504b",
+      "entries": 150,
+      "exclusions": 584
+    }
+  ],
+  "extraction": {
+    "totalRows": 1499162,
+    "retainedRows": 107033,
+    "malformedRows": 2,
+    "malformedSamples": [
+      {
+        "line": 30467,
+        "word": "cyber"
+      },
+      {
+        "line": 30468,
+        "word": null
+      }
+    ],
+    "additionalReferenceLemmas": 5587,
+    "requestedReferenceLemmas": 8817
+  },
+  "output": {
+    "path": "public/vocabulary/english-definitions.json",
+    "entries": 65573,
+    "bytes": 12189887,
+    "sha256": "f0678a217470270eccd5c53693a2601bfaf030a948c33e78917fedd61e2b03cf"
+  }
+}

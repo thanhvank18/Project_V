@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import { useEffect, useState } from 'react';
 import '@fontsource/bungee/400.css';
 import '@fontsource/be-vietnam-pro/400.css';
 import '@fontsource/be-vietnam-pro/500.css';
@@ -7,20 +8,34 @@ import '@fontsource/be-vietnam-pro/700.css';
 import { App } from './ui/App';
 import { emptyProgress, loadProgress } from './game/storage';
 import { loadDictionary } from './game/dictionary';
+import type { Progress, Word } from './game/types';
+import { LanguagePicker, LanguageProvider, useLanguage } from './ui/LanguageContext';
 import './ui/styles.css';
 
 const root = createRoot(document.getElementById('root')!);
 
-async function boot(): Promise<void> {
-  root.render(<main className="dictionary-loading" role="status"><strong>Đang mở từ điển…</strong><p>Chuẩn bị kho từ và lịch sử đã chơi của bạn.</p></main>);
-  try {
-    const [initialProgress, dictionary] = await Promise.all([
-      loadProgress().catch(() => emptyProgress()), loadDictionary(),
-    ]);
-    root.render(<App initialProgress={initialProgress} wordBank={dictionary.words} />);
-  } catch {
-    root.render(<main className="dictionary-loading" role="alert"><strong>Chưa mở được từ điển.</strong><p>Không tải được dữ liệu từ vựng của game. Hãy thử lại.</p><button className="button primary" onClick={() => void boot()}>Thử lại</button></main>);
-  }
+function Bootstrap() {
+  const { t } = useLanguage();
+  const [loaded, setLoaded] = useState<{ progress: Progress; words: readonly Word[] } | null>(null);
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  useEffect(() => {
+    let disposed = false;
+    setFailed(false);
+    void Promise.all([loadProgress().catch(() => emptyProgress()), loadDictionary()])
+      .then(([progress, dictionary]) => { if (!disposed) setLoaded({ progress, words: dictionary.words }); })
+      .catch(() => { if (!disposed) setFailed(true); });
+    return () => { disposed = true; };
+  }, [attempt]);
+  if (loaded) return <App initialProgress={loaded.progress} wordBank={loaded.words} />;
+  return <main className="dictionary-loading">
+    <LanguagePicker />
+    <div role={failed ? 'alert' : 'status'}>
+      <strong>{t(failed ? 'Chưa mở được từ điển.' : 'Đang mở từ điển…')}</strong>
+      <p>{t(failed ? 'Không tải được dữ liệu từ vựng của game. Hãy thử lại.' : 'Chuẩn bị kho từ và lịch sử đã chơi của bạn.')}</p>
+    </div>
+    {failed && <button className="button primary" onClick={() => setAttempt(value => value + 1)}>{t('Thử lại')}</button>}
+  </main>;
 }
 
-void boot();
+root.render(<LanguageProvider><Bootstrap /></LanguageProvider>);

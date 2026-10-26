@@ -144,4 +144,76 @@ describe('room client transitions through the public transport', () => {
     port.resume();
     expect(port.snapshot().phase).toBe('playing');
   });
+
+  it('starts with the saved study language, follows the host acknowledgement and locks guests', () => {
+    const port = new RoomClient({ highScore: 0, runs: 0, totalWords: 0, words: {} }, () => {}, WORDS, 'en'); clients.push(port);
+    port.connect(); const socket = StubSocket.instances[0]; socket.open();
+    expect(socket.sent[0]).toMatchObject({ type: 'hello', language: 'en' });
+    socket.receive({ type: 'room', room: { status: 'lobby', language: 'vi', pin: '123456', selfId: 'self', hostId: 'friend', players: members, error: '' } });
+    expect(port.room.language).toBe('vi');
+    const count = socket.sent.length; port.setLanguage('en');
+    expect(socket.sent).toHaveLength(count); expect(port.room.language).toBe('vi');
+    socket.receive({ type: 'room', room: { status: 'lobby', language: 'vi', pin: '123456', selfId: 'self', hostId: 'self', players: members, error: '' } });
+    port.setLanguage('en');
+    expect(socket.sent.at(-1)).toEqual({ type: 'language', language: 'en' });
+    expect(port.room.language).toBe('vi');
+    socket.receive({ type: 'room', room: { status: 'lobby', language: 'en', pin: '123456', selfId: 'self', hostId: 'self', players: members, error: '' } });
+    expect(port.room.language).toBe('en');
+  });
+
+  it('clears a pending language request on disconnect and adopts the restored room language', () => {
+    const port = client(); port.connect(); const socket = StubSocket.instances[0]; socket.open();
+    const room = { status: 'lobby', language: 'vi', pin: '123456', selfId: 'self', hostId: 'self', players: members, error: '' };
+    socket.receive({ type: 'session', token: 'language-reconnect-token' }); socket.receive({ type: 'room', room });
+    port.setLanguage('en'); expect(port.room.languagePending).toBe(true);
+    socket.close(1006); expect(port.room.languagePending).toBe(false);
+    port.connect(); const restored = StubSocket.instances[1]; restored.open(); restored.receive({ type: 'room', room });
+    expect(port.room).toMatchObject({ status: 'lobby', language: 'vi', languagePending: false });
+    port.setLanguage('en'); expect(restored.sent.at(-1)).toEqual({ type: 'language', language: 'en' });
+  });
+
+  it('plays with English clues offline and retains seen words when switching back to Vietnamese', () => {
+    const bank = WORDS.slice(0, 5).map(word => ({ ...word, englishMeaning: `A test definition for the ${word.partOfSpeech}.` }));
+    const initial = { highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: { [bank[0].answer]: 1 } };
+    const port = new RoomClient(initial, () => {}, bank, 'en'); clients.push(port); port.playOffline(); port.start();
+    expect(port.snapshot().vocabulary.total).toBe(5);
+    expect(port.enemies.length).toBeGreaterThan(0);
+    expect(port.enemies.every(enemy => enemy.challenge.word.meaning.startsWith('A test definition'))).toBe(true);
+    expect(port.enemies.some(enemy => enemy.challenge.word.answer === bank[0].answer)).toBe(false);
+    const remaining = port.snapshot().vocabulary.remaining;
+    port.setLanguage('vi'); expect(port.room.language).toBe('en');
+    port.toMenu(); port.setLanguage('vi');
+    expect(port.room.language).toBe('vi'); expect(port.snapshot().vocabulary.remaining).toBe(remaining);
+    port.start();
+    expect(port.enemies.every(enemy => !enemy.challenge.word.meaning.startsWith('A test definition'))).toBe(true);
+  });
+
+  it('retains the latest language intent through intermediate room acknowledgements', () => {
+    const port = client(); port.connect();
+    const socket = StubSocket.instances[0]; socket.open();
+    const lobby = { status: 'lobby', language: 'vi', pin: '123456', selfId: 'self', hostId: 'self', players: members, error: '' };
+    socket.receive({ type: 'room', room: lobby });
+    port.setLanguage('en'); port.setLanguage('vi');
+    expect(socket.sent.filter(message => message.type === 'language')).toEqual([
+      { type: 'language', language: 'en' }, { type: 'language', language: 'vi' },
+    ]);
+    expect(port.room).toMatchObject({ language: 'vi', languagePending: true });
+    socket.receive({ type: 'room', room: { ...lobby, language: 'en' } });
+    expect(port.room).toMatchObject({ language: 'en', languagePending: true });
+    socket.receive({ type: 'room', room: lobby });
+    expect(port.room).toMatchObject({ language: 'vi', languagePending: false });
+  });
+
+  it('releases a rejected language intent while preserving the server-acknowledged language', () => {
+    const port = client(); port.connect();
+    const socket = StubSocket.instances[0]; socket.open();
+    socket.receive({ type: 'room', room: { status: 'lobby', language: 'vi', pin: '123456', selfId: 'self', hostId: 'self', players: members, error: '' } });
+    port.setLanguage('en');
+    expect(port.room.languagePending).toBe(true);
+    socket.receive({ type: 'error', error: 'Kho từ tiếng Anh chưa sẵn sàng.' });
+    expect(port.room).toMatchObject({ language: 'vi', languagePending: false, error: 'Kho từ tiếng Anh chưa sẵn sàng.' });
+    port.setLanguage('en');
+    expect(socket.sent.filter(message => message.type === 'language')).toHaveLength(2);
+    expect(port.room).toMatchObject({ languagePending: true, error: '' });
+  });
 });

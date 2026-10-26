@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 import type { Word } from './types';
 import { PART_OF_SPEECH_LABELS, WORDS } from './vocabulary';
+import { mergeEnglishDefinitions } from './englishDictionary';
 
 export interface DictionarySource {
   name: string;
@@ -41,6 +42,7 @@ export function parseDictionary(value: unknown): DictionaryCatalog {
     if (!word || typeof word.id !== 'string' || !word.id.trim() || typeof word.answer !== 'string'
       || !/^[a-z]{3,18}$/.test(word.answer) || typeof word.meaning !== 'string'
       || !word.meaning.trim() || word.meaning.length > 120 || typeof word.category !== 'string' || !word.category.trim()
+      || (word.englishMeaning !== undefined && (typeof word.englishMeaning !== 'string' || !word.englishMeaning.trim() || word.englishMeaning.length > 240))
       || typeof word.partOfSpeech !== 'string' || !Object.hasOwn(PART_OF_SPEECH_LABELS, word.partOfSpeech)
       || ![1, 2, 3].includes(word.difficulty)
       || (word.learningLevel !== undefined && (!Number.isInteger(word.learningLevel) || word.learningLevel < 1 || word.learningLevel > 10))
@@ -53,6 +55,7 @@ export function parseDictionary(value: unknown): DictionaryCatalog {
     }
     bank.set(word.answer, { id: word.id, answer: word.answer, meaning: word.meaning,
       category: word.category, partOfSpeech: word.partOfSpeech, difficulty: word.difficulty,
+      ...(word.englishMeaning ? { englishMeaning: word.englishMeaning } : {}),
       ...(word.learningLevel !== undefined ? { learningLevel: word.learningLevel } : {}),
       ...(word.sourceUrl !== undefined ? { sourceUrl: word.sourceUrl } : {}),
       ...(word.historyAliases?.length ? { historyAliases: [...word.historyAliases] } : {}) });
@@ -111,7 +114,13 @@ export async function loadDictionary(apiUrl?: string): Promise<DictionaryCatalog
   try {
     const response = await fetch(url, { signal: controller.signal });
     if (!response.ok) throw new Error(`Dictionary unavailable (${response.status})`);
-    return parseDictionary(await response.json());
+    const catalog = parseDictionary(await response.json());
+    const definitions = await fetch('/vocabulary/english-definitions.json', { signal: controller.signal });
+    if (!definitions.ok) throw new Error(`English dictionary unavailable (${definitions.status})`);
+    // Parse again after reviewed POS/meaning corrections to regenerate unambiguous clue hints.
+    const result = parseDictionary({ version: 1, source: catalog.source, words: mergeEnglishDefinitions(catalog.words, await definitions.json()) });
+    if (!result.words.some(word => word.englishMeaning)) throw new Error('English dictionary contains no playable definitions');
+    return result;
   } catch (error) {
     if (controller.signal.aborted) throw new Error('Dictionary request timed out');
     throw error;

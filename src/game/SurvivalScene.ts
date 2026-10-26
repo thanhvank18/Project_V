@@ -16,8 +16,9 @@ import { createWorldBackdrop } from './worldBackdrop';
 import { CHARGE_RADIUS, RANGED_RADIUS } from './tacticalRules';
 import { PART_OF_SPEECH_LABELS } from './vocabulary';
 import type { Enemy, EnginePort, GameEvent, ItemKind, Snapshot, WorldObject } from './types';
+import { localizeText, type Language } from '../i18n';
 
-export interface RenderOptions { reducedMotion: boolean; muted: boolean; heroId?: string; musicVolume?: number; sfxVolume?: number }
+export interface RenderOptions { reducedMotion: boolean; muted: boolean; heroId?: string; musicVolume?: number; sfxVolume?: number; language?: Language }
 interface Action { key: string; start: number; until: number; offset: number; priority: boolean; hold: boolean }
 interface EnemyView {
   character: CharacterDefinition;
@@ -123,6 +124,7 @@ export class SurvivalScene extends Phaser.Scene {
   private impacts: Impact[] = [];
   private pickups: Pickup[] = [];
   private decoration: Phaser.GameObjects.Sprite[] = [];
+  private districtLabels: { label: Phaser.GameObjects.Text; source: string }[] = [];
   private lines!: Phaser.GameObjects.Graphics;
   private reticle!: Phaser.GameObjects.Graphics;
   private bulletFx!: Phaser.GameObjects.Graphics;
@@ -162,7 +164,7 @@ export class SurvivalScene extends Phaser.Scene {
     this.gameAudio.configure(this.options);
     this.gameAudio.setPhase(this.engine.snapshot().phase);
     this.world = this.add.container(0, 0).setDepth(0);
-    this.inWorld(createWorldBackdrop(this).setDepth(-3));
+    this.inWorld(createWorldBackdrop(this, this.options.language, (label, source) => this.districtLabels.push({ label, source })).setDepth(-3));
     // A quiet vignette reserves contrast for the upper HUD and lower typing area.
     this.inWorld(this.add.rectangle(WORLD_WIDTH / 2, 360, WORLD_WIDTH, 720, 0x0b1922, 0.12).setDepth(-2));
     this.inWorld(this.add.rectangle(WORLD_WIDTH / 2, 57, WORLD_WIDTH, 114, 0x101c25, 0.28).setDepth(-1));
@@ -205,9 +207,20 @@ export class SurvivalScene extends Phaser.Scene {
   }
 
   setOptions(options: RenderOptions): void {
+    const languageChanged = this.options.language !== options.language;
     this.options = options;
     this.gameAudio?.configure(options);
+    if (languageChanged) {
+      for (const { label, source } of this.districtLabels) label.setText(localizeText(source, options.language ?? 'vi').toUpperCase());
+      for (const pickup of this.pickups) pickup.label.setText(`+ ${localizeText(ITEM_NAMES[pickup.item], options.language ?? 'vi')}`);
+      // Brief feedback belongs to its original event; changing language never replays it.
+      for (const floating of this.floats) floating.text.destroy();
+      this.floats = [];
+      this.notifyElapsed = 100;
+    }
   }
+
+  private text(vietnamese: string, english: string): string { return this.options.language === 'en' ? english : vietnamese; }
 
   nextTrack(): void {
     this.gameAudio?.nextTrack();
@@ -228,7 +241,7 @@ export class SurvivalScene extends Phaser.Scene {
       this.cameraX += (desiredCamera - this.cameraX) * (1 - Math.exp(-dt / 160));
     }
     if (snapshot.party || snapshot.phase !== 'paused' && snapshot.phase !== 'countdown') this.visualClock += dt;
-    this.allies?.render(snapshot.party?.players ?? [], snapshot.party?.selfId ?? '', this.engine.clock);
+    this.allies?.render(snapshot.party?.players ?? [], snapshot.party?.selfId ?? '', this.engine.clock, GROUND, this.options.language);
     for (const event of this.engine.drainEvents()) this.handleEvent(event);
     this.renderHero(snapshot);
     this.renderEnemies(snapshot);
@@ -366,8 +379,8 @@ export class SurvivalScene extends Phaser.Scene {
     const meaning = this.add.text(0, 12, '', { fontFamily: FONT, fontSize: '13px', color: '#d1ded2', align: 'center', wordWrap: { width: width - 24 }, resolution: 2 }).setOrigin(0.5);
     const hint = this.add.text(0, 35, '', { fontFamily: FONT, fontSize: '12px', color: '#9ed6c2', align: 'center', resolution: 2 }).setOrigin(0.5);
     const label = this.add.container(enemy.x, 290, [plate, descriptor, prompt, meaning, hint]).setDepth(20);
-    const protectedLabel = this.add.text(enemy.x, GROUND - (isBoss ? 207 : 128), '◆ Được Tank che chắn', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#b8def3', stroke: '#172b3b', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(21).setVisible(false);
-    const slamLabel = this.add.text(enemy.x, GROUND + 46, 'VÙNG ĐẬP ĐẤT · NÉ SANG BÊN', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#ffd1a4', stroke: '#33242a', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(22).setVisible(false);
+    const protectedLabel = this.add.text(enemy.x, GROUND - (isBoss ? 207 : 128), '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#b8def3', stroke: '#172b3b', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(21).setVisible(false);
+    const slamLabel = this.add.text(enemy.x, GROUND + 46, '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#ffd1a4', stroke: '#33242a', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(22).setVisible(false);
     return { character, sprite, shadow, label, plate, descriptor, prompt, meaning, hint, protectedLabel, slamLabel, action: null, born: this.visualClock, dyingAt: null, lastX: enemy.x, gaitPhase: (enemy.id * 0.381966) % 1, lastKind: enemy.kind, labelWidth: width, lastText: '', flashUntil: 0, staggerStart: 0, staggerDuration: 0, staggerDirection: 1, freezeFrame: null, attackImpactStart: -1000, recoveryLastClock: this.visualClock, attackDirection: 1, attackOrigin: enemy.x, attackDuration: isBoss ? 1500 : 500 };
   }
 
@@ -493,14 +506,14 @@ export class SurvivalScene extends Phaser.Scene {
       const visibleHint = target ? snapshot.target?.hint ?? ''
         : enemy.challenge.kind === 'hint' || enemy.challenge.kind === 'translate' ? enemy.challenge.hint : '';
       const owner = snapshot.party?.players.find(player => player.id !== snapshot.party!.selfId && player.hp > 0 && player.connected !== false && player.targetId === enemy.id);
-      if (owner) view.protectedLabel.setVisible(onscreen).setText(`${partyName(owner)} đang khóa`).setColor(`#${partyColor(snapshot.party!.players, owner.id).toString(16).padStart(6, '0')}`);
-      else view.protectedLabel.setText('Được khiên che chắn').setColor('#b8def3');
-      const content = `${enemy.challenge.prompt}|${visibleHint}|${word.meaning}|${word.partOfSpeech}|${enemy.hp}|${target}|${enemy.bossPhase}|${enemy.role}|${owner?.id}`;
+      if (owner) view.protectedLabel.setVisible(onscreen).setText(this.text(`${partyName(owner, this.options.language)} đang khóa`, `Claimed by ${partyName(owner, this.options.language)}`)).setColor(`#${partyColor(snapshot.party!.players, owner.id).toString(16).padStart(6, '0')}`);
+      else view.protectedLabel.setText(this.text('Được khiên che chắn', 'Protected by a shield')).setColor('#b8def3');
+      const content = `${this.options.language}|${enemy.challenge.prompt}|${visibleHint}|${word.meaning}|${word.partOfSpeech}|${enemy.hp}|${target}|${enemy.bossPhase}|${enemy.role}|${owner?.id}`;
       if (content !== view.lastText) {
         view.lastText = content;
-        const role = enemy.role === 'shield' ? 'HỘ VỆ' : enemy.role === 'ranged' ? 'XẠ THỦ' : enemy.role === 'summoner' ? 'TRIỆU HỒI' : '';
-        view.descriptor.setText(`${PART_OF_SPEECH_LABELS[word.partOfSpeech]}${role ? ` · ${role}` : ''}${enemy.kind === 'armored' ? ` · GIÁP ${enemy.hp}/${enemy.maxHp}` : isBoss ? ` · PHASE ${enemy.bossPhase}` : ''}`);
-        const isMeaningPrompt = enemy.challenge.prompt.trim().toLocaleLowerCase('vi') === word.meaning.trim().toLocaleLowerCase('vi');
+        const role = enemy.role === 'shield' ? this.text('HỘ VỆ', 'GUARD') : enemy.role === 'ranged' ? this.text('XẠ THỦ', 'RANGED') : enemy.role === 'summoner' ? this.text('TRIỆU HỒI', 'SUMMONER') : '';
+        view.descriptor.setText(`${localizeText(PART_OF_SPEECH_LABELS[word.partOfSpeech], this.options.language ?? 'vi')}${role ? ` · ${role}` : ''}${enemy.kind === 'armored' ? ` · ${this.text('GIÁP', 'ARMOR')} ${enemy.hp}/${enemy.maxHp}` : isBoss ? ` · ${this.text('GIAI ĐOẠN', 'PHASE')} ${enemy.bossPhase}` : ''}`);
+        const isMeaningPrompt = enemy.challenge.prompt.trim().toLocaleLowerCase(this.options.language ?? 'vi') === word.meaning.trim().toLocaleLowerCase(this.options.language ?? 'vi');
         // Above-head labels stay compact; the selected dock retains the full dictionary definition.
         const shortMeaning = word.meaning.length > 46 ? `${word.meaning.slice(0, 43).replace(/\s+\S*$/, '')}…` : word.meaning;
         let prompt = enemy.challenge.prompt.replace(/\s*\/\s*/g, word.answer.length > 10 ? '' : ' · ');
@@ -523,12 +536,12 @@ export class SurvivalScene extends Phaser.Scene {
         const duration = view.attackDuration;
         const remaining = enemy.attackUntil - this.engine.clock;
         if (!this.tacticalEffects) this.drawSlamTelegraph(enemy, Phaser.Math.Clamp(1 - remaining / duration, 0, 1));
-        view.slamLabel.setText(enemy.attackKind === 'charge' ? 'XUNG PHONG · RA NGOÀI LÀN' : 'ĐẬP ĐẤT · VÙNG ĐÃ KHÓA');
+        view.slamLabel.setText(enemy.attackKind === 'charge' ? this.text('XUNG PHONG · RA NGOÀI LÀN', 'CHARGE · LEAVE THE LANE') : this.text('ĐẬP ĐẤT · VÙNG ĐÃ KHÓA', 'SLAM · AREA LOCKED'));
         view.slamLabel.setVisible(onscreen && (remaining > duration - 450 || remaining < 280)).setX(Phaser.Math.Clamp(this.screenX(enemy.attackTargetX ?? enemy.x), 160, 1120));
       }
       if (!onscreen && !target) continue;
       if (!onscreen && target) {
-        this.offscreenTarget.setVisible(true).setX(screenEnemyX < 0 ? 151 : 1129).setText(screenEnemyX < 0 ? '← Mục tiêu ở bên trái' : 'Mục tiêu ở bên phải →');
+        this.offscreenTarget.setVisible(true).setX(screenEnemyX < 0 ? 151 : 1129).setText(screenEnemyX < 0 ? this.text('← Mục tiêu ở bên trái', '← Target to the left') : this.text('Mục tiêu ở bên phải →', 'Target to the right →'));
       }
       labelRequests.push({ id: enemy.id, width: view.labelWidth, desiredX: screenEnemyX, boss: isBoss, selected: target });
       if (target) {
@@ -593,14 +606,14 @@ export class SurvivalScene extends Phaser.Scene {
       const sx = this.screenX(object.x), nearby = snapshot.world?.nearby?.id === object.id;
       const usable = object.kind !== 'barrel' || object.state !== 'used';
       view.caption.setVisible(sx > 0 && sx < 1280 && !selected && usable);
-      const name = object.kind === 'barrel' ? (object.state === 'active' ? 'Thùng nổ · Tab để chọn' : 'Thùng nổ · chưa sẵn sàng') : object.kind === 'gate' ? (object.state === 'closed' ? 'Cổng đóng' : 'Cổng mở') : `Trạm hồi phục · ${object.charges} lượt`;
+      const name = object.kind === 'barrel' ? (object.state === 'active' ? this.text('Thùng nổ · Tab để chọn', 'Explosive barrel · Tab to select') : this.text('Thùng nổ · chưa sẵn sàng', 'Explosive barrel · not ready')) : object.kind === 'gate' ? (object.state === 'closed' ? this.text('Cổng đóng', 'Gate closed') : this.text('Cổng mở', 'Gate open')) : this.text(`Trạm hồi phục · ${object.charges} lượt`, `Healing station · ${object.charges} charges`);
       view.caption.setText(`${name}${nearby && object.kind === 'gate' ? ' · Enter' : ''}`);
       view.label.setVisible(selected);
       if (!selected || !snapshot.target) continue;
       const target = snapshot.target;
-      const isMeaning = target.prompt.trim().toLocaleLowerCase('vi') === target.meaning.trim().toLocaleLowerCase('vi');
+      const isMeaning = target.prompt.trim().toLocaleLowerCase(this.options.language ?? 'vi') === target.meaning.trim().toLocaleLowerCase(this.options.language ?? 'vi');
       const shortMeaning = target.meaning.length > 46 ? `${target.meaning.slice(0, 43).replace(/\s+\S*$/, '')}…` : target.meaning;
-      view.descriptor.setText(`${PART_OF_SPEECH_LABELS[target.partOfSpeech]} · THÙNG NỔ`);
+      view.descriptor.setText(`${localizeText(PART_OF_SPEECH_LABELS[target.partOfSpeech], this.options.language ?? 'vi')} · ${this.text('THÙNG NỔ', 'BARREL')}`);
       view.prompt.setText(isMeaning ? shortMeaning : target.prompt);
       view.prompt.setFontSize(isMeaning || target.length > 12 ? 16 : 19);
       view.meaning.setText(isMeaning ? '' : shortMeaning);
@@ -659,7 +672,7 @@ export class SurvivalScene extends Phaser.Scene {
       this.letters.push({ heroId: firingCharacter.id, playerId: event.playerId, targetCharacter, object: glyph, ghosts, shotId: event.shotId, enemyId: event.enemyId ?? -1, worldObjectId: event.worldObjectId, momentum, start: firedAt, impactAt: event.impactAt ?? firedAt + (event.duration ?? 220), x0: glyph.x, y0: glyph.y, x1: contact.x, y1: contact.y, effective: event.effective !== false });
       this.addEffect('effects-letter-impact', glyph.x, glyph.y, 0.25, sign < 0);
     } else if (event.type === 'jam') {
-      if (ownEvent) { this.heroAction = this.action(this.heroCharacter.actions.idle, 300, 0, true); this.float('CẠCH!', this.engine.playerX + (this.hero.flipX ? -80 : 80), GROUND - 95, '#ff9b88', 500); }
+      if (ownEvent) { this.heroAction = this.action(this.heroCharacter.actions.idle, 300, 0, true); this.float(this.text('CẠCH!', 'JAMMED!'), this.engine.playerX + (this.hero.flipX ? -80 : 80), GROUND - 95, '#ff9b88', 500); }
     } else if (event.type === 'hit' || event.type === 'world-hit') {
       // Resolve the matching projectile on the authoritative engine hit, never by animation callback.
       const shot = this.letters.find(letter => (!event.playerId || letter.playerId === event.playerId) && (event.shotId !== undefined ? letter.shotId === event.shotId : letter.enemyId === event.enemyId && letter.object.text === event.glyph));
@@ -685,19 +698,19 @@ export class SurvivalScene extends Phaser.Scene {
         this.beginDeath(view);
         if (!this.options.reducedMotion) this.addEffect('effects-ground-dust', x, GROUND - 7, characterVisualHeight(view.character) / 90);
       }
-      this.float(event.type === 'boss-defeat' ? 'BOSS ĐÃ HẠ!' : 'CHÍNH XÁC!', x, GROUND - (event.type === 'boss-defeat' ? 205 : 130), '#a9ead2', 800);
+      this.float(event.type === 'boss-defeat' ? this.text('BOSS ĐÃ HẠ!', 'BOSS DEFEATED!') : this.text('CHÍNH XÁC!', 'CORRECT!'), x, GROUND - (event.type === 'boss-defeat' ? 205 : 130), '#a9ead2', 800);
       if (event.type === 'boss-defeat') this.heroAction = this.action(this.heroCharacter.actions.idle);
     } else if (event.type === 'armor-break') {
       if (view?.lastKind === 'tank') this.reactToBossLayer(view, event.type);
       else if (view) view.action = this.action(view.character.actions.hurt);
-      this.float(view?.lastKind === 'tank' ? 'PHÁ LỚP' : 'VỠ GIÁP', x, GROUND - 155, '#c4c5f6', 650);
+      this.float(view?.lastKind === 'tank' ? this.text('PHÁ LỚP', 'LAYER BROKEN') : this.text('VỠ GIÁP', 'ARMOR BROKEN'), x, GROUND - 155, '#c4c5f6', 650);
     } else if (event.type === 'player-hurt') {
       if (ownEvent) { this.heroAction = this.action(this.heroCharacter.actions.hurt, undefined, 0, true); this.shakeStart = this.visualClock; this.heroHurtStart = this.visualClock; this.heroHurtDirection = (event.x ?? this.engine.playerX) >= (event.sourceX ?? this.engine.playerX - 1) ? 1 : -1; }
       this.attackEffects.recordContact(event, this.visualClock, characterHitPoint(event.x ?? actor?.x ?? this.engine.playerX, GROUND, ownEvent ? this.heroCharacter : getHeroCharacter(actor?.heroId), this.heroFacing));
       this.float(event.damage !== undefined ? `−${event.damage} HP` : '− HP', event.x ?? this.engine.playerX, GROUND - 150, '#ff9c8e', 650);
     } else if (event.type === 'boss-phase') {
       if (view) this.reactToBossLayer(view, event.type);
-      this.float('CUỒNG NỘ!', x, GROUND - 240, '#ffa58d', 900);
+      this.float(this.text('CUỒNG NỘ!', 'ENRAGED!'), x, GROUND - 240, '#ffa58d', 900);
     } else if (event.type === 'hero-skill') {
       const character = getHeroCharacter(event.heroId ?? this.heroCharacter.id);
       const skill = getHeroSkill(character.id);
@@ -715,13 +728,13 @@ export class SurvivalScene extends Phaser.Scene {
         height: characterVisualHeight(character), visualKind: event.visualKind ?? skill.visualKind,
         targetX: event.targetX, radius: event.radius, duration: event.duration, targets,
       });
-      this.float(event.skillPhase === 'block' ? 'CHẶN ĐÒN!' : skill.name, x, GROUND - characterVisualHeight(character) - 22, skill.color, 850);
+      this.float(event.skillPhase === 'block' ? this.text('CHẶN ĐÒN!', 'BLOCKED!') : localizeText(skill.name, this.options.language ?? 'vi'), x, GROUND - characterVisualHeight(character) - 22, skill.color, 850);
     } else if (event.type === 'attack') {
       if (view) {
         view.attackDuration = event.duration ?? 500;
         view.action = this.action(view.character.actions.attack, view.attackDuration);
       }
-      if (view?.lastKind === 'tank') this.float('CẨN THẬN!', x, GROUND - 235, '#ffa58d', 550);
+      if (view?.lastKind === 'tank') this.float(this.text('CẨN THẬN!', 'WATCH OUT!'), x, GROUND - 235, '#ffa58d', 550);
     } else if (event.type === 'attack-impact') {
       const heroContact = characterHitPoint(event.targetX ?? this.engine.playerX, GROUND, ownEvent ? this.heroCharacter : getHeroCharacter(actor?.heroId), this.heroFacing);
       this.attackEffects.record(snapshot.party || event.attackKind ? { ...event, hit: false } : event, this.visualClock, heroContact);
@@ -741,14 +754,14 @@ export class SurvivalScene extends Phaser.Scene {
     } else if (event.type === 'world-explosion') {
       this.tacticalEffects?.emit('explosion', x, this.visualClock, event.radius ?? 220);
       this.gameAudio?.play('boss-slam');
-      this.float('THÙNG NỔ!', x, GROUND - 85, '#ffcb8d', 700);
+      this.float(this.text('THÙNG NỔ!', 'BARREL EXPLODED!'), x, GROUND - 85, '#ffcb8d', 700);
     } else if (event.type === 'world-interact') {
       this.tacticalEffects?.emit(event.worldKind === 'healing-zone' ? 'heal' : 'gate', x, this.visualClock, event.radius ?? 80);
       this.gameAudio?.play('pickup');
     } else if (event.type === 'formation') {
       this.tacticalEffects?.emit('summon', x, this.visualClock, 75);
     } else if (event.type === 'momentum') {
-      if ((event.value ?? 0) > 0) { this.float(`HOÀN HẢO · NHỊP ${event.value}`, actor?.x ?? this.engine.playerX, GROUND - characterVisualHeight(getHeroCharacter(actor?.heroId ?? this.heroCharacter.id)) - 20, '#ffe19d', 850); this.gameAudio?.play('skill'); }
+      if ((event.value ?? 0) > 0) { this.float(this.text(`HOÀN HẢO · NHỊP ${event.value}`, `PERFECT · MOMENTUM ${event.value}`), actor?.x ?? this.engine.playerX, GROUND - characterVisualHeight(getHeroCharacter(actor?.heroId ?? this.heroCharacter.id)) - 20, '#ffe19d', 850); this.gameAudio?.play('skill'); }
     } else if (event.type === 'game-over') {
       this.heroAction = this.action(this.heroCharacter.actions.death, undefined, 0, true, true);
     } else if (event.type === 'vocabulary-complete') {
@@ -807,7 +820,7 @@ export class SurvivalScene extends Phaser.Scene {
     }
     const spawnX = Phaser.Math.Clamp(x, 58, WORLD_WIDTH - 58);
     const icon = this.add.image(this.screenX(spawnX), GROUND - 74, `item-${item}`).setDisplaySize(34, 34).setDepth(24);
-    const label = this.add.text(this.screenX(spawnX), GROUND - 107, `+ ${ITEM_NAMES[item]}`, { fontFamily: FONT, fontSize: '12px', fontStyle: 'bold', color: '#c1f1d7', stroke: '#12252f', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(24);
+    const label = this.add.text(this.screenX(spawnX), GROUND - 107, `+ ${localizeText(ITEM_NAMES[item], this.options.language ?? 'vi')}`, { fontFamily: FONT, fontSize: '12px', fontStyle: 'bold', color: '#c1f1d7', stroke: '#12252f', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(24);
     this.pickups.push({ icon, label, item, x: spawnX, y: GROUND - 74, start: this.visualClock });
   }
 
@@ -991,12 +1004,12 @@ export async function createGame(parent: HTMLElement, engine: EnginePort, onSnap
   const ready = new Promise<void>((resolve, reject) => {
     const timeout = window.setTimeout(() => {
       game?.destroy(true);
-      reject(new Error('Không thể khởi động cảnh game. Hãy tải lại trang.'));
+      reject(new Error(scene.options.language === 'en' ? 'Could not start the game. Please reload the page.' : 'Không thể khởi động cảnh game. Hãy tải lại trang.'));
     }, 45_000);
     scene.onPrepared = () => {
       window.clearTimeout(timeout);
       if (scene.loadErrors.length) {
-        reject(new Error(`Không tải được asset: ${scene.loadErrors.join(', ')}. Hãy tải lại trang.`));
+        reject(new Error(scene.options.language === 'en' ? `Could not load assets: ${scene.loadErrors.join(', ')}. Please reload the page.` : `Không tải được asset: ${scene.loadErrors.join(', ')}. Hãy tải lại trang.`));
         game.destroy(true);
       } else resolve();
     };

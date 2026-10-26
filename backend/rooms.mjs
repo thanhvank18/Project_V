@@ -2,6 +2,8 @@ import { randomInt, randomUUID } from 'node:crypto';
 import { WebSocketServer, WebSocket } from 'ws';
 import { GameEngine } from '../src/game/engine.ts';
 import { HERO_CHARACTERS } from '../src/game/characterCatalog.ts';
+import { vocabularyForLanguage } from '../src/game/englishDictionary.ts';
+export { mergeEnglishDefinitions } from '../src/game/englishDictionary.ts';
 
 const HEROES = HERO_CHARACTERS.map(hero => hero.id);
 const ITEMS = new Set(['health', 'freeze', 'damage', 'shield']);
@@ -17,11 +19,13 @@ export class RoomHub {
   }
 
   hello(message, send) {
+    if (message.language !== undefined && !['vi', 'en'].includes(message.language)) fail('Ngôn ngữ không hợp lệ.');
     if (!Array.isArray(message.seen) || message.seen.length > 100_000
       || message.seen.some(word => typeof word !== 'string' || !/^[a-z]{3,18}$/.test(word))) fail('Lịch sử từ không hợp lệ.');
     const old = typeof message.resumeToken === 'string' ? this.sessions.get(message.resumeToken) : undefined;
     const session = old && this.rooms.has(old.pin) ? old : {
       id: randomUUID(), token: randomUUID(), heroId: HEROES.includes(message.heroId) ? message.heroId : 'soldier',
+      language: message.language ?? 'vi',
       seen: new Set(), pin: '', connected: true, disconnectedAt: 0, attempts: [], tokens: 100, rateAt: this.now(), lastMoveAt: 0,
     };
     if (session.connected && session.send) session.send({ type: 'replaced', error: 'Phiên này đã được mở ở kết nối khác.' });
@@ -44,7 +48,7 @@ export class RoomHub {
 
   lobby(room, session) {
     return { status: room.engine && room.engine.snapshotFor(session.id).phase !== 'menu' ? 'playing' : 'lobby',
-      pin: room.pin, selfId: session.id, hostId: room.hostId,
+      pin: room.pin, selfId: session.id, hostId: room.hostId, language: room.language,
       players: room.members.map(member => ({ id: member.id, name: member.name, heroId: member.heroId, connected: member.connected })), error: '' };
   }
 
@@ -57,7 +61,7 @@ export class RoomHub {
     this.leave(session);
     let pin;
     do { pin = String(randomInt(100000, 1000000)); } while (this.rooms.has(pin));
-    const room = { pin, hostId: session.id, members: [session], engine: null, seenDuring: new Set(),
+    const room = { pin, hostId: session.id, language: session.language, members: [session], engine: null, seenDuring: new Set(),
       pendingSeen: [], touchedAt: this.now(), tickCount: 0, match: 0 };
     session.pin = pin; session.name = 'Người chơi 1';
     this.rooms.set(pin, room); this.broadcastLobby(room);
@@ -99,7 +103,7 @@ export class RoomHub {
       const taken = new Set(next.members.map(member => member.heroId));
       const heroId = taken.has(session.heroId) ? HEROES.find(id => !taken.has(id)) : session.heroId;
       this.leave(session);
-      session.pin = next.pin; session.heroId = heroId;
+      session.pin = next.pin; session.heroId = heroId; session.language = next.language;
       const usedNames = new Set(next.members.map(member => member.name));
       session.name = [1, 2, 3, 4].map(number => `Người chơi ${number}`).find(name => !usedNames.has(name));
       next.members.push(session); this.broadcastLobby(next); return;
@@ -110,17 +114,28 @@ export class RoomHub {
       if (room.members.some(member => member !== session && member.heroId === message.heroId)) fail('Anh hùng này đã có người chọn.', 'hero-taken');
       session.heroId = message.heroId; this.broadcastLobby(room); return;
     }
+    if (message.type === 'language') {
+      if (room.hostId !== session.id) fail('Chỉ chủ phòng đổi ngôn ngữ.', 'host-only');
+      if (room.engine && room.engine.snapshot().phase !== 'menu') fail('Chỉ đổi ngôn ngữ trước trận.');
+      if (!['vi', 'en'].includes(message.language)) fail('Ngôn ngữ không hợp lệ.');
+      if (message.language === 'en' && !this.words.some(word => word.englishMeaning)) fail('Kho từ tiếng Anh chưa sẵn sàng.');
+      room.language = message.language;
+      for (const member of room.members) member.language = room.language;
+      this.broadcastLobby(room); return;
+    }
     if (message.type === 'start') {
       if (room.hostId !== session.id) fail('Chỉ chủ phòng có thể bắt đầu.', 'host-only');
       if (!['survival', 'boss'].includes(message.mode)) fail('Chế độ không hợp lệ.');
       if (room.engine && ['playing', 'paused', 'countdown'].includes(room.engine.snapshot().phase)) fail('Trận đang diễn ra.');
       if (room.members.some(member => !member.connected)) fail('Hãy đợi đồng đội kết nối lại.');
+      const bank = vocabularyForLanguage(this.words, room.language);
+      if (!bank.length) fail('Kho từ tiếng Anh chưa sẵn sàng.');
       const seen = Object.fromEntries([...new Set(room.members.flatMap(member => [...member.seen]))].map(word => [word, 1]));
       room.seenDuring.clear(); room.pendingSeen = []; room.match++;
       room.engine = new this.Engine(Math.random, { highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: seen }, word => {
         room.seenDuring.add(word.answer); room.pendingSeen.push(word.answer);
         for (const member of room.members) member.seen.add(word.answer);
-      }, this.words);
+      }, bank);
       room.engine.configureParty(room.members.map(member => ({ id: member.id, name: member.name, heroId: member.heroId })));
       room.engine.start(message.mode); this.broadcastLobby(room); this.broadcastFrame(room); return;
     }

@@ -1,0 +1,4113 @@
+{
+  "version": 1,
+  "revision": "2026-10-26-reviewed-common-senses",
+  "sourceSha256": "ed9abf18f5b3c257f8bb08b7e3e2fedf6be126ed3b021843c5316ee082db4353",
+  "method": "Explicitly authored paired VI/EN meanings. References support word class or grammatical forms; wording is original. This subset is reviewed, not the entire source dictionary.",
+  "entries": {
+    "ailing": {
+      "before": {
+        "meaning": "sự ốm đau, sự khó ở",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "ốm yếu, đau yếu",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Suffering from illness or poor health.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/ailing"
+      ]
+    },
+    "alula": {
+      "before": {
+        "meaning": "số nhiều alulae",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "cụm lông nhỏ ở ngón đầu tiên của cánh chim",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A small cluster of feathers on the first digit of a bird’s wing.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/alula"
+      ]
+    },
+    "anybody": {
+      "before": {
+        "meaning": "(thông tục) một người nào đó",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "bất kỳ ai, một người nào đó",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "Any person, without specifying who.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/anybody"
+      ]
+    },
+    "anymore": {
+      "before": {
+        "meaning": "(mỹ) nữa",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "nữa (thường dùng trong câu phủ định)",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "Any longer; continuing to the present or future.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/anymore"
+      ]
+    },
+    "anything": {
+      "before": {
+        "meaning": "vật gì, việc gì (trong câu phủ định và câu hỏi)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "bất cứ điều gì; thứ gì",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "Any thing, without specifying which one.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/anything"
+      ]
+    },
+    "anytime": {
+      "before": {
+        "meaning": "bất cứ lúc nào",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "bất cứ lúc nào",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "At any time, without restriction.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/anytime"
+      ]
+    },
+    "are": {
+      "before": {
+        "meaning": "a (đơn vị diện tích ruộng đất, bằng 100m2)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "là; đang ở (dạng hiện tại của be dùng với you, we, they)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Present form of be used with you, we, they, or a plural subject.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/are"
+      ]
+    },
+    "bacca": {
+      "before": {
+        "meaning": "số nhiều baccae",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "(thực vật học) quả mọng",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A berry, in botanical terminology.",
+      "reason": "Replace a bare plural/usage note or truncated source definition with a concise lexical sense confirmed in the cited dictionary or specialist glossary.",
+      "references": [
+        "https://www.dictionary.com/browse/bacca"
+      ]
+    },
+    "bad": {
+      "before": {
+        "meaning": "thời quá khứ của bid",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "xấu, tệ, không tốt",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Of poor quality or harmful.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/bad"
+      ]
+    },
+    "banana": {
+      "before": {
+        "meaning": "(thực vật học) cây chuối",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "quả chuối",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A long fruit with a yellow skin and soft flesh.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/banana"
+      ]
+    },
+    "bathroom": {
+      "before": {
+        "meaning": "thành ngữ bath",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "phòng tắm; nhà vệ sinh",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A room with a bath or shower, often also containing a toilet.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/bathroom"
+      ]
+    },
+    "beaten": {
+      "before": {
+        "meaning": "động tính từ quá khứ của beat",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã đánh, đã đánh bại (phân từ của beat)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Struck repeatedly or defeated an opponent.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/beaten"
+      ]
+    },
+    "better": {
+      "before": {
+        "meaning": "cấp so sánh của good",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "tốt hơn, khá hơn",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Of higher quality or in an improved condition.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/better"
+      ]
+    },
+    "bettor": {
+      "before": {
+        "meaning": "cấp so sánh của good",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "người cá cược",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A person who risks money on the result of an event.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/bettor"
+      ]
+    },
+    "bled": {
+      "before": {
+        "meaning": "mụn nước, mụn phỏng (ở da)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã chảy máu (quá khứ và phân từ của bleed)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Lost blood (past tense or past participle of bleed).",
+      "lemma": "bleed",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "blew": {
+      "before": {
+        "meaning": "thời quá khứ của blow",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã thổi (quá khứ của blow)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved air or sent out air (past tense of blow).",
+      "lemma": "blow",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "blown": {
+      "before": {
+        "meaning": "cú đánh đòn",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã thổi (phân từ của blow)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved air or sent out air (past participle of blow).",
+      "lemma": "blow",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "blue": {
+      "before": {
+        "meaning": "xanh",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "màu xanh dương, xanh da trời",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Having the colour of a clear daytime sky.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/blue"
+      ]
+    },
+    "born": {
+      "before": {
+        "meaning": "động tính từ quá khứ của bear",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "được sinh ra (phân từ của bear dùng khi nói về việc sinh đẻ)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Brought into the world through birth.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/born"
+      ]
+    },
+    "break": {
+      "before": {
+        "meaning": "xe vực ngựa (tập cho ngựa kéo xe)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "làm vỡ, làm gãy, phá vỡ",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To damage something so that it splits or stops working.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/break"
+      ]
+    },
+    "bred": {
+      "before": {
+        "meaning": "nòi, giống",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã gây giống, đã sinh sản (quá khứ và phân từ của breed)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Produced young or raised animals for reproduction.",
+      "lemma": "breed",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "broke": {
+      "before": {
+        "meaning": "thời quá khứ của break",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã làm vỡ, đã phá vỡ (quá khứ của break)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Damaged something so that it split or stopped working.",
+      "lemma": "break",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "broken": {
+      "before": {
+        "meaning": "động tính từ quá khứ của break",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "bị vỡ, bị hỏng",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Damaged and no longer whole or working.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/broken"
+      ]
+    },
+    "built": {
+      "before": {
+        "meaning": "sự xây dựng",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã xây dựng (quá khứ và phân từ của build)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Constructed something by putting parts together.",
+      "lemma": "build",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "burnt": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của burn",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã cháy, đã đốt (quá khứ và phân từ của burn)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Was damaged by fire or set something on fire.",
+      "lemma": "burn",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "came": {
+      "before": {
+        "meaning": "thời quá khứ của come",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã đến (quá khứ của come)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved toward or arrived at a place (past tense).",
+      "lemma": "come",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "can": {
+      "before": {
+        "meaning": "bình, bi đông, ca (đựng nước)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "có thể, có khả năng (trợ động từ)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Used to express ability or permission.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/can"
+      ]
+    },
+    "cannot": {
+      "before": {
+        "meaning": "phủ định của can",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "không thể, không có khả năng",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To be unable to do something.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/cannot"
+      ]
+    },
+    "care": {
+      "before": {
+        "meaning": "sự chăn sóc, sự chăm nom, sự giữ gìn, sự bảo dưỡng",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "sự chăm sóc, sự chăm nom",
+      "partOfSpeech": "noun",
+      "englishMeaning": "Attention given to keeping someone safe and well.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/care"
+      ]
+    },
+    "caroline": {
+      "before": {
+        "meaning": "ở thời saclơ đại đế",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "thuộc thời vua Charles I hoặc Charles II của Anh",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Relating to the reigns of Charles I or Charles II of England.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://www.dictionary.com/browse/caroline"
+      ]
+    },
+    "caught": {
+      "before": {
+        "meaning": "sự bắt, sự nắm lấy; cái bắt, cái vồ, cái chộp",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã bắt, đã chộp lấy (quá khứ và phân từ của catch)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Seized or captured someone or something.",
+      "lemma": "catch",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "check": {
+      "before": {
+        "meaning": "sự cản trở, sự ngăn cản; sự kìm hãm; sự hạn chế; sự chặn lại; người chống cự, người ngăn cản, vật cản",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "kiểm tra",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To examine something to make sure it is correct or safe.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/check"
+      ]
+    },
+    "clepsydra": {
+      "before": {
+        "meaning": "số nhiều clepsydras, clepsydrae",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đồng hồ nước, đo thời gian bằng dòng nước chảy",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A clock that measures time by the flow of water.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/clepsydra"
+      ]
+    },
+    "close": {
+      "before": {
+        "meaning": "đóng kín",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đóng, khép lại",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To move something so that an opening is shut.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/close"
+      ]
+    },
+    "color": {
+      "before": {
+        "meaning": "màu, sự tô màu",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "màu sắc",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A visible quality such as red, blue, or green.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/color"
+      ]
+    },
+    "comes": {
+      "before": {
+        "meaning": "mạch máu chạy dọc dây thần kinh",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đến, tới (ngôi thứ ba số ít của come)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moves toward or arrives at a place (third-person singular).",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/comes"
+      ]
+    },
+    "coming": {
+      "before": {
+        "meaning": "sự đến, sự tới",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đang đến, đang tới (dạng -ing của come)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moving toward or arriving at a place.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/coming"
+      ]
+    },
+    "concentrate": {
+      "before": {
+        "meaning": "tập trung",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "tập trung chú ý",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To focus attention on one thing.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/concentrate"
+      ]
+    },
+    "confused": {
+      "before": {
+        "meaning": "lẫn lộn, lộn xộn, rối rắm",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "bối rối, không hiểu rõ",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Unable to understand clearly.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/confused"
+      ]
+    },
+    "could": {
+      "before": {
+        "meaning": "bình, bi đông, ca (đựng nước)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "có thể; có khả năng (trợ động từ)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Used to express ability or a possibility.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/could"
+      ]
+    },
+    "crazy": {
+      "before": {
+        "meaning": "quá say mê",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "điên rồ, thiếu hợp lý",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Very foolish or unreasonable.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/crazy"
+      ]
+    },
+    "cried": {
+      "before": {
+        "meaning": "tiếng kêu, tiêng la, tiếng hò hét, tiếng hò reo (vì đau đớn, sợ, mừng rỡ...)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã khóc (quá khứ và phân từ của cry)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Shed tears (past tense or past participle).",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/cried"
+      ]
+    },
+    "crossed": {
+      "before": {
+        "meaning": "chéo",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "bắt chéo, đặt chéo nhau",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Placed across one another.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/crossed"
+      ]
+    },
+    "cut": {
+      "before": {
+        "meaning": "sự cắt, sự đốn, sự chặt, sự thái; nhát chém, nhát thái, vết đứt, vết xẻ, vết mổ",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "cắt",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To divide or make an opening with a sharp tool.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/cut"
+      ]
+    },
+    "david": {
+      "before": {
+        "meaning": "chỉ tên của người đàn ông",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "David (tên riêng của nam giới)",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A male given name of Hebrew origin.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/david"
+      ]
+    },
+    "day": {
+      "before": {
+        "meaning": "ban ngày",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "ngày; khoảng thời gian 24 giờ",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A period of twenty-four hours.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/day"
+      ]
+    },
+    "deal": {
+      "before": {
+        "meaning": "gỗ tùng, gỗ thông",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "thỏa thuận, giao dịch",
+      "partOfSpeech": "noun",
+      "englishMeaning": "An agreement between people or organizations.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/deal"
+      ]
+    },
+    "dealt": {
+      "before": {
+        "meaning": "gỗ tùng, gỗ thông",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã phân phát, đã chia (quá khứ và phân từ của deal)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Distributed something, such as cards, among people.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/dealt"
+      ]
+    },
+    "did": {
+      "before": {
+        "meaning": "thời quá khứ của do",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã làm (quá khứ của do)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Performed an action (past tense of do).",
+      "lemma": "do",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "die": {
+      "before": {
+        "meaning": "con súc sắc",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "chết, qua đời",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To stop being alive.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/die"
+      ]
+    },
+    "dipteron": {
+      "before": {
+        "meaning": "số nhiều dipterons, diptera",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "côn trùng thuộc bộ Hai cánh",
+      "partOfSpeech": "noun",
+      "englishMeaning": "An insect belonging to the order of true flies.",
+      "reason": "Replace a bare plural/usage note or truncated source definition with a concise lexical sense confirmed in the cited dictionary or specialist glossary.",
+      "references": [
+        "https://en.wiktionary.org/wiki/dipteron"
+      ]
+    },
+    "does": {
+      "before": {
+        "meaning": "làm, thực hiện",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "làm (ngôi thứ ba số ít của do)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Performs an action (third-person singular present).",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/does"
+      ]
+    },
+    "doing": {
+      "before": {
+        "meaning": "sự làm (việc gì...)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đang làm (dạng -ing của do)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Performing an action or activity.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/doing"
+      ]
+    },
+    "done": {
+      "before": {
+        "meaning": "động tính từ quá khứ của do",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã làm, đã hoàn thành (phân từ của do)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Performed or completed an action (past participle).",
+      "lemma": "do",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "drank": {
+      "before": {
+        "meaning": "đồ uống, thức uống",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã uống (quá khứ của drink)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Swallowed a liquid (past tense of drink).",
+      "lemma": "drink",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "drawn": {
+      "before": {
+        "meaning": "sự kéo; sự cố gắng, sự nỗ lực",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã vẽ (phân từ của draw)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Made a picture with lines (past participle).",
+      "lemma": "draw",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "dreamt": {
+      "before": {
+        "meaning": "giấc mơ, giấc mộng",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã mơ (quá khứ và phân từ của dream)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Experienced thoughts and images while asleep.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/dreamt"
+      ]
+    },
+    "drew": {
+      "before": {
+        "meaning": "sự kéo; sự cố gắng, sự nỗ lực",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã vẽ (quá khứ của draw)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Made a picture with lines (past tense).",
+      "lemma": "draw",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "drinks": {
+      "before": {
+        "meaning": "liên quan đến rượu",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "các đồ uống (số nhiều của drink)",
+      "partOfSpeech": "noun",
+      "englishMeaning": "Liquids that people consume by swallowing.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/drinks"
+      ]
+    },
+    "driven": {
+      "before": {
+        "meaning": "cuộc đi xe, cuộc đi chơi bằng xe",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã lái xe (phân từ của drive)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Operated a vehicle (past participle of drive).",
+      "lemma": "drive",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "drove": {
+      "before": {
+        "meaning": "thời quá khứ của drive",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã lái xe (quá khứ của drive)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Operated a vehicle (past tense of drive).",
+      "lemma": "drive",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "drunk": {
+      "before": {
+        "meaning": "động tính từ quá khứ của drink",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "say rượu",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Affected by drinking too much alcohol.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/drunk"
+      ]
+    },
+    "dug": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của dig",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã đào (quá khứ và phân từ của dig)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Made a hole by removing soil.",
+      "lemma": "dig",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "during": {
+      "before": {
+        "meaning": "trải qua, trong lúc, trong thời gian",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "trong, trong suốt (một khoảng thời gian)",
+      "partOfSpeech": "preposition",
+      "englishMeaning": "Within or throughout a period of time.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/during"
+      ]
+    },
+    "easy": {
+      "before": {
+        "meaning": "thoải mái, thanh thản, không lo lắng; thanh thoát, ung dung",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "dễ, không khó",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Not difficult to do or understand.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/easy"
+      ]
+    },
+    "either": {
+      "before": {
+        "meaning": "mỗi (trong hai), một (trong hai)",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "một trong hai; mỗi bên trong hai bên",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "One or the other of two.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/either"
+      ]
+    },
+    "end": {
+      "before": {
+        "meaning": "giới hạn",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "phần cuối, điểm kết thúc",
+      "partOfSpeech": "noun",
+      "englishMeaning": "The final part or point of something.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/end"
+      ]
+    },
+    "equipoise": {
+      "before": {
+        "meaning": "(thường) (nghĩa bóng)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "trạng thái cân bằng",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A state in which opposing forces or influences are balanced.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/equipoise"
+      ]
+    },
+    "even": {
+      "before": {
+        "meaning": "chiều, chiều hôm",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "thậm chí, ngay cả",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "Used to emphasize something surprising or unexpected.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/even"
+      ]
+    },
+    "everybody": {
+      "before": {
+        "meaning": "mọi người, tất cả mọi người, ai ai; mỗi người",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "mọi người",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "Every person.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/everybody"
+      ]
+    },
+    "everyone": {
+      "before": {
+        "meaning": "mọi người, tất cả mọi người, ai ai; mỗi người",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "mọi người",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "Every person.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/everyone"
+      ]
+    },
+    "expected": {
+      "before": {
+        "meaning": "được chờ đợi hy vọng",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "được mong đợi, được dự kiến",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Believed likely to happen or arrive.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/expected"
+      ]
+    },
+    "extremely": {
+      "before": {
+        "meaning": "thái cực; mức độ cùng cực, tình trạng cùng cực",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "cực kỳ, hết sức",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "To a very high degree.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/extremely"
+      ]
+    },
+    "farewell": {
+      "before": {
+        "meaning": "tam biệt!",
+        "partOfSpeech": "interjection"
+      },
+      "meaning": "tạm biệt",
+      "partOfSpeech": "interjection",
+      "englishMeaning": "Used when saying goodbye.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/farewell"
+      ]
+    },
+    "fed": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của fee",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã cho ăn (quá khứ và phân từ của feed)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Gave food to a person or animal.",
+      "lemma": "feed",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "feel": {
+      "before": {
+        "meaning": "sự sờ mó",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "cảm thấy, cảm nhận",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To experience an emotion or physical sensation.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/feel"
+      ]
+    },
+    "few": {
+      "before": {
+        "meaning": "ít vải",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "một vài; ít",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "A small number of people or things.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/few"
+      ]
+    },
+    "find": {
+      "before": {
+        "meaning": "sự tìm thấy (chồn, cáo, mỏ, vàng...)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "tìm thấy, phát hiện",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To discover or locate someone or something.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/find"
+      ]
+    },
+    "first": {
+      "before": {
+        "meaning": "thứ nhất",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đầu tiên, thứ nhất",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Coming before all others in order.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/first"
+      ]
+    },
+    "five": {
+      "before": {
+        "meaning": "năm",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "năm (số 5)",
+      "partOfSpeech": "numeral",
+      "englishMeaning": "The number after four and before six.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/five"
+      ]
+    },
+    "fled": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của flee",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã bỏ trốn, đã chạy trốn",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Escaped or ran away from danger.",
+      "lemma": "flee",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "flew": {
+      "before": {
+        "meaning": "con ruồi",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã bay (quá khứ của fly)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved through the air (past tense of fly).",
+      "lemma": "fly",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "flirting": {
+      "before": {
+        "meaning": "ve vãn; tán tỉnh",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đang tán tỉnh, đang ve vãn",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Behaving playfully to show romantic interest.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/flirting"
+      ]
+    },
+    "flown": {
+      "before": {
+        "meaning": "(từ cổ,nghĩa cổ) căng ra, phình ra, phồng ra",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đã bay (phân từ của fly)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved through the air (past participle of fly).",
+      "lemma": "fly",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "foregone": {
+      "before": {
+        "meaning": "động tính từ quá khứ của forego",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã được định đoạt hoặc chắc chắn từ trước",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Already settled or certain in advance.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/foregone"
+      ]
+    },
+    "fought": {
+      "before": {
+        "meaning": "sự đấu tranh, sự chiến đấu; trận đánh, cuộc chiến đấu",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã chiến đấu (quá khứ và phân từ của fight)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Took part in a struggle or battle.",
+      "lemma": "fight",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "found": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của find",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã tìm thấy (quá khứ và phân từ của find)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Discovered or located something.",
+      "lemma": "find",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "four": {
+      "before": {
+        "meaning": "bốn",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "bốn (số 4)",
+      "partOfSpeech": "numeral",
+      "englishMeaning": "The number after three and before five.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/four"
+      ]
+    },
+    "freaked": {
+      "before": {
+        "meaning": "có đốm, lốm đốm, làm có vệt",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đã hoảng hốt (quá khứ và phân từ của freak)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Reacted with intense fear or agitation.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/freaked"
+      ]
+    },
+    "froze": {
+      "before": {
+        "meaning": "sự đông vì lạnh, sự giá lạnh; tình trạng đông vì lạnh",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã đông lại, đã đóng băng (quá khứ của freeze)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Became solid because of cold (past tense).",
+      "lemma": "freeze",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "frozen": {
+      "before": {
+        "meaning": "sự đông vì lạnh, sự giá lạnh; tình trạng đông vì lạnh",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đông cứng, đóng băng",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Turned into ice or made solid by cold.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/frozen"
+      ]
+    },
+    "fucker": {
+      "before": {
+        "meaning": "đồ ngốc! đồ ngu!",
+        "partOfSpeech": "interjection"
+      },
+      "meaning": "kẻ đáng ghét (từ chửi tục)",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A vulgar insult for a person the speaker dislikes.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/fucker"
+      ]
+    },
+    "getting": {
+      "before": {
+        "meaning": "(ngành mỏ) sự khấu; sự khai thác",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đang nhận, đang có được (dạng -ing của get)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Receiving or obtaining something.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/getting"
+      ]
+    },
+    "given": {
+      "before": {
+        "meaning": "động tính từ quá khứ của give",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã cho, đã trao (phân từ của give)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Handed or provided something to someone.",
+      "lemma": "give",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "going": {
+      "before": {
+        "meaning": "sự ra đi",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đang đi (dạng -ing của go)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moving or travelling from one place to another.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/going"
+      ]
+    },
+    "gone": {
+      "before": {
+        "meaning": "động tính từ quá khứ của go",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã đi (phân từ của go)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved or travelled away (past participle of go).",
+      "lemma": "go",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "gotta": {
+      "before": {
+        "meaning": "phải, cần phải",
+        "partOfSpeech": "verb"
+      },
+      "meaning": "phải, cần phải (cách nói thân mật của have got to)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "An informal way of saying that someone must do something.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/gotta"
+      ]
+    },
+    "gotten": {
+      "before": {
+        "meaning": "(từ mỹ,nghĩa mỹ), (từ cổ,nghĩa cổ) động tính từ quá khứ của get",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã nhận được, đã có được (phân từ của get, dùng trong tiếng Anh Mỹ)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Received or obtained something (American past participle).",
+      "lemma": "get",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "graven": {
+      "before": {
+        "meaning": "động tính từ quá khứ của grave",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "được chạm khắc",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Carved or engraved into a surface.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/graven"
+      ]
+    },
+    "greater": {
+      "before": {
+        "meaning": "lớn hơn, có ý nghĩa hơn",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "lớn hơn, quan trọng hơn",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Larger in size, amount, or importance.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/greater"
+      ]
+    },
+    "greatest": {
+      "before": {
+        "meaning": "lớn nhất, có ý nghĩa nhất",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "lớn nhất, quan trọng nhất",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Largest in size, amount, or importance.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/greatest"
+      ]
+    },
+    "ground": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của grind",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "mặt đất",
+      "partOfSpeech": "noun",
+      "englishMeaning": "The solid surface of the earth.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/ground"
+      ]
+    },
+    "grown": {
+      "before": {
+        "meaning": "động tính từ quá khứ của grow",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "trưởng thành, đã lớn",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Fully developed or adult.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/grown"
+      ]
+    },
+    "gumshoe": {
+      "before": {
+        "meaning": "<mỹ>",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "(tiếng lóng) thám tử, nhất là thám tử tư",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A detective, especially a private investigator.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/gumshoe"
+      ]
+    },
+    "guy": {
+      "before": {
+        "meaning": "dây, xích",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "anh chàng, người đàn ông (thân mật)",
+      "partOfSpeech": "noun",
+      "englishMeaning": "An informal word for a man.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/guy"
+      ]
+    },
+    "held": {
+      "before": {
+        "meaning": "khoang (của tàu thuỷ)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã cầm, đã giữ (quá khứ và phân từ của hold)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Kept something in the hands or in position.",
+      "lemma": "hold",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "her": {
+      "before": {
+        "meaning": "nó, cô ấy, bà ấy, chị ấy...",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "cô ấy, bà ấy (dùng làm tân ngữ)",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "Refers to a female person as the object of a verb or preposition.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/her"
+      ]
+    },
+    "hid": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của hide",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã giấu, đã ẩn nấp (quá khứ của hide)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Put something out of sight or stayed out of sight.",
+      "lemma": "hide",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "hidden": {
+      "before": {
+        "meaning": "da sống (chưa thuộc, mới chỉ cạo và rửa)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "bị giấu, được che khuất",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Kept out of sight.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/hidden"
+      ]
+    },
+    "higher": {
+      "before": {
+        "meaning": "cao hơn, có cấp cao hơn",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "cao hơn",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "At a greater height or level.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/higher"
+      ]
+    },
+    "him": {
+      "before": {
+        "meaning": "nó, hắn, ông ấy, anh ấy",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "anh ấy, ông ấy (dùng làm tân ngữ)",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "Refers to a male person as the object of a verb or preposition.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/him"
+      ]
+    },
+    "his": {
+      "before": {
+        "meaning": "của nó, của hắn, của ông ấy, của anh ấy",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "của anh ấy, của ông ấy",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "Belonging to or connected with a male person.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/his"
+      ]
+    },
+    "hold": {
+      "before": {
+        "meaning": "khoang (của tàu thuỷ)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "cầm, giữ",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To keep something in the hands or in position.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/hold"
+      ]
+    },
+    "hung": {
+      "before": {
+        "meaning": "sự cúi xuống, sự gục xuống",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã treo (quá khứ và phân từ của hang)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Suspended something from a support.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/hung"
+      ]
+    },
+    "including": {
+      "before": {
+        "meaning": "bao gồm cả, kể cả",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "bao gồm cả, kể cả",
+      "partOfSpeech": "preposition",
+      "englishMeaning": "Having the named item as one part of a group.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/including"
+      ]
+    },
+    "internet": {
+      "before": {
+        "meaning": "một hệ thống các mạng máy tính được liên kết với nhau trên phạm vi toàn thế giới",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "mạng máy tính toàn cầu",
+      "partOfSpeech": "noun",
+      "englishMeaning": "The worldwide system of connected computer networks.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/internet"
+      ]
+    },
+    "into": {
+      "before": {
+        "meaning": "vào, vào trong",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "vào, vào trong",
+      "partOfSpeech": "preposition",
+      "englishMeaning": "Toward the inside of something.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/into"
+      ]
+    },
+    "its": {
+      "before": {
+        "meaning": "của cái đó, của điều đó, của con vật đó",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "của nó",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "Belonging to or connected with a thing or animal.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/its"
+      ]
+    },
+    "jake": {
+      "before": {
+        "meaning": "(từ mỹ, (từ lóng)) thoả đáng, được",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "ổn, được, thỏa đáng (tiếng lóng)",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "All right or satisfactory (slang).",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://scrabble.merriam.com/finder/jake"
+      ]
+    },
+    "kibitzer": {
+      "before": {
+        "meaning": "<mỹ>",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "người đứng ngoài hay xen vào góp ý không được yêu cầu",
+      "partOfSpeech": "noun",
+      "englishMeaning": "An onlooker who gives advice or comments without being asked.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://www.merriam-webster.com/dictionary/kibitzer"
+      ]
+    },
+    "kid": {
+      "before": {
+        "meaning": "con dê non",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đứa trẻ (thân mật)",
+      "partOfSpeech": "noun",
+      "englishMeaning": "An informal word for a child.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/kid"
+      ]
+    },
+    "laden": {
+      "before": {
+        "meaning": "thời quá khứ của lade",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "chất đầy, nặng trĩu",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Carrying or weighed down by a heavy load.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/laden"
+      ]
+    },
+    "laid": {
+      "before": {
+        "meaning": "bài thơ ngắn, bài vè ngắn",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã đặt xuống (quá khứ và phân từ của lay)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Put something down in a position.",
+      "lemma": "lay",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "lain": {
+      "before": {
+        "meaning": "động tính từ quá khứ của lie",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã nằm; đã ở tư thế nằm ngang",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Been resting in a horizontal position.",
+      "lemma": "lie",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "last": {
+      "before": {
+        "meaning": "khuôn giày, cốt giày",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "cuối cùng",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Coming after all the others.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/last"
+      ]
+    },
+    "later": {
+      "before": {
+        "meaning": "chậm hơn",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "sau đó, muộn hơn",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "At a time after the present or another stated time.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/later"
+      ]
+    },
+    "leant": {
+      "before": {
+        "meaning": "độ nghiêng, độ dốc",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã nghiêng, đã dựa (quá khứ và phân từ của lean)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Bent or rested against a support.",
+      "lemma": "lean",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "leave": {
+      "before": {
+        "meaning": "sự cho phép",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "rời đi, rời khỏi",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To go away from a place.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/leave"
+      ]
+    },
+    "led": {
+      "before": {
+        "meaning": "động tính từ quá khứ của lead",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã dẫn dắt (quá khứ và phân từ của lead)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Guided a person or group.",
+      "lemma": "lead",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "lent": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của lend",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã cho mượn (quá khứ và phân từ của lend)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Gave something for temporary use with return expected.",
+      "lemma": "lend",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "lets": {
+      "before": {
+        "meaning": "let us chúng ta hãy",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "cho phép (ngôi thứ ba số ít của let)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Allows someone to do something (third-person singular).",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/lets"
+      ]
+    },
+    "like": {
+      "before": {
+        "meaning": "giống, giống nhau, như nhau, tương tự, cùng loại",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "thích",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To enjoy something or feel pleased by it.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/like"
+      ]
+    },
+    "lit": {
+      "before": {
+        "meaning": "động tính từ quá khứ của light",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã thắp sáng (quá khứ và phân từ của light)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Made a place bright or started a flame.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/lit"
+      ]
+    },
+    "little": {
+      "before": {
+        "meaning": "nhỏ bé, be bỏng",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "nhỏ bé, bé bỏng",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Small in size.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/little"
+      ]
+    },
+    "louder": {
+      "before": {
+        "meaning": "máy chất tải; thiết bị chất tải",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "to hơn, lớn tiếng hơn",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Producing a greater volume of sound.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/louder"
+      ]
+    },
+    "made": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của make",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã làm ra, đã tạo ra (quá khứ và phân từ của make)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Created or produced something.",
+      "lemma": "make",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "magical": {
+      "before": {
+        "meaning": "ma thuật, yêu thuật",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "thuộc về phép thuật, có phép màu",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Relating to or involving magic.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/magical"
+      ]
+    },
+    "make": {
+      "before": {
+        "meaning": "hình dáng, cấu tạo (của một vật); kiểu (quần áo); tầm vóc, dáng, tư thế (người)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "làm ra, tạo ra",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To create or produce something.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/make"
+      ]
+    },
+    "married": {
+      "before": {
+        "meaning": "cưới, kết hôn, thành lập gia đình",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đã kết hôn, có vợ hoặc chồng",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Having a husband or wife.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/married"
+      ]
+    },
+    "mean": {
+      "before": {
+        "meaning": "khoảng giữa, trung độ, trung gian, trung dung",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "có nghĩa là; có ý định",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To express a meaning or have an intention.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/mean"
+      ]
+    },
+    "meant": {
+      "before": {
+        "meaning": "khoảng giữa, trung độ, trung gian, trung dung",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "có nghĩa là; đã có ý định (quá khứ và phân từ của mean)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Had a particular meaning or intention.",
+      "lemma": "mean",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "met": {
+      "before": {
+        "meaning": "cuộc gặp gỡ (của những người đi săn ở một nơi đã hẹn trước, của những nhà thể thao để thi đấu)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã gặp (quá khứ và phân từ của meet)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Came together with or encountered someone.",
+      "lemma": "meet",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "might": {
+      "before": {
+        "meaning": "thời quá khứ của may",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "có thể, có lẽ (trợ động từ chỉ khả năng xảy ra)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Used to say that something is possible but uncertain.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/might"
+      ]
+    },
+    "missile": {
+      "before": {
+        "meaning": "có thể phóng ra",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "tên lửa",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A weapon propelled through the air toward a target.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/missile"
+      ]
+    },
+    "mistaken": {
+      "before": {
+        "meaning": "động tính từ quá khứ của mistake",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "nhầm lẫn, sai lầm",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Wrong about something.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/mistaken"
+      ]
+    },
+    "mistakes": {
+      "before": {
+        "meaning": "hiểu lầm, sai lẫm // khuyết điểm; sự hiểu lầm",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "những lỗi lầm (số nhiều của mistake)",
+      "partOfSpeech": "noun",
+      "englishMeaning": "Actions or decisions that are wrong.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/mistakes"
+      ]
+    },
+    "mom": {
+      "before": {
+        "meaning": "uây khyếm mẹ",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "mẹ (cách gọi thân mật)",
+      "partOfSpeech": "noun",
+      "englishMeaning": "An informal word for mother.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/mom"
+      ]
+    },
+    "mouth": {
+      "before": {
+        "meaning": "mauð/",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "miệng",
+      "partOfSpeech": "noun",
+      "englishMeaning": "The opening through which a person or animal eats.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/mouth"
+      ]
+    },
+    "mown": {
+      "before": {
+        "meaning": "động tính từ quá khứ của mow",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã cắt cỏ hoặc gặt bằng máy, liềm",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Cut grass or a crop with a blade or machine.",
+      "lemma": "mow",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/mown"
+      ]
+    },
+    "myself": {
+      "before": {
+        "meaning": "phản thân",
+        "partOfSpeech": "pronoun"
+      },
+      "meaning": "chính tôi, bản thân tôi",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "The speaker, when the subject and object refer to the same person.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/myself"
+      ]
+    },
+    "nobody": {
+      "before": {
+        "meaning": "không ai, không người nào",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "không ai",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "No person.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/nobody"
+      ]
+    },
+    "nope": {
+      "before": {
+        "meaning": "(từ mỹ,nghĩa mỹ), (từ lóng) không",
+        "partOfSpeech": "adverb"
+      },
+      "meaning": "không (cách đáp thân mật)",
+      "partOfSpeech": "interjection",
+      "englishMeaning": "An informal way of saying no.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/nope"
+      ]
+    },
+    "nor": {
+      "before": {
+        "meaning": "mà... cũng không, và... không",
+        "partOfSpeech": "adverb"
+      },
+      "meaning": "cũng không, mà cũng không",
+      "partOfSpeech": "conjunction",
+      "englishMeaning": "Used to add another negative statement or possibility.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/nor"
+      ]
+    },
+    "nothing": {
+      "before": {
+        "meaning": "sự không có, sự không tồn tại; cái không có",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "không có gì",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "Not a single thing.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/nothing"
+      ]
+    },
+    "obviously": {
+      "before": {
+        "meaning": "một cách rõ ràng; có thể thấy được",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "rõ ràng, hiển nhiên",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "In a way that is easy to see or understand.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/obviously"
+      ]
+    },
+    "ocrea": {
+      "before": {
+        "meaning": "số nhiều ocreae",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "bẹ bao quanh thân cây do các lá kèm hợp lại",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A sheath surrounding a plant stem, formed from joined stipules.",
+      "reason": "Replace a bare plural/usage note or truncated source definition with a concise lexical sense confirmed in the cited dictionary or specialist glossary.",
+      "references": [
+        "https://en.wiktionary.org/wiki/ocrea"
+      ]
+    },
+    "office": {
+      "before": {
+        "meaning": "sự giúp đỡ",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "văn phòng",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A room or building where people do administrative work.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/office"
+      ]
+    },
+    "one": {
+      "before": {
+        "meaning": "một",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "một (số 1)",
+      "partOfSpeech": "numeral",
+      "englishMeaning": "The number before two.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/one"
+      ]
+    },
+    "others": {
+      "before": {
+        "meaning": "những người khác; những vật khác",
+        "partOfSpeech": "pronoun"
+      },
+      "meaning": "những người khác, những thứ khác",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "Other people or things.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/others"
+      ]
+    },
+    "our": {
+      "before": {
+        "meaning": "của chúng ta, của chúng tôi, của chúng mình",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "của chúng tôi, của chúng ta",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "Belonging to or connected with the speaker and other people.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/our"
+      ]
+    },
+    "outspent": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của outspend",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã chi tiêu nhiều hơn người khác",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Spent more money than another person or group.",
+      "lemma": "outspend",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/outspent"
+      ]
+    },
+    "outspoken": {
+      "before": {
+        "meaning": "động tính từ quá khứ của outspeak",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "thẳng thắn, bộc trực",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Open and direct in expressing opinions.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/outspoken"
+      ]
+    },
+    "over": {
+      "before": {
+        "meaning": "trên; ở trên",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "ở trên; phía trên",
+      "partOfSpeech": "preposition",
+      "englishMeaning": "Above or across the top of something.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/over"
+      ]
+    },
+    "overblown": {
+      "before": {
+        "meaning": "động tính từ quá khứ của overblow",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "bị phóng đại, quá mức",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Made to seem larger or more important than it is.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/overblown"
+      ]
+    },
+    "overleapt": {
+      "before": {
+        "meaning": "quá khứ và quá khứ phân từ của overleap",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã nhảy qua một vật",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Jumped over something.",
+      "lemma": "overleap",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/overleapt"
+      ]
+    },
+    "overshot": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của overshoot",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã đi hoặc vượt quá mục tiêu dự định",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Went beyond an intended point, target, or limit.",
+      "lemma": "overshoot",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/overshot"
+      ]
+    },
+    "party": {
+      "before": {
+        "meaning": "đảng",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "buổi tiệc",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A social gathering to celebrate or enjoy time together.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/party"
+      ]
+    },
+    "pdt": {
+      "before": {
+        "meaning": "<mỹ> vt của pacific daylight time (giờ ban ngày khu vực thái bình dương)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "viết tắt của giờ mùa hè Thái Bình Dương, UTC−7",
+      "partOfSpeech": "abbreviation",
+      "englishMeaning": "Pacific Daylight Time, a time zone seven hours behind UTC.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://www.nist.gov/pml/time-and-frequency-division/local-time-faqs"
+      ]
+    },
+    "people": {
+      "before": {
+        "meaning": "dân tộc",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "mọi người, những người",
+      "partOfSpeech": "noun",
+      "englishMeaning": "Human beings considered as a group.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/people"
+      ]
+    },
+    "per": {
+      "before": {
+        "meaning": "mỗi",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "mỗi, trên mỗi",
+      "partOfSpeech": "preposition",
+      "englishMeaning": "For each; used when expressing a rate.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/per"
+      ]
+    },
+    "percent": {
+      "before": {
+        "meaning": "phần trăm",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "phần trăm",
+      "partOfSpeech": "noun",
+      "englishMeaning": "One part out of a hundred.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/percent"
+      ]
+    },
+    "pinky": {
+      "before": {
+        "meaning": "hơi hồng, hồng nhạt",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "hơi hồng, có màu hồng nhạt",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Slightly pink in colour.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/pinky"
+      ]
+    },
+    "policeman": {
+      "before": {
+        "meaning": "officer) /pəli:sɔfisə/",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "nam cảnh sát",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A male police officer.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/policeman"
+      ]
+    },
+    "polyethylene": {
+      "before": {
+        "meaning": "<mỹ>",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "nhựa polyetylen, thường dùng làm túi và đồ chứa",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A plastic made from ethylene, widely used for bags and containers.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/polyethylene"
+      ]
+    },
+    "produced": {
+      "before": {
+        "meaning": "dài quá đáng",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đã sản xuất, đã tạo ra (quá khứ và phân từ của produce)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Made or created something.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/produced"
+      ]
+    },
+    "provided": {
+      "before": {
+        "meaning": "được chuẩn bị đầy đủ, được dự phòng",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đã cung cấp (quá khứ và phân từ của provide)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Supplied something that was needed.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/provided"
+      ]
+    },
+    "pst": {
+      "before": {
+        "meaning": "<mỹ> vt của pacific standard time giờ chuẩn ở thái bình dương",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "viết tắt của giờ chuẩn Thái Bình Dương, UTC−8",
+      "partOfSpeech": "abbreviation",
+      "englishMeaning": "Pacific Standard Time, a time zone eight hours behind UTC.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://www.nist.gov/pml/time-and-frequency-division/local-time-faqs"
+      ]
+    },
+    "pushy": {
+      "before": {
+        "meaning": "so sánh",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "hay thúc ép người khác để đạt điều mình muốn",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Forcefully insisting on getting what one wants, often in an annoying way.",
+      "reason": "Replace bare comparison metadata with a precise paired adjective sense; the next CSV sense is overly vague or describes a different attitude.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/pushy"
+      ]
+    },
+    "rang": {
+      "before": {
+        "meaning": "động tính từ quá khứ của ring",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã reo, đã rung chuông (quá khứ của ring)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Made a bell sound or caused a bell to sound.",
+      "lemma": "ring",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "rebound": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của rebind",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "nảy trở lại, bật trở lại",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Bounce back after hitting a surface.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/rebound"
+      ]
+    },
+    "redrawn": {
+      "before": {
+        "meaning": "quá khứ phân từ của redraw",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã vẽ lại",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Drawn again, often with changes.",
+      "lemma": "redraw",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/redrawn"
+      ]
+    },
+    "rethought": {
+      "before": {
+        "meaning": "quá khứ và quá khứ phân từ của rethink",
+        "partOfSpeech": "verb"
+      },
+      "meaning": "đã suy nghĩ lại, đã xem xét lại",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Considered something again to reconsider a decision or opinion.",
+      "lemma": "rethink",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/rethought"
+      ]
+    },
+    "ridden": {
+      "before": {
+        "meaning": "sự đi chơi, cuộc đi chơi (bằng ngựa, xe đạp, xe ô tô, xe buýt, xe lửa...)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã cưỡi, đã đi xe (phân từ của ride)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Travelled on a horse, bicycle, or vehicle.",
+      "lemma": "ride",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "right": {
+      "before": {
+        "meaning": "điều tốt, điều phải, điều đứng đắn; điều thiện",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đúng, chính xác",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Correct or true.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/right"
+      ]
+    },
+    "risen": {
+      "before": {
+        "meaning": "sự lên, sự đưa lên, sự kéo lên, sự dâng; lên, sự tăng lên",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã tăng lên, đã đi lên (phân từ của rise)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved upward or increased (past participle).",
+      "lemma": "rise",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "rode": {
+      "before": {
+        "meaning": "thời quá khứ của ride",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã cưỡi, đã đi xe (quá khứ của ride)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Travelled on a horse, bicycle, or vehicle (past tense).",
+      "lemma": "ride",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "run": {
+      "before": {
+        "meaning": "sự chạy",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "chạy",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To move quickly on foot with moments when both feet leave the ground.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/run"
+      ]
+    },
+    "said": {
+      "before": {
+        "meaning": "(từ hiếm,nghĩa hiếm) vải chéo",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã nói (quá khứ và phân từ của say)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Expressed something in words.",
+      "lemma": "say",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "saint": {
+      "before": {
+        "meaning": "((viết tắt) st.) thiêng liêng, thánh (thường đặt trước tên người hay tên thiên thần, ví dụ st-paul, st-vincent)",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "vị thánh",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A person recognized as especially holy by a religious group.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/saint"
+      ]
+    },
+    "same": {
+      "before": {
+        "meaning": "đều đều, đơn điệu",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "giống nhau, như nhau; cùng một",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Identical or unchanged.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/same"
+      ]
+    },
+    "sank": {
+      "before": {
+        "meaning": "thùng rửa bát, chậu rửa bát",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã chìm, đã lún xuống (quá khứ của sink)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved downward or below a liquid surface.",
+      "lemma": "sink",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "saw": {
+      "before": {
+        "meaning": "tục ngữ; cách ngôn",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã thấy, đã nhìn thấy (quá khứ của see)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Perceived something with the eyes (past tense of see).",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/saw"
+      ]
+    },
+    "say": {
+      "before": {
+        "meaning": "(từ hiếm,nghĩa hiếm) vải chéo",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "nói",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To express something in words.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/say"
+      ]
+    },
+    "schools": {
+      "before": {
+        "meaning": "(anh) dành cho nhà trường",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "các trường học (số nhiều của school)",
+      "partOfSpeech": "noun",
+      "englishMeaning": "Places where people are taught.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/schools"
+      ]
+    },
+    "scopula": {
+      "before": {
+        "meaning": "số nhiều scopulas, scopulae",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "chùm lông dày ở chân hoặc phần phụ miệng của một số loài nhện",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A dense brush of hairs on the legs or mouthparts of some spiders.",
+      "reason": "Replace a bare plural/usage note or truncated source definition with a concise lexical sense confirmed in the cited dictionary or specialist glossary.",
+      "references": [
+        "https://www.asianarachnology.com/glossary/scopula/"
+      ]
+    },
+    "scraggly": {
+      "before": {
+        "meaning": "so sánh",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "xơ xác, lưa thưa và không đều",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Thin, uneven, and untidy in appearance, especially of hair or plants.",
+      "reason": "Replace bare comparison metadata with a precise paired adjective sense; the next CSV sense is overly vague or describes a different attitude.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/scraggly"
+      ]
+    },
+    "shaken": {
+      "before": {
+        "meaning": "sự rung, sự lắc, sự giũ",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã rung, đã lắc (phân từ của shake)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved rapidly back and forth (past participle).",
+      "lemma": "shake",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "shod": {
+      "before": {
+        "meaning": "giày",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã đóng móng cho ngựa (quá khứ và phân từ của shoe)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Fitted a horse with metal shoes.",
+      "lemma": "shoe",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "shone": {
+      "before": {
+        "meaning": "ánh sáng, ánh nắng",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã chiếu sáng, đã tỏa sáng (quá khứ và phân từ của shine)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Gave off or reflected light.",
+      "lemma": "shine",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "shook": {
+      "before": {
+        "meaning": "thời quá khứ của shake",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã rung, đã lắc (quá khứ của shake)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved rapidly back and forth (past tense).",
+      "lemma": "shake",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "shot": {
+      "before": {
+        "meaning": "sự trả tiền; phiếu tính tiền (ở quán rượu...)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "phát súng, lần bắn",
+      "partOfSpeech": "noun",
+      "englishMeaning": "An act of firing a gun.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/shot"
+      ]
+    },
+    "should": {
+      "before": {
+        "meaning": "thời quá khứ của shall",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "nên, cần (trợ động từ chỉ lời khuyên hoặc bổn phận)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Used to give advice or express what is expected or right.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/should"
+      ]
+    },
+    "show": {
+      "before": {
+        "meaning": "sự bày tỏ",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "cho xem, chỉ ra",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To make something visible or demonstrate it.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/show"
+      ]
+    },
+    "shown": {
+      "before": {
+        "meaning": "sự bày tỏ",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã cho xem, đã chỉ ra (phân từ của show)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Made something visible or demonstrated it.",
+      "lemma": "show",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "signed": {
+      "before": {
+        "meaning": "có dấu",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã được ký tên",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Bearing a signature.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/signed"
+      ]
+    },
+    "slept": {
+      "before": {
+        "meaning": "giấc ngủ; sự ngủ",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã ngủ (quá khứ và phân từ của sleep)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Was in the natural state of rest called sleep.",
+      "lemma": "sleep",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "slunk": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của slink",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã lẻn đi, đã đi rón rén",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved quietly and secretly, trying not to be noticed.",
+      "lemma": "slink",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/slunk"
+      ]
+    },
+    "smelt": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của smell",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã ngửi thấy, đã nhận ra mùi",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Detected a scent using the nose.",
+      "lemma": "smell",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "sniffing": {
+      "before": {
+        "meaning": "khụt khịt, sổ mũi",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đang hít mũi, đang ngửi",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Drawing air in through the nose to smell something.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/sniffing"
+      ]
+    },
+    "sniveler": {
+      "before": {
+        "meaning": "<mỹ>",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "người hay rên rỉ, than vãn về chuyện nhỏ nhặt",
+      "partOfSpeech": "noun",
+      "englishMeaning": "Someone who whines and complains about minor troubles.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/sniveler"
+      ]
+    },
+    "sniveling": {
+      "before": {
+        "meaning": "<mỹ>",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đang rên rỉ, than vãn",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Whining or complaining in a tearful, irritating way.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/sniveling"
+      ]
+    },
+    "sod": {
+      "before": {
+        "meaning": "thời quá khứ (từ cổ,nghĩa cổ) của seethe",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "miếng đất có cỏ mọc trên đó",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A piece of surface soil held together by grass and roots.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/sod"
+      ]
+    },
+    "sodden": {
+      "before": {
+        "meaning": "động tính từ quá khứ",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "ướt sũng",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Completely soaked with liquid.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/sodden"
+      ]
+    },
+    "sold": {
+      "before": {
+        "meaning": "(thực vật học) sự làm thất vọng",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã bán (quá khứ và phân từ của sell)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Gave something in exchange for money.",
+      "lemma": "sell",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "something": {
+      "before": {
+        "meaning": "một điều gì đó, một việc gì đó; cái gì đó",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "một điều gì đó, một thứ gì đó",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "A thing that is not specified.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/something"
+      ]
+    },
+    "southern": {
+      "before": {
+        "meaning": "người ở miền nam",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "thuộc về phía nam, ở miền nam",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "In, facing, or relating to the south.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/southern"
+      ]
+    },
+    "span": {
+      "before": {
+        "meaning": "thời quá khứ (từ cổ,nghĩa cổ) của spin",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "khoảng thời gian",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A period between two points in time.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/span"
+      ]
+    },
+    "spat": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của spit",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã nhổ nước bọt hoặc khạc ra",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Forced saliva or another substance out of the mouth.",
+      "lemma": "spit",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "sped": {
+      "before": {
+        "meaning": "sự mau lẹ; tốc độ, tốc lực",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã đi rất nhanh (quá khứ và phân từ của speed)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved or travelled very quickly.",
+      "lemma": "speed",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "spellbound": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của spellbind",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "mê mẩn, bị cuốn hút hoàn toàn",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "So fascinated that attention is completely held.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/spellbound"
+      ]
+    },
+    "spelt": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của spell",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã đánh vần (quá khứ và phân từ của spell)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Named or wrote the letters of a word in order.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/spelt"
+      ]
+    },
+    "spent": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của spend",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã tiêu tiền, đã dành thời gian (quá khứ và phân từ của spend)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Used money or time for a purpose.",
+      "lemma": "spend",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "spoke": {
+      "before": {
+        "meaning": "thời quá khứ của speak",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã nói (quá khứ của speak)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Used the voice to express words (past tense).",
+      "lemma": "speak",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "spun": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của spin",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã quay, đã xoay (quá khứ và phân từ của spin)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Turned rapidly around a central point.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/spun"
+      ]
+    },
+    "stand": {
+      "before": {
+        "meaning": "sự dừng lại, sự đứng lại",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đứng",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To be upright with the body supported by the feet.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/stand"
+      ]
+    },
+    "stank": {
+      "before": {
+        "meaning": "mùi hôi thối",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã bốc mùi hôi (quá khứ của stink)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Had a strong unpleasant smell (past tense).",
+      "lemma": "stink",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "state": {
+      "before": {
+        "meaning": "trạng thái, tình trạng",
+        "partOfSpeech": "pronoun"
+      },
+      "meaning": "trạng thái, tình trạng",
+      "partOfSpeech": "noun",
+      "englishMeaning": "The condition of someone or something at a particular time.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/state"
+      ]
+    },
+    "stole": {
+      "before": {
+        "meaning": "thời quá khứ của steal",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã ăn trộm (quá khứ của steal)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Took something without permission.",
+      "lemma": "steal",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "stood": {
+      "before": {
+        "meaning": "sự dừng lại, sự đứng lại",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã đứng (quá khứ và phân từ của stand)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Was upright and supported by the feet.",
+      "lemma": "stand",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "stop": {
+      "before": {
+        "meaning": "sự ngừng lại, sư dừng, sự đỗ lại",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "dừng lại, ngừng",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To cease moving or doing something.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/stop"
+      ]
+    },
+    "stuck": {
+      "before": {
+        "meaning": "cái gậy",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã dính, đã mắc kẹt (quá khứ và phân từ của stick)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Became attached or unable to move.",
+      "lemma": "stick",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "stung": {
+      "before": {
+        "meaning": "ngòi, vòi (ong, muỗi); răng độc (rắn)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã đốt, đã chích (quá khứ và phân từ của sting)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Caused pain by piercing with a sting.",
+      "lemma": "sting",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "stunk": {
+      "before": {
+        "meaning": "mùi hôi thối",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã bốc mùi hôi (phân từ của stink)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Had a strong unpleasant smell (past participle).",
+      "lemma": "stink",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "suddenly": {
+      "before": {
+        "meaning": "một cách bất ngờ",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đột nhiên, bất ngờ",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "Quickly and without warning.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/suddenly"
+      ]
+    },
+    "sunk": {
+      "before": {
+        "meaning": "thùng rửa bát, chậu rửa bát",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã chìm, đã lún xuống (phân từ của sink)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved downward or below a liquid surface (past participle).",
+      "lemma": "sink",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "swept": {
+      "before": {
+        "meaning": "sự quét",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã quét (quá khứ và phân từ của sweep)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Cleaned or moved something with a sweeping motion.",
+      "lemma": "sweep",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "swollen": {
+      "before": {
+        "meaning": "động tính từ quá khứ của swell",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "sưng lên",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Larger than normal because of swelling.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/swollen"
+      ]
+    },
+    "swore": {
+      "before": {
+        "meaning": "lời thề",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã thề (quá khứ của swear)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Made a solemn promise (past tense).",
+      "lemma": "swear",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "sworn": {
+      "before": {
+        "meaning": "lời thề",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã thề (phân từ của swear)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Made a solemn promise (past participle).",
+      "lemma": "swear",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "swum": {
+      "before": {
+        "meaning": "sự bơi lội",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã bơi (phân từ của swim)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved through water using the body (past participle).",
+      "lemma": "swim",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "swung": {
+      "before": {
+        "meaning": "sự đua đưa, sự lúc lắc; độ đu đưa, độ lắc",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã đung đưa (quá khứ và phân từ của swing)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Moved back and forth while hanging or turning.",
+      "lemma": "swing",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "take": {
+      "before": {
+        "meaning": "sự cầm, sự nắm, sự lấy",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "lấy, cầm",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To pick up or get possession of something.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/take"
+      ]
+    },
+    "taken": {
+      "before": {
+        "meaning": "sự cầm, sự nắm, sự lấy",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã lấy, đã cầm (phân từ của take)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Picked up or took possession of something (past participle).",
+      "lemma": "take",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "taking": {
+      "before": {
+        "meaning": "sự cầm, sự lấy, sự chiếm lấy",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đang lấy, đang cầm (dạng -ing của take)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Picking up or getting possession of something.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/taking"
+      ]
+    },
+    "talking": {
+      "before": {
+        "meaning": "sự nói",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đang nói chuyện (dạng -ing của talk)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Speaking with someone.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/talking"
+      ]
+    },
+    "technocracy": {
+      "before": {
+        "meaning": "chế độ kỹ trị (việc điều khiển hoặc quản lý các phương tiện (công nghiệp) của một đất nước bởi các chuyên gia <kỹ>)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "chế độ kỹ trị, trong đó các chuyên gia khoa học và kỹ thuật nắm quyền quản lý",
+      "partOfSpeech": "noun",
+      "englishMeaning": "Government or social management controlled by scientific and technical experts.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://www.collinsdictionary.com/us/dictionary/english/technocracy"
+      ]
+    },
+    "technocrat": {
+      "before": {
+        "meaning": "nhà kỹ trị (chuyên gia về khoa học, <kỹ>",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "nhà kỹ trị, chuyên gia kỹ thuật có quyền lực trong chính phủ hoặc công nghiệp",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A scientific or technical expert with power in government or industry.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://dictionary.cambridge.org/us/dictionary/english/technocrat"
+      ]
+    },
+    "teen": {
+      "before": {
+        "meaning": "<mỹ> <thgt>",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "người từ 13 đến 19 tuổi",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A person aged thirteen to nineteen.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/teen"
+      ]
+    },
+    "teenage": {
+      "before": {
+        "meaning": "<mỹ>",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "thuộc độ tuổi từ 13 đến 19",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Relating to people aged thirteen to nineteen.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/teenage"
+      ]
+    },
+    "teletypewriter": {
+      "before": {
+        "meaning": "<mỹ>",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "máy điện báo tự động in thông điệp thành chữ",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A telegraph machine that automatically prints received messages as text.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/teletypewriter"
+      ]
+    },
+    "that": {
+      "before": {
+        "meaning": "chỉ định, số nhiều those",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đó, ấy (chỉ một người hoặc vật ở xa)",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "Refers to one person or thing farther away.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/that"
+      ]
+    },
+    "their": {
+      "before": {
+        "meaning": "của chúng, của chúng nó, của họ",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "của họ, của chúng",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "Belonging to or connected with them.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/their"
+      ]
+    },
+    "them": {
+      "before": {
+        "meaning": "chúng, chúng nó, họ",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "họ, chúng (dùng làm tân ngữ)",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "Refers to people or things as the object of a verb or preposition.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/them"
+      ]
+    },
+    "themselves": {
+      "before": {
+        "meaning": "tự chúng, tự họ, tự",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "chính họ, bản thân họ",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "The same people or things previously mentioned as the subject.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/themselves"
+      ]
+    },
+    "these": {
+      "before": {
+        "meaning": "chỉ định, số nhiều these",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "những người này, những vật này",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "Refers to more than one person or thing nearby.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/these"
+      ]
+    },
+    "they": {
+      "before": {
+        "meaning": "chúng nó, chúng, họ",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "họ, chúng",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "Refers to people or things as the subject of a sentence.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/they"
+      ]
+    },
+    "this": {
+      "before": {
+        "meaning": "chỉ định, số nhiều these",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "này (chỉ một người hoặc vật ở gần)",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "Refers to one person or thing nearby.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/this"
+      ]
+    },
+    "those": {
+      "before": {
+        "meaning": "chỉ định & đại từ chỉ định số nhiều của that",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "những người đó, những vật đó",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "Refers to more than one person or thing farther away.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/those"
+      ]
+    },
+    "thought": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của think",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "ý nghĩ, suy nghĩ",
+      "partOfSpeech": "noun",
+      "englishMeaning": "An idea formed in the mind.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/thought"
+      ]
+    },
+    "three": {
+      "before": {
+        "meaning": "ba",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "ba (số 3)",
+      "partOfSpeech": "numeral",
+      "englishMeaning": "The number after two and before four.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/three"
+      ]
+    },
+    "threw": {
+      "before": {
+        "meaning": "sự ném, sự vứt, sự quăng, sự liệng",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã ném (quá khứ của throw)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Sent something through the air with the hand.",
+      "lemma": "throw",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "thrown": {
+      "before": {
+        "meaning": "sự ném, sự vứt, sự quăng, sự liệng",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã ném (phân từ của throw)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Sent something through the air with the hand (past participle).",
+      "lemma": "throw",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "tomorrow": {
+      "before": {
+        "meaning": "morrow)",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "vào ngày mai",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "On the day after today.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/tomorrow"
+      ]
+    },
+    "tonight": {
+      "before": {
+        "meaning": "night)",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "vào tối nay, vào đêm nay",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "During this evening or night.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/tonight"
+      ]
+    },
+    "took": {
+      "before": {
+        "meaning": "sự cầm, sự nắm, sự lấy",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã lấy, đã cầm (quá khứ của take)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Picked up or took possession of something (past tense).",
+      "lemma": "take",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "tore": {
+      "before": {
+        "meaning": "thời quá khứ của tear",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã xé, đã làm rách (quá khứ của tear)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Pulled something apart or made a rip in it.",
+      "lemma": "tear",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "torn": {
+      "before": {
+        "meaning": "nước mắt, lệ",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã xé, đã làm rách (phân từ của tear)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Pulled something apart or made a rip in it (past participle).",
+      "lemma": "tear",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "trad": {
+      "before": {
+        "meaning": "<thgt> nhạc jazz truyền thống (tức là phong cách của những năm 1920, có nhịp điệu và hoà âm cố định và nhiều ngẫu hứng)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "nhạc jazz truyền thống theo phong cách thập niên 1920",
+      "partOfSpeech": "noun",
+      "englishMeaning": "Traditional jazz in the style of the 1920s.",
+      "reason": "Replace a bare plural/usage note or truncated source definition with a concise lexical sense confirmed in the cited dictionary or specialist glossary.",
+      "references": [
+        "https://www.oxfordlearnersdictionaries.com/us/definition/english/trad"
+      ]
+    },
+    "tranquility": {
+      "before": {
+        "meaning": "<mỹ>",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "sự yên tĩnh, thanh bình",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A peaceful and calm state.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/tranquility"
+      ]
+    },
+    "tranquilize": {
+      "before": {
+        "meaning": "<mỹ>",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "làm cho bình tĩnh hoặc gây an thần",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To calm a person or animal, sometimes by using a sedative.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/tranquilize"
+      ]
+    },
+    "tranquilizer": {
+      "before": {
+        "meaning": "<mỹ>",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "thuốc an thần giúp giảm lo âu hoặc căng thẳng",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A medicine used to reduce anxiety or nervous tension.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/tranquilizer"
+      ]
+    },
+    "tranquillizer": {
+      "before": {
+        "meaning": "thuốc làm đỡ đau, thuốc giảm thống",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "thuốc an thần giúp giảm lo âu hoặc căng thẳng",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A medicine used to reduce anxiety or nervous tension.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/tranquillizer"
+      ]
+    },
+    "two": {
+      "before": {
+        "meaning": "hai, đôi",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "hai (số 2)",
+      "partOfSpeech": "numeral",
+      "englishMeaning": "The number after one and before three.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/two"
+      ]
+    },
+    "tying": {
+      "before": {
+        "meaning": "động tính từ hiện tại của tie",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đang buộc, đang thắt (dạng -ing của tie)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Fastening something with a knot.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/tying"
+      ]
+    },
+    "unbound": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của unbind",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "không bị trói hoặc ràng buộc",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Free from ties or restraints.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/unbound"
+      ]
+    },
+    "underdone": {
+      "before": {
+        "meaning": "động tính từ quá khứ của underdo",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "chưa chín, nấu chưa đủ",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Not cooked for long enough.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/underdone"
+      ]
+    },
+    "underlaid": {
+      "before": {
+        "meaning": "thời quá khứ của underlie",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã đặt một lớp hoặc vật đỡ ở bên dưới",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Placed a layer or support underneath something.",
+      "lemma": "underlay",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/underlaid"
+      ]
+    },
+    "underlay": {
+      "before": {
+        "meaning": "thời quá khứ của underlie",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đặt một lớp hoặc vật đỡ ở bên dưới",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To place a layer or support underneath something.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/underlay"
+      ]
+    },
+    "undone": {
+      "before": {
+        "meaning": "động tính từ quá khứ của undo",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "chưa được làm xong",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Not yet completed.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/undone"
+      ]
+    },
+    "unmade": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của unmake",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "chưa được làm hoặc sắp xếp xong",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Not yet made or put into its finished state.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/unmade"
+      ]
+    },
+    "unwoven": {
+      "before": {
+        "meaning": "động tính từ quá khứ của unweave",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã tháo các sợi đã dệt ra",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Separated the interlaced threads of woven material.",
+      "lemma": "unweave",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/unwoven"
+      ]
+    },
+    "upon": {
+      "before": {
+        "meaning": "trên, ở trên",
+        "partOfSpeech": "preposition"
+      },
+      "meaning": "trên, ở trên",
+      "partOfSpeech": "preposition",
+      "englishMeaning": "On the surface of something.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/upon"
+      ]
+    },
+    "used": {
+      "before": {
+        "meaning": "thường dùng, đang dùng",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đã qua sử dụng",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Previously owned or used by someone.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/used"
+      ]
+    },
+    "very": {
+      "before": {
+        "meaning": "thực, thực sự",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "rất",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "Used to make an adjective or adverb stronger.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/very"
+      ]
+    },
+    "video": {
+      "before": {
+        "meaning": "(từ mỹ,nghĩa mỹ) (thuộc) truyền hình; dùng trong truyền hình",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đoạn phim, bản ghi hình",
+      "partOfSpeech": "noun",
+      "englishMeaning": "A recording of moving images, often with sound.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/video"
+      ]
+    },
+    "vocab": {
+      "before": {
+        "meaning": "<thgt> bảng từ vựng (bản kê các từ cùng với nghĩa của chúng, nhất là loại đi kèm một cuốn sách giáo khoa bằng ngoại ngữ)",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "(thân mật) từ vựng, nhất là vốn từ đang học",
+      "partOfSpeech": "noun",
+      "englishMeaning": "An informal word for vocabulary, especially words being learned.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/vocab"
+      ]
+    },
+    "want": {
+      "before": {
+        "meaning": "sự thiếu, sự không có, sự khuyết",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "muốn, mong muốn",
+      "partOfSpeech": "verb",
+      "englishMeaning": "To desire something.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/want"
+      ]
+    },
+    "welcome": {
+      "before": {
+        "meaning": "được tiếp đ i ân cần, được hoan nghênh",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "được hoan nghênh, được đón tiếp niềm nở",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Gladly received or accepted.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/welcome"
+      ]
+    },
+    "well": {
+      "before": {
+        "meaning": "(+ up, out, forth) phun ra, vọt ra, tuôn ra (nước, nước mắt, máu)",
+        "partOfSpeech": "verb"
+      },
+      "meaning": "tốt, giỏi, một cách tốt đẹp",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "In a good or satisfactory way.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/well"
+      ]
+    },
+    "where": {
+      "before": {
+        "meaning": "đâu, ở đâu, ở ni nào, ở chỗ nào, ở phía nào, ở mặt nào",
+        "partOfSpeech": "adverb"
+      },
+      "meaning": "ở đâu, nơi nào",
+      "partOfSpeech": "adverb",
+      "englishMeaning": "In or at what place.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/where"
+      ]
+    },
+    "which": {
+      "before": {
+        "meaning": "nào (ngụ ý chọn lựa)",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "nào (dùng để hỏi hoặc xác định một lựa chọn)",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "Used to ask or specify one choice from a known set.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/which"
+      ]
+    },
+    "whining": {
+      "before": {
+        "meaning": "hay rên rỉ, hay than van; khóc nhai nhi",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "đang rên rỉ, đang than vãn",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Making a long high sound or complaining in a dissatisfied voice.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/whining"
+      ]
+    },
+    "whole": {
+      "before": {
+        "meaning": "bình an vô sự, không suy suyển, không hư hỏng",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "toàn bộ, nguyên vẹn",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Complete, with no part missing.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/whole"
+      ]
+    },
+    "will": {
+      "before": {
+        "meaning": "ý chí, chí, ý định, lòng",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "sẽ (trợ động từ chỉ tương lai)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Used to refer to a future action or state.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/will"
+      ]
+    },
+    "woke": {
+      "before": {
+        "meaning": "(hàng hải) lằn tàu",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã thức dậy, đã đánh thức (quá khứ của wake)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Stopped sleeping or caused someone to stop sleeping.",
+      "lemma": "wake",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "woken": {
+      "before": {
+        "meaning": "(hàng hải) lằn tàu",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã thức dậy, đã đánh thức (phân từ của wake)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Stopped sleeping or caused someone to stop sleeping (past participle).",
+      "lemma": "wake",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "won": {
+      "before": {
+        "meaning": "sự thắng cuộc",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã chiến thắng (quá khứ và phân từ của win)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Achieved victory in a game or contest.",
+      "lemma": "win",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "wore": {
+      "before": {
+        "meaning": "sự mang; sự dùng; sự mặc",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đã mặc, đã mang (quá khứ của wear)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Had clothing or an accessory on the body.",
+      "lemma": "wear",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "working": {
+      "before": {
+        "meaning": "sự làm việc, sự làm",
+        "partOfSpeech": "noun"
+      },
+      "meaning": "đang làm việc (dạng -ing của work)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Doing a job or an activity that requires effort.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/working"
+      ]
+    },
+    "worn": {
+      "before": {
+        "meaning": "động tính từ quá khứ của wear",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã mặc, đã mang (phân từ của wear)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Had clothing or an accessory on the body (past participle).",
+      "lemma": "wear",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "worried": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của worry",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "lo lắng",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Feeling anxious about a problem or possible trouble.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/worried"
+      ]
+    },
+    "would": {
+      "before": {
+        "meaning": "thời quá khứ của will",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "sẽ (trợ động từ dùng trong câu giả định hoặc tương lai trong quá khứ)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Used for an imagined action or a future action viewed from the past.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/would"
+      ]
+    },
+    "wound": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của wind",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "vết thương",
+      "partOfSpeech": "noun",
+      "englishMeaning": "An injury that damages the skin or other body tissue.",
+      "reason": "Choose the explicitly reviewed common game sense and its matching part of speech; other valid senses are not declared incorrect.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/wound"
+      ]
+    },
+    "written": {
+      "before": {
+        "meaning": "động tính từ quá khứ của write",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "đã viết (phân từ của write)",
+      "partOfSpeech": "verb",
+      "englishMeaning": "Recorded words using letters or symbols.",
+      "lemma": "write",
+      "reason": "Correct a copied base-word sense or replace a grammatical cross-reference with the inflected verb sense.",
+      "references": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/irregular-verbs"
+      ]
+    },
+    "wrong": {
+      "before": {
+        "meaning": "xấu, không tốt, tồi",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "sai, không đúng",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Not correct or true.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/wrong"
+      ]
+    },
+    "wrought": {
+      "before": {
+        "meaning": "thời quá khứ & động tính từ quá khứ của work",
+        "partOfSpeech": "unspecified"
+      },
+      "meaning": "được chế tác, gia công hoặc rèn",
+      "partOfSpeech": "adjective",
+      "englishMeaning": "Shaped or fashioned through work, especially by hammering metal.",
+      "reason": "Replace an incomplete usage label, damaged source clue, or bare grammatical form note with an explicitly paired lexical meaning and matching POS. For valid homographs, retain only the selected game sense.",
+      "references": [
+        "https://en.wiktionary.org/wiki/wrought"
+      ]
+    },
+    "yes": {
+      "before": {
+        "meaning": "vâng, phải, dạ, được, ừ, có, có chứ",
+        "partOfSpeech": "adverb"
+      },
+      "meaning": "vâng, có, đúng vậy",
+      "partOfSpeech": "interjection",
+      "englishMeaning": "Used to express agreement or give an affirmative answer.",
+      "reason": "Reviewed unresolved level-1 to level-4 entry against the available English source senses; preserve a valid lexical sense and correct source POS or broken gloss.",
+      "references": [
+        "https://en.wiktionary.org/wiki/yes"
+      ]
+    },
+    "your": {
+      "before": {
+        "meaning": "của anh, của chị, của ngài, của mày; của các anh, của các chị, của các ngài, của chúng mày",
+        "partOfSpeech": "adjective"
+      },
+      "meaning": "của bạn, của các bạn",
+      "partOfSpeech": "determiner",
+      "englishMeaning": "Belonging to or connected with the person being spoken to.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/your"
+      ]
+    },
+    "yourself": {
+      "before": {
+        "meaning": "phản thân (số nhiều yourselves)",
+        "partOfSpeech": "pronoun"
+      },
+      "meaning": "chính bạn, bản thân bạn",
+      "partOfSpeech": "pronoun",
+      "englishMeaning": "The person being spoken to, when subject and object refer to that person.",
+      "reason": "Reviewed beginner game sense: correct a malformed gloss or POS, or prefer the everyday sense over a rare first source sense.",
+      "references": [
+        "https://dictionary.cambridge.org/dictionary/english/yourself"
+      ]
+    }
+  }
+}

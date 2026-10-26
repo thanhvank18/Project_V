@@ -3,6 +3,7 @@ import { animationDuration, SPRITE_BY_KEY, spriteFrame } from './assets';
 import { characterShadow, heroAnimationKey, rangedShotTiming } from './characterAnimation';
 import { getHeroCharacter, type CharacterDefinition } from './characterCatalog';
 import type { GameEvent, PartyPlayer } from './types';
+import { localizeText, type Language } from '../i18n';
 
 interface AllyView {
   sprite: Phaser.GameObjects.Sprite; shadow: Phaser.GameObjects.Ellipse; label: Phaser.GameObjects.Text;
@@ -11,7 +12,12 @@ interface AllyView {
 }
 const COLORS = [0xa9ead2, 0xffd48a, 0xcbbaff, 0x99dfff];
 export const partyColor = (players: readonly PartyPlayer[], id: string): number => COLORS[Math.max(0, players.findIndex(player => player.id === id)) % COLORS.length];
-export const partyName = (player: PartyPlayer): string => (player.name?.replace(/[\u0000-\u001f]/g, '').trim() || getHeroCharacter(player.heroId).label).slice(0, 24);
+export const partyName = (player: PartyPlayer, language: Language = 'vi'): string => {
+  const name = player.name?.replace(/[\u0000-\u001f]/g, '').trim();
+  // Only system-generated names are translated; teammates' own names stay intact.
+  return (name ? language === 'en' ? name.replace(/^Người chơi (\d+)$/, 'Player $1') : name
+    : localizeText(getHeroCharacter(player.heroId).label, language)).slice(0, 24);
+};
 
 /** Only draws peers; authoritative movement, HP and target ownership stay in the room engine. */
 export class AlliedHeroes {
@@ -32,7 +38,7 @@ export class AlliedHeroes {
       view.action = { key, start: clock, until: clock + animationDuration(key), offset: 0 };
     }
   }
-  render(players: readonly PartyPlayer[], selfId: string, clock: number, ground = 490): void {
+  render(players: readonly PartyPlayer[], selfId: string, clock: number, ground = 490, language: Language = 'vi'): void {
     const peers = players.filter(player => player.id !== selfId).slice(0, 3);
     const ids = new Set(peers.map(player => player.id));
     for (const [id, view] of this.views) if (!ids.has(id)) { this.destroy(view); this.views.delete(id); }
@@ -63,7 +69,7 @@ export class AlliedHeroes {
         .setPosition(player.x, ground).setFlipX(view.facing < 0).setAlpha(player.hp <= 0 ? .45 : player.connected === false ? .55 : 1);
       view.shadow.setPosition(player.x, ground + 3).setAlpha(player.hp <= 0 ? .2 : .5);
       view.label.setPosition(player.x, ground + 35).setColor(`#${partyColor(players, player.id).toString(16).padStart(6, '0')}`)
-        .setText(`${partyName(player)} · ${player.hp <= 0 ? 'GỤC' : `${Math.ceil(player.hp)} HP`}`);
+        .setText(`${partyName(player, language)} · ${player.hp <= 0 ? language === 'en' ? 'DOWN' : 'GỤC' : `${Math.ceil(player.hp)} HP`}`);
     }
   }
   private destroy(view: AllyView): void { view.sprite.destroy(); view.shadow.destroy(); view.label.destroy(); }

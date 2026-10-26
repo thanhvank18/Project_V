@@ -2873,9 +2873,9 @@ var require_websocket = __commonJS({
         opts.auth = `${parsedUrl.username}:${parsedUrl.password}`;
       }
       if (isIpcUrl) {
-        const parts = opts.path.split(":");
-        opts.socketPath = parts[0];
-        opts.path = parts[1];
+        const parts2 = opts.path.split(":");
+        opts.socketPath = parts2[0];
+        opts.path = parts2[1];
       }
       let req;
       if (opts.followRedirects) {
@@ -3721,7 +3721,8 @@ var require_websocket_server = __commonJS({
 var rooms_exports = {};
 __export(rooms_exports, {
   RoomHub: () => RoomHub,
-  attachRooms: () => attachRooms
+  attachRooms: () => attachRooms,
+  mergeEnglishDefinitions: () => mergeEnglishDefinitions
 });
 module.exports = __toCommonJS(rooms_exports);
 var import_node_crypto = require("node:crypto");
@@ -10331,6 +10332,92 @@ var GameEngine = class {
   }
 };
 
+// src/game/englishDictionary.ts
+var parts = /* @__PURE__ */ new Set(["noun", "verb", "adjective", "adverb", "preposition", "pronoun", "conjunction", "interjection", "determiner", "numeral", "prefix", "suffix", "abbreviation", "unspecified"]);
+var isRecord = (value) => !!value && typeof value === "object" && !Array.isArray(value);
+var validText = (value, limit) => typeof value === "string" && !!value.trim() && value.length <= limit && !/[\u0000-\u001f\u007f]/u.test(value);
+function mergeEnglishDefinitions(words, value) {
+  if (!isRecord(value) || value.version !== 1 || !isRecord(value.source) || !validText(value.source.name, 300) || !validText(value.source.license, 1e3) || !validText(value.source.snapshot, 300) || !isRecord(value.entries)) {
+    throw new Error("Unsupported English dictionary format");
+  }
+  const entries = /* @__PURE__ */ new Map();
+  for (const [answer, entry] of Object.entries(value.entries)) {
+    if (!/^[a-z]{3,18}$/.test(answer) || !isRecord(entry) || !validText(entry.meaning, 240) || !parts.has(entry.partOfSpeech) || entry.vietnameseMeaning !== void 0 && !validText(entry.vietnameseMeaning, 120)) {
+      throw new Error("Invalid English dictionary entry");
+    }
+    entries.set(answer, entry);
+  }
+  const excluded = /* @__PURE__ */ new Set();
+  const renames = /* @__PURE__ */ new Map();
+  const quarantined = /* @__PURE__ */ new Set();
+  if (value.excluded !== void 0) {
+    if (!Array.isArray(value.excluded)) throw new Error("Invalid dictionary exclusions");
+    for (const item of value.excluded) {
+      if (!isRecord(item) || typeof item.answer !== "string" || !/^[a-z]{3,18}$/.test(item.answer) || !validText(item.reason, 500) || entries.has(item.answer) || item.canonical !== void 0 && (typeof item.canonical !== "string" || !/^[a-z]{3,18}$/.test(item.canonical) || item.canonical === item.answer)) throw new Error("Invalid dictionary exclusions");
+      excluded.add(item.answer);
+      if (typeof item.canonical === "string") renames.set(item.answer, item.canonical);
+    }
+  }
+  if (value.quarantined !== void 0) {
+    if (!Array.isArray(value.quarantined)) throw new Error("Invalid dictionary quarantine");
+    for (const item of value.quarantined) {
+      if (!isRecord(item) || typeof item.answer !== "string" || !/^[a-z]{3,18}$/.test(item.answer) || !validText(item.reason, 500) || entries.has(item.answer) || excluded.has(item.answer)) throw new Error("Invalid dictionary quarantine");
+      quarantined.add(item.answer);
+    }
+  }
+  const original = new Map(words.map((word) => [word.answer, word]));
+  const reviewed = new Map(words.filter((word) => !excluded.has(word.answer) && !quarantined.has(word.answer)).map((word) => [word.answer, { ...word }]));
+  for (const [from, to] of renames) {
+    if (excluded.has(to)) throw new Error("Chained dictionary rename is not supported");
+    if (quarantined.has(to)) continue;
+    const retired = original.get(from);
+    if (!retired) continue;
+    const existing = reviewed.get(to);
+    if (!existing && !entries.get(to)?.vietnameseMeaning) throw new Error(`Missing corrected dictionary entry: ${to}`);
+    reviewed.set(to, {
+      ...existing ?? { ...retired, answer: to },
+      historyAliases: [.../* @__PURE__ */ new Set([...existing?.historyAliases ?? [], ...retired.historyAliases ?? [], from])].filter((alias) => alias !== to)
+    });
+  }
+  return [...reviewed.values()].map((word) => {
+    const entry = entries.get(word.answer);
+    if (!entry) {
+      if (value.quarantined !== void 0) throw new Error(`Incomplete bilingual dictionary: ${word.answer}`);
+      return { ...word };
+    }
+    if (word.partOfSpeech !== entry.partOfSpeech && !entry.vietnameseMeaning) throw new Error(`Definition part of speech mismatch: ${word.answer}`);
+    return {
+      ...word,
+      englishMeaning: entry.meaning,
+      partOfSpeech: entry.partOfSpeech,
+      ...entry.vietnameseMeaning ? { meaning: entry.vietnameseMeaning, translationHint: void 0 } : {}
+    };
+  });
+}
+function vocabularyForLanguage(words, language) {
+  const bank = words.filter((word) => language === "vi" || word.englishMeaning).map((word) => ({
+    ...word,
+    meaning: language === "en" ? word.englishMeaning : word.meaning,
+    translationHint: void 0
+  }));
+  const groups = /* @__PURE__ */ new Map();
+  for (const word of bank) {
+    const key = `${word.meaning.toLowerCase().trim().replace(/[.,;:!?]+$/, "")}|${word.partOfSpeech}|${word.answer.length}|${word.answer[0]}|${word.answer.at(-1)}`;
+    const group = groups.get(key) ?? [];
+    group.push(word);
+    groups.set(key, group);
+  }
+  for (const group of groups.values()) if (group.length > 1) for (const word of group) {
+    const visible = /* @__PURE__ */ new Set([0, word.answer.length - 1]);
+    for (const other of group) if (other !== word && ![...visible].some((index) => word.answer[index] !== other.answer[index])) {
+      const difference = [...word.answer].findIndex((letter, index) => letter !== other.answer[index]);
+      if (difference >= 0) visible.add(difference);
+    }
+    word.translationHint = [...word.answer].map((letter, index) => visible.has(index) ? letter : "_").join(" ");
+  }
+  return bank;
+}
+
 // backend/rooms.mjs
 var HEROES = HERO_CHARACTERS.map((hero) => hero.id);
 var ITEMS = /* @__PURE__ */ new Set(["health", "freeze", "damage", "shield"]);
@@ -10350,12 +10437,14 @@ var RoomHub = class {
     this.allowedWords = new Set(words.map((word) => word.answer));
   }
   hello(message, send) {
+    if (message.language !== void 0 && !["vi", "en"].includes(message.language)) fail("Ng\xF4n ng\u1EEF kh\xF4ng h\u1EE3p l\u1EC7.");
     if (!Array.isArray(message.seen) || message.seen.length > 1e5 || message.seen.some((word) => typeof word !== "string" || !/^[a-z]{3,18}$/.test(word))) fail("L\u1ECBch s\u1EED t\u1EEB kh\xF4ng h\u1EE3p l\u1EC7.");
     const old = typeof message.resumeToken === "string" ? this.sessions.get(message.resumeToken) : void 0;
     const session = old && this.rooms.has(old.pin) ? old : {
       id: (0, import_node_crypto.randomUUID)(),
       token: (0, import_node_crypto.randomUUID)(),
       heroId: HEROES.includes(message.heroId) ? message.heroId : "soldier",
+      language: message.language ?? "vi",
       seen: /* @__PURE__ */ new Set(),
       pin: "",
       connected: true,
@@ -10395,6 +10484,7 @@ var RoomHub = class {
       pin: room.pin,
       selfId: session.id,
       hostId: room.hostId,
+      language: room.language,
       players: room.members.map((member) => ({ id: member.id, name: member.name, heroId: member.heroId, connected: member.connected })),
       error: ""
     };
@@ -10412,6 +10502,7 @@ var RoomHub = class {
     const room = {
       pin,
       hostId: session.id,
+      language: session.language,
       members: [session],
       engine: null,
       seenDuring: /* @__PURE__ */ new Set(),
@@ -10466,6 +10557,7 @@ var RoomHub = class {
       this.leave(session);
       session.pin = next.pin;
       session.heroId = heroId;
+      session.language = next.language;
       const usedNames = new Set(next.members.map((member) => member.name));
       session.name = [1, 2, 3, 4].map((number) => `Ng\u01B0\u1EDDi ch\u01A1i ${number}`).find((name) => !usedNames.has(name));
       next.members.push(session);
@@ -10480,11 +10572,23 @@ var RoomHub = class {
       this.broadcastLobby(room);
       return;
     }
+    if (message.type === "language") {
+      if (room.hostId !== session.id) fail("Ch\u1EC9 ch\u1EE7 ph\xF2ng \u0111\u1ED5i ng\xF4n ng\u1EEF.", "host-only");
+      if (room.engine && room.engine.snapshot().phase !== "menu") fail("Ch\u1EC9 \u0111\u1ED5i ng\xF4n ng\u1EEF tr\u01B0\u1EDBc tr\u1EADn.");
+      if (!["vi", "en"].includes(message.language)) fail("Ng\xF4n ng\u1EEF kh\xF4ng h\u1EE3p l\u1EC7.");
+      if (message.language === "en" && !this.words.some((word) => word.englishMeaning)) fail("Kho t\u1EEB ti\u1EBFng Anh ch\u01B0a s\u1EB5n s\xE0ng.");
+      room.language = message.language;
+      for (const member of room.members) member.language = room.language;
+      this.broadcastLobby(room);
+      return;
+    }
     if (message.type === "start") {
       if (room.hostId !== session.id) fail("Ch\u1EC9 ch\u1EE7 ph\xF2ng c\xF3 th\u1EC3 b\u1EAFt \u0111\u1EA7u.", "host-only");
       if (!["survival", "boss"].includes(message.mode)) fail("Ch\u1EBF \u0111\u1ED9 kh\xF4ng h\u1EE3p l\u1EC7.");
       if (room.engine && ["playing", "paused", "countdown"].includes(room.engine.snapshot().phase)) fail("Tr\u1EADn \u0111ang di\u1EC5n ra.");
       if (room.members.some((member) => !member.connected)) fail("H\xE3y \u0111\u1EE3i \u0111\u1ED3ng \u0111\u1ED9i k\u1EBFt n\u1ED1i l\u1EA1i.");
+      const bank = vocabularyForLanguage(this.words, room.language);
+      if (!bank.length) fail("Kho t\u1EEB ti\u1EBFng Anh ch\u01B0a s\u1EB5n s\xE0ng.");
       const seen = Object.fromEntries([...new Set(room.members.flatMap((member) => [...member.seen]))].map((word) => [word, 1]));
       room.seenDuring.clear();
       room.pendingSeen = [];
@@ -10493,7 +10597,7 @@ var RoomHub = class {
         room.seenDuring.add(word.answer);
         room.pendingSeen.push(word.answer);
         for (const member of room.members) member.seen.add(word.answer);
-      }, this.words);
+      }, bank);
       room.engine.configureParty(room.members.map((member) => ({ id: member.id, name: member.name, heroId: member.heroId })));
       room.engine.start(message.mode);
       this.broadcastLobby(room);
@@ -10663,5 +10767,6 @@ function attachRooms(server, words, { corsOrigins = "*", now = Date.now } = {}) 
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   RoomHub,
-  attachRooms
+  attachRooms,
+  mergeEnglishDefinitions
 });

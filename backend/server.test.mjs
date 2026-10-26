@@ -51,6 +51,18 @@ afterAll(async () => {
 });
 
 describe('dictionary service configuration', () => {
+  it('serves the reviewed meanings and English definitions used by rooms with a new content hash', async () => {
+    const english = { version: 1, source: { name: 'Fixture English', license: 'CC BY 4.0', snapshot: 'test' }, entries: {
+      water: { meaning: 'A clear liquid essential for life.', vietnameseMeaning: 'nước', partOfSpeech: 'noun' },
+    } };
+    const reviewed = await loadVocabulary(root, { englishDefinitions: english });
+    const data = JSON.parse(reviewed.body);
+    expect(data.words[0]).toMatchObject({ answer: 'water', meaning: 'nước', englishMeaning: english.entries.water.meaning });
+    expect(data.englishSource).toEqual(english.source);
+    expect(reviewed.sha256).not.toBe(vocabulary.sha256);
+    await expect(loadVocabulary(root, { englishDefinitions: { ...english, entries: {} } })).rejects.toThrow('no playable definitions');
+  });
+
   it('validates PORT and explicit CORS origins before the server listens', () => {
     expect(parsePort()).toBe(3001);
     expect(parsePort('8080')).toBe(8080);

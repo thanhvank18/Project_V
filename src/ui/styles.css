@@ -195,3 +195,13 @@
 .hero-taken{cursor:not-allowed}.hero-taken .hero-card{background:#17232c;border-color:#344650}.hero-taken img{opacity:.4}.hero-taken:hover .hero-card{border-color:#344650;background:#17232c}
 .hero-option input:disabled+.hero-card{cursor:default;opacity:.65}
 @media(min-width:761px) and (max-height:760px){.lobby-heading{margin-bottom:6px}.lobby-roster{margin:8px 0;gap:5px}.lobby-roster img{width:29px;height:29px}.lobby-join{margin-top:8px}.has-lobby .start-button{margin-top:7px}.hero-skill-description .hero-tactics{margin-top:4px;padding-top:4px}.hero-skill-description>p:not(.hero-current){font-size:10px;line-height:1.45}}
+.language-picker{display:inline-flex;flex-shrink:0;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+.language-picker button{min-width:42px;min-height:38px;padding:8px 10px;border:0;border-radius:0;background:transparent;color:var(--muted);font:700 12px/1 'Be Vietnam Pro',sans-serif;cursor:pointer}
+.language-picker button[aria-pressed="true"]{background:var(--ink);color:#101b24}
+.language-picker button:hover:not(:disabled){color:var(--accent)}
+.language-picker button[aria-pressed="true"]:hover:not(:disabled){color:#101b24}
+.language-picker button:disabled{cursor:default;opacity:.6}
+.language-picker button[aria-pressed="true"]:disabled{opacity:1}
+.language-picker button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.dictionary-loading>.language-picker{margin-bottom:24px}
+@media(max-width:760px){.site-header{height:auto;min-height:84px;flex-wrap:wrap;row-gap:10px;padding-block:14px}.header-actions{width:100%;justify-content:flex-end}.language-picker{margin-right:auto}}

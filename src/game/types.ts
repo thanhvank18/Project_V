@@ -18,6 +18,8 @@ export type LearningLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 export interface LearningProgress { level: LearningLevel; progress: number; step: 20; nextLevelAt: number | null }
 export interface Word {
   id: string; answer: string; meaning: string; category: string;
+  /** A sourced definition for this headword and part of speech; never a generic fallback. */
+  englishMeaning?: string;
   partOfSpeech: PartOfSpeech; difficulty: WordDifficulty; alternatives?: string[];
   /** Vocabulary grade; legacy banks fall back to difficulty 1→1, 2→4, 3→7. */
   learningLevel?: LearningLevel;

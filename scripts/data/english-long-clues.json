@@ -1,0 +1,1811 @@
+{
+  "version": 1,
+  "revision": "2026-10-26-reviewed-long-clues",
+  "license": "CC-BY-SA-4.0 for adaptations of English Wiktionary; original editorial wording",
+  "entries": {
+    "adularia": {
+      "meaning": "A transparent or white variety of orthoclase feldspar, sometimes showing a bluish sheen.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "một loại khoáng vật fenspat orthoclase trong suốt hoặc trắng",
+      "before": {
+        "meaning": "(khoáng chất) trong suốt",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/adularia#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "aeruginous": {
+      "meaning": "Bluish green like the corrosion that forms on copper.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có tính chất gỉ đồng; giống màu gỉ đồng",
+      "before": {
+        "meaning": "có tính chất gỉ đồng; giống màu gỉ đồng",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/aeruginous#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "aggiornamento": {
+      "meaning": "Modernization or updating, especially of Roman Catholic teaching and practice.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "sự hiện đại hoá, sự hiện đại hoá công giáo",
+      "before": {
+        "meaning": "số nhiều aggiornamentos",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/aggiornamento#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "alsace": {
+      "meaning": "A historical and cultural region of northeastern France beside the upper Rhine.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "vùng Alsace ở đông bắc nước Pháp",
+      "before": {
+        "meaning": "rượu nho vùng an-dát (pháp)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/alsace#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "answerphone": {
+      "meaning": "A device that automatically answers telephone calls and records callers' messages.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "máy tự động trả lời các cú điện thoại và ghi lại mọi thông báo của người gọi; máy tự động trả lời điện thoại (mỹ)",
+      "before": {
+        "meaning": "máy tự động trả lời các cú điện thoại và ghi lại mọi thông báo của người gọi; máy tự động trả lời điện thoại (mỹ)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/answerphone#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "anthropography": {
+      "meaning": "The study of how human populations, languages and customs are distributed geographically.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "địa lý nhân văn",
+      "before": {
+        "meaning": "địa lý nhân văn",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/anthropography#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "anthropophilous": {
+      "meaning": "Attracted to humans or preferring close contact with them.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "ưa người, gần người",
+      "before": {
+        "meaning": "ưa người, gần người",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/anthropophilous#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "apostolicity": {
+      "meaning": "The quality of preserving the teaching and tradition of the original Christian apostles.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "sự phù hợp với giáo lý các tông đồ",
+      "before": {
+        "meaning": "sự phù hợp với giáo lý các tông đồ",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/apostolicity#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "bakestone": {
+      "meaning": "A flat stone or similar surface on which bread or cakes are baked.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "cái lót bánh mì (trong lò)",
+      "before": {
+        "meaning": "cái lót bánh mì (trong lò)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/bakestone#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "bissextile": {
+      "meaning": "A leap year, containing an extra day.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "năm nhuận",
+      "before": {
+        "meaning": "năm nhuận",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/bissextile#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "burgage": {
+      "meaning": "A historical form of holding town property in return for a fixed annual rent.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(sử học) chế độ thành phố anh thuê đất nhà vua trong từng năm và nộp tô",
+      "before": {
+        "meaning": "(sử học) chế độ thành phố anh thuê đất nhà vua trong từng năm và nộp tô",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/burgage#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "calvinism": {
+      "meaning": "The Protestant Christian tradition based on John Calvin's teachings, including predestination.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "thuyết can-vin",
+      "before": {
+        "meaning": "thuyết can-vin",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/calvinism#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "caressing": {
+      "meaning": "Gently touching or stroking someone to show affection.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "vuốt ve, mơn trớn, âu yếm",
+      "before": {
+        "meaning": "vuốt ve, mơn trớn, âu yếm",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/caressing#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "carotid": {
+      "meaning": "Either of the two main arteries in the neck that carry blood to the head.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(giải phẫu) động mạch cảnh",
+      "before": {
+        "meaning": "(giải phẫu) động mạch cảnh",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/carotid#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "childermas": {
+      "meaning": "A Christian feast commemorating the children killed in the biblical Massacre of the Innocents.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(tôn giáo) ngày lễ kỷ niệm trẻ em bị giết (trong (kinh thánh)), ngày 28 - 12",
+      "before": {
+        "meaning": "(tôn giáo) ngày lễ kỷ niệm trẻ em bị giết (trong (kinh thánh)), ngày 28 - 12",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/childermas#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "chronometry": {
+      "meaning": "The science or practice of measuring time.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "phép đo thời gian",
+      "before": {
+        "meaning": "phép đo thời gian",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/chronometry#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "circa": {
+      "meaning": "Approximately; used especially before an uncertain date.",
+      "partOfSpeech": "preposition",
+      "vietnameseMeaning": "vào khoảng",
+      "before": {
+        "meaning": "vào khoảng",
+        "partOfSpeech": "preposition"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/circa#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "clinology": {
+      "meaning": "The study of an organism's deterioration after it reaches maturity.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "nghiên cứu sự suy thoái của sinh vật sau khi trưởng thành",
+      "before": {
+        "meaning": "(y học) bệnh sàng học",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/clinology#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "continuator": {
+      "meaning": "Someone who carries on work begun by another person.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người làm tiếp, người viết tiếp (tiểu thuyết)",
+      "before": {
+        "meaning": "người làm tiếp, người viết tiếp (tiểu thuyết)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/continuator#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "cyclocross": {
+      "meaning": "Bicycle racing on mixed terrain with obstacles that sometimes require riders to carry their bicycles.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "cuộc đua xe đạp việt dã",
+      "before": {
+        "meaning": "cuộc đua xe đạp việt dã",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/cyclocross#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "decenniad": {
+      "meaning": "A period of ten years.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "thời kỳ mười năm",
+      "before": {
+        "meaning": "thời kỳ mười năm",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/decenniad#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "declining": {
+      "meaning": "Becoming weaker, smaller or less successful.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "xuống dốc, tàn tạ",
+      "before": {
+        "meaning": "xuống dốc, tàn tạ",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/declining#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "deuteration": {
+      "meaning": "The introduction of deuterium into a substance.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "việc đưa đơtêri vào hoá chất",
+      "before": {
+        "meaning": "việc đưa đơtêri vào hoá chất",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/deuteration#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "diapositive": {
+      "meaning": "A transparent positive image used for projection or for placing over another image.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "kính dương, kính đèn chiếu",
+      "before": {
+        "meaning": "kính dương, kính đèn chiếu",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/diapositive#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "djin": {
+      "meaning": "A supernatural spirit in Islamic tradition.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "ma; thần đạo ixlam",
+      "before": {
+        "meaning": "ma; thần đạo ixlam",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/djin#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "doggone": {
+      "meaning": "A mild exclamation expressing anger or annoyance.",
+      "partOfSpeech": "interjection",
+      "vietnameseMeaning": "chết tiệt!, quỷ tha ma bắt đi! ((cũng) doggoned)",
+      "before": {
+        "meaning": "chết tiệt!, quỷ tha ma bắt đi! ((cũng) doggoned)",
+        "partOfSpeech": "interjection"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/doggone#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "eloper": {
+      "meaning": "Someone who runs away secretly to marry or live with a partner.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người bí mật bỏ đi để kết hôn hoặc sống với người yêu",
+      "before": {
+        "meaning": "người trốn đi theo trai",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/eloper#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "ensa": {
+      "meaning": "The Entertainments National Services Association, which provided entertainment for British service personnel.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(viết tắt) của entertainments national service association tổ chức giải trí cho quân đội anh",
+      "before": {
+        "meaning": "(viết tắt) của entertainments national service association tổ chức giải trí cho quân đội anh",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/ensa#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "ephedrin": {
+      "meaning": "An older spelling for the stimulant and decongestant drug ephedrine.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(dược học) êfêđrin",
+      "before": {
+        "meaning": "(dược học) êfêđrin",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/ephedrin#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "episcopalian": {
+      "meaning": "A member or supporter of a church governed by bishops, especially an Anglican church.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người tán thành chế độ giám mục quản lý nhà thờ",
+      "before": {
+        "meaning": "người tán thành chế độ giám mục quản lý nhà thờ",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/episcopalian#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "epitomist": {
+      "meaning": "Someone who writes a short summary of a longer work.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người tóm tắt",
+      "before": {
+        "meaning": "người tóm tắt",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/epitomist#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "eruginous": {
+      "meaning": "Bluish green like the corrosion that forms on copper.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "xanh lục; có màu gỉ đồng",
+      "before": {
+        "meaning": "xanh lục; có màu gỉ đồng",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/eruginous#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "esq": {
+      "meaning": "A title, short for esquire, written after a person's name.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "ông, ngài (viết đằng sau tên họ, trong cái địa chỉ đề trên thư)",
+      "before": {
+        "meaning": "ông, ngài (viết đằng sau tên họ, trong cái địa chỉ đề trên thư)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/esq#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "excitomotor": {
+      "meaning": "Stimulating movement or motor activity.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "kích thích vận động",
+      "before": {
+        "meaning": "kích thích vận động",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/excitomotor#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "exegetist": {
+      "meaning": "Someone skilled in interpreting texts, especially religious scripture.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(tôn giáo) người luận bình, người giải thích (kinh thánh)",
+      "before": {
+        "meaning": "(tôn giáo) người luận bình, người giải thích (kinh thánh)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/exegetist#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "fatiguing": {
+      "meaning": "Causing tiredness or exhaustion.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "làm mệt nhọc, làm kiệt sức",
+      "before": {
+        "meaning": "làm mệt nhọc, làm kiệt sức",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/fatiguing#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "ferreous": {
+      "meaning": "Containing, made of, or relating to iron.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(hoá học) có chứa sắt",
+      "before": {
+        "meaning": "(hoá học) có chứa sắt",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/ferreous#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "ferruginous": {
+      "meaning": "Containing iron or rust, or having a rusty color.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có chứa gỉ sắt",
+      "before": {
+        "meaning": "có chứa gỉ sắt",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/ferruginous#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "fraenulum": {
+      "meaning": "A small fold of tissue that restricts or guides the movement of an attached body part.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "nếp mô nhỏ nối và hạn chế chuyển động của một bộ phận cơ thể",
+      "before": {
+        "meaning": "cũng franulum; số nhiều fraenula, frenula",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/fraenulum#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "ganged": {
+      "meaning": "Joined or arranged together to operate as a group.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "ghép đôi; ghép bộ",
+      "before": {
+        "meaning": "ghép đôi; ghép bộ",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/ganged#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "garotter": {
+      "meaning": "Someone who strangles another person with a cord or similar device.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người dùng dây hoặc vật tương tự để siết cổ người khác",
+      "before": {
+        "meaning": "cũng garroter",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/garotter#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "gasogene": {
+      "meaning": "A historical two-chambered bottle that produces and dispenses a carbonated drink.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "bình hai ngăn kiểu cổ dùng để tạo và rót nước có ga",
+      "before": {
+        "meaning": "lò ga",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/gasogene#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "gastral": {
+      "meaning": "Relating to the stomach.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thuộc dạ dày",
+      "before": {
+        "meaning": "thuộc dạ dày",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/gastral#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "gazogene": {
+      "meaning": "A historical two-chambered bottle that produces and dispenses a carbonated drink.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "bình hai ngăn kiểu cổ dùng để tạo và rót nước có ga",
+      "before": {
+        "meaning": "lò ga",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/gazogene#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "geoid": {
+      "meaning": "The theoretical surface of Earth's mean sea level shaped by gravity and rotation, extended beneath the land.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "thể địa cầu",
+      "before": {
+        "meaning": "thể địa cầu",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/geoid#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "godhood": {
+      "meaning": "The state or quality of being a god.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tính chất thần linh",
+      "before": {
+        "meaning": "tính chất thần linh",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/godhood#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "haka": {
+      "meaning": "A traditional Maori group dance with chanting, stamping and vigorous movements.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "điệu vũ chiến đấu theo nghi thức của người maori",
+      "before": {
+        "meaning": "điệu vũ chiến đấu theo nghi thức của người maori",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/haka#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "hauhau": {
+      "meaning": "A nineteenth-century Maori religious movement associated with Pai Marire.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tôn giáo của người maori ở thế kỷ 19",
+      "before": {
+        "meaning": "tôn giáo của người maori ở thế kỷ 19",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/hauhau#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "haylage": {
+      "meaning": "Partly dried grass or other forage preserved as livestock feed.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "thức ăn dự trữ cho gia súc",
+      "before": {
+        "meaning": "thức ăn dự trữ cho gia súc",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/haylage#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "heliostat": {
+      "meaning": "A turning mirror that keeps sunlight reflected toward a fixed target as the Sun moves.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "kính định nhật",
+      "before": {
+        "meaning": "kính định nhật",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/heliostat#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "hetaerism": {
+      "meaning": "An ancient Greek custom in which men sought the company of courtesans at social gatherings.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tục giao du với kỹ nữ trong các cuộc tụ họp ở Hy Lạp cổ đại",
+      "before": {
+        "meaning": "chế độ nàng hầu vợ lẽ",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/hetaerism#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "hetairism": {
+      "meaning": "An ancient Greek custom in which men sought the company of courtesans at social gatherings.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tục giao du với kỹ nữ trong các cuộc tụ họp ở Hy Lạp cổ đại",
+      "before": {
+        "meaning": "chế độ nàng hầu vợ lẽ",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/hetairism#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "hornrimmed": {
+      "meaning": "Having spectacle frames made of horn or a material resembling horn.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có gọng sừng (kính)",
+      "before": {
+        "meaning": "có gọng sừng (kính)",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/hornrimmed#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "horologic": {
+      "meaning": "Relating to clocks or the measurement of time.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(thuộc) thuật đo thời khắc",
+      "before": {
+        "meaning": "(thuộc) thuật đo thời khắc",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/horologic#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "horological": {
+      "meaning": "Relating to clocks or the measurement of time.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(thuộc) thuật đo thời khắc",
+      "before": {
+        "meaning": "(thuộc) thuật đo thời khắc",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/horological#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "housewares": {
+      "meaning": "Items and utensils used in a household.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "đồ dùng trong gia đình",
+      "before": {
+        "meaning": "đồ dùng gia đình (nồi, niêu, xoong, chảo, bất, đựa...)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/housewares#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "hunnish": {
+      "meaning": "Relating to the Huns, an ancient nomadic people.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thuộc người Hung",
+      "before": {
+        "meaning": "(thuộc) rợ hung",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/hunnish#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "hylic": {
+      "meaning": "Relating to physical matter rather than intellectual or spiritual concerns.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(thuộc) vật chất",
+      "before": {
+        "meaning": "(thuộc) vật chất",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/hylic#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "jesuitry": {
+      "meaning": "The work, beliefs or methods of members of the Jesuit religious order.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "công việc, giáo lý hoặc phương pháp của Dòng Tên",
+      "before": {
+        "meaning": "giáo phái dòng tên",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/jesuitry#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "keynesian": {
+      "meaning": "Relating to the economic theories of John Maynard Keynes.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thuộc thuyết kinh tế của kê-nơ (johu maynard keynes + 1946, nhà (kinh tế) học anh)",
+      "before": {
+        "meaning": "thuộc thuyết kinh tế của kê-nơ (johu maynard keynes + 1946, nhà (kinh tế) học anh)",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/keynesian#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "kilogrammeter": {
+      "meaning": "A unit of work equal to raising one kilogram through a vertical distance of one metre under standard gravity.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "kilôgammet",
+      "before": {
+        "meaning": "kilôgammet",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/kilogrammeter#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "kilogrammetre": {
+      "meaning": "A unit of work equal to raising one kilogram through a vertical distance of one metre under standard gravity.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "kilôgammet",
+      "before": {
+        "meaning": "kilôgammet",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/kilogrammetre#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "laitance": {
+      "meaning": "A weak layer of fine cement particles that forms on the surface of concrete.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "lớp yếu gồm các hạt xi măng mịn trên bề mặt bê tông",
+      "before": {
+        "meaning": "xi măng hoà nước",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/laitance#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "lamaism": {
+      "meaning": "A dated name for Tibetan Buddhism.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "lạt-ma giáo (tây tạng và mông cổ)",
+      "before": {
+        "meaning": "lạt-ma giáo (tây tạng và mông cổ)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/lamaism#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "lamarckism": {
+      "meaning": "The historical theory that traits acquired during an organism's life can be inherited by its offspring.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "học thuyết lịch sử cho rằng đặc tính thu được trong đời có thể truyền cho thế hệ sau",
+      "before": {
+        "meaning": "(sinh học) học thuyết lamac",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://www.lancaster.ac.uk/fas/psych/glossary/lamarckism/",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "laundrette": {
+      "meaning": "A shop with machines that customers use to wash their own clothes.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "hiệu giặt tự động (chờ lấy ngay quần áo tại chỗ)",
+      "before": {
+        "meaning": "hiệu giặt tự động (chờ lấy ngay quần áo tại chỗ)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/laundrette#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "lazurite": {
+      "meaning": "A blue mineral that forms the gemstone lapis lazuli and was used to make ultramarine pigment.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(khoáng chất) lazurit",
+      "before": {
+        "meaning": "(khoáng chất) lazurit",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/lazurite#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "lingala": {
+      "meaning": "A Bantu language spoken mainly in the Democratic Republic of the Congo and the Republic of the Congo.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tiếng lingala ở công-gô",
+      "before": {
+        "meaning": "tiếng lingala ở công-gô",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/lingala#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "lipsalve": {
+      "meaning": "A soothing substance applied to dry or sore lips.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "sáp môi",
+      "before": {
+        "meaning": "sáp môi",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/lipsalve#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "longing": {
+      "meaning": "Showing a strong, often sad desire for something.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "ước ao, mong đợi, khát khao, ham muốn",
+      "before": {
+        "meaning": "ước ao, mong đợi, khát khao, ham muốn",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/longing#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "lotsa": {
+      "meaning": "An informal spelling representing the pronunciation of 'lots of'; a large amount of something.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "rất nhiều",
+      "before": {
+        "meaning": "rất nhiều",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/lotsa#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "lounging": {
+      "meaning": "Suitable for relaxing or resting at home, especially clothing.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "dùng để mặc trong nhà",
+      "before": {
+        "meaning": "dùng để mặc trong nhà",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/lounging#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "lubberland": {
+      "meaning": "An imaginary land of abundance where people can live without work.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "nơi sung sướng tưởng tượng",
+      "before": {
+        "meaning": "nơi sung sướng tưởng tượng",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/lubberland#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "lumbrical": {
+      "meaning": "A small, worm-shaped muscle in the hand or foot that helps bend and straighten digits.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(giải phẫu) cơ giun",
+      "before": {
+        "meaning": "(giải phẫu) cơ giun",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/lumbrical#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "maieutics": {
+      "meaning": "A method of questioning that helps someone discover ideas or knowledge for themselves.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "phương pháp đặt câu hỏi giúp người đối thoại tự tìm ra tri thức",
+      "before": {
+        "meaning": "cách đỡ đẻ",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/maieutics#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "manifolder": {
+      "meaning": "A device used to produce several copies of a written document.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "máy in sao",
+      "before": {
+        "meaning": "máy in sao",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/manifolder#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "marplot": {
+      "meaning": "Someone who spoils another person's plans or enjoyment.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "kẻ hay làm bậy, kẻ hay làm sai, kẻ hay làm hỏng việc người khác",
+      "before": {
+        "meaning": "kẻ hay làm bậy, kẻ hay làm sai, kẻ hay làm hỏng việc người khác",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/marplot#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "mattins": {
+      "meaning": "Morning prayers or an early morning church service.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(số nhiều) kinh (cầu buổi sáng) ((cũng) matin)",
+      "before": {
+        "meaning": "(số nhiều) kinh (cầu buổi sáng) ((cũng) matin)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/mattins#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "menshevik": {
+      "meaning": "A member of the moderate faction of the Russian Social Democratic Labour Party before the Russian Revolution.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(chính trị) người mensêvic",
+      "before": {
+        "meaning": "(chính trị) người mensêvic",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/menshevik#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "menshevist": {
+      "meaning": "A supporter or member of the moderate Menshevik faction in Russian revolutionary politics.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người ủng hộ chủ nghĩa mensêvic",
+      "before": {
+        "meaning": "người ủng hộ chủ nghĩa mensêvic",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/menshevist#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "merovingian": {
+      "meaning": "Relating to the early Frankish royal dynasty descended from Merovech.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(thuộc) vương triều mêrôvê (cai trị nước pháp từ năm 500 đến năm 751)",
+      "before": {
+        "meaning": "(thuộc) vương triều mêrôvê (cai trị nước pháp từ năm 500 đến năm 751)",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/merovingian#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "meseemed": {
+      "meaning": "An archaic expression meaning 'it seemed to me'.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "(từ cổ,nghĩa cổ) đối với tôi, hình như",
+      "before": {
+        "meaning": "(từ cổ,nghĩa cổ) đối với tôi, hình như",
+        "partOfSpeech": "verb"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/meseemed#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "metacenter": {
+      "meaning": "The point where a tilted vessel's upward line of buoyancy meets its original vertical centreline.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(toán học) khuynh tâm",
+      "before": {
+        "meaning": "(toán học) khuynh tâm",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/metacenter#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "metacentre": {
+      "meaning": "The point where a tilted vessel's upward line of buoyancy meets its original vertical centreline.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(toán học) khuynh tâm",
+      "before": {
+        "meaning": "(toán học) khuynh tâm",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/metacentre#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "methought": {
+      "meaning": "An archaic expression meaning 'it seemed to me'.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "(từ cổ,nghĩa cổ) đối với tôi, hình như",
+      "before": {
+        "meaning": "(từ cổ,nghĩa cổ) đối với tôi, hình như",
+        "partOfSpeech": "verb"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/methought#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "minacity": {
+      "meaning": "A threatening quality or a tendency to threaten.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tính chất đe doạ",
+      "before": {
+        "meaning": "tính chất đe doạ",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/minacity#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "monophthong": {
+      "meaning": "A vowel sound whose quality remains the same throughout its pronunciation.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "nguyên âm đơn",
+      "before": {
+        "meaning": "nguyên âm đơn",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/monophthong#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "necessitarian": {
+      "meaning": "Relating to the belief that events and human actions are determined by necessity rather than free will.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(triết học) (thuộc) thuyết tất yếu, (thuộc) thuyết định mệnh",
+      "before": {
+        "meaning": "(triết học) (thuộc) thuyết tất yếu, (thuộc) thuyết định mệnh",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/necessitarian#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "oau": {
+      "meaning": "The Organisation of African Unity, a former association of African states.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tổ chức thống nhất châu phi",
+      "before": {
+        "meaning": "tổ chức thống nhất châu phi",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/oau#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "obeli": {
+      "meaning": "Marks used in old texts to indicate doubtful words or passages.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "các dấu dùng trong văn bản cổ để đánh dấu từ hoặc đoạn còn nghi ngờ",
+      "before": {
+        "meaning": "dấu ôben (ghi vào các bản thảo xưa để chỉ một từ hay một đoạn còn nghi ngờ)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/obeli#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "obol": {
+      "meaning": "A small silver coin used in ancient Greece.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "đồng ôbôn (tiền cổ hy-lạp)",
+      "before": {
+        "meaning": "đồng ôbôn (tiền cổ hy-lạp)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/obol#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "olympiad": {
+      "meaning": "A period of four years between successive Olympic Games.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "thời kỳ bốn năm (giữa hai đại hội thể thao ô-lim-pích, cổ hy-lạp)",
+      "before": {
+        "meaning": "thời kỳ bốn năm (giữa hai đại hội thể thao ô-lim-pích, cổ hy-lạp)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/olympiad#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "opec": {
+      "meaning": "The Organization of the Petroleum Exporting Countries, an association of oil-producing states.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tổ chức các nước xuất khẩu dầu lửa",
+      "before": {
+        "meaning": "tổ chức các nước xuất khẩu dầu lửa",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/opec#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "opponens": {
+      "meaning": "A muscle that moves the thumb or little finger toward the other digits.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "cơ gập ngón",
+      "before": {
+        "meaning": "cơ gập ngón",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/opponens#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "orthocentre": {
+      "meaning": "The point where the three altitudes of a triangle intersect.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(toán học) trực tâm",
+      "before": {
+        "meaning": "(toán học) trực tâm",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/orthocentre#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "orthohelium": {
+      "meaning": "Helium in a state in which the spins of its two electrons combine into a triplet state.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "octoheli",
+      "before": {
+        "meaning": "octoheli",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/orthohelium#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "orthohydrogen": {
+      "meaning": "The form of molecular hydrogen in which the two nuclei have parallel spins.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "octohidro",
+      "before": {
+        "meaning": "octohidro",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/orthohydrogen#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "osculatrix": {
+      "meaning": "A curve that matches another curve at a point more closely than other curves of the same kind.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(cơ học) tuyến tiếp xúc",
+      "before": {
+        "meaning": "(cơ học) tuyến tiếp xúc",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/osculatrix#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "otary": {
+      "meaning": "An eared seal, such as a sea lion or fur seal.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "con sư tử biển",
+      "before": {
+        "meaning": "con sư tử biển",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/otary#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "otherwhere": {
+      "meaning": "In or to another place; elsewhere.",
+      "partOfSpeech": "adverb",
+      "vietnameseMeaning": "ở nơi khác",
+      "before": {
+        "meaning": "ở nơi khác",
+        "partOfSpeech": "adverb"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/otherwhere#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "overweighted": {
+      "meaning": "Loaded with too much weight.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "bị chất quá nặng",
+      "before": {
+        "meaning": "bị chất quá nặng",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/overweighted#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "palaeofloristics": {
+      "meaning": "The study of the plant life of past geological ages.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "môn cổ hệ thực vật",
+      "before": {
+        "meaning": "môn cổ hệ thực vật",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/palaeofloristics#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "palaeozoic": {
+      "meaning": "Relating to the geological era before the Mesozoic, when many early animal groups developed.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(địa lý,địa chất) (thuộc) đại cổ sinh",
+      "before": {
+        "meaning": "(địa lý,địa chất) (thuộc) đại cổ sinh",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/palaeozoic#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "paraselenae": {
+      "meaning": "Bright spots beside the Moon caused by moonlight passing through ice crystals.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "các điểm sáng cạnh Mặt Trăng do ánh trăng khúc xạ qua tinh thể băng",
+      "before": {
+        "meaning": "(thiên văn học) trăng già, trăng ảo",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/paraselenae#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "paraselene": {
+      "meaning": "A bright spot beside the Moon caused by moonlight passing through ice crystals.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "điểm sáng cạnh Mặt Trăng do ánh trăng khúc xạ qua tinh thể băng",
+      "before": {
+        "meaning": "<thvăn> trăng già, trăng ảo",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/paraselene#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "parkish": {
+      "meaning": "Resembling a park.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có dạng công viên",
+      "before": {
+        "meaning": "có dạng công viên",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/parkish#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "pdt": {
+      "meaning": "Pacific Daylight Time, the daylight-saving time used in the North American Pacific time zone.",
+      "partOfSpeech": "abbreviation",
+      "vietnameseMeaning": "giờ mùa hè Thái Bình Dương ở Bắc Mỹ",
+      "before": {
+        "meaning": "<mỹ> vt của pacific daylight time (giờ ban ngày khu vực thái bình dương)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/pdt#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "petasi": {
+      "meaning": "Broad-brimmed hats worn in ancient Greece.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "các loại mũ rộng vành của Hy Lạp cổ đại",
+      "before": {
+        "meaning": "số nhiều",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/petasi#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "phyla": {
+      "meaning": "Major divisions in biological classification, ranking below kingdoms.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "các ngành trong phân loại sinh học, dưới bậc giới",
+      "before": {
+        "meaning": "(sinh vật học) ngành (đơn vị phân loại)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/phyla#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "pitying": {
+      "meaning": "Showing sympathy or sorrow for someone else's suffering.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thương hại, thương xót, làm động lòng trắc ẩn",
+      "before": {
+        "meaning": "thương hại, thương xót, làm động lòng trắc ẩn",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/pitying#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "plutonism": {
+      "meaning": "The historical geological theory that heat and volcanic activity formed Earth's rocks.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(địa lý,địa chất) thuyết hoả thành",
+      "before": {
+        "meaning": "(địa lý,địa chất) thuyết hoả thành",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/plutonism#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "podobranchiae": {
+      "meaning": "Gills attached to the bases of limbs in certain crustaceans.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "mang gắn ở gốc chân của một số loài giáp xác",
+      "before": {
+        "meaning": "số nhiều",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/podobranchiae#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "pontil": {
+      "meaning": "An iron rod used to hold and shape hot glass in glassblowing.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "cây gậy dùng trong việc thổi thủy tinh",
+      "before": {
+        "meaning": "cây gậy dùng trong việc thổi thủy tinh",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/pontil#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "poppadam": {
+      "meaning": "A thin, crisp Indian wafer usually made from lentil flour.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "bánh mỏng giòn của Ấn Độ, thường làm từ bột đậu lăng",
+      "before": {
+        "meaning": "cũng poppadom, popadam",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/poppadam#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "presanctified": {
+      "meaning": "Consecrated beforehand, especially bread and wine prepared for a Christian communion service.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(bánh mì, rượu) đã được dùng trong lễ ban thánh thể",
+      "before": {
+        "meaning": "(bánh mì, rượu) đã được dùng trong lễ ban thánh thể",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/presanctified#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "proboscidian": {
+      "meaning": "Having a trunk or a long projecting feeding organ.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(động vật học) có vòi",
+      "before": {
+        "meaning": "(động vật học) có vòi",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/proboscidian#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "providing": {
+      "meaning": "Supplying something that is needed or wanted.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang cung cấp thứ cần thiết hoặc được mong muốn",
+      "before": {
+        "meaning": "được chuẩn bị đầy đủ, được dự phòng",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/providing#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "puckered": {
+      "meaning": "Gathered into small wrinkles or folds.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "nhàu nát; nhăn nheo",
+      "before": {
+        "meaning": "nhàu nát; nhăn nheo",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/puckered#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "pvc": {
+      "meaning": "Polyvinyl chloride, a widely used synthetic plastic.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(viết tắt) của polyvinyl chloride nhựa pvc (một loại chất dẻo)",
+      "before": {
+        "meaning": "<vt> của polyvinyl chloride nhựa pvc (một loại chất dẻo)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/pvc#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "quinquagenarian": {
+      "meaning": "A person between fifty and fifty-nine years old.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người từ năm mươi đến năm mươi chín tuổi",
+      "before": {
+        "meaning": "người năm mươi tuổi",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/quinquagenarian#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "quinquina": {
+      "meaning": "The cinchona tree, whose bark is a source of quinine.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "cây canh ki na",
+      "before": {
+        "meaning": "cây canh ki na",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/quinquina#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "radiosonde": {
+      "meaning": "An instrument carried into the atmosphere that sends weather measurements to the ground by radio.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "máy thăm dò, rađiô",
+      "before": {
+        "meaning": "máy thăm dò, rađiô",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/radiosonde#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "raptured": {
+      "meaning": "Filled with intense delight or happiness.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "sung sướng như lên tiên, mê ly",
+      "before": {
+        "meaning": "sung sướng như lên tiên, mê ly",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/raptured#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "rayed": {
+      "meaning": "Having rays or radiating parts, such as the outer flowers of a flower head.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có hoa toả tia",
+      "before": {
+        "meaning": "có hoa toả tia",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/rayed#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "revanchist": {
+      "meaning": "Seeking revenge, especially to recover territory or status lost in a war.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "chủ trương trả thù, nhất là giành lại lãnh thổ hoặc vị thế đã mất trong chiến tranh",
+      "before": {
+        "meaning": "thuộc revanchism",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/revanchist#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "rfc": {
+      "meaning": "The Royal Flying Corps, the former British military air service.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "Quân đoàn Không quân Hoàng gia Anh trước đây",
+      "before": {
+        "meaning": "chế độ, cách thức cai trị, hệ thống cai trị (một nước)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/rfc#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "roborant": {
+      "meaning": "Strengthening or restoring energy and health.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có tác dụng bồi bổ, phục hồi sức lực",
+      "before": {
+        "meaning": "(y học) bổ thuốc",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/roborant#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "royalistic": {
+      "meaning": "Supporting monarchy or relating to royalists.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "bảo hoàng",
+      "before": {
+        "meaning": "bảo hoàng",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/royalistic#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "saccharide": {
+      "meaning": "A sugar or a compound made from sugar units, including starch and cellulose.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(hoá học) sacarit",
+      "before": {
+        "meaning": "(hoá học) sacarit",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/saccharide#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "satined": {
+      "meaning": "Made smooth and glossy like satin.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có mặt bóng (giấy, kim loại)",
+      "before": {
+        "meaning": "có mặt bóng (giấy, kim loại)",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/satined#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "scatophagous": {
+      "meaning": "Feeding on excrement.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "ăn phân",
+      "before": {
+        "meaning": "ăn phân",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/scatophagous#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "semeiotics": {
+      "meaning": "The study of signs and symptoms of disease.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(y học) triệu chứng học",
+      "before": {
+        "meaning": "(y học) triệu chứng học",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/semeiotics#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "sennight": {
+      "meaning": "An archaic word for a period of seven days; a week.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(từ cổ,nghĩa cổ) tuần lễ",
+      "before": {
+        "meaning": "(từ cổ,nghĩa cổ) tuần lễ",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/sennight#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "seric": {
+      "meaning": "Relating to China in ancient Greek and Roman usage.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(văn học) (thuộc) trung quốc",
+      "before": {
+        "meaning": "(văn học) (thuộc) trung quốc",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/seric#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "sexagenary": {
+      "meaning": "Relating to the number sixty or a period of sixty years.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thuộc số sáu mươi hoặc khoảng thời gian sáu mươi năm",
+      "before": {
+        "meaning": "sáu mươi tuổi, lục tuần",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/sexagenary#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "shelta": {
+      "meaning": "A language used by some Irish Travellers, influenced by Irish and English.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "ngôn ngữ của một bộ phận cộng đồng du cư Ireland",
+      "before": {
+        "meaning": "tiếng lóng bí mật của người du đãng ireland",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/shelta#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "sheol": {
+      "meaning": "The realm of the dead in the Hebrew Bible.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "âm ty, âm phủ",
+      "before": {
+        "meaning": "âm ty, âm phủ",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/sheol#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "siderography": {
+      "meaning": "A historical process of reproducing engraved designs using hardened steel rollers and printing plates.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "thuật khắc (trên) sắt, thuật khắc (trên) thép",
+      "before": {
+        "meaning": "thuật khắc (trên) sắt, thuật khắc (trên) thép",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/siderography#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "stretchmarks": {
+      "meaning": "Lines on the skin caused by stretching, often during growth or pregnancy.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "các vết rạn da do da bị kéo giãn, thường khi lớn lên hoặc mang thai",
+      "before": {
+        "meaning": "dấu hiệu trên bụng sau khi có thai",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/stretchmarks#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "subring": {
+      "meaning": "A subset of a mathematical ring that forms a ring under the same addition and multiplication operations.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(toán học) vành con",
+      "before": {
+        "meaning": "(toán học) vành con",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/subring#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "sufficing": {
+      "meaning": "Being enough to meet a need or requirement.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "đầy đủ",
+      "before": {
+        "meaning": "đầy đủ",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/sufficing#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "syndesis": {
+      "meaning": "The pairing of corresponding chromosomes during cell reproduction.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(sinh học) sự ghép; gióng đôi",
+      "before": {
+        "meaning": "(sinh học) sự ghép; gióng đôi",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/syndesis#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "tectology": {
+      "meaning": "The study of an organism's structural organization into parts and organs.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(sinh vật học) môn hình thái cấu trúc",
+      "before": {
+        "meaning": "(sinh vật học) môn hình thái cấu trúc",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/tectology#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "teethridge": {
+      "meaning": "The ridge behind the upper front teeth; the alveolar ridge.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "gờ ổ răng phía sau các răng cửa hàm trên",
+      "before": {
+        "meaning": "chân răng",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/teethridge#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "telotype": {
+      "meaning": "A telegraph machine that automatically prints transmitted messages as letters.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "máy điện báo ghi chữ",
+      "before": {
+        "meaning": "máy điện báo ghi chữ",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/telotype#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "townlet": {
+      "meaning": "A small town.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "thị trấn",
+      "before": {
+        "meaning": "thị trấn",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/townlet#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "transinformation": {
+      "meaning": "The amount of information that one variable provides about another; mutual information.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "lượng thông tin mà một biến cung cấp về biến khác",
+      "before": {
+        "meaning": "thông tin",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/transinformation#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "transporting": {
+      "meaning": "Causing intense emotion or delight.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "gây cảm xúc mạnh mẽ, làm say mê, làm mê mẩn",
+      "before": {
+        "meaning": "gây cảm xúc mạnh mẽ, làm say mê, làm mê mẩn",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/transporting#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "trapes": {
+      "meaning": "To walk or wander about, often wearily or without a clear purpose.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "dạo chơi, đi vơ vẩn",
+      "before": {
+        "meaning": "dạo chơi, đi vơ vẩn",
+        "partOfSpeech": "verb"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/trapes#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "tropine": {
+      "meaning": "A poisonous alkaloid obtained by breaking down atropine.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "một ancaloit độc thu được khi thủy phân atropin",
+      "before": {
+        "meaning": "(sinh vật học) tropin; opxonin",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/tropine#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "unesco": {
+      "meaning": "The United Nations Educational, Scientific and Cultural Organization.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "Tổ chức Giáo dục, Khoa học và Văn hóa của Liên Hợp Quốc",
+      "before": {
+        "meaning": "unesco ((viết tắt) của united uations educational, scientific and cultural organization) tổ chức giáo dục",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/unesco#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "vamped": {
+      "meaning": "Patched up or repaired, often using old material.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được vá, được sửa chữa lại",
+      "before": {
+        "meaning": "được vá, được sửa chữa lại",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/vamped#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "vasopressive": {
+      "meaning": "Causing blood pressure to rise.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "làm tăng huyết áp",
+      "before": {
+        "meaning": "tăng áp mạch",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/8114917/",
+      "reason": "Concise definition supported by primary medical usage describing vasopressive agents that increase blood pressure."
+    },
+    "vaunting": {
+      "meaning": "Boastful; showing off one's achievements.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "khoe khoang, khoác lác",
+      "before": {
+        "meaning": "khoe khoang, khoác lác",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/vaunting#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "vietminh": {
+      "meaning": "A member of the Vietnamese independence movement formed in 1941.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người tham gia cuộc kháng chiến chống nhật và pháp từ năm 1941 đến 1954 (dưới sự lãnh đạo của chủ tịch hồ chí minh)",
+      "before": {
+        "meaning": "người tham gia cuộc kháng chiến chống nhật và pháp từ năm 1941 đến 1954 (dưới sự lãnh đạo của chủ tịch hồ chí minh)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/vietminh#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "wattless": {
+      "meaning": "Carrying no net electrical power, as with alternating current ninety degrees out of phase with voltage.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "(điện học) không có điện; không sinh điện",
+      "before": {
+        "meaning": "(điện học) không có điện; không sinh điện",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/wattless#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "whipray": {
+      "meaning": "A stingray with a long, slender, whip-like tail.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "cá đuối có đuôi dài và mảnh như roi",
+      "before": {
+        "meaning": "(động vật học) cá bn đuôi dài",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/whipray#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "windsurfing": {
+      "meaning": "A water sport in which a rider stands on a board and controls an attached sail.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(thể thao) môn lướt ván buồm",
+      "before": {
+        "meaning": "<thể> môn lướt ván buồm",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/windsurfing#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "wipo": {
+      "meaning": "The World Intellectual Property Organization, an international organization concerned with intellectual property.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tổ chức quốc tế về quyền sở hữu trí tuệ (world intellectual property organization)",
+      "before": {
+        "meaning": "tổ chức quốc tế về quyền sở hữu trí tuệ (world intellectual property organization)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/wipo#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "wiredrawing": {
+      "meaning": "The process of making wire by pulling metal through progressively smaller openings.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(kỹ thuật) sự kéo sợi (kim loại)",
+      "before": {
+        "meaning": "(kỹ thuật) sự kéo sợi (kim loại)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/wiredrawing#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "woodlice": {
+      "meaning": "Small land-dwelling crustaceans commonly found in damp places and decaying wood.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "các loài giáp xác nhỏ sống trên cạn ở nơi ẩm hoặc gỗ mục",
+      "before": {
+        "meaning": "<động> con mối (loài sinh vật tựa côn trùng, không có cánh sống trong gỗ mục, đất ẩm...)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/woodlice#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "wrapt": {
+      "meaning": "An old past form meaning enclosed or covered by wrapping.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đã gói hoặc bọc lại; dạng quá khứ cổ của wrap",
+      "before": {
+        "meaning": "sung sướng vô ngần, mê ly",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/wrapt#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "xenophobe": {
+      "meaning": "A person who fears or strongly dislikes foreigners or strangers.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người sợ hoặc ghét người nước ngoài hoặc người lạ",
+      "before": {
+        "meaning": "bài ngoại",
+        "partOfSpeech": "adjective"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/xenophobe#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    },
+    "yiddish": {
+      "meaning": "A Germanic language traditionally used by Ashkenazi Jews and usually written in Hebrew letters.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "(yiddish) tiếng i-đít (một thử tiếng đức cổ của người do thái ở trung và đông âu)",
+      "before": {
+        "meaning": "(yiddish) tiếng i-đít (một thử tiếng đức cổ của người do thái ở trung và đông âu)",
+        "partOfSpeech": "noun"
+      },
+      "sourceUrl": "https://en.wiktionary.org/wiki/yiddish#English",
+      "reason": "Reviewed concise English definition based on the sourced lexical sense; retain the headword and provide a matching Vietnamese clue."
+    }
+  }
+}

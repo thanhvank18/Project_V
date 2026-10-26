@@ -1,0 +1,2098 @@
+{
+  "version": 1,
+  "revision": "2026-10-26-reviewed-pos-a-d",
+  "method": "Explicit review of selected level>4 A-D entries flagged for word-class mismatch. Acronyms with ambiguous expansion were not guessed. Source word class and paired meanings were checked per entry; not a claim of exhaustive dictionary review.",
+  "sourceSnapshot": {
+    "name": "English Wiktionary via Kaikki / Wiktextract",
+    "url": "https://kaikki.org/dictionary/English/",
+    "downloadUrl": "https://kaikki.org/dictionary/English/kaikki.org-dictionary-English.jsonl.gz",
+    "snapshot": "2026-10-21 extraction; 2026-10-01 enwiktionary dump",
+    "license": "CC-BY-SA-4.0",
+    "sha256": "cabb3a13b7179d5f8c5909e06b1dcd2e2ae6465d05f35de56509a5b4e2bf0a49"
+  },
+  "entries": {
+    "abac": {
+      "meaning": "A chart that allows numerical calculations to be made by drawing or reading lines.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "toán đồ dùng để tính bằng đồ thị",
+      "sourceUrl": "https://en.wiktionary.org/wiki/abac",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "bàn tính, toán đồ, bản đồ tính",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "abstaining": {
+      "meaning": "Choosing not to take part in an activity or consume something.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "tự nguyện kiêng hoặc không tham gia",
+      "sourceUrl": "https://en.wiktionary.org/wiki/abstaining",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "sự kiêng khem",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "verb"
+      ]
+    },
+    "accelerating": {
+      "meaning": "Increasing speed or making a process happen more quickly.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang tăng tốc hoặc làm nhanh hơn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/accelerating",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "làm nhanh thêm",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "accepting": {
+      "meaning": "Willing to receive or tolerate people, ideas or circumstances.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "sẵn lòng chấp nhận người khác hoặc sự việc",
+      "sourceUrl": "https://en.wiktionary.org/wiki/accepting",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) nhận tin (đầu cuối)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "achondroplasia": {
+      "meaning": "A genetic condition affecting bone growth and causing disproportionately short limbs.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "rối loạn di truyền gây lùn với tay chân ngắn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/achondroplasia",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "tình trạng thiếu phát triển sụn (ở người)",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "achromatism": {
+      "meaning": "The property of producing an image without unwanted colour fringes.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tính tiêu sắc, không tạo viền màu",
+      "sourceUrl": "https://en.wiktionary.org/wiki/achromatism",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(vật lý) tính tiêu sắc",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "achromous": {
+      "meaning": "Lacking colour; colourless.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "không có màu",
+      "sourceUrl": "https://en.wiktionary.org/wiki/achromous",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(vật lý) làm tiêu sắc",
+        "partOfSpeech": "verb"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "acidulated": {
+      "meaning": "Made slightly sour or acidic by adding an acid.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đã làm cho hơi chua bằng cách thêm axit",
+      "sourceUrl": "https://en.wiktionary.org/wiki/acidulated",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "hơi chua",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "verb"
+      ]
+    },
+    "actiniform": {
+      "meaning": "Shaped like rays spreading outward from a centre.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có dạng tỏa tia",
+      "sourceUrl": "https://en.wiktionary.org/wiki/actiniform",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(sinh học) dạng sao; dạng toả tia",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "aculeus": {
+      "meaning": "A sharp prickle or projecting spine on a plant.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "gai nhọn trên thân cây",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aculeus",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(sinh học) gai, trâm đốt; ngòi đốt",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "addend": {
+      "meaning": "One of the numbers or terms that are added together to form a sum.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "số hạng trong phép cộng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/addend",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) số hạng (của tổng), số cộng",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "addressing": {
+      "meaning": "A method of locating and accessing data in computer storage.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "phương pháp xác định vị trí dữ liệu trong bộ nhớ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/addressing",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) định địa chỉ, định vị trí (d)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "adjusting": {
+      "meaning": "Changing something slightly to make it fit or work better.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang điều chỉnh để phù hợp hơn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/adjusting",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) điều chỉnh (d)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "affine": {
+      "meaning": "Describing a transformation made up of a linear transformation and a translation.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thuộc phép biến đổi bảo toàn đường thẳng và tính song song",
+      "sourceUrl": "https://en.wiktionary.org/wiki/affine",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "afin",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun",
+        "verb"
+      ]
+    },
+    "afro": {
+      "meaning": "A hairstyle with tightly curled hair forming a rounded shape around the head.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "kiểu tóc xoăn chặt tạo thành khối tròn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/afro",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(nói về kiểu tóc) quăn và dài như tóc dân da đen",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "aftertax": {
+      "meaning": "Remaining after the required taxes have been deducted.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "còn lại sau khi trừ thuế",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aftertax",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "thuế phụ thu",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "agamogenesis": {
+      "meaning": "Reproduction without the fusion of male and female reproductive cells.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "sự sinh sản vô tính",
+      "sourceUrl": "https://en.wiktionary.org/wiki/agamogenesis",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "sự sinh sản vô tính",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "agaze": {
+      "meaning": "Looking steadily and intently at something.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "đang nhìn chăm chú",
+      "sourceUrl": "https://en.wiktionary.org/wiki/agaze",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "đang nhìn đăm đăm",
+        "partOfSpeech": "adverb"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "agglomerant": {
+      "meaning": "Causing separate particles to gather into a mass or clump.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có tác dụng làm kết tụ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/agglomerant",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(hoá học) chất làm kết tụ",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "agrarian": {
+      "meaning": "Relating to farming, cultivated land or its ownership.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thuộc đất đai, canh tác hoặc nông nghiệp",
+      "sourceUrl": "https://en.wiktionary.org/wiki/agrarian",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": ", tính từ",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun"
+      ]
+    },
+    "agronomics": {
+      "meaning": "The science of managing soil and growing agricultural crops.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "khoa học quản lý đất và sản xuất cây trồng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/agronomics",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "nông học",
+        "partOfSpeech": "numeral"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "aliasing": {
+      "meaning": "Distortion caused when a signal is sampled too infrequently to represent it accurately.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "méo tín hiệu do tần suất lấy mẫu quá thấp",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aliasing",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) rối loạn",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "aligned": {
+      "meaning": "Placed in a straight line or arranged in a consistent direction.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được xếp thẳng hàng hoặc theo cùng hướng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aligned",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) được đồng chỉnh",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "aligning": {
+      "meaning": "Placing things in a straight line or matching their positions.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang sắp xếp cho thẳng hàng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aligning",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) điều chỉnh, hiệu chỉnh; đồng chỉnh, xếp hàng",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "aliquot": {
+      "meaning": "A measured portion taken from a larger quantity of a substance or sample.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "phần mẫu được lấy từ một lượng chất lớn hơn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aliquot",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "ước số",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun",
+        "verb"
+      ]
+    },
+    "aloft": {
+      "meaning": "High in the air or overhead.",
+      "partOfSpeech": "adverb",
+      "vietnameseMeaning": "ở trên cao hoặc trên không",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aloft",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "cao, ở trên cao",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "adverb"
+      ]
+    },
+    "alphanumeric": {
+      "meaning": "Consisting of letters and numbers.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "gồm chữ cái và chữ số",
+      "sourceUrl": "https://en.wiktionary.org/wiki/alphanumeric",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) chữ-số, mẫu tự-số tự",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun"
+      ]
+    },
+    "alphanumerical": {
+      "meaning": "Made up of both alphabetic characters and numerical digits.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "gồm các chữ cái và chữ số",
+      "sourceUrl": "https://en.wiktionary.org/wiki/alphanumerical",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "chữ - chữ số",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun"
+      ]
+    },
+    "ampulliform": {
+      "meaning": "Shaped like a flask or small rounded bottle.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có hình dạng bình hoặc lọ phình bụng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/ampulliform",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "dạng bóng",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "analyzer": {
+      "meaning": "An instrument that examines the components or properties of something.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "thiết bị phân tích",
+      "sourceUrl": "https://en.wiktionary.org/wiki/analyzer",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "phân tích",
+        "partOfSpeech": "verb"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "anaphasis": {
+      "meaning": "The stage of cell division in which chromosomes move toward opposite ends of the cell.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "kỳ sau của quá trình phân bào",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anaphasis",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(sinh học) thuộc kỳ sau",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "anglophobe": {
+      "meaning": "A person who dislikes or fears England, English people or English culture.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người sợ hoặc có ác cảm với nước Anh hay người Anh",
+      "sourceUrl": "https://en.wiktionary.org/wiki/Anglophobe",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "bài anh",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "angstrom": {
+      "meaning": "A unit of length equal to one ten-billionth of a metre, often used for atomic distances.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "đơn vị độ dài bằng một phần mười tỷ mét",
+      "sourceUrl": "https://en.wiktionary.org/wiki/angstrom",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) angstrom (a) (10 lũy thừa -10 mét)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "anisocoria": {
+      "meaning": "A condition in which the pupils of the two eyes differ in size.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tình trạng hai đồng tử có kích thước không bằng nhau",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anisocoria",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "đồng tử không đều",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "annexe": {
+      "meaning": "An extra building or extension attached to a main building.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tòa nhà phụ gắn với công trình chính",
+      "sourceUrl": "https://en.wiktionary.org/wiki/annexe",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "phụ vào, phụ thêm, thêm vào",
+        "partOfSpeech": "verb"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "anoestrous": {
+      "meaning": "Not in the sexually receptive phase of an animal's reproductive cycle.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "không ở thời kỳ động dục",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anoestrous",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "thời kỳ đình dục",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "anomal": {
+      "meaning": "Something irregular or exceptional, especially an irregular word form.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "điều bất thường hoặc dạng từ không theo quy tắc",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anomal",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "[sự; điều], dị thường",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "adjective"
+      ]
+    },
+    "ansiform": {
+      "meaning": "Having the shape of a loop.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có hình vòng hoặc quai",
+      "sourceUrl": "https://en.wiktionary.org/wiki/ansiform",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "dạng quai",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "antepenult": {
+      "meaning": "The third syllable counted backward from the end of a word.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "âm tiết thứ ba tính từ cuối từ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antepenult",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(ngôn ngữ học) thứ ba kể từ dưới lên (âm tiết)",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "anticensorship": {
+      "meaning": "Opposed to suppressing or restricting published information or expression.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "phản đối việc kiểm duyệt",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticensorship",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "việc chống kiểm duyệt",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "anticollision": {
+      "meaning": "Designed to prevent objects or vehicles from colliding.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có tác dụng ngăn va chạm",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticollision",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "sự chống va chạm",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "anticonscription": {
+      "meaning": "Opposed to compulsory enlistment in the armed forces.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "phản đối nghĩa vụ quân sự bắt buộc",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticonscription",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "việc chống chế độ quân sự, bắt buột tòng quân",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "anticonservation": {
+      "meaning": "Opposed to protecting wildlife or natural places.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "phản đối việc bảo tồn thiên nhiên",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticonservation",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "việc chống lại sự duy trì cái cũ",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "anticorrosion": {
+      "meaning": "Intended to prevent a material from being damaged by chemical corrosion.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "chống ăn mòn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticorrosion",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "việc chống gặm mòn",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "anticorrosive": {
+      "meaning": "Preventing or slowing the chemical deterioration of a material.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có tác dụng chống gỉ hoặc ăn mòn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/anticorrosive",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) chống ăn mòn",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "adjective"
+      ]
+    },
+    "antifederalist": {
+      "meaning": "A person opposed to a federal system of government.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người phản đối chế độ liên bang",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antifederalist",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "người chống thuyết liên bang",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "antifundamentalist": {
+      "meaning": "A person opposed to strict fundamentalist beliefs or movements.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người phản đối trào lưu chính thống cực đoan",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antifundamentalist",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "chống trào lưu tôn giáo chính thống (chỉ tin vào (kinh thánh))",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "antijamming": {
+      "meaning": "Designed to prevent interference from disrupting communication signals.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "chống gây nhiễu tín hiệu",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antijamming",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(rađiô) sự chống nhiễu",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "antiliteracy": {
+      "meaning": "Opposed to teaching or acquiring the ability to read and write.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "phản đối việc học đọc và viết",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antiliteracy",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "chống việc học chữ",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "antimonopolist": {
+      "meaning": "A person who opposes exclusive control of a market by one business.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người chống độc quyền",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antimonopolist",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "chống độc quyền",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "antimutation": {
+      "meaning": "Preventing or counteracting changes in genetic material.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có tác dụng ngăn đột biến",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antimutation",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "sự kháng đột biến",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "antinoise": {
+      "meaning": "Designed to reduce or cancel unwanted sound.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có tác dụng giảm tiếng ồn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antinoise",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) chống ồn",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun"
+      ]
+    },
+    "antiorganization": {
+      "meaning": "Opposed to or acting against an organization.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "chống lại một tổ chức",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antiorganization",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "sự chống tổ chức",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "antiparasitic": {
+      "meaning": "Acting against parasites or infections caused by them.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "chống ký sinh trùng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antiparasitic",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) chống tạp âm",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun"
+      ]
+    },
+    "antiphase": {
+      "meaning": "A phase difference of half a cycle between two waves.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "trạng thái hai sóng lệch pha 180 độ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antiphase",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) đối vị tướng, đối pha",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "adjective"
+      ]
+    },
+    "antistatic": {
+      "meaning": "Preventing a buildup of static electrical charge.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "chống tích tụ điện tích tĩnh",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antistatic",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "chống tựnh điện",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun"
+      ]
+    },
+    "antisterility": {
+      "meaning": "Preventing or counteracting an inability to reproduce.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có tác dụng chống vô sinh",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antisterility",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "tính chống vô sinh",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "antiunemployment": {
+      "meaning": "Intended to reduce or prevent people being without work.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "nhằm chống thất nghiệp",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antiunemployment",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "sự chống thất nghiệp",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "antivivisection": {
+      "meaning": "Opposed to surgical experiments performed on living animals.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "phản đối mổ xẻ động vật còn sống để thí nghiệm",
+      "sourceUrl": "https://en.wiktionary.org/wiki/antivivisection",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "sự chống mổ xẻ sống",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "aposematic": {
+      "meaning": "Using a conspicuous signal, such as bright colour, to warn predators of danger or unpalatability.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có màu sắc hoặc tín hiệu cảnh báo kẻ săn mồi",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aposematic",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(động từ) tín hiệu xua đuổi (chủ yếu bằng màu sắc)",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "apostrophic": {
+      "meaning": "Relating to the use of an apostrophe in writing.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thuộc hoặc sử dụng dấu nháy đơn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/apostrophic",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "dấu lược",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "appraise": {
+      "meaning": "To assess the quality or monetary value of something.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đánh giá, xác định giá trị",
+      "sourceUrl": "https://en.wiktionary.org/wiki/appraise",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "đánh giá; định giá",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "verb"
+      ]
+    },
+    "arabesque": {
+      "meaning": "An ornamental design of intertwined geometric lines or floral patterns.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "họa tiết trang trí gồm đường nét hoặc hoa lá đan xen",
+      "sourceUrl": "https://en.wiktionary.org/wiki/arabesque",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "a-rập",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "archive": {
+      "meaning": "A collection or repository of documents and records kept for future reference.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "kho lưu trữ hồ sơ và tài liệu lịch sử",
+      "sourceUrl": "https://en.wiktionary.org/wiki/archive",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) tài liệu, tài liệu lưu trữ; lưu trữ (đ)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "armored": {
+      "meaning": "Protected by a covering of armour or strong defensive material.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được bọc giáp bảo vệ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/armored",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) được bọc kim thuộc",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "verb"
+      ]
+    },
+    "armoring": {
+      "meaning": "Adding armour or protective covering to something.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang bọc giáp hoặc bổ sung lớp bảo vệ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/armoring",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) bọc, bọc kim thuộc",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "ascending": {
+      "meaning": "Rising to a higher position, level or value.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "đang tăng dần hoặc đi lên",
+      "sourceUrl": "https://en.wiktionary.org/wiki/ascending",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) thăng, tăng lên, lên cao (d)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective",
+        "noun"
+      ]
+    },
+    "assembling": {
+      "meaning": "Bringing people or parts together to form a group or whole.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang lắp ráp hoặc tập hợp",
+      "sourceUrl": "https://en.wiktionary.org/wiki/assembling",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) dịch ngữ mã số (d); lắp ráp, tổ hợp",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "associated": {
+      "meaning": "Connected or linked with another person or thing.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có liên quan hoặc được kết nối",
+      "sourceUrl": "https://en.wiktionary.org/wiki/associated",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "liên kết",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "verb"
+      ]
+    },
+    "aswoon": {
+      "meaning": "In a faint or a state of near-unconsciousness.",
+      "partOfSpeech": "adverb",
+      "vietnameseMeaning": "trong trạng thái ngất xỉu",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aswoon",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "ngất đi",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "adverb"
+      ]
+    },
+    "athematic": {
+      "meaning": "Lacking a connecting vowel between a word's root and its grammatical ending.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "không có nguyên âm chủ tố trước phần biến tố",
+      "sourceUrl": "https://en.wiktionary.org/wiki/athematic",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(ngôn ngữ) không có nguyên âm chủ tố",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "atrial": {
+      "meaning": "Relating to an upper chamber of the heart.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thuộc tâm nhĩ của tim",
+      "sourceUrl": "https://en.wiktionary.org/wiki/atrial",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "thuộc tâm nhĩ; khoang tai ngoài",
+        "partOfSpeech": "adverb"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "attended": {
+      "meaning": "Having someone present to provide attention or supervision.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có người hiện diện hoặc trông coi",
+      "sourceUrl": "https://en.wiktionary.org/wiki/attended",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) station đài/trạm có người (quản lý)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "auctions": {
+      "meaning": "Public sales in which goods are sold to the highest bidder.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "các cuộc bán đấu giá",
+      "sourceUrl": "https://en.wiktionary.org/wiki/auctions",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(econ) đấu giá.",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "auditing": {
+      "meaning": "The examination of records or accounts to check their accuracy and compliance.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "việc kiểm tra độc lập sổ sách và hồ sơ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/auditing",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) kiểm tra quản lý",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "augmented": {
+      "meaning": "Increased in size, quantity or strength.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được tăng thêm hoặc mở rộng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/augmented",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "được tăng",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "verb"
+      ]
+    },
+    "aurinasal": {
+      "meaning": "Relating to both the ear and the nose.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thuộc tai và mũi",
+      "sourceUrl": "https://en.wiktionary.org/wiki/aurinasal",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "thuộc tai-mũi",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "autologous": {
+      "meaning": "Obtained from the same individual who receives the tissue or substance.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có nguồn gốc từ chính cơ thể người nhận",
+      "sourceUrl": "https://en.wiktionary.org/wiki/autologous",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(sinh học) sự tự rụng",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "autoreverse": {
+      "meaning": "To change direction automatically.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "tự động đảo chiều",
+      "sourceUrl": "https://en.wiktionary.org/wiki/autoreverse",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) tự đảo ngược, tự quay ngược",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "autosave": {
+      "meaning": "To store current data automatically without a separate manual command.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "tự động lưu dữ liệu",
+      "sourceUrl": "https://en.wiktionary.org/wiki/autosave",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) tự động lưu trữ",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "averaging": {
+      "meaning": "The process of calculating a mean value from several numbers.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "việc tính giá trị trung bình",
+      "sourceUrl": "https://en.wiktionary.org/wiki/averaging",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) lấy trung bình (d)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "backlash": {
+      "meaning": "Free movement between connected machine parts before one part drives the other.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "độ rơ giữa các chi tiết máy ăn khớp",
+      "sourceUrl": "https://en.wiktionary.org/wiki/backlash",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) khe, khoảng trống; dòng lưới ngược; phản xung",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "backlight": {
+      "meaning": "Light that illuminates a subject or display from behind.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "nguồn sáng chiếu từ phía sau đối tượng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/backlight",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) ánh sáng bối cảnh; chiếu sáng mặt sau, áng sáng chiếu hậu; đèn sau",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "backscattering": {
+      "meaning": "The reflection or scattering of waves or particles back toward their source.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "sự tán xạ trở lại về phía nguồn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/backscattering",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) tán xạ ngược",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "backslash": {
+      "meaning": "The punctuation mark formed by a diagonal line sloping down from left to right.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "dấu gạch chéo ngược",
+      "sourceUrl": "https://en.wiktionary.org/wiki/backslash",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) dấu chéo ngược",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "backtab": {
+      "meaning": "A keyboard action, usually Shift plus Tab, that moves to the previous tab position.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "thao tác di chuyển về vị trí Tab trước đó",
+      "sourceUrl": "https://en.wiktionary.org/wiki/backtab",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) lùi cột",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "backtracking": {
+      "meaning": "A search method that abandons unsuccessful partial solutions and tries alternatives.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "phương pháp quay lui để tìm lời giải",
+      "sourceUrl": "https://en.wiktionary.org/wiki/backtracking",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) tìm ngược, truy tích nghịch",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "backup": {
+      "meaning": "A separate copy of data kept so the original can be restored if lost or damaged.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "bản sao dự phòng để phục hồi dữ liệu",
+      "sourceUrl": "https://en.wiktionary.org/wiki/backup",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) dự phòng; sao lưu (d/đ)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "adjective",
+        "verb"
+      ]
+    },
+    "balanced": {
+      "meaning": "Having parts or forces in appropriate proportions so that no side dominates.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "cân bằng, có các phần theo tỷ lệ phù hợp",
+      "sourceUrl": "https://en.wiktionary.org/wiki/balanced",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) được cân bằng",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "balancing": {
+      "meaning": "Adjusting something so its weight or forces are evenly distributed.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang làm cho cân bằng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/balancing",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) làm cân bằng",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "barbate": {
+      "meaning": "Having long, fine hairs resembling a beard.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có lông dài như râu",
+      "sourceUrl": "https://en.wiktionary.org/wiki/barbate",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(sinh vật học) có râu; có gai",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "bargraph": {
+      "meaning": "A chart that uses bars of different lengths to compare numerical values.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "biểu đồ cột",
+      "sourceUrl": "https://en.wiktionary.org/wiki/bargraph",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "đồ thị dải",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "barrelled": {
+      "meaning": "Packed or stored inside a barrel.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được đóng trong thùng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/barrelled",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "shaped)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "baseline": {
+      "meaning": "A reference level or line used as the starting point for measurement or comparison.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "mức hoặc đường chuẩn dùng để so sánh",
+      "sourceUrl": "https://en.wiktionary.org/wiki/baseline",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) đường gốc, đường không; đường quét",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "captaincy": {
+      "meaning": "The rank or position of a captain.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "chức vụ hoặc cương vị đội trưởng",
+      "sourceUrl": "https://en.wiktionary.org/wiki/captaincy",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "cầm đầu, điều khiển, chỉ huy",
+        "partOfSpeech": "verb"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "carven": {
+      "meaning": "Shaped or decorated by carving.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được chạm khắc",
+      "sourceUrl": "https://en.wiktionary.org/wiki/carven",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(sử học) thuyền buồm nhỏ (của tây-ban-nha (thế kỷ) 16, 17)",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "verb"
+      ]
+    },
+    "catalog": {
+      "meaning": "An organized list of items, often with descriptions.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "danh mục các mục được sắp xếp có hệ thống",
+      "sourceUrl": "https://en.wiktionary.org/wiki/catalog",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "cách viết khác : catalogue",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "categorize": {
+      "meaning": "To arrange things into groups according to shared characteristics.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "phân loại",
+      "sourceUrl": "https://en.wiktionary.org/wiki/categorize",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "chia loại, phân loại",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "verb"
+      ]
+    },
+    "cerebral": {
+      "meaning": "Relating to the brain, especially the cerebrum.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "thuộc não hoặc đại não",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cerebral",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(ngôn ngữ học) âm quặt lưỡi",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "charging": {
+      "meaning": "The process of supplying electrical energy to a battery.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "quá trình nạp điện cho pin hoặc ắc quy",
+      "sourceUrl": "https://en.wiktionary.org/wiki/charging",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) nạp; tính tiền",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "cheapen": {
+      "meaning": "To reduce the price, value or perceived quality of something.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "làm giảm giá hoặc giá trị",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cheapen",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "hạ giá; làm giảm giá; làm sụt giá; làm giảm giá trị",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "verb"
+      ]
+    },
+    "checking": {
+      "meaning": "The act of examining something to establish its accuracy or condition.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "việc kiểm tra để xác nhận",
+      "sourceUrl": "https://en.wiktionary.org/wiki/checking",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) kiểm tra (d)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "chunking": {
+      "meaning": "Grouping information into smaller units to make it easier to process or remember.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "việc chia thông tin thành các nhóm nhỏ để dễ ghi nhớ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/chunking",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "lớn; vụng về",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "coated": {
+      "meaning": "Covered with a thin layer of another substance.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được phủ một lớp vật liệu",
+      "sourceUrl": "https://en.wiktionary.org/wiki/coated",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "được phủ",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "cobbler": {
+      "meaning": "A person whose job is repairing shoes.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "thợ sửa giày",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cobbler",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "lát (đường...) bằng đá lát, rải đá cuội (lên sân...)",
+        "partOfSpeech": "verb"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "cockade": {
+      "meaning": "A knot or rosette of ribbon worn on a hat as a badge.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "phù hiệu hình hoa bằng ruy băng gắn trên mũ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cockade",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "đánh đống rơm (cỏ khô... ở cánh đồng)",
+        "partOfSpeech": "verb"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "coded": {
+      "meaning": "Written or represented using a code or cipher.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được viết hoặc biểu diễn bằng mã",
+      "sourceUrl": "https://en.wiktionary.org/wiki/coded",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "mã hoá",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "verb"
+      ]
+    },
+    "coldness": {
+      "meaning": "The condition of having little heat or a low temperature.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "sự lạnh, tình trạng thiếu nhiệt",
+      "sourceUrl": "https://en.wiktionary.org/wiki/coldness",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "sự lạnh, sự lạnh lẽo",
+        "partOfSpeech": "numeral"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "combined": {
+      "meaning": "Formed by joining two or more parts together.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được gộp từ nhiều phần",
+      "sourceUrl": "https://en.wiktionary.org/wiki/combined",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "được tổ hợp, hỗn hợp, hợp phần",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "verb",
+        "noun"
+      ]
+    },
+    "commotion": {
+      "meaning": "A noisy disturbance or state of excited activity.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "sự náo động, huyên náo",
+      "sourceUrl": "https://en.wiktionary.org/wiki/commotion",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "sự rung chuyển, sự chấn đông, sự rung động",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "completed": {
+      "meaning": "Finished, with all necessary parts or tasks done.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "đã hoàn thành",
+      "sourceUrl": "https://en.wiktionary.org/wiki/completed",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "được bổ sung",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "conceivably": {
+      "meaning": "Possibly, according to what can reasonably be imagined.",
+      "partOfSpeech": "adverb",
+      "vietnameseMeaning": "có thể, theo điều có thể hình dung",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conceivably",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "có thể tin được, có thể hình dung được",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adverb"
+      ]
+    },
+    "conditional": {
+      "meaning": "Depending on a requirement or circumstance being fulfilled.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "phụ thuộc vào một điều kiện",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conditional",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "ước định, quy định",
+        "partOfSpeech": "verb"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun"
+      ]
+    },
+    "conquering": {
+      "meaning": "Taking control of a place or defeating an opponent by force.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang chinh phục hoặc đánh chiếm",
+      "sourceUrl": "https://en.wiktionary.org/wiki/conquering",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "xâm chiếm",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "constantly": {
+      "meaning": "Continuously or repeatedly over time.",
+      "partOfSpeech": "adverb",
+      "vietnameseMeaning": "liên tục hoặc thường xuyên",
+      "sourceUrl": "https://en.wiktionary.org/wiki/constantly",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(toán học); (vật lý) hằng số",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adverb"
+      ]
+    },
+    "consulting": {
+      "meaning": "Seeking information or advice from a person or reference source.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang tham khảo hoặc hỏi ý kiến",
+      "sourceUrl": "https://en.wiktionary.org/wiki/consulting",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "cố vấn, để hỏi ý kiến",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "contemporary": {
+      "meaning": "Belonging to the present time or modern period.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "đương đại, thuộc thời hiện tại",
+      "sourceUrl": "https://en.wiktionary.org/wiki/contemporary",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "temporary)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun"
+      ]
+    },
+    "contracted": {
+      "meaning": "Made smaller, shorter or tighter.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "bị co lại hoặc rút ngắn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/contracted",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "bị rút ngắn, bị co rút",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "verb"
+      ]
+    },
+    "controlled": {
+      "meaning": "Subject to regulation, direction or restraint.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được quản lý hoặc hạn chế",
+      "sourceUrl": "https://en.wiktionary.org/wiki/controlled",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "được điều chỉnh, được kiểm tra",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "verb"
+      ]
+    },
+    "cooperative": {
+      "meaning": "Willing to work with others toward a shared purpose.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "sẵn sàng hợp tác",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cooperative",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "hợp tác",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective",
+        "noun"
+      ]
+    },
+    "cordiform": {
+      "meaning": "Shaped like a heart.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có hình trái tim",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cordiform",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "hình quả tim",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "cosiness": {
+      "meaning": "The quality of being warm, comfortable and pleasant.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "sự ấm cúng, dễ chịu",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cosiness",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "sự ấm cúng, sự thoải mái",
+        "partOfSpeech": "numeral"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "countdown": {
+      "meaning": "A backward count showing the time remaining before an event.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "sự đếm ngược đến một thời điểm hoặc sự kiện",
+      "sourceUrl": "https://en.wiktionary.org/wiki/countdown",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) đếm ngược",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "cranberry": {
+      "meaning": "A small, tart red berry often used in sauces and drinks.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "quả nam việt quất đỏ, có vị chua",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cranberry",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "berry)",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "adjective",
+        "verb"
+      ]
+    },
+    "creeping": {
+      "meaning": "Moving slowly and quietly, often close to the ground.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang bò hoặc di chuyển chậm, lén lút",
+      "sourceUrl": "https://en.wiktionary.org/wiki/creeping",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "dần dần, từ từ",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "crept": {
+      "meaning": "Past form of creep: moved slowly and quietly.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đã bò hoặc di chuyển chậm, lặng lẽ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/crept",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(số nhiều) sự ghê rợn, sự rùng mình, sự sởn gáy, sự khiếp đảm, sự hãi hùng",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "verb"
+      ]
+    },
+    "cruising": {
+      "meaning": "Travelling by boat at leisure, often without a fixed destination.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "việc đi thuyền thư thả để ngắm cảnh hoặc giải trí",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cruising",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "đi tuần tra",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "crusader": {
+      "meaning": "A fighter who took part in the medieval Crusades.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "người tham gia các cuộc Thập tự chinh thời trung cổ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/crusader",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(sử học) tham gia cuộc viễn chinh chữ thập",
+        "partOfSpeech": "verb"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "cynical": {
+      "meaning": "Distrusting others' sincerity and believing that people act mainly from self-interest.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "hoài nghi sự chân thành và động cơ của người khác",
+      "sourceUrl": "https://en.wiktionary.org/wiki/cynical",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(cynic) (triết học) nhà khuyến nho",
+        "partOfSpeech": "noun"
+      },
+      "sourcePartsOfSpeech": [
+        "adjective"
+      ]
+    },
+    "dearly": {
+      "meaning": "With deep affection or strong feeling.",
+      "partOfSpeech": "adverb",
+      "vietnameseMeaning": "một cách tha thiết, rất nhiều",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dearly",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "thân, thân yêu, thân mến, yêu quý",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "adverb"
+      ]
+    },
+    "deciding": {
+      "meaning": "Determining the final result or settling a question.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "có tác dụng quyết định kết quả",
+      "sourceUrl": "https://en.wiktionary.org/wiki/deciding",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "có tác dụng quyết định",
+        "partOfSpeech": "adverb"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "adjective",
+        "verb"
+      ]
+    },
+    "deformity": {
+      "meaning": "An abnormal or misshapen physical form or feature.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "tình trạng biến dạng hoặc khác thường về hình thể",
+      "sourceUrl": "https://en.wiktionary.org/wiki/deformity",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "tình trạng méo mó, tình trạng biến dạng, tình trạng xấu đi",
+        "partOfSpeech": "verb"
+      },
+      "sourcePartsOfSpeech": [
+        "noun"
+      ]
+    },
+    "delayed": {
+      "meaning": "Happening later than expected or planned.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "bị chậm hơn dự kiến",
+      "sourceUrl": "https://en.wiktionary.org/wiki/delayed",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "bị chậm",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "deleted": {
+      "meaning": "Removed so that it no longer appears in the final version.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "đã bị xóa hoặc loại bỏ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/deleted",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "bị bỏ đi",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "descended": {
+      "meaning": "Moved downward or came from an earlier ancestor or source.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đã đi xuống hoặc có nguồn gốc từ",
+      "sourceUrl": "https://en.wiktionary.org/wiki/descended",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "có nguồn gốc từ",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "verb"
+      ]
+    },
+    "desired": {
+      "meaning": "Wanted or wished for.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "được mong muốn",
+      "sourceUrl": "https://en.wiktionary.org/wiki/desired",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "muốn có đòi hỏi",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "desktop": {
+      "meaning": "The upper working surface of a desk.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "mặt bàn làm việc",
+      "sourceUrl": "https://en.wiktionary.org/wiki/desktop",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "bàn giấy, mặt bàn",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "adjective"
+      ]
+    },
+    "dialing": {
+      "meaning": "The act of entering a telephone number to place a call.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "việc bấm hoặc quay số điện thoại",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dialing",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) quay số, bấm số, gọi điện thoại",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    },
+    "dialog": {
+      "meaning": "A conversation between two or more people; a spelling variant of dialogue.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "cuộc đối thoại",
+      "sourceUrl": "https://en.wiktionary.org/wiki/dialog",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "hội thoại",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "distributing": {
+      "meaning": "Giving or spreading things among several people or places.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "đang phân phối hoặc chia ra",
+      "sourceUrl": "https://en.wiktionary.org/wiki/distributing",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "để phân phối",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "verb"
+      ]
+    },
+    "download": {
+      "meaning": "To transfer data from a remote system to a local device through a network.",
+      "partOfSpeech": "verb",
+      "vietnameseMeaning": "tải dữ liệu từ mạng về thiết bị",
+      "sourceUrl": "https://en.wiktionary.org/wiki/download",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(tech) nạp xuống; viễn nạp",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "noun",
+        "verb"
+      ]
+    },
+    "drunken": {
+      "meaning": "Intoxicated after drinking alcohol.",
+      "partOfSpeech": "adjective",
+      "vietnameseMeaning": "say rượu",
+      "sourceUrl": "https://en.wiktionary.org/wiki/drunken",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "(thơ ca), động tính từ quá khứ của drink",
+        "partOfSpeech": "unspecified"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "adjective"
+      ]
+    },
+    "drying": {
+      "meaning": "The process of removing moisture from something.",
+      "partOfSpeech": "noun",
+      "vietnameseMeaning": "quá trình làm khô",
+      "sourceUrl": "https://en.wiktionary.org/wiki/drying",
+      "reason": "Reviewed the available lexical senses and selected an explicit matching word class; paired VI/EN wording corrects the source classification or misleading gloss without asserting that other valid senses are invalid.",
+      "before": {
+        "meaning": "làm thành khô; được dùng khô",
+        "partOfSpeech": "adjective"
+      },
+      "sourcePartsOfSpeech": [
+        "verb",
+        "noun"
+      ]
+    }
+  }
+}

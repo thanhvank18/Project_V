@@ -41,7 +41,7 @@ export function parseCorsOrigins(value = '*') {
 }
 
 /** Validate the real target before reading: this service exposes one fixed catalog, no file browser. */
-export async function loadVocabulary(root = PROJECT_ROOT) {
+export async function loadVocabulary(root = PROJECT_ROOT, { englishDefinitions } = {}) {
   const realRoot = await realpath(root);
   const base = await realpath(path.join(realRoot, 'public', 'vocabulary'));
   const relativeBase = path.relative(realRoot, base);
@@ -57,12 +57,17 @@ export async function loadVocabulary(root = PROJECT_ROOT) {
   if (!info.isFile() || info.size > 64 * 1024 * 1024) {
     throw new Error('Dictionary must be a regular JSON file smaller than 64 MiB');
   }
-  const body = await readFile(target);
+  let body = await readFile(target);
   let catalog;
   try { catalog = JSON.parse(body.toString('utf8')); } catch { throw new Error('Dictionary is not valid JSON'); }
   if (catalog?.version !== 1 || !Array.isArray(catalog.words) || !catalog.words.length
     || !catalog.source || typeof catalog.source.name !== 'string') {
     throw new Error('Dictionary must contain a nonempty version 1 catalog');
+  }
+  if (englishDefinitions) {
+    catalog = { ...catalog, words: roomRuntime.mergeEnglishDefinitions(catalog.words, englishDefinitions), englishSource: englishDefinitions.source };
+    if (!catalog.words.some(word => word.englishMeaning)) throw new Error('English dictionary contains no playable definitions');
+    body = Buffer.from(JSON.stringify(catalog));
   }
   const zipped = await compress(body, { level: 6 });
   const sha256 = hash(body);
@@ -166,7 +171,8 @@ export function createRequestHandler(vocabulary, { corsOrigins = '*' } = {}) {
 
 export async function startServer({ port = parsePort(process.env.PORT), root = PROJECT_ROOT,
   corsOrigins = parseCorsOrigins(process.env.CORS_ORIGINS) } = {}) {
-  const vocabulary = await loadVocabulary(root);
+  const english = JSON.parse(await readFile(path.join(root, 'public', 'vocabulary', 'english-definitions.json'), 'utf8'));
+  const vocabulary = await loadVocabulary(root, { englishDefinitions: english });
   const handle = createRequestHandler(vocabulary, { corsOrigins });
   const server = createServer((request, response) => {
     try { handle(request, response); }
@@ -176,7 +182,8 @@ export async function startServer({ port = parsePort(process.env.PORT), root = P
       else { response.writeHead(500, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); response.end('{"error":"Request failed"}'); }
     }
   });
-  const rooms = roomRuntime.attachRooms(server, JSON.parse(vocabulary.body.toString('utf8')).words, { corsOrigins });
+  const words = JSON.parse(vocabulary.body.toString('utf8')).words;
+  const rooms = roomRuntime.attachRooms(server, words, { corsOrigins });
   server.roomHub = rooms.hub;
   server.closeRooms = rooms.close;
   server.requestTimeout = 30_000;

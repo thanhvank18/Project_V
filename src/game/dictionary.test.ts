@@ -12,6 +12,10 @@ const csvEntry = { id: 'csv-apple', answer: 'apple', meaning: 'Nghĩa quả táo
 const csvPack = (words: unknown[] = [csvEntry]) => ({ version: 1,
   source: { kind: 'local-csv', name: 'English - Vietnamese.csv', localFile: 'Dic/English - Vietnamese.csv',
     license: 'Không kèm thông tin giấy phép', snapshot: 'sha256-local-source' }, words });
+const englishPack = { version: 1, source: { name: 'English definitions', license: 'CC BY 4.0', snapshot: 'test' }, entries: {
+  telescope: { meaning: 'An optical instrument used to view distant objects.', partOfSpeech: 'noun' },
+  apple: { meaning: 'A round fruit with firm flesh.', partOfSpeech: 'noun' },
+} };
 
 afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.useRealTimers(); });
 describe('local dictionary loading', () => {
@@ -134,20 +138,22 @@ describe('local dictionary loading', () => {
   });
   it('fetches the bundled file once and fails explicitly when it cannot load', async () => {
     vi.stubEnv('VITE_API_URL', '');
-    const fetcher = vi.fn().mockResolvedValue({ ok: true, json: async () => pack() });
+    const fetcher = vi.fn().mockResolvedValueOnce({ ok: true, json: async () => pack() }).mockResolvedValueOnce({ ok: true, json: async () => englishPack });
     vi.stubGlobal('fetch', fetcher);
     expect((await loadDictionary()).words.some(word => word.answer === 'telescope')).toBe(true);
-    expect(fetcher).toHaveBeenCalledExactlyOnceWith('/vocabulary/en-vi.json', { signal: expect.any(AbortSignal) });
+    expect(fetcher).toHaveBeenNthCalledWith(1, '/vocabulary/en-vi.json', { signal: expect.any(AbortSignal) });
+    expect(fetcher).toHaveBeenNthCalledWith(2, '/vocabulary/english-definitions.json', { signal: expect.any(AbortSignal) });
     fetcher.mockResolvedValue({ ok: false, status: 404 });
     await expect(loadDictionary()).rejects.toThrow('Dictionary unavailable');
   });
 
   it('loads the configured API using the same validation and preserves the CSV source without fallback', async () => {
     vi.stubEnv('VITE_API_URL', 'https://project-v.up.railway.app/');
-    const fetcher = vi.fn().mockResolvedValue({ ok: true, json: async () => csvPack() });
+    const fetcher = vi.fn().mockResolvedValueOnce({ ok: true, json: async () => csvPack() }).mockResolvedValueOnce({ ok: true, json: async () => englishPack });
     vi.stubGlobal('fetch', fetcher);
-    expect((await loadDictionary()).words).toEqual([csvEntry]);
-    expect(fetcher).toHaveBeenCalledExactlyOnceWith('https://project-v.up.railway.app/api/vocabulary', { signal: expect.any(AbortSignal) });
+    expect((await loadDictionary()).words).toEqual([{ ...csvEntry, englishMeaning: englishPack.entries.apple.meaning }]);
+    expect(fetcher).toHaveBeenNthCalledWith(1, 'https://project-v.up.railway.app/api/vocabulary', { signal: expect.any(AbortSignal) });
+    expect(fetcher).toHaveBeenNthCalledWith(2, '/vocabulary/english-definitions.json', { signal: expect.any(AbortSignal) });
     fetcher.mockClear().mockResolvedValue({ ok: false, status: 503 });
     await expect(loadDictionary()).rejects.toThrow('Dictionary unavailable (503)');
     expect(fetcher).toHaveBeenCalledTimes(1);

@@ -14,7 +14,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Frontend ở http://127.0.0.1:5174. Mặc định `VITE_API_URL` để trống, game tải `/vocabulary/en-vi.json` cùng origin. Vite chuyển WebSocket `/api/rooms` sang backend local cổng 3001. Cần chạy backend để có mã phòng; khi không kết nối được có nút chơi riêng trên máy.
+Frontend ở http://127.0.0.1:5174. Mặc định `VITE_API_URL` để trống, game tải `/vocabulary/en-vi.json` và `/vocabulary/english-definitions.json` cùng origin, hợp nhất thành kho song ngữ chơi được trước khi mở game. Vite chuyển WebSocket `/api/rooms` sang backend local cổng 3001. Cần chạy backend để có mã phòng; khi không kết nối được có nút chơi riêng trên máy.
 
 Để thử backend, mở terminal thứ hai:
 
@@ -29,11 +29,11 @@ API mặc định ở http://127.0.0.1:3001. Đặt dòng sau trong `.env.local`
 VITE_API_URL=http://127.0.0.1:3001
 ```
 
-`GET /health` trả trạng thái và số từ; `GET /api/vocabulary` trả catalog. Có thể chạy `pnpm test:api` để kiểm tra API.
+`GET /health` trả trạng thái và số từ chơi được sau khi lọc; `GET /api/vocabulary` trả catalog đã hợp nhất nghĩa Anh, các sửa nghĩa/từ loại và chuyển khóa lịch sử. Các mục bị loại hoặc đang chờ kiểm tra không được đưa vào HTTP catalog hay phòng co-op. Gzip/ETag được tạo từ catalog đã hợp nhất. Có thể chạy `pnpm test:api` để kiểm tra API.
 
 ## Railway: API từ điển
 
-Kết nối repository với service Railway, chọn thư mục gốc repository. Railway tự phát hiện `Dockerfile` ở gốc. Container chỉ cần server cùng `public/vocabulary/en-vi.json`; không cần cài dependency Node bên ngoài.
+Kết nối repository với service Railway, chọn thư mục gốc repository. Railway tự phát hiện `Dockerfile` ở gốc. Container cần server, bundle co-op cùng hai file `public/vocabulary/en-vi.json` và `public/vocabulary/english-definitions.json`; không cần cài dependency Node bên ngoài. Server nạp và kiểm tra lớp song ngữ lúc khởi động, dùng cùng kho đã lọc cho API và mọi phòng.
 
 Service hiện tại không áp dụng `railway.json`: Railway đánh dấu Config-as-Code là deprecated và không cho service mới bật từ 28/08/2026. File này được giữ làm tham khảo. Các giá trị đang dùng được đặt trực tiếp trong Dashboard: health check **`/health`**, timeout **120 giây**, restart policy **On Failure**, tối đa **3 lần thử lại**. Khi tạo service mới, nhập các giá trị này trong Dashboard.
 
@@ -47,19 +47,22 @@ Import cùng repository, chọn thư mục gốc. `vercel.json` đã đặt fram
 
 Trong Environment Variables, đặt `VITE_API_URL=https://projectv-production.up.railway.app` cho môi trường cần triển khai. Frontend tự nối `/api/vocabulary`; giá trị cấu hình chỉ cần origin. Biến này được đưa vào bundle lúc build, nên thay đổi cần build/deploy lại.
 
-Nếu để trống `VITE_API_URL`, bản Vercel dùng từ điển tĩnh đi kèm. Khi đã cấu hình API mà API lỗi, giao diện báo lỗi tải và cho thử lại; không tự đổi sang bản tĩnh.
+Nếu để trống `VITE_API_URL`, bản Vercel dùng từ điển tĩnh đi kèm. Khi có API, frontend nhận catalog đã hợp nhất từ API và vẫn nạp lớp `/vocabulary/english-definitions.json` của bản frontend để kiểm tra/hợp nhất theo cùng quy tắc. Phép hợp nhất có thể áp dụng lại mà không đổi khóa lịch sử. Khi API đã cấu hình hoặc lớp song ngữ tải lỗi, giao diện báo lỗi tải và cho thử lại; không tự đổi sang bản tĩnh hay quay về kho mẫu.
 
-Sau deploy, kiểm tra trang tải được từ điển, bắt đầu trận, nhập chữ và tải lại để xác nhận tiến trình trình duyệt vẫn còn. Nếu gặp lỗi CORS, đối chiếu origin frontend với `CORS_ORIGINS` trên Railway.
+Sau deploy, kiểm tra trang tải được từ điển, đổi VI/EN trước trận, bắt đầu trận, nhập chữ và tải lại để xác nhận tiến trình/ngôn ngữ trình duyệt vẫn còn. Chế độ EN phải hiện định nghĩa Anh ở quái, dock, sổ từ và tổng kết; nhãn từ loại cũng đổi ngôn ngữ. Nếu gặp lỗi CORS, đối chiếu origin frontend với `CORS_ORIGINS` trên Railway.
 
 ## Dữ liệu và repository
 
 Máy chủ giữ trạng thái phòng và trận trong RAM, không ghi tài khoản hoặc kết quả vào database. localStorage/IndexedDB tiếp tục lưu lịch sử, điểm, từ yêu thích và cài đặt trên từng trình duyệt. Đổi thiết bị, trình duyệt hoặc origin frontend không tự chuyển tiến trình.
 
-Repository giữ code, lockfile và asset/catalog runtime để clone rồi build trực tiếp. `.gitignore` loại bí mật, cache, review artifacts, CSV/pack nguồn và ZIP. Các script nhập lại hoặc kiểm chứng xuất xứ có thể cần những nguồn bị bỏ qua đó; build/deploy thông thường dùng đầu ra đã đóng gói. Khi đổi từ điển, cập nhật JSON runtime rồi deploy lại cả API và frontend để giữ dữ liệu nhất quán.
+Repository giữ code, lockfile và asset/catalog runtime để clone rồi build trực tiếp. `.gitignore` loại bí mật, cache, review artifacts, CSV/pack nguồn và ZIP; `.vercelignore` cũng loại cache nguồn khỏi gói deploy. Các script nhập lại hoặc kiểm chứng xuất xứ có thể cần những nguồn bị bỏ qua đó; build/deploy thông thường dùng đầu ra đã đóng gói.
+
+CSV người dùng và `en-vi.json` giữ vai trò nguồn đối chiếu; lớp rà soát được xuất riêng vào `english-definitions.json`. Khi đổi từ điển, tạo lại lớp nghĩa, danh sách loại/chờ kiểm tra và báo cáo tương ứng, rồi triển khai API và frontend từ cùng phiên bản. Không chỉ sửa dữ liệu phía Vercel trong khi phòng Railway vẫn dùng catalog cũ. Thống kê và giới hạn kiểm chứng nằm trong `public/vocabulary/english-definition-report.json`; quy trình nguồn/giấy phép nằm trong `ENGLISH_DICTIONARY_SOURCES.md`. Cả VI/EN phải có cùng tập đáp án chơi được; thử một lỗi chính tả đã sửa với lịch sử khóa cũ để xác nhận không phát lại từ đó. Không báo số mục nguồn là số mục chơi được hoặc coi kiểm tra schema là kiểm chứng thủ công mọi nghĩa.
 
 ## Phòng co-op
 
 - `wss://projectv-production.up.railway.app/api/rooms`: tối đa 4 người/phòng; PIN ngẫu nhiên 6 số, không trùng anh hùng. Chủ phòng bắt đầu/chơi lại; chỉ tham gia khi ở sảnh.
+- Thông điệp `hello` gửi ngôn ngữ ưu tiên `vi`/`en`. Phòng mới dùng lựa chọn đó; vào phòng có sẵn hoặc phục hồi kết nối dùng ngôn ngữ của phòng. Chỉ host gửi được thay đổi ngôn ngữ khi ở sảnh, và client chờ xác nhận từ server. Ngôn ngữ khóa trong trận và không thay kho lịch sử của người chơi.
 - Mỗi phòng có một `GameEngine` chạy trên máy chủ. Client chỉ gửi phím, hướng đi, đổi mục tiêu và dùng vật phẩm. Server phân quyền và giữ độc quyền mục tiêu ngay lúc được chọn.
 - Lịch sử các từ đã gặp được gửi khi vào phòng; trận dùng hợp các lịch sử này để tránh đưa lại từ cũ của bất kỳ thành viên nào. Từ mới xuất hiện được gửi cho tất cả thành viên để lưu ở trình duyệt.
 - Kết nối được phục hồi trong 20 giây bằng token ngẫu nhiên lưu trong `sessionStorage`, gửi trong thông điệp đầu tiên, không đặt trên URL. Khi mất kết nối, dừng di chuyển và nhả mục tiêu; nhân vật vẫn có thể bị tấn công. Hết 20 giây ghế được trả lại. Chủ phòng được chuyển cho thành viên còn kết nối.
@@ -67,4 +70,4 @@ Repository giữ code, lockfile và asset/catalog runtime để clone rồi buil
 - Bản thử chạy **một replica Railway**; phòng mất khi server deploy/khởi động lại. Chưa có Redis, khôi phục trận qua restart hoặc matchmaking giữa nhiều replica. Tối đa 32 phòng và 128 kết nối cùng lúc trong bản thử.
 - `backend/rooms.bundle.cjs` gói engine TypeScript và thư viện `ws` cho Docker không cần cài dependencies lúc chạy. Sau khi sửa luật game hoặc backend, chạy `pnpm build:api` (hoặc `pnpm build`) và đưa bundle mới cùng mã nguồn lên GitHub.
 
-Kiểm tra triển khai bằng hai trình duyệt/tab: tạo phòng, nhập cùng PIN, thử chọn trùng hero, host bắt đầu, xác nhận hai người cùng thấy quái nhưng không chọn được từ đã có người giữ; thử đóng/mở kết nối. API từ điển và WebSocket dùng chung cổng `PORT` Railway.
+Kiểm tra triển khai bằng hai trình duyệt/tab: tạo phòng, host chọn EN, nhập cùng PIN từ tab đang dùng VI và xác nhận khách chuyển sang EN, không tự đổi ngôn ngữ được. Thử chọn trùng hero, host bắt đầu, xác nhận hai người cùng thấy quái/nghĩa Anh nhưng không chọn được từ đã có người giữ; thử đóng/mở kết nối và kiểm tra ngôn ngữ vẫn giữ. API từ điển và WebSocket dùng chung cổng `PORT` Railway.

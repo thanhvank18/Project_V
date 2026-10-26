@@ -92,6 +92,42 @@ function harness(heroId = 'soldier') {
 }
 
 describe('tactical and co-op Scene handoff', () => {
+  it('updates cached labels and world captions when language changes without resetting combat', () => {
+    const { scene, engine, snapshot, addEnemy } = harness();
+    const { enemy, view } = addEnemy(ENEMY_CHARACTERS.find(character => character.enemyKind === 'armored')!);
+    enemy.role = 'shield';
+    engine.worldObjects = [{ id: 77, kind: 'gate', x: 900, radius: 40, state: 'closed', charges: 1, progress: 0 }];
+    const state = snapshot();
+    scene['renderEnemies'](state);
+    expect(view.descriptor.text).toContain('HỘ VỆ');
+    expect(scene['worldViews'].get(77)!.caption.text).toBe('Cổng đóng');
+    const challenge = enemy.challenge, originalHp = enemy.hp, originalClock = engine.clock;
+
+    scene.setOptions({ ...scene.options, language: 'en' });
+    scene['renderEnemies'](state);
+    expect(view.descriptor.text).toContain('GUARD');
+    expect(view.descriptor.text).toContain('ARMOR');
+    expect(scene['worldViews'].get(77)!.caption.text).toBe('Gate closed');
+    expect(enemy.challenge).toBe(challenge);
+    expect(enemy.hp).toBe(originalHp);
+    expect(engine.clock).toBe(originalClock);
+
+    scene.setOptions({ ...scene.options, language: 'vi' });
+    scene['renderEnemies'](state);
+    expect(view.descriptor.text).toContain('HỘ VỆ');
+  });
+  it('renders English peer reservations and combat feedback while preserving a teammate name', () => {
+    const { scene, snapshot, addEnemy } = harness();
+    const { enemy, view } = addEnemy(ENEMY_CHARACTERS.find(character => character.enemyKind === 'normal')!);
+    scene.setOptions({ ...scene.options, language: 'en' });
+    scene['renderEnemies'](snapshot({ party: { selfId: 'self', players: [
+      { id: 'self', heroId: 'soldier', x: 640, hp: 100, targetId: null },
+      { id: 'peer', name: 'Bạn B', heroId: 'wizard', x: 950, hp: 80, targetId: enemy.id },
+    ] } }));
+    expect(view.protectedLabel.text).toBe('Claimed by Bạn B');
+    scene['handleEvent']({ type: 'hero-skill', heroId: 'knight', skillPhase: 'block', x: 640 });
+    expect(scene['floats'].at(-1)?.text.text).toBe('BLOCKED!');
+  });
   it('lands a barrel letter on the prop, and removes that exact shot on authoritative world impact', () => {
     const { scene, engine } = harness();
     engine.worldObjects = [{ id: 77, kind: 'barrel', x: 900, radius: 220, state: 'idle', charges: 1, progress: 0 }];

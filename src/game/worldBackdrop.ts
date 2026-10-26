@@ -1,8 +1,9 @@
 import type Phaser from 'phaser';
 import { DISTRICTS, WORLD_WIDTH } from './worldLayout';
+import { localizeText, type Language } from '../i18n';
 
 /** One continuous road, with overlapping scenery rather than scene swaps. */
-export function createWorldBackdrop(scene: Phaser.Scene): Phaser.GameObjects.Container {
+export function createWorldBackdrop(scene: Phaser.Scene, language: Language = 'vi', registerLabel?: (label: Phaser.GameObjects.Text, source: string) => void): Phaser.GameObjects.Container {
   const root = scene.add.container(0, 0);
   for (let i = 0; i < 5; i++) {
     // Mirroring alternate panels makes both adjoining edge pixels identical.
@@ -137,9 +138,11 @@ export function createWorldBackdrop(scene: Phaser.Scene): Phaser.GameObjects.Con
     rect(district.start + 52, 399, 6, 78, 0x283a42);
     rect(district.start + 21, 390, 160, 30, 0x162d38);
     rect(district.start + 21, 390, 160, 2, 0x6d8b8a);
-    root.add(scene.add.text(district.start + 101, 405, district.name.toUpperCase(), {
+    const label = scene.add.text(district.start + 101, 405, localizeText(district.name, language).toUpperCase(), {
       fontFamily: '"Be Vietnam Pro", Arial, sans-serif', fontSize: '12px', fontStyle: 'bold', color: '#b9cdc6',
-    }).setOrigin(.5));
+    }).setOrigin(.5);
+    root.add(label);
+    registerLabel?.(label, district.name);
   }
   return root;
 }

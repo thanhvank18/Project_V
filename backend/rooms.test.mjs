@@ -16,6 +16,37 @@ const join = (hub, guest, host) => hub.receive(guest.session, { type: 'join', pi
 const start = (hub, host) => hub.receive(host.session, { type: 'start', mode: 'survival' });
 
 describe('authoritative PIN rooms', () => {
+  it('shares the host language, rejects guest/mid-match changes and uses real English definitions', () => {
+    const bank = WORDS.slice(0, 10).map(word => ({ ...word, englishMeaning: `An English definition for ${word.partOfSpeech}.` }));
+    const hub = new RoomHub(bank);
+    const host = { session: hub.hello({ seen: [bank[0].answer], language: 'en' }, () => {}) };
+    const guest = { session: hub.hello({ seen: [], language: 'vi' }, () => {}) };
+    join(hub, guest, host);
+    const room = hub.rooms.get(host.session.pin);
+    expect(hub.lobby(room, guest.session).language).toBe('en');
+    expect(() => hub.receive(guest.session, { type: 'language', language: 'vi' })).toThrow('Chỉ chủ phòng');
+    expect(() => hub.receive(host.session, { type: 'language', language: 'fr' })).toThrow('không hợp lệ');
+    start(hub, host);
+    expect(room.engine.enemies.length).toBeGreaterThan(0);
+    expect(room.engine.enemies.every(enemy => enemy.challenge.word.meaning.startsWith('An English definition'))).toBe(true);
+    expect(room.engine.enemies.some(enemy => enemy.challenge.word.answer === bank[0].answer)).toBe(false);
+    expect(() => hub.receive(host.session, { type: 'language', language: 'vi' })).toThrow('trước trận');
+    hub.disconnect(host.session, host.session.send);
+    expect(room.hostId).toBe(guest.session.id);
+    expect(hub.lobby(room, guest.session).language).toBe('en');
+  });
+
+  it('broadcasts lobby language changes and retains the room language on session resume', () => {
+    const hub = new RoomHub(WORDS.map(word => ({ ...word, englishMeaning: 'A genuine fixture definition.' })));
+    const messages = [];
+    const host = hub.hello({ seen: [], language: 'vi' }, message => messages.push(message));
+    hub.receive(host, { type: 'language', language: 'en' });
+    expect(messages.at(-1).room.language).toBe('en');
+    const restored = hub.hello({ seen: [], language: 'vi', resumeToken: host.token }, message => messages.push(message));
+    expect(restored.id).toBe(host.id); expect(messages.at(-1).room.language).toBe('en');
+    expect(() => hub.hello({ seen: [], language: 'unknown' }, () => {})).toThrow('không hợp lệ');
+  });
+
   it('creates a distinct six-digit PIN on entry, caps rooms at four and prevents duplicate heroes', () => {
     const { hub, clients } = fixture(5);
     const [host, ...guests] = clients;

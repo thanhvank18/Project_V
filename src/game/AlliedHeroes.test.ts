@@ -30,6 +30,17 @@ function harness() {
 const players = (): PartyPlayer[] => [{ id: 'self', heroId: 'soldier', x: 600, hp: 100, targetId: null }, { id: 'peer', name: 'Bạn B', heroId: 'wizard', x: 900, hp: 80, targetId: 3 }];
 
 describe('allied native actors', () => {
+  it('localizes an existing downed ally and generated name without recreating its sprite', () => {
+    const h = harness(), party = players();
+    party[1].hp = 0; party[1].name = 'Người chơi 2';
+    h.effects.render(party, 'self', 1000);
+    expect(h.labels[0].text).toBe('Người chơi 2 · GỤC');
+    h.effects.render(party, 'self', 1000, 490, 'en');
+    expect(h.sprites).toHaveLength(1);
+    expect(h.labels[0].text).toBe('Player 2 · DOWN');
+    expect(partyName({ ...party[1], name: 'Bạn B' }, 'en')).toBe('Bạn B');
+    expect(party[1].name).toBe('Người chơi 2');
+  });
   it('uses peer native metadata and a separate name color, never creates the local actor twice', () => {
     const h = harness(); h.effects.render(players(), 'self', 1000);
     expect(h.effects.count).toBe(1); expect(h.sprites).toHaveLength(1);
