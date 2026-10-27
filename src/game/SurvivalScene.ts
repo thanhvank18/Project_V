@@ -9,6 +9,7 @@ import { HeroAttackEffects } from './HeroAttackEffects';
 import { TacticalWorldEffects, type TelegraphVisual, type RoleVisual } from './TacticalWorldEffects';
 import { AlliedHeroes, partyColor, partyName } from './AlliedHeroes';
 import { getHeroSkill } from './heroSkills';
+import { getHeroCombat } from './heroCombat';
 import { GameAudio, type AudioState } from './GameAudio';
 import { audioCueForEvent } from './combatAudio';
 import { BOSS_SLAM_RANGE, canTargetEnemy, WORLD_WIDTH } from './engine';
@@ -879,7 +880,8 @@ export class SurvivalScene extends Phaser.Scene {
     const inRun = snapshot.phase !== 'menu';
     const moving = snapshot.phase === 'playing' && !this.options.reducedMotion;
     const t = this.visualClock;
-    const dizziness = lowHealthVisuals(inRun ? snapshot.hp : 100, t, moving);
+    const maxHp = snapshot.maxHp ?? getHeroCombat(snapshot.hero.id).maxHp;
+    const dizziness = lowHealthVisuals(inRun ? snapshot.hp : maxHp, t, moving, maxHp);
     const severity = dizziness.severity;
     const shakeP = (t - this.shakeStart) / 190;
     const shake = moving && shakeP >= 0 && shakeP < 1 ? (1 - shakeP) ** 2 : 0;

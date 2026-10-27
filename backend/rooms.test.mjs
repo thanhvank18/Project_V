@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { RoomHub } from './rooms.mjs';
 import { WORDS } from '../src/game/vocabulary';
 
-function fixture(count = 1) {
+function fixture(count = 1, bank = WORDS) {
   let clock = 1000;
-  const hub = new RoomHub(WORDS, { now: () => clock });
+  const hub = new RoomHub(bank, { now: () => clock });
   const clients = Array.from({ length: count }, () => {
     const messages = []; const send = message => messages.push(JSON.parse(JSON.stringify(message)));
     const session = hub.hello({ seen: [], heroId: 'soldier' }, send);
@@ -97,6 +97,58 @@ describe('authoritative PIN rooms', () => {
     expect(engine.snapshotFor(host.session.id).input).toHaveLength(1);
     expect(() => hub.receive(host.session, { type: 'command', seq: 2, command: { kind: 'damage', hp: -100 } })).toThrow('không hợp lệ');
     expect(engine.enemies).toContain(enemy);
+  });
+
+  it('keeps melee approach through neutral watchdog packets and pauses only the requesting actor', () => {
+    const bank = Array.from({ length: 20 }, (_, index) => ({ id: `melee-${index}`,
+      answer: `training${String.fromCharCode(97 + index)}`, meaning: 'Từ kiểm thử', category: 'test',
+      partOfSpeech: 'noun', difficulty: 1, learningLevel: 1 }));
+    const { hub, clients: [host, guest], advance } = fixture(2, bank);
+    join(hub, guest, host);
+    hub.receive(host.session, { type: 'hero', heroId: 'knight' });
+    hub.receive(guest.session, { type: 'hero', heroId: 'swordsman' });
+    start(hub, host);
+    const room = hub.rooms.get(host.session.pin), engine = room.engine;
+    expect(engine.snapshotFor(host.session.id)).toMatchObject({ hp: 150, maxHp: 150 });
+    expect(engine.snapshotFor(guest.session.id).party.players).toEqual(expect.arrayContaining([
+      expect.objectContaining({ id: host.session.id, hp: 150, maxHp: 150 }),
+      expect.objectContaining({ id: guest.session.id, hp: 150, maxHp: 150 }),
+    ]));
+    engine.nextSpawn = engine.nextBoss = 1e9;
+    for (const enemy of engine.enemies) { enemy.speed = 0; enemy.nextAttackAt = 1e9; }
+    const hostTarget = engine.enemies.find(enemy => enemy.id === engine.snapshotFor(host.session.id).target.id);
+    const guestTarget = engine.enemies.find(enemy => enemy.id === engine.snapshotFor(guest.session.id).target.id);
+    hostTarget.x = engine.snapshotFor(host.session.id).playerX - 600;
+    guestTarget.x = engine.snapshotFor(guest.session.id).playerX + 600;
+    const send = (client, seq, command) => hub.receive(client.session, { type: 'command', seq, command });
+    for (const [client, target] of [[host, hostTarget], [guest, guestTarget]]) {
+      send(client, 0, { kind: 'type', key: target.challenge.word.answer[0] });
+      send(client, 1, { kind: 'type', key: target.challenge.word.answer[1] });
+    }
+    for (let tick = 0; tick < 120; tick++) advance(10);
+    const afterWatchdog = engine.snapshotFor(host.session.id).playerX;
+    for (let tick = 0; tick < 40; tick++) advance(10);
+    expect(engine.snapshotFor(host.session.id).playerX).toBeLessThan(afterWatchdog);
+
+    send(host, 2, { kind: 'move', direction: 0 });
+    send(host, 3, { kind: 'cancel-approach' });
+    const stopped = engine.snapshotFor(host.session.id);
+    const guestX = engine.snapshotFor(guest.session.id).playerX;
+    for (let tick = 0; tick < 40; tick++) advance(10);
+    expect(engine.snapshotFor(host.session.id)).toMatchObject({ playerX: stopped.playerX, input: stopped.input, phase: 'playing' });
+    expect(engine.snapshotFor(guest.session.id).playerX).toBeGreaterThan(guestX);
+    expect(stopped.input).toBe(hostTarget.challenge.word.answer.slice(0, 2));
+
+    const packetCursor = host.messages.length;
+    hostTarget.x = stopped.playerX - 60;
+    for (let tick = 0; tick < 20; tick++) advance(10);
+    const pausedShots = host.messages.slice(packetCursor).flatMap(message => message.events ?? [])
+      .filter(event => event.type === 'shot' && event.playerId === host.session.id);
+    expect(pausedShots).toHaveLength(0);
+    send(host, 4, { kind: 'type', key: hostTarget.challenge.word.answer[2] });
+    for (let tick = 0; tick < 40; tick++) advance(10);
+    expect(host.messages.slice(packetCursor).flatMap(message => message.events ?? [])
+      .some(event => event.type === 'shot' && event.playerId === host.session.id)).toBe(true);
   });
 
   it('unions every member history before allocating new words', () => {

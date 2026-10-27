@@ -2,11 +2,13 @@ import { useLanguage } from './LanguageContext';
 import { Check } from 'lucide-react';
 import { getHeroCharacter, HERO_CHARACTERS } from '../game/characterCatalog';
 import { getHeroSkill } from '../game/heroSkills';
+import { getHeroCombat } from '../game/heroCombat';
 
 export function HeroPicker({ value, onChange, taken = [], disabled = false }: { value: string; onChange: (id: string) => void; taken?: readonly string[]; disabled?: boolean }) {
   const { t } = useLanguage();
   const selected = getHeroCharacter(value);
   const skill = getHeroSkill(selected.id);
+  const combat = getHeroCombat(selected.id);
 
   return <fieldset className="hero-picker" aria-describedby="hero-picker-help">
     <legend>{t("Chọn nhân vật ")}<span>{HERO_CHARACTERS.length}{t(" anh hùng")}</span></legend>
@@ -22,6 +24,7 @@ export function HeroPicker({ value, onChange, taken = [], disabled = false }: { 
     </div>
     <div className="hero-skill-description" aria-live="polite">
       <p className="hero-current"><strong>{t(skill.name)}</strong><span>{skill.threshold}{t(" chữ đúng")}</span></p>
+      <p className="hero-combat-profile">{t('{0} · {1} HP', [t(combat.class === 'melee' ? 'Cận chiến' : 'Đánh xa'), combat.maxHp])}</p>
       <p id="hero-picker-help">{t(skill.description)}</p>
       <p className="hero-tactics">{t(skill.tactics)}</p>
     </div>

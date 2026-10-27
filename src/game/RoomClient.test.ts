@@ -104,10 +104,13 @@ describe('room client transitions through the public transport', () => {
     const socket = StubSocket.instances[0]; socket.open();
     const snapshot = acknowledge(socket, port);
     port.setMovement(1); port.pause();
-    expect(socket.sent.at(-1)).toMatchObject({ type: 'command', command: { kind: 'move', direction: 0 } });
+    expect(socket.sent.slice(-2).map(message => message.command)).toEqual([
+      { kind: 'move', direction: 0 }, { kind: 'cancel-approach' },
+    ]);
     expect(port.snapshot()).toMatchObject({ phase: 'paused', hp: 64, party: snapshot.party });
     const sent = socket.sent.length;
-    port.typeKey('a'); port.cycleTarget(); port.useItem('health'); port.interactWorld();
+    port.typeKey('a'); port.cycleTarget(); port.useItem('health'); port.interactWorld(); port.cancelApproach();
+    vi.advanceTimersByTime(1600);
     expect(socket.sent).toHaveLength(sent);
     port.resume(); port.typeKey('a');
     expect(port.snapshot().phase).toBe('playing');

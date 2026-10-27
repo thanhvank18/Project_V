@@ -34,7 +34,16 @@ Mục tiêu là ghi nhớ từ, không chỉ gõ nhanh. Đối tượng tuổi, 
 
 ## Chọn nhân vật và đội hình quái vật — 25/10/2026
 
-Menu cho chọn Archer, Armored Axeman, Knight, Knight Templar, Lancer, Priest, Soldier, Swordsman hoặc Wizard trước khi bắt đầu. Mặc định Soldier; lựa chọn lưu cùng cài đặt trình duyệt và áp dụng cho cả sinh tồn lẫn tập Boss. Mỗi anh hùng có animation/vũ khí, cách phóng chữ và kỹ năng hỗ trợ riêng theo CHARACTER_ROSTER.md. Kỹ năng tự tích theo ký tự đúng mới và tự kích khi đầy thanh, không chiếm thêm phím lúc gõ. HP/tốc độ/sát thương giải từ cơ bản giữ nguyên; kỹ năng tạo khác biệt về đẩy lùi, khống chế, đỡ đòn hoặc hồi phục.
+Menu cho chọn Archer, Armored Axeman, Knight, Knight Templar, Lancer, Priest, Soldier, Swordsman hoặc Wizard trước khi bắt đầu. Mặc định Soldier; lựa chọn lưu cùng cài đặt trình duyệt và áp dụng cho cả sinh tồn lẫn tập Boss. Mỗi anh hùng có animation/vũ khí, cách phóng chữ và kỹ năng hỗ trợ riêng theo CHARACTER_ROSTER.md. Kỹ năng tự tích theo ký tự đúng mới đã tung đòn và tự kích khi đầy thanh, không chiếm thêm phím lúc gõ. Cận chiến có lợi thế máu tối đa, đánh xa có lợi thế khoảng cách; tốc độ di chuyển cơ bản và sát thương giải từ không đổi.
+
+### Cận chiến và đánh xa — 27/10/2026
+
+- Armored Axeman, Knight, Knight Templar, Lancer và Swordsman thuộc cận chiến: thử nghiệm **150 HP**. Archer, Priest, Soldier và Wizard đánh xa: **100 HP**, giữ cách phóng chữ hiện tại.
+- Cận chiến chỉ tung chữ khi trong tầm: kiếm/rìu 120 px, thương 160 px tính từ tâm nhân vật đến tâm mục tiêu. Boss cộng thêm 100 px vào khoảng cách đánh để tính thân lớn và tránh bị cản ngoài tầm.
+- Gõ đúng bắt đầu tự áp sát mục tiêu đã chọn. Ô nhập phản hồi ngay, chữ được giữ trong hàng chờ; khi vào tầm mới phát đòn lần lượt, cách nhau 70 ms. Chữ chờ chưa cộng năng lượng kỹ năng và chưa hoàn thành từ. Kết thúc từ chỉ được xử lý khi chữ cuối thực sự tung ra, sát thương/phá giáp vẫn theo lúc va chạm.
+- Phím trái/phải luôn có ưu tiên và hủy tự áp sát; giữ tiến độ chữ để chạy trốn. Thả phím không tự kéo người chơi trở lại quái; gõ tiếp khi không giữ hướng sẽ cho phép áp sát lại, kể cả khi cả từ đã chờ. Khi tự di chuyển vào tầm, các chữ chờ có thể tung ra. Backspace hủy chữ chưa tung tương ứng, gõ lại chữ đã có hiệu lực không nhân đôi sát thương/năng lượng.
+- Hồi máu, thanh HP và cảnh báo dưới 30% dùng máu tối đa của từng anh hùng. Các giá trị 150/100 và tầm đánh là thông số cân bằng ban đầu, tiếp tục chỉnh qua chơi thử.
+- Trong co-op, mỗi người có hàng chờ và tự áp sát riêng; dừng điều khiển cá nhân phải gửi yêu cầu dừng tự áp sát, không dựa vào phím di chuyển trung tính của heartbeat. Đổi mục tiêu, mất kết nối, chết và trận mới không được để lại đòn chờ nhắm nhầm mục tiêu.
 
 Kỹ năng không cộng năng lượng từ gõ lại chữ đã credited, không tự giải/skip từ và không tạo kill/loot. Boss miễn đẩy/khựng/chậm/đóng băng; hiệu ứng vùng không xuyên khiên Tank để tác động quái bị che. Đẩy lùi giữ thứ tự địch và biên bản đồ. Pause dừng timer kỹ năng; trận mới reset năng lượng và buff, giữ nhân vật đã chọn.
 
@@ -70,7 +79,7 @@ Tank Bảo Hộ (còn gọi Tanker, cùng loại `tank`/Tank Boss hiện có) d�
 
 Nhận phím qua một đầu mối. Không nhận auto-repeat thành nhiều phát bắn; xử lý composition/IME và focus có chủ đích, không tự tắt bộ gõ hệ điều hành. Khi đang chơi và vùng game có focus mới chiếm Tab/Backspace; menu vẫn dùng điều hướng bàn phím bình thường.
 
-Mũi tên trái/phải điều khiển di chuyển; giữ phím để di chuyển, phím chữ vẫn chỉ dùng nhập từ (không dùng WASD). `playerX` khởi tạo 640, tốc độ 160 px/giây, giới hạn x=240–6160 trong thế giới dài 6400 px. Va chạm ngăn đi xuyên zombie. Pause, mất focus, về menu và chết phải xóa trạng thái giữ phím/dừng di chuyển; chỉ nhận lại khi người chơi thao tác tiếp. Ưu tiên mục tiêu, phía địch và hướng khiên Tank tính theo vị trí hiện tại của người chơi.
+Mũi tên trái/phải điều khiển di chuyển; giữ phím để di chuyển, phím chữ dùng nhập từ và cho phép cận chiến tự áp sát (không dùng WASD). `playerX` khởi tạo 640, tốc độ 160 px/giây, giới hạn x=240–6160 trong thế giới dài 6400 px. Nhân vật có thể đi xuyên quái thường, runner và quái giáp để thoát vây, nhưng không xuyên Boss/Tank. Đi xuyên không cho miễn sát thương; vẫn phải tránh vùng và thời điểm đánh. Pause, mất focus, về menu và chết phải dừng giữ phím/tự áp sát theo chế độ tương ứng. Ưu tiên mục tiêu, phía địch và hướng khiên Tank tính theo vị trí hiện tại của người chơi.
 
 Thế giới là tuyến đường liên tục nhưng hữu hạn 6400 px, gồm phố cũ, công viên, ga bỏ hoang, bờ sông và nhà máy. Camera bám mượt người chơi trong viewport logic 1280×720 và chặn ở hai biên; địch sinh cục bộ từ hai phía quanh người chơi. Các vùng tái sử dụng pixel art hiện có cùng đạo cụ pixel dựng bằng mã. Tên gọi endless trong brief gốc không có nghĩa bản đồ kéo dài vô hạn hay bộ từ được tự quay vòng.
 
@@ -110,7 +119,7 @@ Rage tăng theo thời gian/lỗi và có thể giảm khi đúng; hệ số cò
 
 Cập nhật theo phản hồi 22/10/2026: mỗi kill thực sự, bao gồm Tank, xét rơi một vật phẩm ngẫu nhiên. Mức khó nội bộ 1/2/3 của từ kết liễu tương ứng 15%/30%/45%; đây là mức do dự án biên soạn theo từ vựng/chính tả, không phải CEFR. Không thưởng theo mỗi 5 kill, theo từng phím hoặc khi chỉ phá lớp giáp. Mỗi loại tối đa 5; chỉ chọn trong các loại chưa đầy, không rơi thêm nếu cả bốn loại đã đầy. Mỗi trận prototype vẫn cấp một món mỗi loại để thử cơ chế.
 
-Nhân vật bị thương có screen shake ngắn trên lớp thế giới. Khi HP dưới 30, thế giới lắc nhẹ và vignette nhịp chậm báo choáng; HP trở lại từ 30 trở lên thì xóa trạng thái này. HUD, input và nhãn câu đố giữ ổn định. Reduced Motion tắt shake và dao động, vẫn giữ tín hiệu nguy hiểm nhìn thấy.
+Nhân vật bị thương có screen shake ngắn trên lớp thế giới. Khi HP dưới 30% máu tối đa, thế giới lắc nhẹ và vignette nhịp chậm báo choáng; HP trở lại từ 30% máu tối đa trở lên thì xóa trạng thái này. HUD, input và nhãn câu đố giữ ổn định. Reduced Motion tắt shake và dao động, vẫn giữ tín hiệu nguy hiểm nhìn thấy.
 
 ## Học từ và dữ liệu
 
@@ -171,13 +180,13 @@ Three.js không nằm trong stack 2D này. Frontend triển khai Vercel; backend
 
 - Gõ nhanh không mất phím ngoài thời gian kẹt được báo rõ; không cần click lại input.
 - Tab, Backspace, restart và mất focus hoạt động nhất quán.
-- Mũi tên trái/phải di chuyển đúng tốc độ/giới hạn, không xuyên zombie; pause/mất focus/menu/chết không giữ ngầm phím di chuyển. Targeting và khiên dùng playerX hiện tại.
+- Mũi tên trái/phải di chuyển đúng tốc độ/giới hạn, xuyên quái thường nhưng không xuyên Boss; pause/mất focus/menu/chết không giữ ngầm điều khiển. Cận chiến chỉ tung chữ trong tầm và không tự kéo người đang chạy trốn ngược lại. Targeting và khiên dùng playerX hiện tại.
 - Nhãn không chồng, dấu tiếng Việt đủ, đạn không lật chữ khi bắn trái.
 - Đạn cũ không tác động câu đố mới; gõ lại không tạo thêm hiệu lực.
 - Mỗi lần trúng chữ có hiệu lực đặt lại khựng 300 ms cho địch không phải Boss; không có miễn khựng và Boss không khựng ở mọi phase.
 - Tank chỉ dùng từ dài từ 7 ký tự, kể cả Final Strike; khiên chặn mọi đường chọn/bắn mới vào địch phía sau cùng phía đến khi Tank chết, còn đạn đã bắn vẫn được resolve.
 - Mỗi kill chỉ xét rơi đồ một lần theo độ khó nội bộ và giới hạn kho; phá giáp hoặc mỗi 5 kill không tạo thưởng riêng.
-- Rung khi bị thương và choáng dưới 30 HP không làm rung HUD/input/nhãn; hồi lên ít nhất 30 HP xóa choáng, Reduced Motion không dao động.
+- Rung khi bị thương và choáng dưới 30% máu tối đa không làm rung HUD/input/nhãn; hồi lên ít nhất 30% máu tối đa xóa choáng, Reduced Motion không dao động.
 - Giáp, va chạm, damage và chuyển phase không bị tính lặp.
 - Dữ liệu học đúng theo từ, khôi phục sau reload; không có số liệu học giả.
 - Đáp án chính/alias không lặp trong hoặc giữa các trận; bỏ dở và reload vẫn giữ nhật ký đã gặp, bao gồm dữ liệu `progress.words` cũ.

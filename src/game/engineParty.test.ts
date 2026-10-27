@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import { GameEngine } from './engine';
-import { HERO_CHARACTERS } from './characterCatalog';
 import type { Enemy, Word } from './types';
 
 const bank: Word[] = Array.from({ length: 150 }, (_, index) => ({ id: `coop-${index}`,
@@ -10,7 +9,8 @@ type Control = { hp: number; input: string; nextBoss: number; nextSpawn: number;
 const control = (engine: GameEngine) => engine as unknown as Control;
 function party(count = 2, boss = false) {
   const engine = new GameEngine(() => .13, undefined, undefined, bank);
-  engine.configureParty(Array.from({ length: count }, (_, index) => ({ id: `p${index + 1}`, name: `Player ${index + 1}`, heroId: HERO_CHARACTERS[index].id })));
+  // These tests isolate shared-state behavior; melee travel/queue isolation has its own suite.
+  engine.configureParty(Array.from({ length: count }, (_, index) => ({ id: `p${index + 1}`, name: `Player ${index + 1}`, heroId: ['archer', 'soldier', 'priest', 'wizard'][index] })));
   engine.start(boss ? 'boss' : 'survival');
   control(engine).nextBoss = control(engine).nextSpawn = 1e9;
   for (const enemy of engine.enemies) { enemy.speed = 0; enemy.nextAttackAt = 1e9; }

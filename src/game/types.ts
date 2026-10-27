@@ -61,9 +61,11 @@ export interface Progress {
   seenWords?: Record<string, number>;
 }
 export interface PartyMember { id: string; name?: string; heroId: string }
-export interface PartyPlayer extends PartyMember { x: number; hp: number; targetId: number | null; connected?: boolean }
+export interface PartyPlayer extends PartyMember { x: number; hp: number; maxHp?: number; targetId: number | null; connected?: boolean }
 export interface Snapshot {
   phase: Phase; hp: number; playerX: number; score: number; combo: number; bestCombo: number;
+  maxHp?: number;
+  combat?: { class: 'melee' | 'ranged'; range: number; inRange: boolean; approaching: boolean; queued: number };
   kills: number; words: number; elapsed: number; input: string; locked: boolean;
   jamRemaining: number; countdown: number; enemyCount: number;
   target: null | {
@@ -123,6 +125,7 @@ export interface EnginePort {
   start(mode?: 'survival' | 'boss'): void;
   setHero(id?: string): void;
   setMovement(direction: -1 | 0 | 1): void;
+  cancelApproach?(): void;
   step(deltaMs: number): void;
   typeKey(key: string): void;
   cycleTarget(direction?: number): void;

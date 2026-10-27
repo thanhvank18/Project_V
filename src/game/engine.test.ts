@@ -609,19 +609,20 @@ describe('player movement and local world spawning', () => {
     expect(engine.snapshot().playerX).toBe(engine.playerX);
   });
 
-  it.each(['normal', 'tank'] as const)('cannot walk through a live %s', (kind) => {
+  it.each(['normal', 'runner', 'armored', 'tank'] as const)('passes ordinary bodies but respects a live Boss: %s', (kind) => {
     const engine = playing(kind === 'tank' ? 'boss' : 'survival');
     const enemy = target(engine);
+    enemy.kind = kind;
     engine.enemies = [enemy];
     enemy.x = 1000;
     enemy.speed = 0;
     enemy.nextAttackAt = 100_000;
     engine.setMovement(1);
     engine.step(3000);
-    expect(engine.playerX).toBe(kind === 'tank' ? 820 : 908);
+    expect(engine.playerX).toBeCloseTo(kind === 'tank' ? 820 : 1120);
   });
 
-  it.each(['normal', 'armored', 'tank'] as const)('keeps a resolving %s solid until its actual death', (kind) => {
+  it.each(['normal', 'armored', 'tank'] as const)('only a resolving Boss stays solid until actual death: %s', (kind) => {
     const engine = playing(kind === 'tank' ? 'boss' : 'survival');
     const enemy = target(engine);
     engine.enemies = [enemy];
@@ -637,14 +638,16 @@ describe('player movement and local world spawning', () => {
     expect(enemy.state).toBe('resolving');
     engine.setMovement(1);
     engine.step(100);
-    expect(engine.playerX).toBe(position);
+    if (kind === 'tank') expect(engine.playerX).toBe(position);
+    else expect(engine.playerX).toBeGreaterThan(position);
     engine.step(300);
     if (kind === 'normal') {
       expect(engine.enemies).not.toContain(enemy);
       expect(engine.playerX).toBeGreaterThan(position);
     } else {
       expect(enemy.hp).toBeGreaterThan(0);
-      expect(engine.playerX).toBe(position);
+      if (kind === 'tank') expect(engine.playerX).toBe(position);
+      else expect(engine.playerX).toBeGreaterThan(position);
     }
   });
 

@@ -65,4 +65,11 @@ describe('combat visual timing', () => {
       expect(effect.outerAlpha).toBeLessThanOrEqual(0.16);
     }
   });
+
+  it('uses the same thirty-percent danger threshold for melee and ranged heroes', () => {
+    expect(lowHealthVisuals(45, 1000, true, 150).severity).toBe(0);
+    expect(lowHealthVisuals(44, 1000, true, 150).severity).toBeGreaterThan(0);
+    expect(lowHealthVisuals(30, 1000, true, 150)).toEqual(lowHealthVisuals(20, 1000, true, 100));
+    expect(lowHealthVisuals(150, 1000, true, 150).outerAlpha).toBe(0);
+  });
 });

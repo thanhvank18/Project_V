@@ -39,7 +39,7 @@ export const HERO_SKILLS: readonly HeroSkillDefinition[] = [
     tactics: 'Đứng trong vùng sáng tại chỗ kích hoạt để giữ giảm sát thương.',
     description: 'Giảm 35% sát thương nhận vào trong 3 giây.', effect: { kind: 'ward', duration: 3000, reduction: .35 } },
   { id: 'lance-drive', heroId: 'lancer', name: 'Thương phá trận', threshold: 8, color: '#d0e8e5', attackStyle: 'spear', visualKind: 'lance',
-    tactics: 'Canh quái cùng một phía; nhắm xa để tăng lực đẩy cả tuyến.',
+    tactics: 'Canh quái cùng một phía; đánh ở đầu tầm thương để tăng lực đẩy cả tuyến.',
     description: 'Đẩy lùi mạnh các quái trên đường tới mục tiêu. Không đẩy Boss.', effect: { kind: 'push-line', distance: 60 } },
   { id: 'restoring-light', heroId: 'priest', name: 'Ánh sáng hồi phục', threshold: 12, color: '#b8efd3', attackStyle: 'holy-light', visualKind: 'heal',
     tactics: 'Đứng yên ít nhất một giây trước khi đủ năng lượng để hồi 8HP thay vì 5HP.',

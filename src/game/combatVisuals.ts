@@ -22,8 +22,9 @@ export function hurtFrame(elapsed: number, duration: number): number {
   return p < 0.16 ? 0 : p < 0.8 ? 1 : p < 0.93 ? 2 : 3;
 }
 
-export function lowHealthVisuals(hp: number, clock: number, animate: boolean): { severity: number; dx: number; dy: number; angle: number; outerAlpha: number } {
-  const severity = hp < 30 ? 0.2 + (30 - Math.max(0, hp)) / 30 * 0.8 : 0;
+export function lowHealthVisuals(hp: number, clock: number, animate: boolean, maxHp = 100): { severity: number; dx: number; dy: number; angle: number; outerAlpha: number } {
+  const threshold = Math.max(1, maxHp) * .3;
+  const severity = hp < threshold ? 0.2 + (threshold - Math.max(0, hp)) / threshold * 0.8 : 0;
   const pulse = animate ? (Math.sin(clock * 0.0048) + 1) * 0.5 : 0.5;
   return {
     severity,

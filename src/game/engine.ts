@@ -9,7 +9,8 @@ import { getEnemyCharacter, getEnemyCharacters, getHeroCharacter } from './chara
 import { getHeroSkill, type HeroSkillDefinition } from './heroSkills';
 import { getLearningProgress, getWordLearningLevel } from './learningProgression';
 import { BARREL_RADIUS, CHARGE_RADIUS, clipAtGate, createWorldObjects, HEAL_DWELL_MS, insideLane, MAX_ENEMIES, MOMENTUM_LIFETIME, RANGED_RADIUS, shieldsFollowers } from './tacticalRules';
-import { createActorState, type ActorState, type PartyActor } from './partyState';
+import { createActorState, type ActorState, type PartyActor, type QueuedLetter } from './partyState';
+import { attackReach, getHeroCombat, MELEE_LETTER_INTERVAL } from './heroCombat';
 export { WORLD_WIDTH } from './worldLayout';
 
 export const PLAYER_X = 640;
@@ -21,6 +22,7 @@ export const STUN_MS: Record<EnemyKind, number> = { normal: 300, runner: 300, ar
 export const ENEMY_SPEED: Record<EnemyKind, number> = { normal: 14, runner: 33, armored: 10, tank: 7 };
 const KINDS: ChallengeKind[] = ['scramble', 'missing', 'translate', 'hint'];
 interface Projectile { shotId: number; enemyId: number; challengeId: number; index: number; firedAt: number; due: number; final: boolean; glyph: string; effective: boolean; ownerId?: string }
+type CombatTarget = Enemy | { id: number; kind: 'barrel'; x: number; challenge: Challenge };
 
 /** A nearer Tank shields everything farther away on its side, including other Tanks. */
 export function canTargetEnemy(enemies: Enemy[], candidate: Enemy, playerX = PLAYER_X): boolean {
@@ -95,6 +97,11 @@ export class GameEngine implements EnginePort {
   private claims = new Map<number, string>();
   private healingProgress = new Map<number, number>();
   private spawnActorSequence = 0;
+  private queuedLetters: QueuedLetter[] = [];
+  private queuedChallengeId: number | null = null;
+  private approachTargetId: number | null = null;
+  private nextMeleeShotAt = 0;
+  private combatPaused = false;
 
   private captureActor(): ActorState {
     return { playerX: this.playerX, targetId: this.targetId, hp: this.hp, movement: this.movement,
@@ -103,7 +110,9 @@ export class GameEngine implements EnginePort {
       heroGuardUntil: this.heroGuardUntil, heroWardUntil: this.heroWardUntil,
       lastPlayerHurt: this.lastPlayerHurt, lastMovedAt: this.lastMovedAt, dashUntil: this.dashUntil,
       wardX: this.wardX, inventory: this.inventory, momentum: this.momentum,
-      momentumStreak: this.momentumStreak, momentumUntil: this.momentumUntil, healingProgress: this.healingProgress };
+      momentumStreak: this.momentumStreak, momentumUntil: this.momentumUntil, healingProgress: this.healingProgress,
+      queuedLetters: this.queuedLetters, queuedChallengeId: this.queuedChallengeId, approachTargetId: this.approachTargetId,
+      nextMeleeShotAt: this.nextMeleeShotAt, combatPaused: this.combatPaused };
   }
 
   private syncActor(): void {
@@ -128,7 +137,7 @@ export class GameEngine implements EnginePort {
   get players(): readonly PartyPlayer[] {
     this.syncActor();
     return [...this.party.values()].map(actor => ({ ...actor.member, connected: actor.connected,
-      x: actor.state.playerX, hp: actor.state.hp, targetId: actor.state.targetId }));
+      x: actor.state.playerX, hp: actor.state.hp, maxHp: getHeroCombat(actor.member.heroId).maxHp, targetId: actor.state.targetId }));
   }
 
   configureParty(members: readonly PartyMember[]): void {
@@ -193,6 +202,7 @@ export class GameEngine implements EnginePort {
   private targetAvailable(id: number): boolean { return !this.actorId || !this.claims.has(id) || this.claims.get(id) === this.actorId; }
 
   private chooseTarget(id: number | null): void {
+    if (id !== this.targetId) { this.clearQueuedAttack(); this.input = ''; }
     if (this.actorId && this.targetId !== null && this.claims.get(this.targetId) === this.actorId) this.claims.delete(this.targetId);
     this.targetId = id !== null && this.targetAvailable(id) ? id : null;
     if (this.actorId && this.targetId !== null) this.claims.set(this.targetId, this.actorId);
@@ -246,6 +256,7 @@ export class GameEngine implements EnginePort {
     const next = getHeroCharacter(id).id;
     if (next === this.heroId) return;
     this.heroId = next;
+    this.hp = getHeroCombat(next).maxHp;
     this.resetHeroSkill();
   }
 
@@ -261,7 +272,8 @@ export class GameEngine implements EnginePort {
     this.playerX = PLAYER_X;
     this.movement = 0;
     this.phase = 'playing';
-    this.hp = 100;
+    this.hp = getHeroCombat(this.heroId).maxHp;
+    this.clearQueuedAttack(); this.combatPaused = false;
     this.score = this.combo = this.bestCombo = this.kills = this.words = this.bossKills = 0;
     this.correctLetters = this.correctKeys = this.wrongKeys = 0;
     this.shotSequence = 0;
@@ -331,7 +343,9 @@ export class GameEngine implements EnginePort {
   private tick(delta: number): void {
     this.clock += delta;
     const advance = () => {
+      this.enforceTargetVisibility();
       this.movePlayer(delta);
+      this.releaseMeleeLetter();
       this.updateWorld(delta);
       if (this.momentum > 0 && this.clock >= this.momentumUntil) {
         this.changeMomentum(-1); this.momentumUntil = this.clock + 5000;
@@ -424,23 +438,32 @@ export class GameEngine implements EnginePort {
 
   setMovement(direction: -1 | 0 | 1): void {
     this.movement = this.phase === 'playing' ? direction : 0;
+    if (this.movement) this.approachTargetId = null;
   }
 
   private movePlayer(delta: number): void {
-    if (!this.movement) return;
     const facingTarget = this.getTarget();
+    const target = this.combatTarget();
+    const approach = !this.combatPaused && this.approachTargetId === target?.id && this.queuedLetters.length > 0
+      && target && !this.inAttackRange(target) ? Math.sign(target.x - this.playerX) : 0;
+    const direction = this.movement || approach;
+    if (!direction) return;
     const knightAdvance = this.heroId === 'knight' && this.clock < this.heroGuardUntil
-      && facingTarget && this.movement === Math.sign(facingTarget.x - this.playerX) ? .25 : 0;
+      && facingTarget && direction === Math.sign(facingTarget.x - this.playerX) ? .25 : 0;
     const speed = PLAYER_SPEED * (1 + this.momentum * .03 + (this.clock < this.dashUntil ? .4 : 0) + knightAdvance);
     let next = Math.max(PLAYER_BOUNDS.min, Math.min(PLAYER_BOUNDS.max,
-      this.playerX + this.movement * speed * delta / 1000));
+      this.playerX + direction * speed * delta / 1000));
+    if (!this.movement && target) {
+      const stop = target.x - direction * attackReach(this.heroId, target.kind);
+      next = direction > 0 ? Math.min(next, stop) : Math.max(next, stop);
+    }
     for (const enemy of this.enemies) {
       // A completed word is only a pending hit: the body stays solid until actual death.
-      if (enemy.hp <= 0) continue;
-      const radius = enemy.kind === 'tank' ? 180 : 92;
-      if (this.movement > 0 && enemy.x >= this.playerX) {
+      if (enemy.hp <= 0 || enemy.kind !== 'tank') continue;
+      const radius = 180;
+      if (direction > 0 && enemy.x >= this.playerX) {
         next = Math.min(next, Math.max(this.playerX, enemy.x - radius));
-      } else if (this.movement < 0 && enemy.x <= this.playerX) {
+      } else if (direction < 0 && enemy.x <= this.playerX) {
         next = Math.max(next, Math.min(this.playerX, enemy.x + radius));
       }
     }
@@ -474,16 +497,26 @@ export class GameEngine implements EnginePort {
   }
 
   typeKey(rawKey: string): void {
-    if (this.phase !== 'playing') return;
+    if (this.phase !== 'playing' || this.hp <= 0) return;
     this.enforceTargetVisibility();
     if (rawKey === 'Backspace') {
       this.input = this.input.slice(0, -1);
+      this.queuedLetters = this.queuedLetters.filter(letter => letter.index < this.input.length);
+      if (!this.queuedLetters.length) this.approachTargetId = null;
       return;
     }
     if (!/^[a-z]$/i.test(rawKey) || this.clock < this.jamUntil) return;
     const world = this.getWorldTarget();
-    const target = this.getTarget() ?? (world?.challenge ? { id: -world.id, kind: 'barrel' as const, x: world.x, challenge: world.challenge } : undefined);
+    const target = this.combatTarget();
     if (!target) return;
+    const melee = getHeroCombat(this.heroId).class === 'melee';
+    // A full buffered word can be resumed after fleeing without adding an impossible extra letter.
+    if (melee && this.queuedLetters.length && answersFor(target.challenge.word).includes(this.input)) {
+      this.combatPaused = false;
+      if (!this.movement) this.approachTargetId = target.id;
+      this.releaseMeleeLetter();
+      return;
+    }
     const key = rawKey.toLowerCase();
     const next = this.input + key;
     const possibilities = answersFor(target.challenge.word).filter((answer) => answer.startsWith(next));
@@ -502,9 +535,52 @@ export class GameEngine implements EnginePort {
     this.input = next;
     this.correctKeys++;
     const index = next.length - 1;
+    const final = possibilities.includes(next);
+    if (melee) {
+      this.combatPaused = false;
+      this.queuedChallengeId = target.challenge.id;
+      // Retyping an already launched position does not create another visual, hit or charge.
+      if (!target.challenge.credited.has(index) || final) this.queuedLetters.push({ index, glyph: key, final });
+      if (!this.movement && this.queuedLetters.length) this.approachTargetId = target.id;
+      this.releaseMeleeLetter();
+      return;
+    }
+    this.launchLetter(target, { index, glyph: key, final });
+  }
+
+  private combatTarget(): CombatTarget | undefined {
+    const world = this.getWorldTarget();
+    return this.getTarget() ?? (world?.challenge ? { id: -world.id, kind: 'barrel', x: world.x, challenge: world.challenge } : undefined);
+  }
+
+  private inAttackRange(target: CombatTarget): boolean {
+    return Math.abs(target.x - this.playerX) <= attackReach(this.heroId, target.kind) + .001;
+  }
+
+  private clearQueuedAttack(): void {
+    this.queuedLetters = []; this.queuedChallengeId = null; this.approachTargetId = null;
+    this.nextMeleeShotAt = 0;
+  }
+
+  cancelApproach(): void { this.approachTargetId = null; this.combatPaused = true; }
+
+  private releaseMeleeLetter(): void {
+    if (this.phase !== 'playing' || this.hp <= 0 || this.combatPaused || !this.queuedLetters.length) return;
+    const target = this.combatTarget();
+    if (!target || target.challenge.id !== this.queuedChallengeId) { this.clearQueuedAttack(); this.input = ''; return; }
+    if (!this.inAttackRange(target) || this.clock < this.nextMeleeShotAt || this.clock < this.jamUntil) return;
+    const letter = this.queuedLetters.shift()!;
+    this.nextMeleeShotAt = this.clock + MELEE_LETTER_INTERVAL;
+    this.launchLetter(target, letter);
+    if (!this.queuedLetters.length) this.approachTargetId = null;
+  }
+
+  /** A letter earns charge, damage and word completion only after it actually launches. */
+  private launchLetter(target: CombatTarget, letter: QueuedLetter): void {
+    const { index, glyph: key, final } = letter;
+    const world = target.kind === 'barrel' ? this.getWorldTarget() : undefined;
     const effective = !target.challenge.credited.has(index);
     const shotId = ++this.shotSequence;
-    const final = possibilities.includes(next);
     const baseDuration = Math.round(160 + Math.abs(target.x - this.playerX) / 5);
     // The finisher resolves after every earlier letter, even while the target is approaching.
     const finalDue = Math.max(this.clock + baseDuration, ...this.projectiles
@@ -615,11 +691,11 @@ export class GameEngine implements EnginePort {
         const side = Math.sign(targetX - this.playerX) || target.side;
         const reach = Math.abs(targetX - this.playerX);
         affected = this.pushEnemies(eligible.filter(enemy => (Math.sign(enemy.x - this.playerX) || enemy.side) === side
-          && Math.abs(enemy.x - this.playerX) <= reach), effect.distance * (reach > 400 ? 1.5 : 1));
+          && Math.abs(enemy.x - this.playerX) <= reach), effect.distance * (reach >= 120 ? 1.5 : 1));
         break;
       }
       case 'heal':
-        value = Math.min(effect.amount + (this.clock - this.lastMovedAt >= 1000 ? 3 : 0), 100 - this.hp);
+        value = Math.min(effect.amount + (this.clock - this.lastMovedAt >= 1000 ? 3 : 0), getHeroCombat(this.heroId).maxHp - this.hp);
         this.hp += value;
         break;
       case 'slow':
@@ -651,6 +727,7 @@ export class GameEngine implements EnginePort {
   }
 
   pause(): void {
+    this.cancelApproach();
     if (this.party.size) { this.movement = 0; return; }
     if (this.phase === 'playing' || this.phase === 'countdown') { this.phase = 'paused'; this.countdown = 0; this.movement = 0; }
   }
@@ -659,13 +736,13 @@ export class GameEngine implements EnginePort {
     if (this.phase === 'paused') { this.phase = 'countdown'; this.countdown = 2000; }
   }
 
-  toMenu(): void { this.phase = 'menu'; this.movement = 0; this.projectiles = []; this.events = []; this.resetHeroSkill(); }
+  toMenu(): void { this.phase = 'menu'; this.movement = 0; this.clearQueuedAttack(); this.projectiles = []; this.events = []; this.resetHeroSkill(); }
 
   useItem(item: ItemKind): void {
     if (this.phase !== 'playing' || !this.inventory[item]) return;
     if (item === 'health') {
-      if (this.hp >= 100) { this.inform('HP đang đầy. Túi cứu thương được giữ lại.'); return; }
-      this.hp = Math.min(100, this.hp + 25);
+      if (this.hp >= getHeroCombat(this.heroId).maxHp) { this.inform('HP đang đầy. Túi cứu thương được giữ lại.'); return; }
+      this.hp = Math.min(getHeroCombat(this.heroId).maxHp, this.hp + 25);
       this.inform('+25 HP');
     } else if (item === 'freeze') {
       const previousFreeze = this.freezeUntil;
@@ -704,8 +781,13 @@ export class GameEngine implements EnginePort {
     const targetCharacter = target ? getEnemyCharacter(target.appearanceId, target.kind) : undefined;
     const bossCharacter = boss ? getEnemyCharacter(boss.appearanceId, boss.kind) : undefined;
     const heroSkill = getHeroSkill(this.heroId);
+    const combat = getHeroCombat(this.heroId);
+    const combatTarget = this.combatTarget();
     return {
-      phase: this.phase, hp: this.hp, playerX: this.playerX, score: this.score, combo: this.combo, bestCombo: this.bestCombo,
+      phase: this.phase, hp: this.hp, maxHp: combat.maxHp, playerX: this.playerX, score: this.score, combo: this.combo, bestCombo: this.bestCombo,
+      combat: { class: combat.class, range: combat.range, inRange: !!combatTarget && this.inAttackRange(combatTarget),
+        approaching: !this.combatPaused && !this.movement && !!combatTarget && this.approachTargetId === combatTarget.id
+          && this.queuedLetters.length > 0 && !this.inAttackRange(combatTarget), queued: this.queuedLetters.length },
       kills: this.kills, words: this.words, elapsed: this.clock, input: this.input, locked: this.input.length > 0,
       jamRemaining: Math.max(0, this.jamUntil - this.clock), countdown: this.countdown, enemyCount: this.enemies.length,
       target: target ? { id: target.id, kind: target.kind, prompt: target.challenge.prompt,
@@ -769,13 +851,13 @@ export class GameEngine implements EnginePort {
         if (word) { object.challenge = this.challenge(word, 'translate'); object.state = 'active'; }
       }
       if (object.kind !== 'healing-zone' || object.state === 'used') continue;
-      if (Math.abs(object.x - this.playerX) > object.radius || this.movement || this.hp >= 100
+      if (Math.abs(object.x - this.playerX) > object.radius || this.movement || this.lastMovedAt === this.clock || this.hp >= getHeroCombat(this.heroId).maxHp
         || this.clock - this.lastPlayerHurt < 1000) { this.setHealingProgress(object, 0); continue; }
       const previous = this.party.size ? this.healingProgress.get(object.id) ?? 0 : object.progress;
       const progress = Math.min(1, previous + delta / HEAL_DWELL_MS);
       this.setHealingProgress(object, progress);
       if (progress < 1) continue;
-      const value = Math.min(15, 100 - this.hp);
+      const value = Math.min(15, getHeroCombat(this.heroId).maxHp - this.hp);
       this.hp += value; object.charges--; this.setHealingProgress(object, 0);
       if (!object.charges) {
         object.state = 'used';
@@ -822,6 +904,10 @@ export class GameEngine implements EnginePort {
   private getTarget(): Enemy | undefined { return this.enemies.find((enemy) => enemy.id === this.targetId && this.targetAvailable(enemy.id) && canTargetEnemy(this.enemies, enemy, this.playerX)); }
 
   private enforceTargetVisibility(): void {
+    const live = this.combatTarget();
+    if (this.queuedChallengeId !== null && (!live || live.challenge.id !== this.queuedChallengeId)) {
+      this.clearQueuedAttack(); this.input = '';
+    }
     if (this.targetId !== null && (!this.targetAvailable(this.targetId) || this.targetId < 0 && !this.getWorldTarget())) {
       this.input = ''; this.chooseTarget(null); return;
     }
@@ -1131,7 +1217,7 @@ export class GameEngine implements EnginePort {
     if (enemy.kind === 'tank') {
       this.bossKills++;
       this.score += 1000;
-      if (this.hp > 0) this.hp = Math.min(100, this.hp + 20);
+      if (this.hp > 0) this.hp = Math.min(getHeroCombat(this.heroId).maxHp, this.hp + 20);
       this.nextBoss = this.clock + 180_000;
       this.emit({ type: 'boss-defeat', enemyId: enemy.id, x: enemy.x });
       this.inform('Tank đã bị hạ! +20 HP · +1000 điểm. Sinh tồn tiếp tục!', 6000);
@@ -1191,6 +1277,7 @@ export class GameEngine implements EnginePort {
     if (this.phase !== 'playing') return;
     this.phase = 'over';
     this.movement = 0;
+    this.clearQueuedAttack();
     this.projectiles = [];
     const minutes = this.clock / 60_000;
     this.summary = { id: `${Date.now()}-${this.runSequence}-${Math.round(this.random() * 1e9)}`,

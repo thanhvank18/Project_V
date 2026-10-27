@@ -95,7 +95,7 @@ Trước menu, có trạng thái nạp từ điển cục bộ; nếu thất b�
 - Nhãn và input sắc nét ở kích thước hiển thị thực; không ép UI chữ xuống độ phân giải sprite.
 - Không rung HUD, không hiệu ứng bay phủ nhãn/input; tránh flash toàn màn hình.
 - Reduced Motion tắt rung, giảm hạt và chuyển động phụ mà giữ thông tin/trạng thái.
-- Bị thương tạo rung ngắn ở lớp thế giới; HP dưới 30 thêm lắc nhẹ và vignette nhịp chậm. HUD/input/nhãn giữ nguyên vị trí; hồi lên ít nhất 30 HP xóa choáng. Reduced Motion không có shake, lắc thế giới hoặc nhịp dao động của vignette.
+- Bị thương tạo rung ngắn ở lớp thế giới; HP dưới 30% máu tối đa thêm lắc nhẹ và vignette nhịp chậm. HUD/input/nhãn giữ nguyên vị trí; hồi lên ít nhất 30% máu tối đa xóa choáng. Reduced Motion không có shake, lắc thế giới hoặc nhịp dao động của vignette.
 - Thanh âm lượng riêng cho nhạc và hiệu ứng là đề xuất; vẫn phải có feedback nhìn thấy khi tắt tiếng.
 - Desktop là ưu tiên; màn hình nhỏ cần bố cục được kiểm tra riêng, không tự coi thu nhỏ canvas là mobile support hoàn chỉnh.
 

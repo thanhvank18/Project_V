@@ -4,7 +4,8 @@ export function GameHelp() {
   return <div className="help-content">
     <p>{t("Đọc nghĩa tiếng Việt, từ loại và chữ gợi ý, rồi nhập ")}<strong>{t("toàn bộ từ tiếng Anh")}</strong>{t(". Mỗi ký tự đúng trở thành đòn đánh của anh hùng. Đủ năng lượng, kỹ năng riêng tự kích hoạt.")}</p>
     <dl>
-      <div><dt>{t("Chọn vị trí")}</dt><dd><kbd>←</kbd> / <kbd>→</kbd>{t(" để di chuyển. Cung thủ cần khoảng cách, kiếm sĩ mạnh khi quái áp sát, thương thủ tận dụng quái đứng thành hàng. Xem chiến thuật của từng anh hùng khi chọn nhân vật.")}</dd></div>
+      <div><dt>{t("Chọn vị trí")}</dt><dd><kbd>←</kbd> / <kbd>→</kbd>{t(" để di chuyển và ngắt tự áp sát. Có thể chạy xuyên qua quái thường để thoát vây, nhưng vẫn trúng đòn của chúng. Boss chặn đường; không thể chạy xuyên qua.")}</dd></div>
+      <div><dt>{t("Tầm đánh")}</dt><dd>{t("Cận chiến có nhiều máu hơn. Gõ chữ đúng để tự chạy tới mục tiêu; chữ chờ chỉ đánh ra khi vào tầm. Bấm hướng để rút lui, thả hướng rồi gõ tiếp để áp sát lại. Anh hùng đánh xa giữ khoảng cách và tấn công ngay khi gõ đúng.")}</dd></div>
       <div><dt>{t("Chọn mục tiêu")}</dt><dd><kbd>Tab</kbd> / <kbd>Shift + Tab</kbd>{t(" để đổi mục tiêu; chữ đúng đầu tiên sẽ khóa mục tiêu. ")}<kbd>Backspace</kbd>{t(" xóa hết để mở khóa. Gõ lại chữ đã tính không gây thêm sát thương hoặc năng lượng.")}</dd></div>
       <div><dt>{t("Nhịp hoàn hảo")}</dt><dd>{t("Hoàn thành từ không sai, không dùng gợi ý để tăng nhịp: thêm điểm và tốc độ di chuyển, tối đa 5 bậc. Một lỗi chỉ làm mất một bậc; tiếp tục gõ chính xác để lấy lại nhịp. Thanh nhịp cạn dần nếu lâu không hoàn thành từ.")}</dd></div>
       <div><dt>{t("Đọc đòn Boss")}</dt><dd>{t("Vùng sáng trên mặt đất báo vị trí đòn đánh sắp tới. Rời khỏi vùng đó trước khi Boss ra đòn. Boss đổi cách đánh qua các giai đoạn; hãy quan sát cả khoảng đất phía trước khi Boss lấy đà lao tới.")}</dd></div>
@@ -17,6 +18,6 @@ export function GameHelp() {
       <div><dt>{t("Chơi cùng bạn")}</dt><dd>{t("Gửi mã phòng 6 số cho bạn bè. Tối đa 4 người, mỗi người chọn một anh hùng khác nhau; chủ phòng bắt đầu trận.")}</dd></div>
       <div><dt>{t("Tạm dừng")}</dt><dd><kbd>Esc</kbd>{t(" để nghỉ. Chơi một mình sẽ dừng trận; trong phòng trực tuyến chỉ dừng điều khiển của bạn, thế giới vẫn tiếp tục. Chuyển tab cũng dừng điều khiển.")}</dd></div>
     </dl>
-    <p className="help-note">{t("Khi HP dưới 30, cảnh chơi chao nhẹ và tối viền. Bật Giảm chuyển động để tắt rung và chao. Dùng bộ gõ tiếng Anh; bản chơi hiện dành cho máy tính có bàn phím.")}</p>
+    <p className="help-note">{t("Khi máu dưới 30%, cảnh chơi chao nhẹ và tối viền. Bật Giảm chuyển động để tắt rung và chao. Dùng bộ gõ tiếng Anh; bản chơi hiện dành cho máy tính có bàn phím.")}</p>
   </div>;
 }

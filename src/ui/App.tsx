@@ -3,6 +3,8 @@ import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, 
 import { BookOpen, Crosshair, Heart, Keyboard, Maximize2, Minimize2, Music2, Pause, Play, RotateCcw, Shield, SkipForward, Skull, Sparkles, Star, Trophy, Volume2, VolumeX, X, Zap } from 'lucide-react';
 import { RoomClient } from '../game/RoomClient';
 import { getHeroCharacter } from '../game/characterCatalog';
+import { getHeroCombat } from '../game/heroCombat';
+import { CombatStatus, HealthMeter } from './CombatFeedback';
 import { HeroPicker } from './HeroPicker';
 import { GameHelp } from './GameHelp';
 import { MultiplayerLobby } from './MultiplayerLobby';
@@ -206,6 +208,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
   const playing = snapshot.phase === 'playing' || snapshot.phase === 'countdown' || snapshot.phase === 'paused';
   const summary = snapshot.summary;
   const spectating = snapshot.hp <= 0 && teamRun && snapshot.phase === 'playing';
+  const maxHp = snapshot.maxHp ?? getHeroCombat(snapshot.hero.id).maxHp;
   const encounteredWords = useMemo(() => panel === 'collection'
     ? wordBank.filter(word => historyKeysFor(word).some(answer => seenWords.has(answer))) : [], [wordBank, seenWords, panel]);
   const collectionWords = useMemo(() => {
@@ -267,7 +270,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
 
         {playing && <>
           <div className="hud" aria-label={t("Trạng thái trận đấu")}>
-            <div className={`health-block ${snapshot.hp < 30 ? 'critical' : ''}`}><div className="health-title"><Heart size={17} fill="currentColor" /><span>{t("SỨC KHỎE")}</span><strong>{Math.ceil(snapshot.hp)}<small>/100</small></strong></div><div className="health-track"><span style={{ width: `${snapshot.hp}%` }} /></div></div>
+            <HealthMeter hp={snapshot.hp} maxHp={maxHp} />
             <div className="time-block"><span>{t("SỐNG SÓT")}</span><strong>{formatTime(snapshot.elapsed)}</strong></div>
             <div className="score-block"><span>{teamRun ? t("ĐIỂM ĐỘI") : t("ĐIỂM SỐ")}</span><strong>{snapshot.score.toLocaleString(locale)}</strong></div>
             <div className={`combo-block ${snapshot.combo >= 3 ? 'hot' : ''}`}><Zap size={18} /><strong>{snapshot.combo}</strong><span>COMBO</span></div>
@@ -297,6 +300,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
               <span className="input-state">{snapshot.jamRemaining > 0 ? t("KẸT ĐẠN") : snapshot.target ? `${snapshot.input.length}/${snapshot.target.length}` : '…'}</span>
               {snapshot.jamRemaining > 0 && <span className="jam-progress" style={{ width: `${snapshot.jamRemaining / 300 * 100}%` }} />}
             </div>
+            <CombatStatus combat={snapshot.combat} hasTarget={Boolean(snapshot.target)} active={snapshot.phase === 'playing' && !spectating} />
             <div className="typing-bottom"><p id="typing-help"><kbd>Tab</kbd>{t(" đổi mục tiêu ")}<span>·</span> <kbd>⌫</kbd>{t(" xóa chữ ")}<span>·</span> <kbd>Esc</kbd>{t(" tạm dừng")}</p><span>{snapshot.words}{t(" từ ")}<span>·</span> {snapshot.kills} zombie</span></div>
           </div>
           <div className="inventory" aria-label={t("Vật phẩm")}>

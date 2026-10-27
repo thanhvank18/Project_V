@@ -1,4 +1,7 @@
 import type { ItemKind, PartyMember } from './types';
+import { getHeroCombat } from './heroCombat';
+
+export interface QueuedLetter { index: number; glyph: string; final: boolean }
 
 /** Only actor-local state is switched; clock, dictionary, combatants and world remain shared. */
 export interface ActorState {
@@ -8,13 +11,16 @@ export interface ActorState {
   dashUntil: number; wardX: number; inventory: Record<ItemKind, number>;
   momentum: number; momentumStreak: number; momentumUntil: number;
   healingProgress: Map<number, number>;
+  queuedLetters: QueuedLetter[]; queuedChallengeId: number | null; approachTargetId: number | null;
+  nextMeleeShotAt: number; combatPaused: boolean;
 }
 export interface PartyActor { member: PartyMember; connected: boolean; state: ActorState }
 
 export function createActorState(heroId: string, x: number): ActorState {
-  return { playerX: x, targetId: null, hp: 100, movement: 0, input: '', jamUntil: 0, boostUntil: 0,
+  return { playerX: x, targetId: null, hp: getHeroCombat(heroId).maxHp, movement: 0, input: '', jamUntil: 0, boostUntil: 0,
     heroId, heroCharge: 0, heroActiveUntil: 0, heroGuardUntil: 0, heroWardUntil: 0,
     lastPlayerHurt: -Infinity, lastMovedAt: 0, dashUntil: 0, wardX: x,
     inventory: { health: 1, freeze: 1, damage: 1, shield: 1 },
-    momentum: 0, momentumStreak: 0, momentumUntil: 0, healingProgress: new Map() };
+    momentum: 0, momentumStreak: 0, momentumUntil: 0, healingProgress: new Map(),
+    queuedLetters: [], queuedChallengeId: null, approachTargetId: null, nextMeleeShotAt: 0, combatPaused: false };
 }

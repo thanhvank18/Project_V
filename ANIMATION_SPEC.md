@@ -33,7 +33,7 @@ Các giá trị trên là thông số renderer/prototype hiện tại, còn cầ
 
 1. Nhận key hợp lệ khi đang chơi và không kẹt.
 2. So với các prefix đáp án còn hợp lệ của câu đố đang chọn.
-3. Đúng: ghi nhận tiến độ ngay; phát clip tấn công native và tạo projectile có glyph đúng chiều đọc, bao quanh bằng tên/nhát chém/phép tương ứng anh hùng.
+3. Đúng: ghi nhận tiến độ nhập ngay. Đánh xa phát clip tấn công native và tạo projectile tức thời; cận chiến giữ chữ khi ngoài tầm, tự chạy về mục tiêu và chỉ phát clip/glyph khi thực sự vào tầm. Chữ chờ tung lần lượt cách nhau 70 ms; không phát animation đánh hoặc âm thanh đòn đánh khi vẫn đang chờ. Glyph đúng chiều đọc, bao quanh bằng tên/nhát chém/phép tương ứng anh hùng.
 4. Projectile tăng tốc từ điểm phát đòn tới thân mục tiêu, glyph đúng chiều đọc và lớn dần theo quãng đường bay với kích thước có giới hạn; vệt ngắn theo sau, cung cong tối đa 6 px, không phủ UI.
 5. Chạm: glyph vỡ thành mảnh góc cạnh phát sáng cyan/tím/vàng và vết nứt mảnh gợi Arcane, kèm hurt cục bộ; mọi địch không phải Boss nhận hit có hiệu lực đều đặt lại khựng 300 ms.
 6. Đạn hoàn tất câu đố: chuyển death, break-armor hoặc boss-damage.
@@ -43,7 +43,9 @@ Mỗi projectile mang shotId, targetId, challengeId, chỉ số tiến độ và
 
 Khi Tank dựng khiên, chỉ ngăn chọn/bắn mới vào địch xa hơn phía sau cùng phía. Projectile đã phát vẫn hoàn tất theo shotId và mốc va chạm đã có; renderer không xóa hoặc chặn ngược các viên đang bay chỉ vì mục tiêu vừa được che.
 
-Địch đang nhận đòn kết liễu bị vô hiệu damage lên người chơi ngay khi đáp án hoàn thành. Nếu mục tiêu/câu đố không còn hợp lệ khi đạn đến, chỉ kết thúc hiệu ứng, không gây tác động lên mục tiêu khác. Kiểm thử riêng gõ rất nhanh, đạn đến đảo thứ tự, restart, pause và chuyển Boss phase.
+Địch đang nhận đòn kết liễu bị vô hiệu damage lên người chơi khi chữ kết thúc được tung ra; gõ xong từ trong hàng chờ cận chiến chưa vô hiệu địch. Nếu mục tiêu/câu đố không còn hợp lệ khi đạn đến, chỉ kết thúc hiệu ứng, không gây tác động lên mục tiêu khác. Kiểm thử riêng gõ rất nhanh, hàng chờ khi chạy trốn, đạn đến đảo thứ tự, restart, pause và chuyển Boss phase.
+
+Cập nhật 27/10/2026: hiệu ứng máu thấp tính theo dưới 30% HP tối đa (cận chiến dưới 45/150, đánh xa dưới 30/100). Reduced Motion vẫn giữ phản hồi tĩnh. Animation chạy theo di chuyển thực, kể cả tự áp sát; không lặp clip đánh trong lúc chữ chưa được tung.
 
 ## Nhập sai và phục hồi
 
@@ -59,7 +61,7 @@ Phản hồi phục hồi phải vừa khoảng kẹt; không có phần animati
 |---|---|---|
 | Idle | Thở/nhún rất nhẹ | Loop, không gây nhiễu đọc |
 | Aim | Quay đúng phía, chuẩn bị vũ khí/phép | Chuyển nhanh theo mục tiêu |
-| Move | Di chuyển trái/phải bằng phím mũi tên | 160 px/giây, x=240–6160 trong world 6400 px; không xuyên zombie, không chiếm phím chữ |
+| Move | Di chuyển trái/phải bằng phím mũi tên | 160 px/giây, x=240–6160 trong world 6400 px; xuyên quái thường nhưng không xuyên Boss, không chiếm phím chữ |
 | Shoot | Clip tấn công native và hiệu ứng riêng của anh hùng | Có thể kích hoạt liên tiếp, không khóa phím |
 | Jam / Clear | Giật hụt, chữ lỗi, phục hồi | Khớp timer kẹt |
 | Hurt | Nhăn mặt/giật thân, screen shake ngắn | Không xóa tiến độ từ; chỉ rung lớp thế giới |
@@ -127,7 +129,7 @@ Combo tăng độ phong phú của vệt đạn, âm sắc và hiệu ứng kế
 
 Bản âm thanh ngày 25/10/2026 dùng 6 bài pixel từ `Sound/`, chuyển theo sự kiện hết bài rồi lặp cả playlist. `Pixel Death` phát khi hạ quái, `Pixel Explosion` phát tại impact đập đất của Boss (không phát sớm ở windup), `Pixel Game Over` dành cho thua trận. Tín hiệu gõ chữ/va chạm/kỹ năng vẫn ngắn, giới hạn 8 voice, riêng chữ tối đa2. Pause giữ vị trí nhạc; volume nhạc/hiệu ứng và master mute được lưu. Nguồn, mapping, quy tắc lifecycle và giới hạn xác minh trong `AUDIO_SPEC.md`.
 
-Nhân vật bị thương tạo camera shake ngắn ở lớp thế giới, không rung mỗi chữ. HP dưới 30 bật lắc thế giới nhẹ và vignette nhịp chậm báo choáng; HP từ 30 trở lên xóa hiệu ứng choáng. HUD, input và nhãn câu đố dùng lớp ổn định. Weather/parallax không cản đường đọc hoặc che projectile. Biên độ và thời lượng phản hồi tiếp tục được cân chỉnh trong renderer.
+Nhân vật bị thương tạo camera shake ngắn ở lớp thế giới, không rung mỗi chữ. HP dưới 30% máu tối đa bật lắc thế giới nhẹ và vignette nhịp chậm báo choáng; HP từ 30% máu tối đa trở lên xóa hiệu ứng choáng. HUD, input và nhãn câu đố dùng lớp ổn định. Weather/parallax không cản đường đọc hoặc che projectile. Biên độ và thời lượng phản hồi tiếp tục được cân chỉnh trong renderer.
 
 ## Reduced Motion và hiệu năng
 
@@ -150,7 +152,7 @@ Bổ sung 26/10/2026: Boss dùng footprint khóa từ lúc lấy đà cho đập
 - Mỗi hit có hiệu lực đặt lại khựng 300 ms, không có miễn khựng cho địch thường; Boss miễn khựng ở mọi phase.
 - Khiên Tank hướng đúng người chơi, đạn đã phát vẫn hoàn tất; từ Tank/Final Strike dài ít nhất 7 ký tự.
 - Glyph lớn dần có giới hạn, vệt ngắn/cung không quá 6 px và vỡ đúng thời điểm va chạm; không che nhãn/input.
-- HP dưới 30 bật choáng và HP từ 30 trở lên xóa choáng; Reduced Motion tắt shake và mọi dao động.
+- HP dưới 30% máu tối đa bật choáng và HP từ 30% máu tối đa trở lên xóa choáng; Reduced Motion tắt shake và mọi dao động.
 - Zombie có lấy đà/lao thân, vệt móng vuốt và điểm tiếp xúc đúng `attack-impact`; recoil/số sát thương chỉ xuất hiện khi HP thực sự giảm, không dời collider.
 - Boss đập đất có lấy đà, điểm nện, vòng xung kích giới hạn bán kính 300, nứt nền/bụi/mảnh vụn; đập hụt vẫn có hiệu ứng nền nhưng không có phản hồi người chơi bị thương giả.
 - Pause/reset/Reduced Motion xử lý cả hiệu ứng địch tấn công mới; không để tween hoặc callback từ trận trước tồn tại.

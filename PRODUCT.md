@@ -40,6 +40,8 @@ Cute Zombie Arcade, pixel art, nền thành phố xanh than và HUD đọc chữ
 
 Mỗi anh hùng có kiểu tấn công và kỹ năng riêng theo vũ khí/phép của mình. Kỹ năng tự tích bằng ký tự đúng mới; không tự giải từ hoặc dùng súng chung cho mọi nhân vật.
 
+Cập nhật 27/10/2026: năm anh hùng cận chiến (Armored Axeman, Knight, Knight Templar, Lancer, Swordsman) có 150 HP; bốn anh hùng đánh xa giữ 100 HP. Khi gõ, cận chiến tự áp sát rồi mới tung chữ trong tầm; chữ nhập trước được giữ chờ. Phím di chuyển luôn ưu tiên để hủy áp sát và chạy trốn, giữ tiến độ từ. Quái thường cho đi xuyên, Boss vẫn chặn; đi xuyên không miễn sát thương. Thông số HP/tầm là cân bằng thử nghiệm, nguồn trong src/game/heroCombat.ts; gameplay chi tiết ở GAME_DESIGN.md.
+
 Nhân vật hiển thị ở 85% kích thước trước đó. Kho từ chia 10 bậc học ước lượng từ dễ đến khó và có bộ lọc từ loại/bậc trong sổ từ. Mỗi trận bắt đầu bậc 1; cứ 20 từ hoàn thành tăng một bậc, tối đa bậc 10. Trong co-op, tiến độ này tính theo số từ hoàn thành của cả đội. Lịch sử tránh lặp vẫn cộng dồn qua các trận; khi một bậc hết từ mới, chọn từ ở bậc khả dụng tiếp theo theo quy tắc trong GAME_DESIGN.md.
 
 Menu giữ gọn, ưu tiên vào trận, phòng cùng bạn và chọn anh hùng; hướng dẫn chi tiết nằm trong Cách chơi. VI/EN là điều khiển ngắn ở đầu trang, không bổ sung bảng thống kê nguồn hoặc lời giải thích dài vào menu. Các tính năng mới tiếp tục dùng thế giới pixel art, nền xanh than, chữ kem và nhấn vàng đã chốt.

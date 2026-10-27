@@ -8784,7 +8784,7 @@ var HERO_SKILLS = [
     color: "#d0e8e5",
     attackStyle: "spear",
     visualKind: "lance",
-    tactics: "Canh qu\xE1i c\xF9ng m\u1ED9t ph\xEDa; nh\u1EAFm xa \u0111\u1EC3 t\u0103ng l\u1EF1c \u0111\u1EA9y c\u1EA3 tuy\u1EBFn.",
+    tactics: "Canh qu\xE1i c\xF9ng m\u1ED9t ph\xEDa; \u0111\xE1nh \u1EDF \u0111\u1EA7u t\u1EA7m th\u01B0\u01A1ng \u0111\u1EC3 t\u0103ng l\u1EF1c \u0111\u1EA9y c\u1EA3 tuy\u1EBFn.",
     description: "\u0110\u1EA9y l\xF9i m\u1EA1nh c\xE1c qu\xE1i tr\xEAn \u0111\u01B0\u1EDDng t\u1EDBi m\u1EE5c ti\xEAu. Kh\xF4ng \u0111\u1EA9y Boss.",
     effect: { kind: "push-line", distance: 60 }
   },
@@ -8870,12 +8870,24 @@ function shieldsFollowers(enemy) {
   return enemy.kind === "tank" || enemy.role === "shield" && enemy.hp > 1;
 }
 
+// src/game/heroCombat.ts
+var MELEE = /* @__PURE__ */ new Set(["armored-axeman", "knight", "knight-templar", "lancer", "swordsman"]);
+var SPEARS = /* @__PURE__ */ new Set(["knight-templar", "lancer"]);
+function getHeroCombat(heroId) {
+  return MELEE.has(heroId ?? "") ? { class: "melee", maxHp: 150, range: SPEARS.has(heroId ?? "") ? 160 : 120 } : { class: "ranged", maxHp: 100, range: 1e4 };
+}
+function attackReach(heroId, targetKind) {
+  const profile = getHeroCombat(heroId);
+  return profile.range + (profile.class === "melee" && targetKind === "tank" ? 100 : 0);
+}
+var MELEE_LETTER_INTERVAL = 70;
+
 // src/game/partyState.ts
 function createActorState(heroId, x) {
   return {
     playerX: x,
     targetId: null,
-    hp: 100,
+    hp: getHeroCombat(heroId).maxHp,
     movement: 0,
     input: "",
     jamUntil: 0,
@@ -8893,7 +8905,12 @@ function createActorState(heroId, x) {
     momentum: 0,
     momentumStreak: 0,
     momentumUntil: 0,
-    healingProgress: /* @__PURE__ */ new Map()
+    healingProgress: /* @__PURE__ */ new Map(),
+    queuedLetters: [],
+    queuedChallengeId: null,
+    approachTargetId: null,
+    nextMeleeShotAt: 0,
+    combatPaused: false
   };
 }
 
@@ -8982,6 +8999,11 @@ var GameEngine = class {
   claims = /* @__PURE__ */ new Map();
   healingProgress = /* @__PURE__ */ new Map();
   spawnActorSequence = 0;
+  queuedLetters = [];
+  queuedChallengeId = null;
+  approachTargetId = null;
+  nextMeleeShotAt = 0;
+  combatPaused = false;
   captureActor() {
     return {
       playerX: this.playerX,
@@ -9004,7 +9026,12 @@ var GameEngine = class {
       momentum: this.momentum,
       momentumStreak: this.momentumStreak,
       momentumUntil: this.momentumUntil,
-      healingProgress: this.healingProgress
+      healingProgress: this.healingProgress,
+      queuedLetters: this.queuedLetters,
+      queuedChallengeId: this.queuedChallengeId,
+      approachTargetId: this.approachTargetId,
+      nextMeleeShotAt: this.nextMeleeShotAt,
+      combatPaused: this.combatPaused
     };
   }
   syncActor() {
@@ -9035,6 +9062,7 @@ var GameEngine = class {
       connected: actor.connected,
       x: actor.state.playerX,
       hp: actor.state.hp,
+      maxHp: getHeroCombat(actor.member.heroId).maxHp,
       targetId: actor.state.targetId
     }));
   }
@@ -9100,6 +9128,10 @@ var GameEngine = class {
     return !this.actorId || !this.claims.has(id) || this.claims.get(id) === this.actorId;
   }
   chooseTarget(id) {
+    if (id !== this.targetId) {
+      this.clearQueuedAttack();
+      this.input = "";
+    }
     if (this.actorId && this.targetId !== null && this.claims.get(this.targetId) === this.actorId) this.claims.delete(this.targetId);
     this.targetId = id !== null && this.targetAvailable(id) ? id : null;
     if (this.actorId && this.targetId !== null) this.claims.set(this.targetId, this.actorId);
@@ -9143,6 +9175,7 @@ var GameEngine = class {
     const next = getHeroCharacter(id).id;
     if (next === this.heroId) return;
     this.heroId = next;
+    this.hp = getHeroCombat(next).maxHp;
     this.resetHeroSkill();
   }
   resetHeroSkill() {
@@ -9156,7 +9189,9 @@ var GameEngine = class {
     this.playerX = PLAYER_X;
     this.movement = 0;
     this.phase = "playing";
-    this.hp = 100;
+    this.hp = getHeroCombat(this.heroId).maxHp;
+    this.clearQueuedAttack();
+    this.combatPaused = false;
     this.score = this.combo = this.bestCombo = this.kills = this.words = this.bossKills = 0;
     this.correctLetters = this.correctKeys = this.wrongKeys = 0;
     this.shotSequence = 0;
@@ -9224,7 +9259,9 @@ var GameEngine = class {
   tick(delta) {
     this.clock += delta;
     const advance = () => {
+      this.enforceTargetVisibility();
       this.movePlayer(delta);
+      this.releaseMeleeLetter();
       this.updateWorld(delta);
       if (this.momentum > 0 && this.clock >= this.momentumUntil) {
         this.changeMomentum(-1);
@@ -9332,22 +9369,30 @@ var GameEngine = class {
   }
   setMovement(direction) {
     this.movement = this.phase === "playing" ? direction : 0;
+    if (this.movement) this.approachTargetId = null;
   }
   movePlayer(delta) {
-    if (!this.movement) return;
     const facingTarget = this.getTarget();
-    const knightAdvance = this.heroId === "knight" && this.clock < this.heroGuardUntil && facingTarget && this.movement === Math.sign(facingTarget.x - this.playerX) ? 0.25 : 0;
+    const target = this.combatTarget();
+    const approach = !this.combatPaused && this.approachTargetId === target?.id && this.queuedLetters.length > 0 && target && !this.inAttackRange(target) ? Math.sign(target.x - this.playerX) : 0;
+    const direction = this.movement || approach;
+    if (!direction) return;
+    const knightAdvance = this.heroId === "knight" && this.clock < this.heroGuardUntil && facingTarget && direction === Math.sign(facingTarget.x - this.playerX) ? 0.25 : 0;
     const speed = PLAYER_SPEED * (1 + this.momentum * 0.03 + (this.clock < this.dashUntil ? 0.4 : 0) + knightAdvance);
     let next = Math.max(PLAYER_BOUNDS.min, Math.min(
       PLAYER_BOUNDS.max,
-      this.playerX + this.movement * speed * delta / 1e3
+      this.playerX + direction * speed * delta / 1e3
     ));
+    if (!this.movement && target) {
+      const stop = target.x - direction * attackReach(this.heroId, target.kind);
+      next = direction > 0 ? Math.min(next, stop) : Math.max(next, stop);
+    }
     for (const enemy of this.enemies) {
-      if (enemy.hp <= 0) continue;
-      const radius = enemy.kind === "tank" ? 180 : 92;
-      if (this.movement > 0 && enemy.x >= this.playerX) {
+      if (enemy.hp <= 0 || enemy.kind !== "tank") continue;
+      const radius = 180;
+      if (direction > 0 && enemy.x >= this.playerX) {
         next = Math.min(next, Math.max(this.playerX, enemy.x - radius));
-      } else if (this.movement < 0 && enemy.x <= this.playerX) {
+      } else if (direction < 0 && enemy.x <= this.playerX) {
         next = Math.max(next, Math.min(this.playerX, enemy.x + radius));
       }
     }
@@ -9377,16 +9422,25 @@ var GameEngine = class {
     }
   }
   typeKey(rawKey) {
-    if (this.phase !== "playing") return;
+    if (this.phase !== "playing" || this.hp <= 0) return;
     this.enforceTargetVisibility();
     if (rawKey === "Backspace") {
       this.input = this.input.slice(0, -1);
+      this.queuedLetters = this.queuedLetters.filter((letter) => letter.index < this.input.length);
+      if (!this.queuedLetters.length) this.approachTargetId = null;
       return;
     }
     if (!/^[a-z]$/i.test(rawKey) || this.clock < this.jamUntil) return;
     const world = this.getWorldTarget();
-    const target = this.getTarget() ?? (world?.challenge ? { id: -world.id, kind: "barrel", x: world.x, challenge: world.challenge } : void 0);
+    const target = this.combatTarget();
     if (!target) return;
+    const melee = getHeroCombat(this.heroId).class === "melee";
+    if (melee && this.queuedLetters.length && answersFor(target.challenge.word).includes(this.input)) {
+      this.combatPaused = false;
+      if (!this.movement) this.approachTargetId = target.id;
+      this.releaseMeleeLetter();
+      return;
+    }
     const key = rawKey.toLowerCase();
     const next = this.input + key;
     const possibilities = answersFor(target.challenge.word).filter((answer) => answer.startsWith(next));
@@ -9405,9 +9459,54 @@ var GameEngine = class {
     this.input = next;
     this.correctKeys++;
     const index = next.length - 1;
+    const final = possibilities.includes(next);
+    if (melee) {
+      this.combatPaused = false;
+      this.queuedChallengeId = target.challenge.id;
+      if (!target.challenge.credited.has(index) || final) this.queuedLetters.push({ index, glyph: key, final });
+      if (!this.movement && this.queuedLetters.length) this.approachTargetId = target.id;
+      this.releaseMeleeLetter();
+      return;
+    }
+    this.launchLetter(target, { index, glyph: key, final });
+  }
+  combatTarget() {
+    const world = this.getWorldTarget();
+    return this.getTarget() ?? (world?.challenge ? { id: -world.id, kind: "barrel", x: world.x, challenge: world.challenge } : void 0);
+  }
+  inAttackRange(target) {
+    return Math.abs(target.x - this.playerX) <= attackReach(this.heroId, target.kind) + 1e-3;
+  }
+  clearQueuedAttack() {
+    this.queuedLetters = [];
+    this.queuedChallengeId = null;
+    this.approachTargetId = null;
+    this.nextMeleeShotAt = 0;
+  }
+  cancelApproach() {
+    this.approachTargetId = null;
+    this.combatPaused = true;
+  }
+  releaseMeleeLetter() {
+    if (this.phase !== "playing" || this.hp <= 0 || this.combatPaused || !this.queuedLetters.length) return;
+    const target = this.combatTarget();
+    if (!target || target.challenge.id !== this.queuedChallengeId) {
+      this.clearQueuedAttack();
+      this.input = "";
+      return;
+    }
+    if (!this.inAttackRange(target) || this.clock < this.nextMeleeShotAt || this.clock < this.jamUntil) return;
+    const letter = this.queuedLetters.shift();
+    this.nextMeleeShotAt = this.clock + MELEE_LETTER_INTERVAL;
+    this.launchLetter(target, letter);
+    if (!this.queuedLetters.length) this.approachTargetId = null;
+  }
+  /** A letter earns charge, damage and word completion only after it actually launches. */
+  launchLetter(target, letter) {
+    const { index, glyph: key, final } = letter;
+    const world = target.kind === "barrel" ? this.getWorldTarget() : void 0;
     const effective = !target.challenge.credited.has(index);
     const shotId = ++this.shotSequence;
-    const final = possibilities.includes(next);
     const baseDuration = Math.round(160 + Math.abs(target.x - this.playerX) / 5);
     const finalDue = Math.max(this.clock + baseDuration, ...this.projectiles.filter((shot) => shot.enemyId === target.id && shot.challengeId === target.challenge.id).map((shot) => shot.due));
     const duration = final ? finalDue - this.clock : baseDuration;
@@ -9545,11 +9644,11 @@ var GameEngine = class {
       case "push-line": {
         const side = Math.sign(targetX - this.playerX) || target.side;
         const reach = Math.abs(targetX - this.playerX);
-        affected = this.pushEnemies(eligible.filter((enemy) => (Math.sign(enemy.x - this.playerX) || enemy.side) === side && Math.abs(enemy.x - this.playerX) <= reach), effect.distance * (reach > 400 ? 1.5 : 1));
+        affected = this.pushEnemies(eligible.filter((enemy) => (Math.sign(enemy.x - this.playerX) || enemy.side) === side && Math.abs(enemy.x - this.playerX) <= reach), effect.distance * (reach >= 120 ? 1.5 : 1));
         break;
       }
       case "heal":
-        value = Math.min(effect.amount + (this.clock - this.lastMovedAt >= 1e3 ? 3 : 0), 100 - this.hp);
+        value = Math.min(effect.amount + (this.clock - this.lastMovedAt >= 1e3 ? 3 : 0), getHeroCombat(this.heroId).maxHp - this.hp);
         this.hp += value;
         break;
       case "slow":
@@ -9594,6 +9693,7 @@ var GameEngine = class {
     });
   }
   pause() {
+    this.cancelApproach();
     if (this.party.size) {
       this.movement = 0;
       return;
@@ -9613,6 +9713,7 @@ var GameEngine = class {
   toMenu() {
     this.phase = "menu";
     this.movement = 0;
+    this.clearQueuedAttack();
     this.projectiles = [];
     this.events = [];
     this.resetHeroSkill();
@@ -9620,11 +9721,11 @@ var GameEngine = class {
   useItem(item) {
     if (this.phase !== "playing" || !this.inventory[item]) return;
     if (item === "health") {
-      if (this.hp >= 100) {
+      if (this.hp >= getHeroCombat(this.heroId).maxHp) {
         this.inform("HP \u0111ang \u0111\u1EA7y. T\xFAi c\u1EE9u th\u01B0\u01A1ng \u0111\u01B0\u1EE3c gi\u1EEF l\u1EA1i.");
         return;
       }
-      this.hp = Math.min(100, this.hp + 25);
+      this.hp = Math.min(getHeroCombat(this.heroId).maxHp, this.hp + 25);
       this.inform("+25 HP");
     } else if (item === "freeze") {
       const previousFreeze = this.freezeUntil;
@@ -9660,13 +9761,23 @@ var GameEngine = class {
     const targetCharacter = target ? getEnemyCharacter(target.appearanceId, target.kind) : void 0;
     const bossCharacter = boss ? getEnemyCharacter(boss.appearanceId, boss.kind) : void 0;
     const heroSkill = getHeroSkill(this.heroId);
+    const combat = getHeroCombat(this.heroId);
+    const combatTarget = this.combatTarget();
     return {
       phase: this.phase,
       hp: this.hp,
+      maxHp: combat.maxHp,
       playerX: this.playerX,
       score: this.score,
       combo: this.combo,
       bestCombo: this.bestCombo,
+      combat: {
+        class: combat.class,
+        range: combat.range,
+        inRange: !!combatTarget && this.inAttackRange(combatTarget),
+        approaching: !this.combatPaused && !this.movement && !!combatTarget && this.approachTargetId === combatTarget.id && this.queuedLetters.length > 0 && !this.inAttackRange(combatTarget),
+        queued: this.queuedLetters.length
+      },
       kills: this.kills,
       words: this.words,
       elapsed: this.clock,
@@ -9773,7 +9884,7 @@ var GameEngine = class {
         }
       }
       if (object.kind !== "healing-zone" || object.state === "used") continue;
-      if (Math.abs(object.x - this.playerX) > object.radius || this.movement || this.hp >= 100 || this.clock - this.lastPlayerHurt < 1e3) {
+      if (Math.abs(object.x - this.playerX) > object.radius || this.movement || this.lastMovedAt === this.clock || this.hp >= getHeroCombat(this.heroId).maxHp || this.clock - this.lastPlayerHurt < 1e3) {
         this.setHealingProgress(object, 0);
         continue;
       }
@@ -9781,7 +9892,7 @@ var GameEngine = class {
       const progress = Math.min(1, previous + delta / HEAL_DWELL_MS);
       this.setHealingProgress(object, progress);
       if (progress < 1) continue;
-      const value = Math.min(15, 100 - this.hp);
+      const value = Math.min(15, getHeroCombat(this.heroId).maxHp - this.hp);
       this.hp += value;
       object.charges--;
       this.setHealingProgress(object, 0);
@@ -9845,6 +9956,11 @@ var GameEngine = class {
     return this.enemies.find((enemy) => enemy.id === this.targetId && this.targetAvailable(enemy.id) && canTargetEnemy(this.enemies, enemy, this.playerX));
   }
   enforceTargetVisibility() {
+    const live = this.combatTarget();
+    if (this.queuedChallengeId !== null && (!live || live.challenge.id !== this.queuedChallengeId)) {
+      this.clearQueuedAttack();
+      this.input = "";
+    }
     if (this.targetId !== null && (!this.targetAvailable(this.targetId) || this.targetId < 0 && !this.getWorldTarget())) {
       this.input = "";
       this.chooseTarget(null);
@@ -10229,7 +10345,7 @@ var GameEngine = class {
     if (enemy.kind === "tank") {
       this.bossKills++;
       this.score += 1e3;
-      if (this.hp > 0) this.hp = Math.min(100, this.hp + 20);
+      if (this.hp > 0) this.hp = Math.min(getHeroCombat(this.heroId).maxHp, this.hp + 20);
       this.nextBoss = this.clock + 18e4;
       this.emit({ type: "boss-defeat", enemyId: enemy.id, x: enemy.x });
       this.inform("Tank \u0111\xE3 b\u1ECB h\u1EA1! +20 HP \xB7 +1000 \u0111i\u1EC3m. Sinh t\u1ED3n ti\u1EBFp t\u1EE5c!", 6e3);
@@ -10307,6 +10423,7 @@ var GameEngine = class {
     if (this.phase !== "playing") return;
     this.phase = "over";
     this.movement = 0;
+    this.clearQueuedAttack();
     this.projectiles = [];
     const minutes = this.clock / 6e4;
     this.summary = {
@@ -10620,7 +10737,8 @@ var RoomHub = class {
     else if (command.kind === "move" && [-1, 0, 1].includes(command.direction)) {
       session.lastMoveAt = now;
       action = () => room.engine.setMovement(command.direction);
-    } else if (command.kind === "cycle" && [-1, 1].includes(command.direction)) action = () => room.engine.cycleTarget(command.direction);
+    } else if (command.kind === "cancel-approach") action = () => room.engine.cancelApproach();
+    else if (command.kind === "cycle" && [-1, 1].includes(command.direction)) action = () => room.engine.cycleTarget(command.direction);
     else if (command.kind === "item" && ITEMS.has(command.item)) action = () => room.engine.useItem(command.item);
     else if (command.kind === "interact") action = () => room.engine.interactWorld();
     else fail("Thao t\xE1c kh\xF4ng h\u1EE3p l\u1EC7.");

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { HERO_CHARACTERS } from './characterCatalog';
 import { GameEngine, PLAYER_X, WORLD_WIDTH } from './engine';
 import { getHeroSkill, HERO_SKILLS } from './heroSkills';
+import { getHeroCombat } from './heroCombat';
 import type { Enemy, EnemyKind, Word } from './types';
 
 const bank: Word[] = Array.from({ length: 80 }, (_, index) => {
@@ -29,7 +30,15 @@ function freshLetters(engine: GameEngine, count: number) {
   const start = engine.snapshot().input.length;
   for (const letter of target.challenge.word.answer.slice(start, start + count)) engine.typeKey(letter);
 }
-function activate(engine: GameEngine) { freshLetters(engine, getHeroSkill(engine.snapshot().hero.id).threshold); }
+function activate(engine: GameEngine) {
+  const hero = engine.snapshot().hero.id;
+  if (getHeroCombat(hero).class === 'melee') {
+    // Effect tests isolate the activation instant; engineMelee verifies travel/letter timing.
+    const target = engine.enemies.find(enemy => enemy.id === engine.targetId)!;
+    const activation = engine as unknown as { chargeHeroSkill(target: Enemy): void };
+    for (let index = 0; index < getHeroSkill(hero).threshold; index++) activation.chargeHeroSkill(target);
+  } else freshLetters(engine, getHeroSkill(hero).threshold);
+}
 function clone(base: Enemy, id: number, x: number, kind: EnemyKind = 'normal'): Enemy {
   return { ...base, id, x, kind, side: x >= PLAYER_X ? 1 : -1, hp: kind === 'tank' ? 9 : 1, maxHp: kind === 'tank' ? 9 : 1,
     stunUntil: 0, freezeUntil: undefined, slowUntil: undefined, attackUntil: 0,
@@ -121,7 +130,7 @@ describe('nine distinct hero effects', () => {
     const { engine, target } = prepare('knight');
     activate(engine); activate(engine); engine.drainEvents();
     expect(damageControl(engine).hurt(20, target)).toBe(0);
-    expect(engine.snapshot().hp).toBe(100);
+    expect(engine.snapshot().hp).toBe(150);
     const events = engine.drainEvents();
     expect(events.some(event => event.type === 'player-hurt')).toBe(false);
     expect(events).toContainEqual(expect.objectContaining({ type: 'hero-skill', skillPhase: 'block', value: 20 }));
@@ -141,12 +150,12 @@ describe('nine distinct hero effects', () => {
 
   it('Lancer pushes the line to its target, excluding farther and opposite-side enemies', () => {
     const { engine, target } = prepare('lancer');
-    target.x = PLAYER_X + 300;
-    const front = clone(target, 90, PLAYER_X + 150), far = clone(target, 91, PLAYER_X + 400), left = clone(target, 92, PLAYER_X - 120);
+    target.x = PLAYER_X + 150;
+    const front = clone(target, 90, PLAYER_X + 80), far = clone(target, 91, PLAYER_X + 250), left = clone(target, 92, PLAYER_X - 120);
     engine.enemies.push(front, far, left);
     activate(engine);
-    expect(target.x).toBe(PLAYER_X + 360); expect(front.x).toBe(PLAYER_X + 210);
-    expect(far.x).toBe(PLAYER_X + 400); expect(left.x).toBe(PLAYER_X - 120);
+    expect(target.x).toBe(PLAYER_X + 240); expect(front.x).toBe(PLAYER_X + 170);
+    expect(far.x).toBe(PLAYER_X + 250); expect(left.x).toBe(PLAYER_X - 120);
   });
 
   it('Priest restores 5HP without exceeding 100 and reports the actual restored amount', () => {

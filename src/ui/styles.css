@@ -68,6 +68,8 @@
 .hero-current{display:flex;flex-wrap:wrap;justify-content:space-between;gap:7px;margin:0 0 3px;font-size:clamp(11px,1.05cqw,14px)}
 .hero-current>span{color:var(--muted)}
 .hero-current>strong{color:var(--accent)}
+.hero-skill-description>p.hero-combat-profile{color:var(--muted);font-size:clamp(11px,1cqw,13px);line-height:1.5;margin-bottom:5px;font-variant-numeric:tabular-nums}
+.combat-status{margin-top:5px;color:var(--accent);font-size:clamp(11px,.85cqw,13px);line-height:1.4;overflow-wrap:anywhere}
 .hero-skill-description{margin-top:10px;padding:9px 10px;background:#142731ee;border:1px solid var(--line);border-radius:4px}
 .hero-skill-description>p:last-child{font-size:clamp(10px,.95cqw,13px);color:var(--muted);line-height:1.6;min-height:3.2em}
 .hero-skill-hud{position:absolute;top:15%;left:3%;width:22%;pointer-events:none;color:#c7d8cf}

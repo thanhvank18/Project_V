@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { GameEngine, canTargetEnemy, PLAYER_X } from './engine';
 import { getHeroSkill } from './heroSkills';
+import { getHeroCombat } from './heroCombat';
 import { createWorldObjects, clipAtGate } from './tacticalRules';
 import type { Enemy, Word } from './types';
 
@@ -24,6 +25,12 @@ function solve(engine: GameEngine, enemy = engine.enemies[0]) {
 function charge(engine: GameEngine, target = engine.enemies[0]) {
   target.challenge.word = { ...bank[0], answer: 'abcdefghijklmnopqrstuvwx' };
   engine.targetId = target.id;
+  if (getHeroCombat(engine.snapshot().hero.id).class === 'melee') {
+    // Isolate tactical effects; melee dispatch is integrated in engineMelee.test.ts.
+    const activation = engine as unknown as { chargeHeroSkill(target: Enemy): void };
+    for (let index = 0; index < getHeroSkill(engine.snapshot().hero.id).threshold; index++) activation.chargeHeroSkill(target);
+    return;
+  }
   for (const letter of target.challenge.word.answer.slice(0, getHeroSkill(engine.snapshot().hero.id).threshold)) engine.typeKey(letter);
 }
 
@@ -36,8 +43,8 @@ describe('position-dependent hero tactics', () => {
     axe.enemies[0].x = PLAYER_X + 130; charge(axe);
     expect(axe.enemies[0].stunUntil).toBe(900);
     const lance = game('lancer'); lance.enemies = [lance.enemies[0]];
-    lance.enemies[0].x = PLAYER_X + 450; charge(lance);
-    expect(lance.enemies[0].x).toBe(PLAYER_X + 540);
+    lance.enemies[0].x = PLAYER_X + 150; charge(lance);
+    expect(lance.enemies[0].x).toBe(PLAYER_X + 240);
   });
   it('gives Knight protected approach speed and Swordsman an actual escape burst', () => {
     const knight = game('knight'); knight.enemies = [knight.enemies[0]]; knight.enemies[0].x = 1100;

@@ -16,7 +16,9 @@ Quyết định hiện tại: dùng toàn bộ 42 nhân vật trong hai pack Tin
 | Swordsman | Kiếm sĩ | Đường kiếm vòng | Vòng kiếm phản kích: đẩy tối đa 42 đơn vị các quái trong vùng 160 quanh người chơi | 8 |
 | Wizard | Pháp sư | Phép chữ | Vòng băng: đóng băng 1 giây trong vùng 150 quanh mục tiêu | 12 |
 
-Khoảng cách tính theo đơn vị thế giới của simulation; UI mô tả bằng phạm vi tương đối. HP/tốc độ người chơi và sát thương giải từ cơ bản giữ nguyên, lợi thế đến từ kỹ năng hỗ trợ. Không có phím kích kỹ năng riêng: ký tự đúng mới cộng một năng lượng, đầy thanh tự kích rồi bắt đầu tích lượt kế tiếp. Nhập sai, phím bị bỏ qua lúc kẹt và gõ lại chỉ số ký tự đã credited không cộng năng lượng.
+Khoảng cách tính theo đơn vị thế giới của simulation; UI mô tả bằng phạm vi tương đối. Tốc độ cơ bản và sát thương giải từ giữ nguyên. Không có phím kích kỹ năng riêng: ký tự đúng mới đã tung đòn cộng một năng lượng, đầy thanh tự kích rồi bắt đầu tích lượt kế tiếp. Nhập sai, phím bị bỏ qua lúc kẹt, chữ chưa tung trong hàng chờ và gõ lại chỉ số ký tự đã credited không cộng năng lượng.
+
+Cập nhật 27/10/2026: Armored Axeman, Knight, Knight Templar, Lancer, Swordsman là cận chiến với 150 HP. Kiếm/rìu có tầm 120 px; hai anh hùng dùng thương có tầm 160 px; cộng 100 px khi đánh thân Boss. Archer, Priest, Soldier, Wizard đánh xa với 100 HP. Gõ đúng cho cận chiến tự áp sát, giữ chữ chờ và chỉ tung trong tầm; phím di chuyển ngắt áp sát để rút lui. Quái thường cho đi xuyên, Boss chặn. Đây là thông số cân bằng ban đầu trong `src/game/heroCombat.ts`, không phải cân bằng đã xác nhận qua chơi dài hạn. Thương thủ tăng lực đẩy 1,5 lần khi ra đòn ở khoảng cách từ 120 px trong tầm thương.
 
 Boss miễn đẩy, khựng, làm chậm và đóng băng. Kỹ năng vùng chỉ tác động mục tiêu có thể nhắm, không xuyên qua khiên bảo hộ của Tank. Đẩy lùi bị giới hạn bởi biên bản đồ và thứ tự địch, không đưa chúng xuyên qua nhau. Các kỹ năng không tự giải, bỏ qua hoặc gây damage từ vựng, không tạo kill/loot. Khiên Hiệp sĩ chỉ chặn một đòn, không cộng dồn; đòn bị chặn không phát player-hurt/rung màn hình.
 

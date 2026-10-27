@@ -212,6 +212,10 @@ export class RoomClient implements EnginePort {
     if (this.state.status === 'offline') this.local.setMovement(direction);
     else { this.movement = direction; this.command({ kind: 'move', direction }); }
   }
+  cancelApproach(): void {
+    if (this.state.status === 'offline') this.local.cancelApproach();
+    else this.command({ kind: 'cancel-approach' });
+  }
   step(deltaMs: number): void {
     if (this.state.status === 'offline') this.local.step(deltaMs);
     else if (this.remote?.phase === 'playing') this.displayClock = Math.min(this.remoteClock + 50, this.displayClock + deltaMs);
@@ -222,7 +226,13 @@ export class RoomClient implements EnginePort {
   interactWorld(): void { if (this.state.status === 'offline') this.local.interactWorld(); else this.command({ kind: 'interact' }); }
   pause(): void {
     if (this.state.status === 'offline') this.local.pause();
-    else if (this.remote?.phase === 'playing') { this.setMovement(0); this.localPaused = true; }
+    else if (this.remote?.phase === 'playing') {
+      this.setMovement(0);
+      // A neutral movement packet also serves as the server watchdog; explicitly stop
+      // autonomous melee movement before input is locally paused, without losing the word.
+      this.cancelApproach();
+      this.localPaused = true;
+    }
   }
   resume(): void { if (this.state.status === 'offline') this.local.resume(); else if (this.state.status === 'playing') this.localPaused = false; }
   toMenu(): void {

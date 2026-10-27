@@ -152,7 +152,8 @@ export class RoomHub {
     if (command.kind === 'type' && typeof command.key === 'string' && (/^[a-z]$/i.test(command.key) || command.key === 'Backspace')) action = () => room.engine.typeKey(command.key);
     else if (command.kind === 'move' && [-1, 0, 1].includes(command.direction)) {
       session.lastMoveAt = now; action = () => room.engine.setMovement(command.direction);
-    } else if (command.kind === 'cycle' && [-1, 1].includes(command.direction)) action = () => room.engine.cycleTarget(command.direction);
+    } else if (command.kind === 'cancel-approach') action = () => room.engine.cancelApproach();
+    else if (command.kind === 'cycle' && [-1, 1].includes(command.direction)) action = () => room.engine.cycleTarget(command.direction);
     else if (command.kind === 'item' && ITEMS.has(command.item)) action = () => room.engine.useItem(command.item);
     else if (command.kind === 'interact') action = () => room.engine.interactWorld();
     else fail('Thao tác không hợp lệ.');
