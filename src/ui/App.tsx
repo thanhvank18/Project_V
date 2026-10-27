@@ -5,6 +5,7 @@ import { RoomClient } from '../game/RoomClient';
 import { getHeroCharacter } from '../game/characterCatalog';
 import { getHeroCombat } from '../game/heroCombat';
 import { CombatStatus, HealthMeter } from './CombatFeedback';
+import { TargetClue } from './TargetClue';
 import { HeroPicker } from './HeroPicker';
 import { GameHelp } from './GameHelp';
 import { MultiplayerLobby } from './MultiplayerLobby';
@@ -292,8 +293,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
           {!spectating && <p className="movement-help"><kbd>←</kbd><kbd>→</kbd><span>{t("Di chuyển")}</span></p>}
           <div className="typing-dock">
             <div className="target-heading"><span><Crosshair size={15} /> {snapshot.target ? t(snapshot.target.label || kindNames[snapshot.target.kind]) : spectating ? t("Đang theo dõi đồng đội") : t("Đang tìm mục tiêu")}</span><span>{snapshot.target ? <>{t(PART_OF_SPEECH_LABELS[snapshot.target.partOfSpeech])}{t(" · Bậc ")}{snapshot.target.learningLevel}</> : ''}{snapshot.locked && <b>{t(" · ĐÃ KHÓA")}</b>}</span></div>
-            <div className="target-prompt"><strong>{snapshot.target?.prompt || t("Chuẩn bị cho đợt tiếp theo…")}</strong>{snapshot.target?.hint && <span>{snapshot.target.hint}</span>}</div>
-            {snapshot.target && snapshot.target.prompt !== snapshot.target.meaning && <p className="target-meaning">{snapshot.target.meaning}</p>}
+            <TargetClue target={snapshot.target} />
             <div className={`input-frame ${snapshot.jamRemaining > 0 ? 'jammed' : ''}`}>
               <Keyboard size={23} /><label className="sr-only" htmlFor="word-input">{t("Nhập toàn bộ từ tiếng Anh")}</label>
               <input id="word-input" ref={input} className="typing-input" type="text" autoComplete="off" autoCapitalize="off" spellCheck={false} readOnly value={snapshot.input} placeholder={spectating ? t("Đang theo dõi đồng đội…") : t("Nhập toàn bộ từ tiếng Anh…")} aria-describedby="typing-help" disabled={snapshot.phase !== 'playing' || spectating} />
