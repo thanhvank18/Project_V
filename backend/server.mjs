@@ -168,7 +168,8 @@ export function createRequestHandler(vocabulary, { corsOrigins = '*', customDeck
     catch { sendJson(400, { error: 'Invalid request URL' }); return; }
     const createDeck = pathname === '/api/custom-decks';
     const deckMatch = /^\/api\/custom-decks\/([a-f0-9]{32})$/.exec(pathname);
-    if (pathname !== '/health' && pathname !== '/api/vocabulary' && !createDeck && !deckMatch) {
+    const leaderboardMatch = /^\/api\/custom-decks\/([a-f0-9]{32})\/leaderboard$/.exec(pathname);
+    if (pathname !== '/health' && pathname !== '/api/vocabulary' && !createDeck && !deckMatch && !leaderboardMatch) {
       sendJson(404, { error: 'Not found' }); return;
     }
     if (request.method === 'OPTIONS') {
@@ -186,13 +187,14 @@ export function createRequestHandler(vocabulary, { corsOrigins = '*', customDeck
       });
       response.end(); return;
     }
-    if (createDeck || deckMatch) {
+    if (createDeck || deckMatch || leaderboardMatch) {
       if (createDeck ? request.method !== 'POST' : !['GET', 'HEAD'].includes(request.method)) {
         response.setHeader('Allow', createDeck ? 'POST, OPTIONS' : METHODS);
         sendJson(405, { error: 'Method not allowed' }); return;
       }
       if (!customDecks) { sendJson(503, { error: 'Kho bộ từ chưa sẵn sàng.', code: 'unavailable' }); return; }
       try {
+        if (leaderboardMatch) { sendJson(200, customDecks.getLeaderboard(leaderboardMatch[1])); return; }
         if (createDeck && !allowCreate(request)) {
           request.resume(); response.setHeader('Retry-After', '600');
           sendJson(429, { error: 'Bạn tạo bộ từ quá nhanh. Hãy thử lại sau.', code: 'rate' }); return;

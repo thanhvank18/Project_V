@@ -60,7 +60,7 @@ describe('room client transitions through the public transport', () => {
   const deckClient = (onSeen = vi.fn(), overrides: Partial<CustomDeck> = {}) => {
     const deck: CustomDeck = { id: 'a'.repeat(32), title: 'Our pack', language: 'en', createdAt: Date.now(), expiresAt: Date.now() + 86_400_000,
       entries: [{ answer: 'water', meaning: 'A clear liquid.', partOfSpeech: 'noun', level: 1, type: 'fill', sentence: 'I drink ___.' }], ...overrides };
-    const port = new RoomClient({ highScore: 999, runs: 9, totalWords: 99, words: {}, seenWords: { water: 1 } }, onSeen, WORDS, 'vi', deck);
+    const port = new RoomClient({ highScore: 999, runs: 9, totalWords: 99, words: {}, seenWords: { water: 1 } }, onSeen, WORDS, 'vi', deck, '  Thanh   Vân  ');
     clients.push(port); return { port, deck, onSeen };
   };
 
@@ -68,7 +68,7 @@ describe('room client transitions through the public transport', () => {
     sessionStorage.setItem('zvs-room-session-v1', 'normal-token');
     const { port, deck, onSeen } = deckClient(); port.connect();
     const socket = StubSocket.instances[0]; socket.open();
-    expect(socket.sent[0]).toMatchObject({ type: 'hello', resumeToken: '', seen: [], language: 'en', deckId: deck.id });
+    expect(socket.sent[0]).toMatchObject({ type: 'hello', resumeToken: '', seen: [], language: 'en', deckId: deck.id, playerName: 'Thanh Vân' });
     expect(port.snapshot().vocabulary).toMatchObject({ total: 1, remaining: 1 });
     socket.receive({ type: 'session', token: 'deck-token' });
     expect(sessionStorage.getItem('zvs-room-session-v1')).toBe('normal-token');
@@ -82,6 +82,25 @@ describe('room client transitions through the public transport', () => {
     expect(onSeen).toHaveBeenCalledTimes(2);
     port.toMenu(); expect(port.snapshot().vocabulary.remaining).toBe(1); port.start();
     expect(port.enemies[0].challenge.word.answer).toBe('water');
+  });
+
+  it('requires a name before connecting a custom pack and only notifies when ranking status changes', () => {
+    const { port, deck } = deckClient();
+    const unnamed = new RoomClient({ highScore: 0, runs: 0, totalWords: 0, words: {} }, () => {}, WORDS, 'en', deck);
+    clients.push(unnamed); unnamed.connect();
+    expect(StubSocket.instances).toHaveLength(0); expect(unnamed.room.error).toContain('tên');
+    port.connect(); const socket = StubSocket.instances[0]; socket.open();
+    const listen = vi.fn(); port.subscribeRoom(listen); listen.mockClear();
+    const frame = { type: 'frame', clock: 1000, snapshot: { ...port.snapshot(), phase: 'over' }, enemies: [], events: [],
+      leaderboard: { runId: '12345678-1234-1234-1234-123456789abc', status: 'saving' } };
+    socket.receive(frame); socket.receive(frame);
+    expect(port.room.leaderboard?.status).toBe('saving'); expect(listen).toHaveBeenCalledTimes(1);
+    socket.receive({ ...frame, leaderboard: { ...frame.leaderboard, status: 'saved' } });
+    expect(port.room.leaderboard?.status).toBe('saved'); expect(listen).toHaveBeenCalledTimes(2);
+    socket.receive({ ...frame, snapshot: { ...frame.snapshot, phase: 'playing' }, leaderboard: undefined });
+    expect(port.room.leaderboard).toBeUndefined();
+    socket.receive({ ...frame, leaderboard: { ...frame.leaderboard, status: 'saved' } });
+    port.playOffline(); expect(port.room.leaderboard).toBeUndefined();
   });
 
   it('ends offline play and stops reconnecting when a custom link expires', () => {

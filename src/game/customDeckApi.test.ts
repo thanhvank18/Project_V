@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { createCustomDeck, customDeckApiUrl, loadCustomDeck, parseCustomDeckResponse } from './customDeckApi';
+import { createCustomDeck, customDeckApiUrl, loadCustomDeck, loadDeckLeaderboard, parseCustomDeckResponse, parseDeckLeaderboard } from './customDeckApi';
 import { CUSTOM_DECK_TTL_MS, type CustomDeckInput } from './customDeck';
 
 const input: CustomDeckInput = { title: 'My class', language: 'en', entries: [{ answer: 'water', meaning: 'A clear liquid', partOfSpeech: 'noun', level: 1, type: 'fill', sentence: 'I drink ___.' }] };
@@ -41,5 +41,21 @@ describe('custom deck API boundary', () => {
     await expect(loadCustomDeck('../oops')).rejects.toMatchObject({ code: 'not-found' });
     expect(fetcher).not.toHaveBeenCalled();
     await expect(loadCustomDeck(response().deck.id)).rejects.toMatchObject({ code: 'deck-missing' });
+  });
+  it('reads shared ranking with GET and refuses another pack or duplicate entries', async () => {
+    vi.stubGlobal('location', { origin: 'http://localhost:5174' });
+    const id = 'a'.repeat(32), expiresAt = Date.now() + CUSTOM_DECK_TTL_MS;
+    const row = { id: '12345678-1234-1234-1234-123456789abc', players: ['Minh'], score: 500, words: 3, accuracy: 100,
+      durationMs: 10000, endedAt: Date.now(), reason: 'defeat' };
+    const payload = { deckId: id, expiresAt, entries: [row] };
+    const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify(payload), { status: 200 }));
+    vi.stubGlobal('fetch', fetcher);
+    expect(await loadDeckLeaderboard(id)).toEqual(payload);
+    expect(fetcher.mock.calls[0][0]).toBe(`http://localhost:5174/api/custom-decks/${id}/leaderboard`);
+    expect(fetcher.mock.calls[0][1]).toMatchObject({ method: 'GET', cache: 'no-store', credentials: 'omit' });
+    expect(() => parseDeckLeaderboard({ ...payload, deckId: 'b'.repeat(32) }, id)).toThrow();
+    expect(() => parseDeckLeaderboard({ ...payload, entries: [row, row] }, id)).toThrow();
+    expect(() => parseDeckLeaderboard({ ...payload, entries: [{ ...row, players: [''] }] }, id)).toThrow();
+    expect(() => parseDeckLeaderboard({ ...payload, expiresAt: 1 }, id)).toThrow('hết hạn');
   });
 });

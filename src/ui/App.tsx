@@ -7,6 +7,7 @@ import { getHeroCharacter } from '../game/characterCatalog';
 import { getHeroCombat } from '../game/heroCombat';
 import { CombatStatus, HealthMeter } from './CombatFeedback';
 import { TargetClue } from './TargetClue';
+import { DeckLeaderboard } from './DeckLeaderboard';
 import { HeroPicker } from './HeroPicker';
 import { GameHelp } from './GameHelp';
 import { MultiplayerLobby } from './MultiplayerLobby';
@@ -60,13 +61,13 @@ function Modal({ title, onClose, children, className = '' }: { title: string; on
   </dialog>;
 }
 
-export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMode, onDeckExpired }: { initialProgress: Progress; wordBank?: readonly Word[]; customDeck?: CustomDeck; onCreateMode?: () => void; onDeckExpired?: () => void }) {
+export function App({ initialProgress, wordBank = WORDS, customDeck, customPlayerName, onCreateMode, onDeckExpired }: { initialProgress: Progress; wordBank?: readonly Word[]; customDeck?: CustomDeck; customPlayerName?: string; onCreateMode?: () => void; onDeckExpired?: () => void }) {
   const { t, language, locale, setLanguage } = useLanguage();
   const [seenWords, setSeenWords] = useState(() => new Set([...Object.keys(initialProgress.seenWords ?? {}), ...Object.keys(initialProgress.words)]));
   const [engine] = useState(() => new RoomClient(initialProgress, word => {
     if (!customDeck) markWordSeen(word);
     setSeenWords(previous => new Set(previous).add(word.answer));
-  }, wordBank, customDeck?.language ?? language, customDeck));
+  }, wordBank, customDeck?.language ?? language, customDeck, customPlayerName));
   const [snapshot, setSnapshot] = useState<Snapshot>(() => engine.snapshot());
   const [room, setRoom] = useState(() => engine.room);
   const [teamRun, setTeamRun] = useState(false);
@@ -76,7 +77,7 @@ export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMod
   const [saveError, setSaveError] = useState(() => customDeck ? '' : getStorageWarning());
   const [settings, setSettings] = useState(() => { const s = readSettings(); return { muted: s.muted ?? false, reducedMotion: s.reducedMotion ?? matchMedia('(prefers-reduced-motion: reduce)').matches, heroId: getHeroCharacter(s.heroId).id, musicVolume: s.musicVolume ?? 0.25, sfxVolume: s.sfxVolume ?? 0.6 }; });
   const [audioState, setAudioState] = useState<AudioState>({ title: '', index: 0, total: 0, playing: false, status: 'waiting' });
-  const [panel, setPanel] = useState<'help' | 'collection' | 'audio' | null>(null);
+  const [panel, setPanel] = useState<'help' | 'collection' | 'audio' | 'leaderboard' | null>(null);
   const [collectionQuery, setCollectionQuery] = useState('');
   const [collectionPos, setCollectionPos] = useState('');
   const [collectionLevel, setCollectionLevel] = useState('');
@@ -170,7 +171,7 @@ export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMod
   const start = (mode: 'survival' | 'boss') => { engine.setHero(settings.heroId); runtime.current?.setOptions({ ...settings, language }); setPanel(null); engine.start(mode); setSnapshot(engine.snapshot()); focusInput(); };
   const resume = () => { engine.resume(); setSnapshot(engine.snapshot()); focusInput(); };
   const home = () => { setPanel(null); engine.toMenu(); setSnapshot(engine.snapshot()); };
-  const showPanel = (value: 'help' | 'collection' | 'audio') => { engine.pause(); setSnapshot(engine.snapshot()); setPanel(value); };
+  const showPanel = (value: 'help' | 'collection' | 'audio' | 'leaderboard') => { engine.pause(); setSnapshot(engine.snapshot()); setPanel(value); };
   const consume = (key: ItemKind) => { engine.useItem(key); setSnapshot(engine.snapshot()); focusInput(); };
   const interact = () => { engine.interactWorld?.(); setSnapshot(engine.snapshot()); focusInput(); };
   const toggleFavorite = useCallback((word: string) => {
@@ -247,7 +248,7 @@ export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMod
       <p className="header-tagline">Learn English.<br /><strong>Live another day.</strong></p>
       <div className="header-actions">
         <LanguagePicker disabled={Boolean(customDeck) || Boolean(room.languagePending) || snapshot.phase !== 'menu' || room.status === 'connecting' || room.status === 'disconnected' || (room.status === 'lobby' && room.selfId !== room.hostId)} title={t(customDeck ? 'Ngôn ngữ do người tạo bộ câu hỏi chọn.' : room.status === 'lobby' && room.selfId !== room.hostId ? 'Chủ phòng chọn ngôn ngữ trước trận.' : 'Đổi ngôn ngữ trước khi bắt đầu trận.')} />
-        <span className="record"><Trophy size={18} /><span>{t("Kỷ lục")}<strong>{progress.highScore.toLocaleString(locale)}</strong></span></span>
+        {customDeck ? <button className="text-button" onClick={() => showPanel('leaderboard')} aria-haspopup="dialog"><Trophy size={18} />{t('Bảng danh vọng')}</button> : <span className="record"><Trophy size={18} /><span>{t("Kỷ lục")}<strong>{progress.highScore.toLocaleString(locale)}</strong></span></span>}
         <button className="icon-button" onClick={() => setSettings(s => ({ ...s, muted: !s.muted }))} aria-pressed={settings.muted} aria-label={settings.muted ? t("Bật âm thanh") : t("Tắt âm thanh")} title={settings.muted ? t("Bật âm thanh") : t("Tắt âm thanh")}>{settings.muted ? <VolumeX size={20} /> : <Volume2 size={20} />}</button>
         <button className={`icon-button ${settings.reducedMotion ? 'selected' : ''}`} onClick={() => setSettings(s => ({ ...s, reducedMotion: !s.reducedMotion }))} aria-pressed={settings.reducedMotion} aria-label={t("Giảm chuyển động")} title={t("Giảm chuyển động")}><Sparkles size={20} /></button>
         <button className="icon-button" onClick={() => showPanel('audio')} aria-label={t("Nhạc và âm thanh")} aria-haspopup="dialog" title={t("Nhạc và âm thanh")}><Music2 size={20} /></button>
@@ -256,7 +257,7 @@ export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMod
     </header>
 
     {(customDeck || (!playing && onCreateMode)) && <div className="custom-deck-bar">
-      {customDeck ? <div><strong>{customDeck.title}</strong><span>{t(customDeck.damageMode === 'one-hit' ? 'Một chạm là chết' : 'Máu bằng trái tim')}</span><span>{t('Hết hạn {0}', [new Date(customDeck.expiresAt).toLocaleString(locale)])}</span></div> : <span>{t('Chơi với bộ từ của bạn')}</span>}
+      {customDeck ? <div><strong>{customDeck.title}</strong><span>{t('Tên người chơi: {0}', [room.players.find(player => player.id === room.selfId)?.name ?? customPlayerName ?? ''])}</span><span>{t(customDeck.damageMode === 'one-hit' ? 'Một chạm là chết' : 'Máu bằng trái tim')}</span><span>{t('Hết hạn {0}', [new Date(customDeck.expiresAt).toLocaleString(locale)])}</span></div> : <span>{t('Chơi với bộ từ của bạn')}</span>}
       <div>{customDeck && <a href={location.pathname}>{t('Về game chính')}</a>}{!playing && onCreateMode && <button className="text-button" onClick={onCreateMode}>{t('Tạo bộ câu hỏi')}</button>}</div>
     </div>}
 
@@ -353,6 +354,9 @@ export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMod
       {settings.muted && <p className="audio-muted-note">{t("Âm thanh đang tắt. Hai mức âm lượng vẫn được giữ lại.")}</p>}
     </Modal>}
     {panel === 'help' && <Modal title={t("Sống sót bằng từ vựng")} onClose={() => setPanel(null)}><GameHelp /><button className="button primary" onClick={() => setPanel(null)}>{t("Đã hiểu")}</button></Modal>}
+    {panel === 'leaderboard' && customDeck && <Modal title={customDeck.title} onClose={() => setPanel(null)} className="deck-leaderboard-modal">
+      <DeckLeaderboard deckId={customDeck.id} currentRunId={room.leaderboard?.runId} refreshKey={room.leaderboard?.status} initialMode={teamRun ? 'coop' : 'solo'} />
+    </Modal>}
     {panel === 'collection' && <Modal title={t("Từ đã gặp")} onClose={() => setPanel(null)}>
       <p className="modal-intro">{customDeck ? t('{0}/{1} từ đã gặp trong phiên này.', [encounteredWords.length, wordBank.length]) : <>{encounteredWords.length.toLocaleString(locale)}/{wordBank.length.toLocaleString(locale)}{t(" từ trong sổ của bạn · ")}{progress.runs}{t(" trận đã lưu. Từ được ghi nhớ ngay khi xuất hiện; thống kê của trận được lưu khi kết thúc.")}</>}</p>
       <div className="collection-search"><label htmlFor="collection-search">{t("Tìm từ hoặc nghĩa")}</label><input id="collection-search" type="search" value={collectionQuery} onChange={event => { setCollectionQuery(event.target.value); setCollectionPage(0); }} placeholder={t("Nhập từ tiếng Anh hoặc nghĩa tiếng Việt…")} /></div>
@@ -369,6 +373,13 @@ export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMod
       {room.error && <p className="lobby-feedback" role="status">{t(room.error)}</p>}
       <div className="result-score"><Trophy size={24} /><strong>{summary.score.toLocaleString(locale)}</strong><span>{teamRun ? t("điểm cả đội") : t("điểm")}</span></div>
       <div className="result-stats"><div><strong>{summary.kills}</strong><span>{teamRun ? t("quái cả đội hạ") : 'zombie'}</span></div><div><strong>{summary.words}</strong><span>{teamRun ? t("từ cả đội") : t("từ hoàn thành")}</span></div><div><strong>{Math.round(summary.accuracy)}%</strong><span>{teamRun ? t("chính xác đội") : t("chính xác")}</span></div><div><strong>{Math.round(summary.wpm)}</strong><span>{teamRun ? t("WPM cả đội") : 'WPM'}</span></div><div><strong>{summary.bestCombo}</strong><span>{teamRun ? t("combo đội") : t("combo cao nhất")}</span></div></div>
+      {customDeck && <>
+        <p className="deck-result-status" role="status">{t(room.status === 'offline' ? 'Chơi ngoại tuyến không được xếp hạng.'
+          : room.leaderboard?.status === 'saved' ? 'Bảng danh vọng đã cập nhật.'
+            : room.leaderboard?.status === 'failed' ? 'Chưa lưu được kết quả trên bảng danh vọng.'
+              : room.leaderboard?.status === 'unranked' ? 'Lượt chơi này không xếp hạng.' : 'Đang lưu kết quả lên bảng danh vọng…')}</p>
+        <DeckLeaderboard deckId={customDeck.id} currentRunId={room.leaderboard?.runId} refreshKey={`${summary.id}:${room.leaderboard?.status ?? ''}`} initialMode={teamRun ? 'coop' : 'solo'} />
+      </>}
       <h3>{t("Nhớ thêm vài từ")}</h3>
       <LearningPanel words={wordBank} results={summary.results} runReview {...learningActions} />
       {learningStatus}

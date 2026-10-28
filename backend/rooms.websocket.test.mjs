@@ -71,8 +71,8 @@ describe('real WebSocket room transport', () => {
       entries: [{ answer: 'water', meaning: 'A clear liquid.', partOfSpeech: 'noun', level: 1, type: 'fill', sentence: 'I drink ___.' },
         { answer: 'apple', meaning: 'A round fruit.', partOfSpeech: 'noun', level: 1, type: 'translate' }] };
     const { connect, runtime } = await fixture({ now: () => now, customDecks: { get: () => structuredClone(deck) } });
-    const host = await connect('', { deckId: deck.id, seen: ['water', 'apple'] });
-    const guest = await connect('', { deckId: deck.id });
+    const host = await connect('', { deckId: deck.id, playerName: 'An', seen: ['water', 'apple'] });
+    const guest = await connect('', { deckId: deck.id, playerName: 'Bình' });
     expect(host.room.customDeck).toMatchObject({ id: deck.id, entryCount: 2 });
     guest.send({ type: 'join', pin: host.room.pin });
     await guest.wait(message => message.type === 'room' && message.room.players.length === 2);

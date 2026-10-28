@@ -4,6 +4,7 @@ import { GameEngine } from '../src/game/engine.ts';
 import { HERO_CHARACTERS } from '../src/game/characterCatalog.ts';
 import { vocabularyForLanguage } from '../src/game/englishDictionary.ts';
 import { customDeckWords } from '../src/game/customDeck.ts';
+import { normalizePlayerName } from '../src/game/customDeckLeaderboard.ts';
 export { mergeEnglishDefinitions } from '../src/game/englishDictionary.ts';
 export { validateCustomDeck, customDeckWords } from '../src/game/customDeck.ts';
 export { CustomDeckStore, CUSTOM_DECK_BODY_LIMIT } from './custom-decks.mjs';
@@ -29,6 +30,8 @@ export class RoomHub {
     const deckId = message.deckId ?? '';
     if (typeof deckId !== 'string') fail('Bộ từ không hợp lệ.');
     const deck = deckId ? this.getDeck(deckId) : null;
+    const playerName = deck ? normalizePlayerName(message.playerName) : null;
+    if (deck && !playerName) fail('Hãy nhập tên người chơi hợp lệ trước khi vào bộ từ.', 'player-name-required');
     const candidate = typeof message.resumeToken === 'string' ? this.sessions.get(message.resumeToken) : undefined;
     const old = candidate?.deckId === deckId ? candidate : undefined;
     const session = old && this.rooms.has(old.pin) ? old : {
@@ -36,6 +39,8 @@ export class RoomHub {
       language: deck?.language ?? message.language ?? 'vi', deckId,
       seen: new Set(), pin: '', connected: true, disconnectedAt: 0, attempts: [], tokens: 100, rateAt: this.now(), lastMoveAt: 0,
     };
+    // A reconnect may restore the room, but cannot rename a player in an existing run.
+    if (deck && (!this.rooms.get(session.pin)?.engine || this.rooms.get(session.pin).engine.snapshot().phase === 'menu')) session.name = playerName;
     if (session.connected && session.send) session.send({ type: 'replaced', error: 'Phiên này đã được mở ở kết nối khác.' });
     session.send = send; session.connected = true; session.disconnectedAt = 0;
     if (!deckId) for (const word of message.seen) if (this.allowedWords.has(word)) session.seen.add(word);
@@ -99,8 +104,9 @@ export class RoomHub {
     let pin;
     do { pin = String(randomInt(100000, 1000000)); } while (this.rooms.has(pin));
     const room = { pin, hostId: session.id, language: customDeck?.language ?? session.language, customDeck, members: [session], engine: null, seenDuring: new Set(),
-      pendingSeen: [], touchedAt: this.now(), tickCount: 0, match: 0 };
-    session.pin = pin; session.name = 'Người chơi 1';
+      pendingSeen: [], touchedAt: this.now(), tickCount: 0, match: 0, run: null };
+    session.pin = pin;
+    if (!customDeck) session.name = 'Người chơi 1';
     this.rooms.set(pin, room); this.broadcastLobby(room);
   }
 
@@ -108,6 +114,7 @@ export class RoomHub {
     const room = this.rooms.get(session.pin);
     if (!room) return;
     room.engine?.removePartyPlayer(session.id);
+    this.recordCompletedRun(room);
     room.members = room.members.filter(member => member !== session);
     session.pin = '';
     if (!room.members.length) this.rooms.delete(room.pin);
@@ -144,8 +151,10 @@ export class RoomHub {
       const heroId = taken.has(session.heroId) ? HEROES.find(id => !taken.has(id)) : session.heroId;
       this.leave(session);
       session.pin = next.pin; session.heroId = heroId; session.language = next.language;
-      const usedNames = new Set(next.members.map(member => member.name));
-      session.name = [1, 2, 3, 4].map(number => `Người chơi ${number}`).find(name => !usedNames.has(name));
+      if (!next.customDeck) {
+        const usedNames = new Set(next.members.map(member => member.name));
+        session.name = [1, 2, 3, 4].map(number => `Người chơi ${number}`).find(name => !usedNames.has(name));
+      }
       next.members.push(session); this.broadcastLobby(next); return;
     }
     if (message.type === 'hero') {
@@ -172,17 +181,21 @@ export class RoomHub {
       const bank = room.customDeck ? customDeckWords(this.getDeck(room.customDeck.id)) : vocabularyForLanguage(this.words, room.language);
       if (!bank.length) fail('Kho từ tiếng Anh chưa sẵn sàng.');
       const seen = room.customDeck ? {} : Object.fromEntries([...new Set(room.members.flatMap(member => [...member.seen]))].map(word => [word, 1]));
+      this.recordCompletedRun(room);
       room.seenDuring.clear(); room.pendingSeen = []; room.match++;
       room.engine = new this.Engine(Math.random, { highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: seen }, word => {
         room.seenDuring.add(word.answer); room.pendingSeen.push(word.answer);
         if (!room.customDeck) for (const member of room.members) member.seen.add(word.answer);
       }, bank, { damageMode: room.customDeck?.damageMode ?? 'health' });
       room.engine.configureParty(room.members.map(member => ({ id: member.id, name: member.name, heroId: member.heroId })));
+      room.run = room.customDeck ? { id: randomUUID(), players: room.members.map(member => member.name), mode: message.mode,
+        engine: room.engine, status: null, completed: false } : null;
       room.engine.start(message.mode); this.broadcastLobby(room); this.broadcastFrame(room); return;
     }
     if (message.type === 'lobby') {
       if (room.hostId !== session.id) fail('Chỉ chủ phòng mở lại sảnh.', 'host-only');
       if (room.engine?.snapshot().phase !== 'over') fail('Trận chưa kết thúc.');
+      this.recordCompletedRun(room);
       room.engine = null; this.broadcastLobby(room); return;
     }
     if (message.type !== 'command' || !room.engine) fail('Chưa có trận đang chơi.');
@@ -216,19 +229,54 @@ export class RoomHub {
   sendFrame(room, member, events) {
     if (!room.engine || !member.connected) return;
     const snapshot = room.engine.snapshotFor(member.id);
+    this.recordCompletedRun(room, snapshot);
     // Run IDs must stay unique across rooms, server restarts, and newly constructed engines.
     if (snapshot.summary) snapshot.summary = { ...snapshot.summary, id: `${room.pin}:${room.match}:${snapshot.summary.id}` };
     member.send({ type: 'frame', clock: room.engine.clock, snapshot,
-      enemies: room.engine.enemies, worldObjects: room.engine.worldObjects ?? [], events, ack: member.lastSeq ?? -1 });
+      enemies: room.engine.enemies, worldObjects: room.engine.worldObjects ?? [], events, ack: member.lastSeq ?? -1,
+      ...(room.run?.completed ? { leaderboard: { runId: room.run.id, status: room.run.status } } : {}) });
+  }
+
+  recordCompletedRun(room, frameSnapshot) {
+    const run = room.run;
+    if (!room.customDeck || !room.engine || !run || run.completed || run.engine !== room.engine) return;
+    const snapshot = frameSnapshot ?? room.engine.snapshot();
+    if (snapshot.phase !== 'over' || !snapshot.summary) return;
+    run.completed = true;
+    if (run.mode !== 'survival') { run.status = 'unranked'; return; }
+    const summary = snapshot.summary;
+    const entry = { id: run.id, players: [...run.players], score: summary.score, words: summary.words,
+      accuracy: summary.accuracy, durationMs: summary.durationMs, endedAt: this.now(), reason: summary.reason ?? 'defeat' };
+    const deckId = room.customDeck.id;
+    run.status = 'saving';
+    const notify = () => {
+      if (this.rooms.get(room.pin) !== room || room.run !== run || room.engine !== run.engine) return;
+      for (const member of room.members) this.sendFrame(room, member, []);
+    };
+    const persist = attempt => {
+      // File I/O never blocks the simulation. The same UUID also makes retries idempotent.
+      void Promise.resolve().then(() => this.customDecks.recordRun(deckId, entry)).then(() => {
+        run.status = 'saved'; notify();
+      }).catch(error => {
+        if (attempt === 0 && !['deck-expired', 'deck-missing'].includes(error?.code)) {
+          const timer = setTimeout(() => persist(1), 250);
+          timer.unref?.();
+        } else { run.status = 'failed'; notify(); }
+      });
+    };
+    persist(0);
   }
 
   broadcastFrame(room) {
     if (!room.engine) return;
     const events = room.engine.drainEvents();
+    let sent = false;
     for (const member of room.members) if (member.connected) {
       if (room.pendingSeen.length) member.send({ type: room.customDeck ? 'deck-seen' : 'seen', words: room.pendingSeen });
       this.sendFrame(room, member, events);
+      sent = true;
     }
+    if (!sent) this.recordCompletedRun(room);
     room.pendingSeen = [];
   }
 

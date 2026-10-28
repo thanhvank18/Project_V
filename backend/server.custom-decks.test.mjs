@@ -2,6 +2,7 @@ import { createServer, request } from 'node:http';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { randomUUID } from 'node:crypto';
 import { afterEach, describe, expect, it } from 'vitest';
 import { createRequestHandler } from './server.mjs';
 import { CustomDeckStore, CUSTOM_DECK_TTL } from './custom-decks.mjs';
@@ -65,6 +66,32 @@ describe('public custom deck HTTP API', () => {
     expect((await post(port, huge, { 'Content-Length': String(Buffer.byteLength(huge)) })).status).toBe(413);
     expect((await post(port, huge, { 'Transfer-Encoding': 'chunked' })).status).toBe(413);
     expect(store.decks.size).toBe(0);
+  });
+
+  it('serves per-link rankings without cache and never accepts client-submitted scores', async () => {
+    const { port, store, advance } = await fixture();
+    const created = await post(port), deck = created.body.deck;
+    const url = `${created.headers.location}/leaderboard`;
+    const empty = await call(port, url);
+    expect(empty.status).toBe(200);
+    expect(empty.body).toEqual({ deckId: deck.id, expiresAt: deck.expiresAt, entries: [] });
+    expect(empty.headers['cache-control']).toBe('no-store');
+    const run = { id: randomUUID(), players: ['Người chơi'], score: 120, words: 1, accuracy: 100,
+      durationMs: 2500, endedAt: deck.createdAt, reason: 'vocabulary-complete' };
+    await store.recordRun(deck.id, run);
+    expect((await call(port, url)).body.entries).toEqual([run]);
+    const head = await call(port, url, { method: 'HEAD' });
+    expect(head.status).toBe(200); expect(head.body).toBeNull();
+    for (const method of ['POST', 'PUT', 'DELETE']) {
+      const rejected = await call(port, url, { method, body: JSON.stringify(run), headers: { 'Content-Type': 'application/json' } });
+      expect(rejected.status).toBe(405); expect(rejected.headers.allow).toBe('GET, HEAD, OPTIONS');
+    }
+    expect((await call(port, url, { method: 'OPTIONS', headers: { 'Access-Control-Request-Method': 'POST' } })).status).toBe(405);
+    expect((await call(port, `/api/custom-decks/${'0'.repeat(32)}/leaderboard`)).status).toBe(404);
+    expect((await call(port, '/api/custom-decks/..%2Fserver.mjs/leaderboard')).status).toBe(404);
+    advance(CUSTOM_DECK_TTL);
+    expect((await call(port, url)).status).toBe(410);
+    await store.cleanup(); expect((await call(port, url)).status).toBe(404);
   });
 
   it('permits only the configured origin and methods and bounds anonymous creation rate', async () => {

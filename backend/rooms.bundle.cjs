@@ -10643,6 +10643,37 @@ function customDeckWords(deck) {
   }));
 }
 
+// src/game/customDeckLeaderboard.ts
+var PLAYER_NAME_MAX_LENGTH = 24;
+var LEADERBOARD_CATEGORY_LIMIT = 50;
+function normalizePlayerName(value) {
+  if (typeof value !== "string" || value.length > 200 || /[\p{Cc}\p{Cf}]/u.test(value)) return null;
+  const name = value.normalize("NFC").trim().replace(/\s+/gu, " ");
+  const length = [...name].length;
+  return length >= 1 && length <= PLAYER_NAME_MAX_LENGTH ? name : null;
+}
+function compareLeaderboardEntries(a, b) {
+  return b.score - a.score || b.words - a.words || b.accuracy - a.accuracy || a.durationMs - b.durationMs || a.endedAt - b.endedAt || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+}
+function parseLeaderboardEntry(value) {
+  if (!value || typeof value !== "object") return null;
+  const row = value;
+  if (typeof row.id !== "string" || !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(row.id) || !Array.isArray(row.players) || row.players.length < 1 || row.players.length > 4) return null;
+  const players = row.players.map(normalizePlayerName);
+  if (players.some((name) => !name)) return null;
+  if (typeof row.score !== "number" || !Number.isSafeInteger(row.score) || row.score < 0 || typeof row.words !== "number" || !Number.isSafeInteger(row.words) || row.words < 0 || typeof row.accuracy !== "number" || !Number.isFinite(row.accuracy) || row.accuracy < 0 || row.accuracy > 100 || typeof row.durationMs !== "number" || !Number.isFinite(row.durationMs) || row.durationMs < 0 || row.durationMs > 864e5 || typeof row.endedAt !== "number" || !Number.isSafeInteger(row.endedAt) || row.endedAt <= 0 || !["defeat", "vocabulary-complete"].includes(String(row.reason))) return null;
+  return {
+    id: row.id,
+    players,
+    score: row.score,
+    words: row.words,
+    accuracy: row.accuracy,
+    durationMs: row.durationMs,
+    endedAt: row.endedAt,
+    reason: row.reason
+  };
+}
+
 // backend/custom-decks.mjs
 var import_node_crypto = require("node:crypto");
 var import_promises = require("node:fs/promises");
@@ -10651,6 +10682,17 @@ var CUSTOM_DECK_TTL = 24 * 60 * 60 * 1e3;
 var CUSTOM_DECK_BODY_LIMIT = 1024 * 1024;
 var ID = /^[a-f0-9]{32}$/;
 var error = (message, code, status, details) => Object.assign(new Error(message), { code, status, ...details ? { errors: details } : {} });
+function boundedLeaderboard(entries, deck, now) {
+  if (!Array.isArray(entries)) return [];
+  const ids = /* @__PURE__ */ new Set(), counts = [0, 0];
+  return entries.map(parseLeaderboardEntry).filter((entry) => entry && entry.endedAt >= deck.createdAt && entry.endedAt < deck.expiresAt && entry.endedAt <= now && entry.durationMs <= CUSTOM_DECK_TTL).sort(compareLeaderboardEntries).filter((entry) => {
+    const mode = entry.players.length === 1 ? 0 : 1;
+    if (ids.has(entry.id) || counts[mode] >= LEADERBOARD_CATEGORY_LIMIT) return false;
+    ids.add(entry.id);
+    counts[mode]++;
+    return true;
+  });
+}
 var CustomDeckStore = class {
   constructor(directory, { now = Date.now, maxDecks = 1e3, maxBytes = 100 * 1024 * 1024, cleanupMs = 6e4 } = {}) {
     this.directory = import_node_path.default.resolve(directory);
@@ -10678,7 +10720,8 @@ var CustomDeckStore = class {
           continue;
         }
         if (this.decks.size >= this.maxDecks || this.bytes + info.size > this.maxBytes) continue;
-        this.decks.set(deck.id, { deck: { ...parsed.data, id: deck.id, createdAt: deck.createdAt, expiresAt: deck.expiresAt }, bytes: info.size });
+        const cleanDeck = { ...parsed.data, id: deck.id, createdAt: deck.createdAt, expiresAt: deck.expiresAt };
+        this.decks.set(deck.id, { deck: cleanDeck, leaderboard: boundedLeaderboard(deck.leaderboard, cleanDeck, this.now()), bytes: info.size });
         this.bytes += info.size;
       } catch (cause) {
         if (cause.code !== "ENOENT" && !(cause instanceof SyntaxError)) throw cause;
@@ -10692,31 +10735,37 @@ var CustomDeckStore = class {
     return this;
   }
   create(input) {
-    const operation = this.pending.then(async () => {
+    return this.enqueue(async () => {
       const parsed = validateCustomDeck(input);
       if (!parsed.data) throw error("B\u1ED9 t\u1EEB ch\u01B0a h\u1EE3p l\u1EC7.", "validation", 422, parsed.errors);
-      await this.cleanup();
+      await this.cleanupNow();
       const createdAt = this.now();
       const deck = { ...parsed.data, id: (0, import_node_crypto.randomBytes)(16).toString("hex"), createdAt, expiresAt: createdAt + CUSTOM_DECK_TTL };
       const body = JSON.stringify(deck), bytes = Buffer.byteLength(body);
       if (bytes > CUSTOM_DECK_BODY_LIMIT) throw error("B\u1ED9 t\u1EEB v\u01B0\u1EE3t gi\u1EDBi h\u1EA1n 1 MiB.", "too-large", 413);
       if (this.decks.size >= this.maxDecks || this.bytes + bytes > this.maxBytes) throw error("Kho b\u1ED9 t\u1EEB \u0111ang \u0111\u1EA7y. H\xE3y th\u1EED l\u1EA1i sau.", "capacity", 503);
-      const temporary = import_node_path.default.join(this.directory, `${deck.id}.tmp`), file = import_node_path.default.join(this.directory, `${deck.id}.json`);
-      try {
-        await (0, import_promises.writeFile)(temporary, body, { flag: "wx", mode: 384 });
-        await (0, import_promises.rename)(temporary, file);
-      } catch (cause) {
-        await (0, import_promises.rm)(temporary, { force: true }).catch(() => {
-        });
-        throw cause;
-      }
-      this.decks.set(deck.id, { deck, bytes });
+      await this.persist(deck.id, body);
+      this.decks.set(deck.id, { deck, leaderboard: [], bytes });
       this.bytes += bytes;
       return structuredClone(deck);
     });
+  }
+  enqueue(work) {
+    const operation = this.pending.then(work);
     this.pending = operation.catch(() => {
     });
     return operation;
+  }
+  async persist(id, body) {
+    const temporary = import_node_path.default.join(this.directory, `${id}.tmp`), file = import_node_path.default.join(this.directory, `${id}.json`);
+    try {
+      await (0, import_promises.writeFile)(temporary, body, { flag: "wx", mode: 384 });
+      await (0, import_promises.rename)(temporary, file);
+    } catch (cause) {
+      await (0, import_promises.rm)(temporary, { force: true }).catch(() => {
+      });
+      throw cause;
+    }
   }
   get(id) {
     if (typeof id !== "string" || !ID.test(id)) throw error("Kh\xF4ng t\xECm th\u1EA5y b\u1ED9 t\u1EEB.", "deck-missing", 404);
@@ -10729,15 +10778,52 @@ var CustomDeckStore = class {
     }
     return structuredClone(stored.deck);
   }
-  async remove(id) {
+  getLeaderboard(id) {
+    const deck = this.get(id);
+    return { deckId: deck.id, expiresAt: deck.expiresAt, entries: structuredClone(this.decks.get(id).leaderboard) };
+  }
+  recordRun(id, value) {
+    return this.enqueue(async () => {
+      const deck = this.get(id), stored = this.decks.get(id);
+      const entry = parseLeaderboardEntry(value);
+      if (!entry || entry.endedAt < deck.createdAt || entry.endedAt >= deck.expiresAt || entry.endedAt > this.now() || entry.durationMs > CUSTOM_DECK_TTL) throw error("K\u1EBFt qu\u1EA3 ch\u01B0a h\u1EE3p l\u1EC7.", "validation", 422);
+      if (stored.leaderboard.some((previous) => previous.id === entry.id)) return;
+      const leaderboard = boundedLeaderboard([...stored.leaderboard, entry], deck, this.now());
+      if (!leaderboard.some((previous) => previous.id === entry.id)) return;
+      const body = JSON.stringify({ ...deck, leaderboard }), bytes = Buffer.byteLength(body);
+      if (bytes > CUSTOM_DECK_BODY_LIMIT || this.bytes - stored.bytes + bytes > this.maxBytes) {
+        throw error("Kho k\u1EBFt qu\u1EA3 \u0111ang \u0111\u1EA7y. H\xE3y th\u1EED l\u1EA1i sau.", "capacity", 503);
+      }
+      await this.persist(id, body);
+      if (deck.expiresAt <= this.now() || this.decks.get(id) !== stored) {
+        if (this.decks.get(id) === stored) {
+          this.decks.delete(id);
+          this.bytes -= stored.bytes;
+        }
+        await (0, import_promises.rm)(import_node_path.default.join(this.directory, `${id}.json`), { force: true });
+        throw error("Li\xEAn k\u1EBFt b\u1ED9 t\u1EEB \u0111\xE3 h\u1EBFt h\u1EA1n sau 24 gi\u1EDD.", "deck-expired", 410);
+      }
+      this.bytes += bytes - stored.bytes;
+      stored.bytes = bytes;
+      stored.leaderboard = leaderboard;
+    });
+  }
+  remove(id) {
     const stored = this.decks.get(id);
-    if (!stored) return;
+    if (!stored) return Promise.resolve();
     this.decks.delete(id);
     this.bytes -= stored.bytes;
-    await (0, import_promises.rm)(import_node_path.default.join(this.directory, `${id}.json`), { force: true });
+    return this.enqueue(() => (0, import_promises.rm)(import_node_path.default.join(this.directory, `${id}.json`), { force: true }));
   }
-  async cleanup() {
-    for (const [id, stored] of this.decks) if (stored.deck.expiresAt <= this.now()) await this.remove(id);
+  cleanup() {
+    return this.enqueue(() => this.cleanupNow());
+  }
+  async cleanupNow() {
+    for (const [id, stored] of this.decks) if (stored.deck.expiresAt <= this.now()) {
+      this.decks.delete(id);
+      this.bytes -= stored.bytes;
+      await (0, import_promises.rm)(import_node_path.default.join(this.directory, `${id}.json`), { force: true });
+    }
     for (const entry of await (0, import_promises.readdir)(this.directory, { withFileTypes: true })) {
       if (!entry.isFile() || !/^[a-f0-9]{32}\.(json|tmp)$/.test(entry.name)) continue;
       const id = entry.name.slice(0, 32);
@@ -10777,6 +10863,8 @@ var RoomHub = class {
     const deckId = message.deckId ?? "";
     if (typeof deckId !== "string") fail("B\u1ED9 t\u1EEB kh\xF4ng h\u1EE3p l\u1EC7.");
     const deck = deckId ? this.getDeck(deckId) : null;
+    const playerName = deck ? normalizePlayerName(message.playerName) : null;
+    if (deck && !playerName) fail("H\xE3y nh\u1EADp t\xEAn ng\u01B0\u1EDDi ch\u01A1i h\u1EE3p l\u1EC7 tr\u01B0\u1EDBc khi v\xE0o b\u1ED9 t\u1EEB.", "player-name-required");
     const candidate = typeof message.resumeToken === "string" ? this.sessions.get(message.resumeToken) : void 0;
     const old = candidate?.deckId === deckId ? candidate : void 0;
     const session = old && this.rooms.has(old.pin) ? old : {
@@ -10794,6 +10882,7 @@ var RoomHub = class {
       rateAt: this.now(),
       lastMoveAt: 0
     };
+    if (deck && (!this.rooms.get(session.pin)?.engine || this.rooms.get(session.pin).engine.snapshot().phase === "menu")) session.name = playerName;
     if (session.connected && session.send) session.send({ type: "replaced", error: "Phi\xEAn n\xE0y \u0111\xE3 \u0111\u01B0\u1EE3c m\u1EDF \u1EDF k\u1EBFt n\u1ED1i kh\xE1c." });
     session.send = send;
     session.connected = true;
@@ -10888,10 +10977,11 @@ var RoomHub = class {
       pendingSeen: [],
       touchedAt: this.now(),
       tickCount: 0,
-      match: 0
+      match: 0,
+      run: null
     };
     session.pin = pin;
-    session.name = "Ng\u01B0\u1EDDi ch\u01A1i 1";
+    if (!customDeck) session.name = "Ng\u01B0\u1EDDi ch\u01A1i 1";
     this.rooms.set(pin, room);
     this.broadcastLobby(room);
   }
@@ -10899,6 +10989,7 @@ var RoomHub = class {
     const room = this.rooms.get(session.pin);
     if (!room) return;
     room.engine?.removePartyPlayer(session.id);
+    this.recordCompletedRun(room);
     room.members = room.members.filter((member) => member !== session);
     session.pin = "";
     if (!room.members.length) this.rooms.delete(room.pin);
@@ -10940,8 +11031,10 @@ var RoomHub = class {
       session.pin = next.pin;
       session.heroId = heroId;
       session.language = next.language;
-      const usedNames = new Set(next.members.map((member) => member.name));
-      session.name = [1, 2, 3, 4].map((number) => `Ng\u01B0\u1EDDi ch\u01A1i ${number}`).find((name) => !usedNames.has(name));
+      if (!next.customDeck) {
+        const usedNames = new Set(next.members.map((member) => member.name));
+        session.name = [1, 2, 3, 4].map((number) => `Ng\u01B0\u1EDDi ch\u01A1i ${number}`).find((name) => !usedNames.has(name));
+      }
       next.members.push(session);
       this.broadcastLobby(next);
       return;
@@ -10973,6 +11066,7 @@ var RoomHub = class {
       const bank = room.customDeck ? customDeckWords(this.getDeck(room.customDeck.id)) : vocabularyForLanguage(this.words, room.language);
       if (!bank.length) fail("Kho t\u1EEB ti\u1EBFng Anh ch\u01B0a s\u1EB5n s\xE0ng.");
       const seen = room.customDeck ? {} : Object.fromEntries([...new Set(room.members.flatMap((member) => [...member.seen]))].map((word) => [word, 1]));
+      this.recordCompletedRun(room);
       room.seenDuring.clear();
       room.pendingSeen = [];
       room.match++;
@@ -10982,6 +11076,14 @@ var RoomHub = class {
         if (!room.customDeck) for (const member of room.members) member.seen.add(word.answer);
       }, bank, { damageMode: room.customDeck?.damageMode ?? "health" });
       room.engine.configureParty(room.members.map((member) => ({ id: member.id, name: member.name, heroId: member.heroId })));
+      room.run = room.customDeck ? {
+        id: (0, import_node_crypto2.randomUUID)(),
+        players: room.members.map((member) => member.name),
+        mode: message.mode,
+        engine: room.engine,
+        status: null,
+        completed: false
+      } : null;
       room.engine.start(message.mode);
       this.broadcastLobby(room);
       this.broadcastFrame(room);
@@ -10990,6 +11092,7 @@ var RoomHub = class {
     if (message.type === "lobby") {
       if (room.hostId !== session.id) fail("Ch\u1EC9 ch\u1EE7 ph\xF2ng m\u1EDF l\u1EA1i s\u1EA3nh.", "host-only");
       if (room.engine?.snapshot().phase !== "over") fail("Tr\u1EADn ch\u01B0a k\u1EBFt th\xFAc.");
+      this.recordCompletedRun(room);
       room.engine = null;
       this.broadcastLobby(room);
       return;
@@ -11025,6 +11128,7 @@ var RoomHub = class {
   sendFrame(room, member, events) {
     if (!room.engine || !member.connected) return;
     const snapshot = room.engine.snapshotFor(member.id);
+    this.recordCompletedRun(room, snapshot);
     if (snapshot.summary) snapshot.summary = { ...snapshot.summary, id: `${room.pin}:${room.match}:${snapshot.summary.id}` };
     member.send({
       type: "frame",
@@ -11033,16 +11137,63 @@ var RoomHub = class {
       enemies: room.engine.enemies,
       worldObjects: room.engine.worldObjects ?? [],
       events,
-      ack: member.lastSeq ?? -1
+      ack: member.lastSeq ?? -1,
+      ...room.run?.completed ? { leaderboard: { runId: room.run.id, status: room.run.status } } : {}
     });
+  }
+  recordCompletedRun(room, frameSnapshot) {
+    const run = room.run;
+    if (!room.customDeck || !room.engine || !run || run.completed || run.engine !== room.engine) return;
+    const snapshot = frameSnapshot ?? room.engine.snapshot();
+    if (snapshot.phase !== "over" || !snapshot.summary) return;
+    run.completed = true;
+    if (run.mode !== "survival") {
+      run.status = "unranked";
+      return;
+    }
+    const summary = snapshot.summary;
+    const entry = {
+      id: run.id,
+      players: [...run.players],
+      score: summary.score,
+      words: summary.words,
+      accuracy: summary.accuracy,
+      durationMs: summary.durationMs,
+      endedAt: this.now(),
+      reason: summary.reason ?? "defeat"
+    };
+    const deckId = room.customDeck.id;
+    run.status = "saving";
+    const notify = () => {
+      if (this.rooms.get(room.pin) !== room || room.run !== run || room.engine !== run.engine) return;
+      for (const member of room.members) this.sendFrame(room, member, []);
+    };
+    const persist = (attempt) => {
+      void Promise.resolve().then(() => this.customDecks.recordRun(deckId, entry)).then(() => {
+        run.status = "saved";
+        notify();
+      }).catch((error2) => {
+        if (attempt === 0 && !["deck-expired", "deck-missing"].includes(error2?.code)) {
+          const timer = setTimeout(() => persist(1), 250);
+          timer.unref?.();
+        } else {
+          run.status = "failed";
+          notify();
+        }
+      });
+    };
+    persist(0);
   }
   broadcastFrame(room) {
     if (!room.engine) return;
     const events = room.engine.drainEvents();
+    let sent = false;
     for (const member of room.members) if (member.connected) {
       if (room.pendingSeen.length) member.send({ type: room.customDeck ? "deck-seen" : "seen", words: room.pendingSeen });
       this.sendFrame(room, member, events);
+      sent = true;
     }
+    if (!sent) this.recordCompletedRun(room);
     room.pendingSeen = [];
   }
   step(delta = 25) {

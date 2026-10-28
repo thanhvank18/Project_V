@@ -1,0 +1,61 @@
+.deck-entry {
+  width: min(620px, calc(100% - 32px)); margin: clamp(24px, 10vh, 100px) auto 32px;
+  color: var(--ink); font-size: 14px; line-height: 1.6;
+}
+.deck-entry-panel, .deck-entry-board {
+  border: 18px solid transparent; border-image: var(--fantasy-panel) 20 fill / 18px;
+  padding: 24px; background: transparent;
+}
+.deck-entry h1 { margin: 0 0 24px; color: var(--accent); font-size: clamp(22px, 3vw, 30px); line-height: 1.35; overflow-wrap: anywhere; }
+.deck-entry form { display: flex; flex-direction: column; align-items: stretch; }
+.deck-entry label { margin-bottom: 8px; font-weight: 600; }
+.deck-entry input {
+  width: 100%; min-height: 48px; padding: 10px 12px; border: 1px solid #aa8656; border-radius: 2px;
+  background: #170f0b; color: var(--ink); font: inherit; font-size: 16px; caret-color: var(--accent);
+}
+.deck-entry input::placeholder { color: var(--muted); opacity: 1; }
+.deck-entry input[aria-invalid='true'] { border-color: #ed8664; }
+.deck-entry .deck-entry-hint { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+.deck-entry .deck-entry-error { margin: 8px 0 0; color: #ffc0a3; font-size: 13px; }
+.deck-entry form > .button { margin-top: 22px; }
+.deck-entry-links { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; margin-top: 14px; }
+.deck-entry-links .text-button { min-height: 44px; text-align: left; font-size: 12px; }
+.deck-entry-board { margin-top: 20px; padding: 16px; }
+.deck-leaderboard { min-width: 0; color: var(--ink); font-size: 12px; }
+.deck-leaderboard-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 12px; }
+.deck-leaderboard .deck-leaderboard-heading h3 { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--accent); font-size: 17px; line-height: 1.4; }
+.deck-leaderboard-heading .text-button { min-height: 40px; font-size: 12px; }
+.deck-leaderboard-modes { display: flex; gap: 4px; margin-top: 10px; border-bottom: 1px solid var(--line); }
+.deck-leaderboard-modes button {
+  min-height: 44px; padding: 8px 12px; border: 0; border-bottom: 2px solid transparent; border-radius: 0;
+  color: var(--muted); background: transparent; font: inherit; font-weight: 600;
+}
+.deck-leaderboard-modes button:hover { color: var(--ink); background: #3b291e; }
+.deck-leaderboard-modes button[aria-pressed='true'] { border-bottom-color: var(--accent); color: var(--accent); background: #3b291e; }
+.deck-leaderboard .deck-leaderboard-caption { margin: 10px 0 14px; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.deck-leaderboard .deck-leaderboard-status { margin: 0; padding: 20px 4px; color: var(--muted); line-height: 1.7; }
+.deck-leaderboard-status p { margin: 0 0 12px; }
+.deck-leaderboard-scroll { max-height: 320px; overflow: auto; overscroll-behavior: contain; scrollbar-color: #987044 #251a15; }
+.deck-leaderboard-scroll:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.deck-leaderboard-table { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
+.deck-leaderboard-table th, .deck-leaderboard-table td { padding: 12px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.deck-leaderboard-table thead th { position: sticky; top: 0; z-index: 1; background: #281c17; color: var(--muted); font-size: 11px; font-weight: 500; }
+.deck-leaderboard-table .deck-rank { width: 36px; padding-left: 4px; color: var(--muted); font-weight: 500; }
+.deck-leaderboard-table .deck-number { text-align: right; white-space: nowrap; }
+.deck-leaderboard-table .deck-score { color: var(--accent); font-weight: 700; }
+.deck-player-name { min-width: 80px; max-width: 210px; overflow-wrap: anywhere; font-weight: 600; }
+.deck-name-separator { color: var(--muted); font-weight: 400; }
+.deck-current-run { background: #4a3322; }
+.deck-own-run { display: block; margin-top: 4px; color: #ffe1a0; font-size: 10px; font-weight: 500; }
+.deck-mobile-stats { display: none; }
+.summary-modal .deck-leaderboard { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }
+.deck-leaderboard-modal { width: min(680px, calc(100vw - 32px)); }
+.modal .deck-result-status { margin: 12px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+@media (max-width: 560px) {
+  .deck-entry { width: calc(100% - 24px); margin-top: 24px; }
+  .deck-entry-panel, .deck-entry-board { padding: 16px 10px; border-width: 14px; border-image-width: 14px; }
+  .deck-leaderboard .deck-extra-stat { display: none; }
+  .deck-leaderboard-table th, .deck-leaderboard-table td { padding: 10px 6px; }
+  .deck-player-name { max-width: 160px; }
+  .deck-mobile-stats { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; font-weight: 400; }
+}

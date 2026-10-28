@@ -5,6 +5,7 @@ import type { Language } from '../i18n';
 import { vocabularyForLanguage } from './englishDictionary';
 import { localizeSnapshot } from './localization';
 import { customDeckWords, type CustomDeck } from './customDeck';
+import { normalizePlayerName, type DeckResultStatus } from './customDeckLeaderboard';
 import type { Enemy, EnginePort, GameEvent, ItemKind, Progress, Snapshot, Word, WorldObject } from './types';
 
 export interface RoomState {
@@ -14,6 +15,7 @@ export interface RoomState {
   error: string;
   language: Language;
   languagePending?: boolean;
+  leaderboard?: DeckResultStatus;
   customDeck?: Pick<CustomDeck, 'id' | 'title' | 'language' | 'createdAt' | 'expiresAt' | 'damageMode'> & { entryCount: number };
 }
 const SESSION_KEY = 'zvs-room-session-v1';
@@ -67,8 +69,9 @@ export class RoomClient implements EnginePort {
   private expiryTimer?: ReturnType<typeof setTimeout>;
   private sessionKey: string;
 
-  constructor(progress: Progress, private onWordSeen: (word: Word) => void, bank: readonly Word[], language: Language = 'vi', private customDeck?: CustomDeck) {
+  constructor(progress: Progress, private onWordSeen: (word: Word) => void, bank: readonly Word[], language: Language = 'vi', private customDeck?: CustomDeck, private playerName = '') {
     if (customDeck) { language = customDeck.language; bank = customDeckWords(customDeck); }
+    this.playerName = normalizePlayerName(playerName) ?? '';
     this.state = initialRoom(language); this.progress = customDeck ? freshProgress() : progress;
     this.sessionKey = customDeck ? `${SESSION_KEY}:deck:${customDeck.id}` : SESSION_KEY;
     if (customDeck) this.state.customDeck = { id: customDeck.id, title: customDeck.title, language, createdAt: customDeck.createdAt,
@@ -112,6 +115,7 @@ export class RoomClient implements EnginePort {
 
   connect(): void {
     if (!this.activeDeck()) return;
+    if (this.customDeck && !this.playerName) { this.update({ status: 'disconnected', error: 'Hãy nhập tên người chơi trước khi vào phòng.' }); return; }
     if (this.socket && (this.socket.readyState === WebSocket.OPEN || this.socket.readyState === WebSocket.CONNECTING)) return;
     this.disposed = false; clearTimeout(this.retryTimer); clearTimeout(this.timeout);
     this.motionReady = false;
@@ -124,7 +128,7 @@ export class RoomClient implements EnginePort {
     socket.onopen = () => {
       if (this.socket !== socket) return;
       this.send({ type: 'hello', resumeToken: this.resumeToken, heroId: this.preferredHero, seen: this.customDeck ? [] : [...this.seen],
-        language: this.state.language, ...(this.customDeck ? { deckId: this.customDeck.id } : {}) });
+        language: this.state.language, ...(this.customDeck ? { deckId: this.customDeck.id, playerName: this.playerName } : {}) });
     };
     socket.onmessage = event => {
       if (this.socket !== socket || this.disposed) return;
@@ -174,7 +178,7 @@ export class RoomClient implements EnginePort {
         this.local.toMenu(); this.local.setHero(hero);
         this.syncLocalSeen();
       }
-      this.update({ ...room, languagePending: this.pendingLanguage !== null }); return;
+      this.update({ ...room, ...(changedRoom || room.status === 'lobby' ? { leaderboard: undefined } : {}), languagePending: this.pendingLanguage !== null }); return;
     }
     if ((message.type === 'seen' || message.type === 'deck-seen') && Array.isArray(message.words)) {
       if (this.customDeck ? message.type !== 'deck-seen' : message.type !== 'seen') return;
@@ -228,6 +232,14 @@ export class RoomClient implements EnginePort {
       this.events.push(...frameEvents);
       if (this.events.length > 512) this.events.splice(0, this.events.length - 512);
       if (fresh.phase === 'over') { this.localPaused = false; this.movement = 0; }
+      if (this.customDeck) {
+        const status = message.leaderboard;
+        const next: DeckResultStatus | undefined = fresh.phase === 'over' && status
+          && typeof status.runId === 'string' && status.runId.length <= 64
+          && ['saving', 'saved', 'failed', 'unranked'].includes(status.status)
+          ? { runId: status.runId, status: status.status } : undefined;
+        if (next?.runId !== this.state.leaderboard?.runId || next?.status !== this.state.leaderboard?.status) this.update({ leaderboard: next });
+      }
     }
   }
 
@@ -343,7 +355,7 @@ export class RoomClient implements EnginePort {
     this.dispose(); this.remote = this.displaySnapshot = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
     this.local.toMenu(); this.local.setHero(this.preferredHero);
     this.syncLocalSeen();
-    this.update({ ...initialRoom(this.state.language), status: 'offline' }); this.watchExpiry();
+    this.update({ ...initialRoom(this.state.language), status: 'offline', leaderboard: undefined }); this.watchExpiry();
   }
   dispose(): void {
     this.disposed = true; clearInterval(this.heartbeat); clearTimeout(this.retryTimer); clearTimeout(this.timeout);
@@ -369,6 +381,6 @@ export class RoomClient implements EnginePort {
     this.dispose(); this.local.toMenu(); this.remote = this.displaySnapshot = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
     this.resumeToken = ''; this.localPaused = false;
     try { sessionStorage.removeItem(this.sessionKey); } catch { /* Storage is optional. */ }
-    this.update({ status: 'expired', players: [], pin: '', error, languagePending: false });
+    this.update({ status: 'expired', players: [], pin: '', error, languagePending: false, leaderboard: undefined });
   }
 }
