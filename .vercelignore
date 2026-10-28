@@ -4,7 +4,8 @@
 .cache/
 node_modules/
 dist/
-assets/
+/assets/
+/UI/
 new_asset/
 Dic/
 Sound/
