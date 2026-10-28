@@ -17,6 +17,8 @@ export interface RoomState {
   customDeck?: Pick<CustomDeck, 'id' | 'title' | 'language' | 'createdAt' | 'expiresAt' | 'damageMode'> & { entryCount: number };
 }
 const SESSION_KEY = 'zvs-room-session-v1';
+// Rooms broadcast at 20 Hz. Blend only the rendered coordinates between those samples.
+const FRAME_INTERVAL = 50;
 const initialRoom = (language: Language = 'vi'): RoomState => ({ status: 'connecting', pin: '', selfId: '', hostId: '', players: [], error: '', language, languagePending: false });
 const freshProgress = (): Progress => ({ highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: {} });
 
@@ -36,6 +38,11 @@ export class RoomClient implements EnginePort {
   private listeners = new Set<(room: RoomState) => void>();
   private socket: WebSocket | null = null;
   private remote: Snapshot | null = null;
+  private displaySnapshot: Snapshot | null = null;
+  private displayPlayer = { x: 0 };
+  private motionSamples: { view: { x: number }; from: number; to: number }[] = [];
+  private motionElapsed = FRAME_INTERVAL;
+  private motionReady = false;
   private remoteEnemies: Enemy[] = [];
   private remoteObjects: WorldObject[] = [];
   private events: GameEvent[] = [];
@@ -79,11 +86,11 @@ export class RoomClient implements EnginePort {
 
   get room(): RoomState { return this.state; }
   get clock(): number { return this.state.status === 'offline' ? this.local.clock : this.displayClock; }
-  get playerX(): number { return this.remote?.playerX ?? this.local.playerX; }
+  get playerX(): number { return this.remote ? this.displayPlayer.x : this.local.playerX; }
   get enemies(): Enemy[] { return this.remote ? this.remoteEnemies : this.local.enemies; }
   get targetId(): number | null { return this.remote?.target?.id ?? (this.remote ? null : this.local.targetId); }
   get worldObjects(): WorldObject[] { return this.remote ? this.remoteObjects : this.local.worldObjects; }
-  get players() { return this.remote?.party?.players ?? []; }
+  get players() { return this.displaySnapshot?.party?.players ?? []; }
 
   subscribeRoom(listener: (room: RoomState) => void): () => void {
     this.listeners.add(listener); listener(this.state);
@@ -107,6 +114,7 @@ export class RoomClient implements EnginePort {
     if (!this.activeDeck()) return;
     if (this.socket && (this.socket.readyState === WebSocket.OPEN || this.socket.readyState === WebSocket.CONNECTING)) return;
     this.disposed = false; clearTimeout(this.retryTimer); clearTimeout(this.timeout);
+    this.motionReady = false;
     this.watchExpiry();
     this.update({ status: 'connecting', error: '' });
     let socket: WebSocket;
@@ -160,7 +168,8 @@ export class RoomClient implements EnginePort {
       const hero = room.players.find(player => player.id === room.selfId)?.heroId;
       if (hero) { this.preferredHero = hero; this.pendingHero = ''; }
       if (changedRoom || room.status === 'lobby') {
-        this.remote = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
+        this.remote = this.displaySnapshot = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
+        this.motionSamples = []; this.motionReady = false;
         this.remoteClock = this.displayClock = 0; this.localPaused = false; this.movement = 0;
         this.local.toMenu(); this.local.setHero(hero);
         this.syncLocalSeen();
@@ -178,14 +187,45 @@ export class RoomClient implements EnginePort {
     }
     if (message.type === 'frame' && message.snapshot && Array.isArray(message.enemies)) {
       const fresh = message.snapshot as Snapshot;
-      if (fresh.elapsed < (this.remote?.elapsed ?? 0) || fresh.summary?.id !== this.remote?.summary?.id) this.events = [];
+      const reset = fresh.elapsed < (this.remote?.elapsed ?? 0) || fresh.summary?.id !== this.remote?.summary?.id;
+      if (reset) this.events = [];
+      const clockGap = message.clock - this.remoteClock;
+      const blend = this.motionReady && !reset && this.remote?.phase === 'playing' && fresh.phase === 'playing'
+        && clockGap > 0 && clockGap <= 250;
+      const previousEnemies = new Map(this.remoteEnemies.map(enemy => [enemy.id, enemy]));
+      const previousPlayers = new Map(this.players.map(player => [player.id, player]));
+      const frameEvents = (message.events ?? []) as GameEvent[];
+      // Charge impacts relocate the boss immediately. The scene starts its recovery at
+      // the landing position, so that coordinate must already be final when it drains events.
+      const landedEnemies = new Set(frameEvents.filter(event => event.type === 'attack-impact' && event.attackKind === 'charge')
+        .map(event => event.enemyId));
+      this.motionSamples = []; this.motionElapsed = 0;
+      const place = (view: { x: number }, from: number | undefined, to: number): void => {
+        view.x = blend && from !== undefined ? from : to;
+        if (view.x !== to) this.motionSamples.push({ view, from: view.x, to });
+      };
+      place(this.displayPlayer, this.remote && this.remote.hp > 0 && fresh.hp > 0 && this.remote.hero.id === fresh.hero.id
+        ? this.displayPlayer.x : undefined, fresh.playerX);
+      // Keep combat state and snapshot.playerX authoritative. Only party rendering gets a copy.
+      this.displaySnapshot = { ...fresh, ...(fresh.party ? { party: { ...fresh.party, players: fresh.party.players.map(player => {
+        const previous = previousPlayers.get(player.id), view = { ...player };
+        place(view, previous && previous.hp > 0 && player.hp > 0 && previous.heroId === player.heroId ? previous.x : undefined, player.x);
+        return view;
+      }) } } : {}) };
       this.remote = fresh;
-      this.remoteClock = this.displayClock = message.clock;
-      this.remoteEnemies = message.enemies.map((enemy: Enemy) => ({ ...enemy,
-        challenge: { ...enemy.challenge, credited: new Set(enemy.challenge.credited as unknown as number[]) } }));
+      this.remoteClock = message.clock;
+      this.displayClock = blend ? Math.max(this.displayClock, message.clock) : message.clock;
+      this.motionReady = fresh.phase === 'playing';
+      this.remoteEnemies = message.enemies.map((enemy: Enemy) => {
+        const previous = previousEnemies.get(enemy.id);
+        const view = { ...enemy, challenge: { ...enemy.challenge, credited: new Set(enemy.challenge.credited as unknown as number[]) } };
+        place(view, !landedEnemies.has(enemy.id) && previous?.state === 'alive' && enemy.state === 'alive'
+          && previous.hp > 0 && enemy.hp > 0 ? previous.x : undefined, enemy.x);
+        return view;
+      });
       this.remoteObjects = (message.worldObjects ?? []).map((object: WorldObject) => ({ ...object,
         ...(object.challenge ? { challenge: { ...object.challenge, credited: new Set(object.challenge.credited as unknown as number[]) } } : {}) }));
-      this.events.push(...message.events ?? []);
+      this.events.push(...frameEvents);
       if (this.events.length > 512) this.events.splice(0, this.events.length - 512);
       if (fresh.phase === 'over') { this.localPaused = false; this.movement = 0; }
     }
@@ -249,7 +289,14 @@ export class RoomClient implements EnginePort {
   step(deltaMs: number): void {
     if (!this.activeDeck()) return;
     if (this.state.status === 'offline') this.local.step(deltaMs);
-    else if (this.remote?.phase === 'playing') this.displayClock = Math.min(this.remoteClock + 50, this.displayClock + deltaMs);
+    else if (this.remote?.phase === 'playing') {
+      const dt = Math.max(0, deltaMs);
+      this.displayClock = Math.min(this.remoteClock + FRAME_INTERVAL, this.displayClock + dt);
+      this.motionElapsed = Math.min(FRAME_INTERVAL, this.motionElapsed + dt);
+      const progress = this.motionElapsed / FRAME_INTERVAL;
+      for (const sample of this.motionSamples) sample.view.x = sample.from + (sample.to - sample.from) * progress;
+      if (progress === 1) this.motionSamples.length = 0;
+    }
   }
   typeKey(key: string): void { if (!this.activeDeck()) return; if (this.state.status === 'offline') this.local.typeKey(key); else this.command({ kind: 'type', key }); }
   cycleTarget(direction = 1): void { if (!this.activeDeck()) return; if (this.state.status === 'offline') this.local.cycleTarget(direction); else this.command({ kind: 'cycle', direction: direction < 0 ? -1 : 1 }); }
@@ -278,7 +325,7 @@ export class RoomClient implements EnginePort {
   snapshot(): Snapshot {
     const snapshot = !this.remote ? this.local.snapshot()
       : (this.localPaused || this.state.status === 'disconnected' || this.state.status === 'connecting') && this.remote.phase === 'playing'
-        ? { ...this.remote, phase: 'paused' as const } : this.remote;
+        ? { ...this.displaySnapshot!, phase: 'paused' as const } : this.displaySnapshot!;
     return localizeSnapshot(snapshot, this.state.language);
   }
   drainEvents(): GameEvent[] {
@@ -293,7 +340,7 @@ export class RoomClient implements EnginePort {
   }
   playOffline(): void {
     if (!this.activeDeck()) return;
-    this.dispose(); this.remote = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
+    this.dispose(); this.remote = this.displaySnapshot = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
     this.local.toMenu(); this.local.setHero(this.preferredHero);
     this.syncLocalSeen();
     this.update({ ...initialRoom(this.state.language), status: 'offline' }); this.watchExpiry();
@@ -302,6 +349,7 @@ export class RoomClient implements EnginePort {
     this.disposed = true; clearInterval(this.heartbeat); clearTimeout(this.retryTimer); clearTimeout(this.timeout);
     clearTimeout(this.expiryTimer);
     this.socket?.close(); this.socket = null; this.movement = 0;
+    this.motionSamples = []; this.motionReady = false;
   }
   private syncLocalSeen(): void {
     if (this.customDeck) { this.local.setProgress(freshProgress()); return; }
@@ -318,7 +366,7 @@ export class RoomClient implements EnginePort {
     if (this.customDeck && this.activeDeck()) this.expiryTimer = setTimeout(() => this.expireDeck(), Math.max(0, this.customDeck.expiresAt - Date.now()));
   }
   private expireDeck(error = 'Liên kết bộ từ đã hết hạn sau 24 giờ.'): void {
-    this.dispose(); this.local.toMenu(); this.remote = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
+    this.dispose(); this.local.toMenu(); this.remote = this.displaySnapshot = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
     this.resumeToken = ''; this.localPaused = false;
     try { sessionStorage.removeItem(this.sessionKey); } catch { /* Storage is optional. */ }
     this.update({ status: 'expired', players: [], pin: '', error, languagePending: false });

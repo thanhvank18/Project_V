@@ -1,16 +1,19 @@
 import type Phaser from 'phaser';
-import { DISTRICTS, WORLD_WIDTH } from './worldLayout';
+import { DISTRICTS, VIEW_WIDTH, WORLD_WIDTH } from './worldLayout';
 import { localizeText, type Language } from '../i18n';
 
 /** One continuous road, with overlapping scenery rather than scene swaps. */
 export function createWorldBackdrop(scene: Phaser.Scene, language: Language = 'vi', registerLabel?: (label: Phaser.GameObjects.Text, source: string) => void): Phaser.GameObjects.Container {
   const root = scene.add.container(0, 0);
+  const surfaces: Phaser.GameObjects.Image[] = [];
   for (let i = 0; i < 5; i++) {
     // Mirroring alternate panels makes both adjoining edge pixels identical.
-    root.add(scene.add.image(i * 1280 + 640, 360, 'city').setDisplaySize(1280, 720).setFlipX(i % 2 === 1));
+    const panel = scene.add.image(i * 1280 + 640, 360, 'city').setDisplaySize(1280, 720).setFlipX(i % 2 === 1);
+    root.add(panel);
+    surfaces.push(panel);
   }
-  const g = scene.add.graphics();
-  root.add(g);
+  // Retain the source only for context restoration, never in the per-frame display list.
+  const g = scene.add.graphics().removeFromDisplayList();
   const rect = (x: number, y: number, width: number, height: number, color: number, alpha = 1) => {
     g.fillStyle(color, alpha).fillRect(Math.round(x), Math.round(y), width, height);
   };
@@ -144,5 +147,38 @@ export function createWorldBackdrop(scene: Phaser.Scene, language: Language = 'v
     root.add(label);
     registerLabel?.(label, district.name);
   }
+  const chunks: Phaser.GameObjects.RenderTexture[] = [];
+  for (let x = 0; x < WORLD_WIDTH; x += VIEW_WIDTH) {
+    const chunk = scene.add.renderTexture(x, 0, Math.min(VIEW_WIDTH, WORLD_WIDTH - x), 720).setOrigin(0);
+    // Preserve the original ordering: city panels, scenery, then live district text.
+    root.addAt(chunk, surfaces.length);
+    surfaces.push(chunk);
+    chunks.push(chunk);
+  }
+  const redraw = () => {
+    for (const chunk of chunks) chunk.clear().draw(g, -chunk.x, 0).render();
+  };
+  redraw();
+
+  // The world scrolls via its parent Container, so use transformed bounds rather than camera culling.
+  const bounds = surfaces.map(surface => surface.getBounds());
+  const cull = () => {
+    const camera = scene.cameras.main;
+    const left = camera.scrollX - 32, right = camera.scrollX + camera.width / camera.zoom + 32;
+    const top = camera.scrollY - 32, bottom = camera.scrollY + camera.height / camera.zoom + 32;
+    for (let index = 0; index < surfaces.length; index++) {
+      const box = surfaces[index].getBounds(bounds[index]);
+      surfaces[index].setVisible(box.x + box.width >= left && box.x <= right && box.y + box.height >= top && box.y <= bottom);
+    }
+  };
+  scene.events.on('prerender', cull);
+  // DynamicTexture restores its GPU resources, but its pixels must be redrawn by the owner.
+  const renderer = scene.game.renderer;
+  renderer.on('restorewebgl', redraw);
+  root.once('destroy', () => {
+    scene.events.off('prerender', cull);
+    renderer.off('restorewebgl', redraw);
+    g.destroy();
+  });
   return root;
 }

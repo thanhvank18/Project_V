@@ -26,6 +26,7 @@ class DrawNode {
   width = 0; height = 0; text = ''; texture = { key: '' }; frame = { name: '0' };
   children: DrawNode[] = []; strokeWidth = 0; strokeColor = 0; fillAlpha = 1;
   slices: number[] = [];
+  style = { color: '#b8def3' };
   setPosition(x: number, y: number): this { this.x = x; this.y = y; return this; }
   setX(x: number): this { this.x = x; return this; }
   setDepth(): this { return this; }
@@ -43,7 +44,7 @@ class DrawNode {
   setText(text: string): this { this.text = text; return this; }
   setFontSize(): this { return this; }
   setStrokeStyle(width = 0, color = 0): this { this.strokeWidth = width; this.strokeColor = color; return this; }
-  setColor(): this { return this; }
+  setColor(color: string): this { this.style.color = color; return this; }
   add(): this { return this; }
   clear(): this { return this; }
   lineStyle(): this { return this; }
@@ -101,6 +102,23 @@ function harness(heroId = 'soldier') {
 }
 
 describe('tactical and co-op Scene handoff', () => {
+  it('does not upload an unchanged reservation text texture on every display frame', () => {
+    const { scene, snapshot, addEnemy } = harness();
+    const { enemy, view } = addEnemy(ENEMY_CHARACTERS.find(character => character.enemyKind === 'normal')!);
+    const color = vi.spyOn(view.protectedLabel, 'setColor');
+    const party = { selfId: 'self', players: [
+      { id: 'self', heroId: 'soldier', x: 640, hp: 100, targetId: null },
+      { id: 'peer', heroId: 'wizard', x: 950, hp: 80, targetId: enemy.id },
+    ] };
+    for (let frame = 0; frame < 60; frame++) scene['renderEnemies'](snapshot({ party }));
+    expect(color).toHaveBeenCalledTimes(1);
+    expect(view.protectedLabel.text).toContain('đang khóa');
+    scene['renderEnemies'](snapshot());
+    expect(color).toHaveBeenCalledTimes(2);
+    expect(color).toHaveBeenLastCalledWith('#b8def3');
+    expect(view.protectedLabel.text).toBe('Được khiên che chắn');
+  });
+
   it('preloads the FantasyUI frame and keeps enemy and world labels within their existing footprint', () => {
     const { scene, addEnemy } = harness();
     const image = vi.fn();

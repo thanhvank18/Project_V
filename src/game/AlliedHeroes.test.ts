@@ -8,6 +8,7 @@ import type { PartyPlayer } from './types';
 
 class Node {
   x = 0; y = 0; flipX = false; alpha = 1; text = ''; color = ''; key = ''; frame = 0; destroyed = false; scale = 1;
+  style = { color: '' }; colorUpdates = 0;
   setDepth(): this { return this; } setOrigin(): this { return this; }
   setScale(scale: number): this { this.scale = scale; return this; }
   setPosition(x: number, y: number): this { this.x = x; this.y = y; return this; }
@@ -15,7 +16,7 @@ class Node {
   setFlipX(flip: boolean): this { this.flipX = flip; return this; }
   setAlpha(alpha: number): this { this.alpha = alpha; return this; }
   setText(text: string): this { this.text = text; return this; }
-  setColor(color: string): this { this.color = color; return this; }
+  setColor(color: string): this { this.color = this.style.color = color; this.colorUpdates++; return this; }
   destroy(): void { this.destroyed = true; }
 }
 function harness() {
@@ -30,6 +31,20 @@ function harness() {
 const players = (): PartyPlayer[] => [{ id: 'self', heroId: 'soldier', x: 600, hp: 100, targetId: null }, { id: 'peer', name: 'Bạn B', heroId: 'wizard', x: 900, hp: 80, targetId: 3 }];
 
 describe('allied native actors', () => {
+  it('repaints label color only when party order changes while keeping health text current', () => {
+    const h = harness(), party = players();
+    h.effects.render(party, 'self', 1000);
+    const initialColor = h.labels[0].color;
+    for (let frame = 1; frame <= 60; frame++) h.effects.render(party, 'self', 1000 + frame * 16);
+    expect(h.labels[0].colorUpdates).toBe(1);
+    party[1].hp = 75;
+    h.effects.render(party, 'self', 2000);
+    expect(h.labels[0].text).toBe('Bạn B · 75 HP');
+    expect(h.labels[0].colorUpdates).toBe(1);
+    h.effects.render([...party].reverse(), 'self', 2100);
+    expect(h.labels[0].colorUpdates).toBe(2);
+    expect(h.labels[0].color).not.toBe(initialColor);
+  });
   it('localizes an existing downed ally and generated name without recreating its sprite', () => {
     const h = harness(), party = players();
     party[1].hp = 0; party[1].name = 'Người chơi 2';

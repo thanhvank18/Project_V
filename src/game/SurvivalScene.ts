@@ -18,6 +18,7 @@ import { CHARGE_RADIUS, RANGED_RADIUS } from './tacticalRules';
 import { PART_OF_SPEECH_LABELS } from './vocabulary';
 import type { Enemy, EnginePort, GameEvent, ItemKind, Snapshot, WorldObject } from './types';
 import { localizeText, type Language } from '../i18n';
+import { attachPerformanceMonitor } from './performanceMonitor';
 
 export interface RenderOptions { reducedMotion: boolean; muted: boolean; heroId?: string; musicVolume?: number; sfxVolume?: number; language?: Language }
 interface Action { key: string; start: number; until: number; offset: number; priority: boolean; hold: boolean }
@@ -510,8 +511,11 @@ export class SurvivalScene extends Phaser.Scene {
       const visibleHint = target ? snapshot.target?.hint ?? ''
         : enemy.challenge.kind === 'hint' || enemy.challenge.kind === 'translate' ? enemy.challenge.hint : '';
       const owner = snapshot.party?.players.find(player => player.id !== snapshot.party!.selfId && player.hp > 0 && player.connected !== false && player.targetId === enemy.id);
-      if (owner) view.protectedLabel.setVisible(onscreen).setText(this.text(`${partyName(owner, this.options.language)} đang khóa`, `Claimed by ${partyName(owner, this.options.language)}`)).setColor(`#${partyColor(snapshot.party!.players, owner.id).toString(16).padStart(6, '0')}`);
-      else view.protectedLabel.setText(this.text('Được khiên che chắn', 'Protected by a shield')).setColor('#b8def3');
+      if (owner) view.protectedLabel.setVisible(onscreen).setText(this.text(`${partyName(owner, this.options.language)} đang khóa`, `Claimed by ${partyName(owner, this.options.language)}`));
+      else view.protectedLabel.setText(this.text('Được khiên che chắn', 'Protected by a shield'));
+      const claimColor = owner ? `#${partyColor(snapshot.party!.players, owner.id).toString(16).padStart(6, '0')}` : '#b8def3';
+      // Phaser setColor rerasterizes the canvas even when the color is unchanged.
+      if (view.protectedLabel.style.color !== claimColor) view.protectedLabel.setColor(claimColor);
       const content = `${this.options.language}|${enemy.challenge.prompt}|${visibleHint}|${word.meaning}|${word.partOfSpeech}|${enemy.hp}|${target}|${enemy.bossPhase}|${enemy.role}|${owner?.id}`;
       if (content !== view.lastText) {
         view.lastText = content;
@@ -1039,6 +1043,7 @@ export async function createGame(parent: HTMLElement, engine: EnginePort, onSnap
     audio: { noAudio: true },
   });
   await ready;
+  attachPerformanceMonitor(game, parent, () => `${engine.snapshot().phase} · ${engine.enemies.length} enemies`);
   game.canvas.setAttribute('aria-hidden', 'true');
   return { game, setOptions: next => scene.setOptions(next), nextTrack: () => scene.nextTrack() };
 }

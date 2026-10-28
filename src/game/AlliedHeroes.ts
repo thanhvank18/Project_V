@@ -68,7 +68,9 @@ export class AlliedHeroes {
       view.sprite.setTexture(key, spriteFrame(key, elapsed)).setOrigin(character.originX, character.originY).setScale(character.displayScale)
         .setPosition(player.x, ground).setFlipX(view.facing < 0).setAlpha(player.hp <= 0 ? .45 : player.connected === false ? .55 : 1);
       view.shadow.setPosition(player.x, ground + 3).setAlpha(player.hp <= 0 ? .2 : .5);
-      view.label.setPosition(player.x, ground + 35).setColor(`#${partyColor(players, player.id).toString(16).padStart(6, '0')}`)
+      const color = `#${partyColor(players, player.id).toString(16).padStart(6, '0')}`;
+      if (view.label.style.color !== color) view.label.setColor(color);
+      view.label.setPosition(player.x, ground + 35)
         .setText(`${partyName(player, language)} · ${player.hp <= 0 ? language === 'en' ? 'DOWN' : 'GỤC' : `${Math.ceil(player.hp)} HP`}`);
     }
   }

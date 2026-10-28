@@ -1,9 +1,10 @@
+import { memo } from 'react';
 import type { Snapshot } from '../game/types';
 import { useLanguage } from './LanguageContext';
 import { getHealthHearts } from './healthHearts';
 import './health-hearts.css';
 
-export function HeartRow({ hp, maxHp, compact = false }: { hp: number; maxHp: number; compact?: boolean }) {
+export const HeartRow = memo(function HeartRow({ hp, maxHp, compact = false }: { hp: number; maxHp: number; compact?: boolean }) {
   const { t } = useLanguage();
   const { health, maximum, hearts } = getHealthHearts(hp, maxHp);
   const healthText = `${Math.ceil(health)} / ${maximum} HP`;
@@ -13,16 +14,16 @@ export function HeartRow({ hp, maxHp, compact = false }: { hp: number; maxHp: nu
       <span className="heart-fill" style={{ width: `${Math.round(fill * 10000) / 100}%` }}><img className="heart-sprite" src="/assets/ui/fantasy/heart-full.png" alt="" draggable={false} /></span>
     </span>)}
   </div>;
-}
+});
 
-export function HealthMeter({ hp, maxHp }: { hp: number; maxHp: number }) {
+export const HealthMeter = memo(function HealthMeter({ hp, maxHp }: { hp: number; maxHp: number }) {
   const { t } = useLanguage();
   const { critical } = getHealthHearts(hp, maxHp);
   return <div className={`health-block${critical ? ' critical' : ''}`}>
     <div className="health-title"><span>{t('SỨC KHỎE')}</span></div>
     <HeartRow hp={hp} maxHp={maxHp} />
   </div>;
-}
+});
 
 export function CombatStatus({ combat, hasTarget, active }: { combat: Snapshot['combat']; hasTarget: boolean; active: boolean }) {
   const { t } = useLanguage();

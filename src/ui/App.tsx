@@ -180,8 +180,10 @@ export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMod
     if (!customDeck) setFavoriteWarning(saveWordFavorites(next) ? '' : 'Yêu thích chỉ được giữ trong phiên này vì trình duyệt chưa lưu được.');
   }, [favorites, customDeck]);
   const onKey = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (engine.snapshot().phase !== 'playing' || panel) return;
-    if (engine.snapshot().hp <= 0 && event.key !== 'Escape') { event.preventDefault(); return; }
+    if (panel) return;
+    const current = engine.snapshot();
+    if (current.phase !== 'playing') return;
+    if (current.hp <= 0 && event.key !== 'Escape') { event.preventDefault(); return; }
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       event.preventDefault();
       if (!event.repeat) {
@@ -198,8 +200,8 @@ export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMod
     if (/^[a-z]$/i.test(event.key) || event.key === 'Backspace') { event.preventDefault(); engine.typeKey(event.key); setSnapshot(engine.snapshot()); }
   };
   const onKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (engine.snapshot().phase !== 'playing' || panel) return;
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    if (panel || engine.snapshot().phase !== 'playing') return;
     event.preventDefault();
     movementKeys.current.delete(event.key);
     const remaining = [...movementKeys.current].at(-1);

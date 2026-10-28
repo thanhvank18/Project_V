@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { RoomClient, roomSocketUrl } from './RoomClient';
 import { WORDS } from './vocabulary';
-import type { Snapshot, Word } from './types';
+import type { Enemy, Snapshot, Word } from './types';
 import type { CustomDeck } from './customDeck';
 describe('multiplayer transport endpoints', () => {
   it('uses same-origin Vite proxy locally and the public API origin on deployment', () => {
@@ -31,7 +31,7 @@ class StubSocket {
   constructor(readonly url: string) { StubSocket.instances.push(this); }
   send(value: string) { this.sent.push(JSON.parse(value)); }
   open() { this.readyState = StubSocket.OPEN; this.onopen?.(); }
-  receive(message: object) { this.onmessage?.({ data: JSON.stringify(message) }); }
+  receive(message: object) { this.onmessage?.({ data: JSON.stringify(message, (_key, value) => value instanceof Set ? [...value] : value) }); }
   close(code = 1000) { this.readyState = StubSocket.CLOSED; this.onclose?.({ code }); }
 }
 
@@ -119,6 +119,115 @@ describe('room client transitions through the public transport', () => {
     socket.receive({ type: 'frame', clock: 1000, snapshot, enemies: [], worldObjects: [], events: [] });
     return snapshot;
   }
+
+  const enemyAt = (id: number, x: number): Enemy => ({
+    id, x, kind: 'normal', side: -1, speed: 40, hp: 3, maxHp: 3, state: 'alive',
+    stunUntil: 0, immuneUntil: 0, attackUntil: 0, nextAttackAt: 0, bossPhase: 0, rage: 0,
+    challenge: { id, word: WORDS[0], kind: 'translate', prompt: 'test', hint: '', credited: new Set([0]), mistakes: 0, assisted: false },
+  });
+  function positions(socket: StubSocket, port: RoomClient, clock: number, x: number, enemies: Enemy[] = [], overrides: Partial<Snapshot> = {}) {
+    const snapshot: Snapshot = { ...port.snapshot(), phase: 'playing', elapsed: clock, playerX: x,
+      party: { selfId: 'self', players: members.map((member, index) => ({ ...member, x: x + index * 80, hp: 100, targetId: null })) },
+      ...overrides };
+    socket.receive({ type: 'frame', clock, snapshot, enemies, worldObjects: [], events: [] });
+    return snapshot;
+  }
+
+  it('renders 20 Hz positions smoothly while accepting combat state and event coordinates immediately', () => {
+    const port = client(); port.connect(); const socket = StubSocket.instances[0]; socket.open(); acknowledge(socket, port);
+    positions(socket, port, 1000, 600, [enemyAt(1, 950)]);
+    const target = { id: 1, kind: 'normal' as const, prompt: 'test', hint: '', type: 'translate' as const,
+      length: 4, meaning: 'test', partOfSpeech: 'noun' as const, difficulty: 1 as const };
+    const authoritative = positions(socket, port, 1050, 630, [enemyAt(1, 920)], { hp: 40, target, input: 't', locked: true });
+    expect(port.playerX).toBe(600); expect(port.enemies[0].x).toBe(950);
+    expect(port.snapshot()).toMatchObject({ playerX: 630, hp: 40, target, input: 't', locked: true });
+    expect(port.targetId).toBe(1);
+    port.step(25);
+    expect(port.playerX).toBe(615); expect(port.enemies[0].x).toBe(935);
+    expect(port.snapshot().party!.players.map(player => player.x)).toEqual([615, 695]);
+    expect(authoritative.party!.players.map(player => player.x)).toEqual([630, 710]);
+    expect(port.enemies[0].challenge.credited.has(0)).toBe(true);
+    port.step(25);
+    expect(port.playerX).toBe(630); expect(port.enemies[0].x).toBe(920);
+    const event = { type: 'attack-impact', x: 920, targetX: 630, hit: true, damage: 24 };
+    socket.receive({ type: 'frame', clock: 1100, snapshot: { ...authoritative, elapsed: 1100 }, enemies: [], events: [event] });
+    expect(port.drainEvents()).toEqual([event]);
+  });
+
+  it('retargets an early packet from the displayed position and holds at the last server position without extrapolating', () => {
+    const port = client(); port.connect(); const socket = StubSocket.instances[0]; socket.open(); acknowledge(socket, port);
+    positions(socket, port, 1000, 600, [enemyAt(1, 950)]);
+    positions(socket, port, 1050, 630, [enemyAt(1, 920)]); port.step(25);
+    positions(socket, port, 1075, 660, [enemyAt(1, 890)]);
+    expect(port.playerX).toBe(615); expect(port.enemies[0].x).toBe(935);
+    port.step(25);
+    expect(port.playerX).toBe(637.5); expect(port.enemies[0].x).toBe(912.5);
+    port.step(1000);
+    expect(port.playerX).toBe(660); expect(port.enemies[0].x).toBe(890);
+    port.step(1000);
+    expect(port.playerX).toBe(660); expect(port.enemies[0].x).toBe(890);
+  });
+
+  it('snaps spawns and defeated actors and removes enemies on the authoritative frame', () => {
+    const port = client(); port.connect(); const socket = StubSocket.instances[0]; socket.open(); acknowledge(socket, port);
+    positions(socket, port, 1000, 600, [enemyAt(1, 950)]);
+    positions(socket, port, 1050, 630, [{ ...enemyAt(1, 920), state: 'resolving', hp: 0 }, enemyAt(2, 1100)],
+      { hp: 0, party: { selfId: 'self', players: [{ ...members[0], x: 630, hp: 0, targetId: null }] } });
+    expect(port.playerX).toBe(630); expect(port.snapshot().party!.players[0].x).toBe(630);
+    expect(port.enemies.map(enemy => enemy.x)).toEqual([920, 1100]);
+    positions(socket, port, 1100, 630, [enemyAt(2, 1090)]);
+    expect(port.enemies.map(enemy => enemy.id)).toEqual([2]);
+  });
+
+  it('lands a boss charge immediately before delivering its impact while other actors keep interpolating', () => {
+    const port = client(); port.connect(); const socket = StubSocket.instances[0]; socket.open(); acknowledge(socket, port);
+    const bossAt = (x: number): Enemy => ({ ...enemyAt(1, x), kind: 'tank', bossPhase: 2, attackKind: 'charge' });
+    positions(socket, port, 1000, 600, [bossAt(1000), enemyAt(2, 1200)]);
+    const snapshot = positions(socket, port, 1050, 630, [bossAt(980), enemyAt(2, 1190)]);
+    port.step(25);
+    expect(port.enemies[0].x).toBe(990);
+    const impact = { type: 'attack-impact', enemyId: 1, enemyKind: 'tank', attackKind: 'charge',
+      x: 980, targetX: 600, hit: true, damage: 12, laneFrom: 980, laneTo: 600 };
+    socket.receive({ type: 'frame', clock: 1100, snapshot: { ...snapshot, elapsed: 1100 },
+      enemies: [bossAt(780), enemyAt(2, 1180)], events: [impact] });
+    expect(port.enemies[0].x).toBe(780);
+    expect(port.enemies[1].x).toBe(1195);
+    expect(port.drainEvents()).toEqual([impact]);
+    port.step(25);
+    expect(port.enemies[0].x).toBe(780); expect(port.enemies[1].x).toBe(1187.5);
+    port.step(25);
+    expect(port.enemies.map(enemy => enemy.x)).toEqual([780, 1180]);
+  });
+
+  it('snaps after a stale stream, match reset, reconnect, and final phase instead of replaying old movement', () => {
+    const port = client(); port.connect(); let socket = StubSocket.instances[0]; socket.open(); acknowledge(socket, port);
+    positions(socket, port, 1000, 600);
+    positions(socket, port, 1500, 900); expect(port.playerX).toBe(900);
+    positions(socket, port, 0, 640); expect(port.playerX).toBe(640); expect(port.clock).toBe(0);
+    positions(socket, port, 50, 660, [], { phase: 'over' }); expect(port.playerX).toBe(660);
+    positions(socket, port, 100, 680); expect(port.playerX).toBe(680);
+    socket.close(1006); port.connect(); socket = StubSocket.instances[1]; socket.open();
+    positions(socket, port, 150, 720); expect(port.playerX).toBe(720);
+    socket.receive({ type: 'room', room: { status: 'lobby', pin: '123456', selfId: 'self', hostId: 'self', players: members, error: '' } });
+    expect(port.players).toEqual([]); expect(port.enemies).toEqual([]);
+  });
+
+  it('continues interpolating the shared world during a local pause without sending gameplay commands', () => {
+    const port = client(); port.connect(); const socket = StubSocket.instances[0]; socket.open(); acknowledge(socket, port);
+    positions(socket, port, 1000, 600, [enemyAt(1, 950)]); port.pause();
+    const commands = socket.sent.length;
+    positions(socket, port, 1050, 630, [enemyAt(1, 920)]); port.step(25); port.typeKey('a');
+    expect(port.snapshot().phase).toBe('paused'); expect(port.playerX).toBe(615); expect(port.enemies[0].x).toBe(935);
+    expect(socket.sent).toHaveLength(commands);
+  });
+
+  it('keeps the render clock monotonic when a server interval arrives slightly early', () => {
+    const port = client(); port.connect(); const socket = StubSocket.instances[0]; socket.open(); acknowledge(socket, port);
+    positions(socket, port, 1000, 600); port.step(50);
+    positions(socket, port, 1048, 630);
+    expect(port.clock).toBe(1050);
+    port.step(16); expect(port.clock).toBe(1066);
+  });
 
   it('keeps the hero picked offline when opening an online room', () => {
     const port = client();
