@@ -254,7 +254,7 @@ export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMod
     </header>
 
     {(customDeck || (!playing && onCreateMode)) && <div className="custom-deck-bar">
-      {customDeck ? <div><strong>{customDeck.title}</strong><span>{t(customDeck.damageMode === 'one-hit' ? 'Một chạm là chết' : 'Có thanh máu')}</span><span>{t('Hết hạn {0}', [new Date(customDeck.expiresAt).toLocaleString(locale)])}</span></div> : <span>{t('Chơi với bộ từ của bạn')}</span>}
+      {customDeck ? <div><strong>{customDeck.title}</strong><span>{t(customDeck.damageMode === 'one-hit' ? 'Một chạm là chết' : 'Máu bằng trái tim')}</span><span>{t('Hết hạn {0}', [new Date(customDeck.expiresAt).toLocaleString(locale)])}</span></div> : <span>{t('Chơi với bộ từ của bạn')}</span>}
       <div>{customDeck && <a href={location.pathname}>{t('Về game chính')}</a>}{!playing && onCreateMode && <button className="text-button" onClick={onCreateMode}>{t('Tạo bộ câu hỏi')}</button>}</div>
     </div>}
 

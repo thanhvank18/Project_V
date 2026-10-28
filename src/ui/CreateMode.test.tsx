@@ -67,7 +67,7 @@ describe('custom word pack editor', () => {
       expect(markup).toContain(locale === 'vi' ? '<strong>Một chạm là chết</strong>' : '<strong>One hit, game over</strong>');
     }
     const legacy = renderToStaticMarkup(<LanguageProvider><CreatedDeckPanel deck={deck} shareUrl="https://game.example/?deck=abc" onClose={() => {}} onPlay={() => {}} /></LanguageProvider>);
-    expect(legacy).toContain('<strong>Health bar</strong>');
+    expect(legacy).toContain('<strong>Hearts</strong>');
   });
 
   it('translates row validation and preserves the referenced duplicate row number', () => {

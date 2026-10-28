@@ -36,7 +36,7 @@ Co-op hiện chạy một replica Railway, phòng nằm trong RAM và mất khi 
 
 ## Brand Commitments
 
-Cute Zombie Arcade, pixel art, nền thành phố xanh than và HUD đọc chữ rõ. Từ 25/10/2026, nhân vật dùng toàn bộ hai pack Tiny RPG Full trong new_asset: 9 anh hùng có thể chọn và 33 quái vật, giữ palette/animation gốc. Tài liệu nền: GAME_DESIGN.md, ART_DIRECTION.md, ANIMATION_SPEC.md và CHARACTER_ROSTER.md. Registry hiện tại ở src/game/characterCatalog.generated.json; các bộ nhân vật trước đó là tư liệu cũ.
+Cute Zombie Arcade, pixel art, nền thành phố xanh than và HUD đọc chữ rõ. Từ 28/10/2026, toàn bộ giao diện dùng FantasyUI do người dùng cung cấp: khung vàng, nền da nâu, nút gỗ và chữ kem; gồm menu, sảnh co-op, chọn anh hùng, HUD, nhãn từ trên quái, cửa sổ phụ và Create Mode. Máu anh hùng hiển thị bằng tim: 100 HP là 5 tim, 150 HP là 7 tim, chế độ một chạm là 1 tim; tim vơi theo tỷ lệ HP thực, không thay đổi cân bằng sát thương. Từ 25/10/2026, nhân vật dùng toàn bộ hai pack Tiny RPG Full trong new_asset: 9 anh hùng có thể chọn và 33 quái vật, giữ palette/animation gốc. Tài liệu nền: GAME_DESIGN.md, ART_DIRECTION.md, ANIMATION_SPEC.md, CHARACTER_ROSTER.md và FANTASY_UI.md. Registry hiện tại ở src/game/characterCatalog.generated.json; các bộ nhân vật trước đó là tư liệu cũ.
 
 Mỗi anh hùng có kiểu tấn công và kỹ năng riêng theo vũ khí/phép của mình. Kỹ năng tự tích bằng ký tự đúng mới; không tự giải từ hoặc dùng súng chung cho mọi nhân vật.
 
@@ -44,7 +44,7 @@ Cập nhật 27/10/2026: năm anh hùng cận chiến (Armored Axeman, Knight, K
 
 Nhân vật hiển thị ở 85% kích thước trước đó. Kho từ chia 10 bậc học ước lượng từ dễ đến khó và có bộ lọc từ loại/bậc trong sổ từ. Mỗi trận bắt đầu bậc 1; cứ 20 từ hoàn thành tăng một bậc, tối đa bậc 10. Trong co-op, tiến độ này tính theo số từ hoàn thành của cả đội. Lịch sử tránh lặp vẫn cộng dồn qua các trận; khi một bậc hết từ mới, chọn từ ở bậc khả dụng tiếp theo theo quy tắc trong GAME_DESIGN.md.
 
-Menu giữ gọn, ưu tiên vào trận, phòng cùng bạn và chọn anh hùng; hướng dẫn chi tiết nằm trong Cách chơi. VI/EN là điều khiển ngắn ở đầu trang, không bổ sung bảng thống kê nguồn hoặc lời giải thích dài vào menu. Các tính năng mới tiếp tục dùng thế giới pixel art, nền xanh than, chữ kem và nhấn vàng đã chốt.
+Menu giữ gọn, ưu tiên vào trận, phòng cùng bạn và chọn anh hùng; hướng dẫn chi tiết nằm trong Cách chơi. VI/EN là điều khiển ngắn ở đầu trang, không bổ sung bảng thống kê nguồn hoặc lời giải thích dài vào menu. Các tính năng mới tiếp tục dùng thế giới pixel art; cảnh nền giữ palette gốc, còn giao diện theo FantasyUI nâu/vàng, chữ kem trong DESIGN.md.
 
 ## Accessibility & Inclusion
 

@@ -1,0 +1,264 @@
+{
+  "source": "User-provided FantasyUI",
+  "sourceSize": {
+    "width": 1024,
+    "height": 1560
+  },
+  "license": "No license or attribution file was included in the supplied folder. Preserve the original pack license outside this extracted subset.",
+  "extraction": "Lossless integer-coordinate crops, original RGBA pixels, transparent borders trimmed, no resampling.",
+  "assets": [
+    {
+      "file": "heart-full.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 919,
+        "y": 43,
+        "width": 18,
+        "height": 15
+      },
+      "nineSlice": 0
+    },
+    {
+      "file": "heart-half.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 951,
+        "y": 43,
+        "width": 18,
+        "height": 15
+      },
+      "nineSlice": 0
+    },
+    {
+      "file": "heart-empty.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 983,
+        "y": 43,
+        "width": 18,
+        "height": 15
+      },
+      "nineSlice": 0
+    },
+    {
+      "file": "panel-gold.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 712,
+        "y": 571,
+        "width": 76,
+        "height": 93
+      },
+      "nineSlice": 20
+    },
+    {
+      "file": "panel-red.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 616,
+        "y": 571,
+        "width": 76,
+        "height": 94
+      },
+      "nineSlice": 20
+    },
+    {
+      "file": "panel-purple.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 528,
+        "y": 572,
+        "width": 76,
+        "height": 94
+      },
+      "nineSlice": 20
+    },
+    {
+      "file": "panel-wide.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 912,
+        "y": 578,
+        "width": 112,
+        "height": 78
+      },
+      "nineSlice": 20
+    },
+    {
+      "file": "panel-square.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 812,
+        "y": 577,
+        "width": 76,
+        "height": 78
+      },
+      "nineSlice": 20
+    },
+    {
+      "file": "panel-ornate.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 532,
+        "y": 448,
+        "width": 116,
+        "height": 104
+      },
+      "nineSlice": 28
+    },
+    {
+      "file": "panel-ornate-purple.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 674,
+        "y": 448,
+        "width": 116,
+        "height": 104
+      },
+      "nineSlice": 28
+    },
+    {
+      "file": "button-dark.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 322,
+        "y": 6,
+        "width": 92,
+        "height": 36
+      },
+      "nineSlice": 6
+    },
+    {
+      "file": "button-wood.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 5,
+        "y": 814,
+        "width": 119,
+        "height": 35
+      },
+      "nineSlice": 8
+    },
+    {
+      "file": "button-wood-large.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 5,
+        "y": 750,
+        "width": 119,
+        "height": 51
+      },
+      "nineSlice": 8
+    },
+    {
+      "file": "panel-wood.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 244,
+        "y": 488,
+        "width": 68,
+        "height": 86
+      },
+      "nineSlice": 12
+    },
+    {
+      "file": "parchment.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 10,
+        "y": 1217,
+        "width": 144,
+        "height": 94
+      },
+      "nineSlice": 14
+    },
+    {
+      "file": "gem-amber.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 290,
+        "y": 242,
+        "width": 29,
+        "height": 28
+      },
+      "nineSlice": 0
+    },
+    {
+      "file": "gem-blue.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 321,
+        "y": 242,
+        "width": 29,
+        "height": 28
+      },
+      "nineSlice": 0
+    },
+    {
+      "file": "gem-green.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 354,
+        "y": 242,
+        "width": 29,
+        "height": 28
+      },
+      "nineSlice": 0
+    },
+    {
+      "file": "gem-red.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 386,
+        "y": 242,
+        "width": 29,
+        "height": 28
+      },
+      "nineSlice": 0
+    },
+    {
+      "file": "gem-purple.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 417,
+        "y": 242,
+        "width": 29,
+        "height": 28
+      },
+      "nineSlice": 0
+    },
+    {
+      "file": "slot-gold.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 812,
+        "y": 577,
+        "width": 76,
+        "height": 78
+      },
+      "nineSlice": 20
+    },
+    {
+      "file": "slot-selected.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 616,
+        "y": 571,
+        "width": 76,
+        "height": 94
+      },
+      "nineSlice": 20
+    },
+    {
+      "file": "leather-tile.png",
+      "source": "UI/FantasyUI/FantasyUI/fantasy.png",
+      "crop": {
+        "x": 934,
+        "y": 604,
+        "width": 32,
+        "height": 32
+      },
+      "nineSlice": 0
+    }
+  ]
+}

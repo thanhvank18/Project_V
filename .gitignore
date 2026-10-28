@@ -10,6 +10,13 @@ __pycache__/
 .serena/
 .vercel/
 assets/
+!public/assets/
+public/assets/*
+!public/assets/ui/
+public/assets/ui/*
+!public/assets/ui/fantasy/
+!public/assets/ui/fantasy/**
+UI/FantasyUI/
 new_asset/
 Sound/
 Dic/

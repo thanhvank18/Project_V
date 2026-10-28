@@ -11,6 +11,7 @@ import { loadDictionary } from './game/dictionary';
 import type { Progress, Word } from './game/types';
 import { LanguagePicker, LanguageProvider, useLanguage } from './ui/LanguageContext';
 import './ui/styles.css';
+import './ui/fantasy-ui.css';
 
 const root = createRoot(document.getElementById('root')!);
 const CreateMode = lazy(() => import('./ui/CreateMode').then(module => ({ default: module.CreateMode })));

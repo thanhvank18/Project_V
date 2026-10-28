@@ -1,0 +1,44 @@
+.heart-row {
+  --heart-size: clamp(17px, 2.1cqw, 28px);
+  --heart-gap: clamp(1px, .18cqw, 3px);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--heart-gap);
+  width: fit-content;
+  max-width: 100%;
+  line-height: 0;
+}
+
+.health-block .heart-row { margin-top: 7px; }
+.health-block .health-title { min-height: 17px; }
+
+.heart-slot {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 var(--heart-size);
+  width: var(--heart-size);
+  height: var(--heart-size);
+}
+
+.heart-sprite {
+  display: block;
+  width: var(--heart-size);
+  height: var(--heart-size);
+  max-width: none;
+  image-rendering: pixelated;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.heart-empty { opacity: .95; }
+.heart-fill { position: absolute; inset: 0 auto 0 0; overflow: hidden; transition: width 150ms ease-out; }
+.health-block.critical .health-title > span { color: #ffb2a2; }
+.heart-row--compact { --heart-size: 18px; --heart-gap: 2px; }
+.hero-combat-profile { display: flex; align-items: center; flex-wrap: wrap; gap: 7px 12px; }
+.hero-skill-description > .hero-combat-profile { color: var(--muted); font-size: clamp(11px, 1cqw, 13px); line-height: 1.5; margin-bottom: 7px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .heart-fill { transition: none; }
+}

@@ -82,6 +82,7 @@ type WorldView = Pick<EnemyView, 'label' | 'plate' | 'descriptor' | 'prompt' | '
 const PLAYER_X = 640;
 const GROUND = 490;
 const FONT = '"Be Vietnam Pro", Arial, sans-serif';
+const LABEL_PANEL_KEY = 'fantasy-label-panel';
 const KIND_COLORS = { normal: 0x94bd97, runner: 0xf8b86b, armored: 0xa5b1dc, tank: 0xff9f7b };
 const ITEM_NAMES: Record<ItemKind, string> = { health: 'Túi cứu thương', freeze: 'Đóng băng', damage: 'Cường hóa', shield: 'Gợi ý' };
 const ITEM_INDEX: Record<ItemKind, number> = { health: 0, freeze: 1, damage: 2, shield: 3 };
@@ -157,6 +158,7 @@ export class SurvivalScene extends Phaser.Scene {
       this.loadErrors.push(file.key);
     });
     preloadArt(this);
+    this.load.image(LABEL_PANEL_KEY, '/assets/ui/fantasy/button-dark.png');
   }
 
   create(): void {
@@ -374,12 +376,13 @@ export class SurvivalScene extends Phaser.Scene {
     const shadow = this.inWorld(this.add.ellipse(enemy.x, GROUND + 3, size.width, size.height, 0x07131a, 0.56).setDepth(3));
     const sprite = this.inWorld(this.add.sprite(enemy.x, GROUND, character.actions.move, 0).setOrigin(character.originX, character.originY).setScale(character.displayScale).setDepth(8).setFlipX(enemy.x > this.engine.playerX));
     const width = isBoss ? 260 : 238;
-    const plate = this.add.rectangle(0, 0, width, 106, 0x12252f, 0.97).setStrokeStyle(1, 0x6e8490, 0.65);
-    const descriptor = this.add.text(-width / 2 + 13, -43, '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#a5b8bd', resolution: 2 });
-    const prompt = this.add.text(0, -16, '', { fontFamily: FONT, fontSize: '19px', fontStyle: 'bold', color: '#f4f1df', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(0.5);
-    const meaning = this.add.text(0, 12, '', { fontFamily: FONT, fontSize: '13px', color: '#d1ded2', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(0.5);
-    const hint = this.add.text(0, 35, '', { fontFamily: FONT, fontSize: '12px', color: '#9ed6c2', align: 'center', resolution: 2 }).setOrigin(0.5);
-    const label = this.add.container(enemy.x, 290, [plate, descriptor, prompt, meaning, hint]).setDepth(20);
+    const panel = this.add.nineslice(0, 0, LABEL_PANEL_KEY, undefined, width, 106, 6, 6, 6, 6);
+    const plate = this.add.rectangle(0, 0, width, 106, 0x281a12, 0).setStrokeStyle(1, 0xbba078, 0.65);
+    const descriptor = this.add.text(-width / 2 + 13, -43, '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#dbc49c', resolution: 2 });
+    const prompt = this.add.text(0, -16, '', { fontFamily: FONT, fontSize: '19px', fontStyle: 'bold', color: '#fff0ce', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(0.5);
+    const meaning = this.add.text(0, 12, '', { fontFamily: FONT, fontSize: '13px', color: '#ead8b4', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(0.5);
+    const hint = this.add.text(0, 35, '', { fontFamily: FONT, fontSize: '12px', color: '#f6c372', align: 'center', resolution: 2 }).setOrigin(0.5);
+    const label = this.add.container(enemy.x, 290, [panel, plate, descriptor, prompt, meaning, hint]).setDepth(20);
     const protectedLabel = this.add.text(enemy.x, GROUND - (isBoss ? 207 : 128), '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#b8def3', stroke: '#172b3b', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(21).setVisible(false);
     const slamLabel = this.add.text(enemy.x, GROUND + 46, '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#ffd1a4', stroke: '#33242a', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(22).setVisible(false);
     return { character, sprite, shadow, label, plate, descriptor, prompt, meaning, hint, protectedLabel, slamLabel, action: null, born: this.visualClock, dyingAt: null, lastX: enemy.x, gaitPhase: (enemy.id * 0.381966) % 1, lastKind: enemy.kind, labelWidth: width, lastText: '', flashUntil: 0, staggerStart: 0, staggerDuration: 0, staggerDirection: 1, freezeFrame: null, attackImpactStart: -1000, recoveryLastClock: this.visualClock, attackDirection: 1, attackOrigin: enemy.x, attackDuration: isBoss ? 1500 : 500 };
@@ -528,7 +531,7 @@ export class SurvivalScene extends Phaser.Scene {
         view.meaning.y = 12;
         view.hint.y = isMeaningPrompt ? 28 : 35;
         view.plate.setStrokeStyle(target || owner ? 2 : 1, target ? 0xf6c372 : owner ? partyColor(snapshot.party!.players, owner.id) : KIND_COLORS[enemy.kind], target || owner ? 1 : 0.5);
-        view.descriptor.setColor(target ? '#f6c372' : '#a5b8bd');
+        view.descriptor.setColor(target ? '#f6c372' : '#dbc49c');
       }
       if (isBoss || enemy.role === 'shield' && enemy.hp > 1) this.drawTankShield(enemy, character);
       else if (protectedByTank) this.drawProtectedShield(enemy, character);
@@ -586,13 +589,14 @@ export class SurvivalScene extends Phaser.Scene {
 
   private createWorldView(object: WorldObject): WorldView {
     const width = 238;
-    const plate = this.add.rectangle(0, 0, width, 106, 0x12252f, .97).setStrokeStyle(2, 0xf6c372, .9);
+    const panel = this.add.nineslice(0, 0, LABEL_PANEL_KEY, undefined, width, 106, 6, 6, 6, 6);
+    const plate = this.add.rectangle(0, 0, width, 106, 0x281a12, 0).setStrokeStyle(2, 0xf6c372, .9);
     const descriptor = this.add.text(-width / 2 + 13, -43, '', { fontFamily: FONT, fontSize: '11px', color: '#f6c372', resolution: 2 });
-    const prompt = this.add.text(0, -20, '', { fontFamily: FONT, fontSize: '19px', fontStyle: 'bold', color: '#f4f1df', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(.5);
-    const meaning = this.add.text(0, 12, '', { fontFamily: FONT, fontSize: '13px', color: '#d1ded2', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(.5);
-    const hint = this.add.text(0, 35, '', { fontFamily: FONT, fontSize: '12px', color: '#9ed6c2', resolution: 2 }).setOrigin(.5);
-    const label = this.add.container(0, 292, [plate, descriptor, prompt, meaning, hint]).setDepth(20).setVisible(false);
-    const caption = this.inWorld(this.add.text(object.x, GROUND + 34, '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#d7e5ce', stroke: '#172b36', strokeThickness: 4, resolution: 2 }).setOrigin(.5).setDepth(21));
+    const prompt = this.add.text(0, -20, '', { fontFamily: FONT, fontSize: '19px', fontStyle: 'bold', color: '#fff0ce', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(.5);
+    const meaning = this.add.text(0, 12, '', { fontFamily: FONT, fontSize: '13px', color: '#ead8b4', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(.5);
+    const hint = this.add.text(0, 35, '', { fontFamily: FONT, fontSize: '12px', color: '#f6c372', resolution: 2 }).setOrigin(.5);
+    const label = this.add.container(0, 292, [panel, plate, descriptor, prompt, meaning, hint]).setDepth(20).setVisible(false);
+    const caption = this.inWorld(this.add.text(object.x, GROUND + 34, '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#ead8b4', stroke: '#281a12', strokeThickness: 4, resolution: 2 }).setOrigin(.5).setDepth(21));
     return { label, plate, descriptor, prompt, meaning, hint, caption, lastText: '' };
   }
 

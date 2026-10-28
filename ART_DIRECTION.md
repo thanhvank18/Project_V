@@ -18,7 +18,7 @@ Hướng màu được chọn; mã màu và độ tương phản cụ thể cầ
 | Nền | Xanh than, xám xanh, chi tiết tương phản thấp |
 | Nhân vật | Giữ palette gốc từng anh hùng Tiny RPG; viền chọn màu vàng ở menu |
 | Quái vật | Giữ palette và silhouette riêng trong cả hai pack |
-| Bảng câu đố | Nền xanh than đặc, chữ trắng ngà |
+| Bảng câu đố | Khung FantasyUI vàng, nền da nâu tối, chữ trắng ngà; giữ kích thước gọn để không che chiến đấu |
 | Nguy hiểm/lỗi | Đỏ san hô hoặc cam đỏ, kèm hình/âm báo |
 | Phần thưởng | Xanh ngọc, kèm biểu tượng vật phẩm |
 

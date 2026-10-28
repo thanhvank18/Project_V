@@ -17,10 +17,10 @@ Ngôn ngữ nội dung do người tạo chọn và được cố định khi ch
 
 **Luật sinh tồn** áp dụng cho toàn bộ bộ từ, cả chơi riêng và co-op:
 
-- **Có thanh máu** (mặc định): cận chiến 150 HP, đánh xa 100 HP, hồi máu theo giới hạn của anh hùng như game chính.
+- **Máu bằng trái tim** (mặc định): cận chiến 150 HP, đánh xa 100 HP, hồi máu theo giới hạn của anh hùng như game chính.
 - **Một chạm là chết**: mọi anh hùng có 1 HP; bất kỳ đòn từ quái hoặc Boss thực sự gây sát thương đều hạ người chơi. Hồi máu không thể vượt 1 HP. Trong co-op, người bị hạ theo dõi đồng đội và đội chỉ thua khi tất cả đã gục.
 
-Luật được chọn trên web, không nằm trong từng dòng CSV, và được giữ nguyên khi chia sẻ link. Bộ cũ không có trường luật dùng mặc định **Có thanh máu**. API nhận `damageMode: "health"` hoặc `damageMode: "one-hit"`.
+Luật được chọn trên web, không nằm trong từng dòng CSV, và được giữ nguyên khi chia sẻ link. Bộ cũ không có trường luật dùng mặc định **Máu bằng trái tim**. API nhận `damageMode: "health"` hoặc `damageMode: "one-hit"`.
 
 ## Dữ liệu và dạng câu hỏi
 

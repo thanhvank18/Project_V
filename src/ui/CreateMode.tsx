@@ -28,7 +28,7 @@ const ERROR_TEXT: Record<string, string> = {
   'Deck must be an object.': 'Bộ từ không đúng định dạng. Hãy kiểm tra lại dữ liệu.',
   'Title must contain 1–80 characters with no control characters.': 'Tên bộ từ cần 1–80 ký tự và không chứa ký tự điều khiển.',
   'Language must be vi or en.': 'Hãy chọn tiếng Việt hoặc tiếng Anh cho bộ từ.',
-  'Damage mode must be health or one-hit.': 'Hãy chọn luật Có thanh máu hoặc Một chạm là chết.',
+  'Damage mode must be health or one-hit.': 'Hãy chọn luật Máu bằng trái tim hoặc Một chạm là chết.',
   'Invalid quote or text after a closing quote.': 'Dấu ngoặc kép trong CSV chưa đúng. Hãy lưu lại bằng mẫu CSV.',
   'Unclosed quoted field.': 'Một ô CSV chưa đóng dấu ngoặc kép.',
   'CSV must be at most 1 MB of text.': 'File CSV không được lớn hơn 1 MB.',
@@ -66,7 +66,7 @@ export function CreatedDeckPanel({ deck, shareUrl, onPlay, onClose }: { deck: Cu
     <Check className="create-success-check" size={36} aria-hidden="true" />
     <h1 id="create-success-title">{t('Bộ từ đã sẵn sàng')}</h1>
     <p className="create-success-name">{deck.title} <span>· {t('{0} câu hỏi', [deck.entries.length])}</span></p>
-    <p className="create-success-rule">{t('Luật sinh tồn')}: <strong>{t(deck.damageMode === 'one-hit' ? 'Một chạm là chết' : 'Có thanh máu')}</strong></p>
+    <p className="create-success-rule">{t('Luật sinh tồn')}: <strong>{t(deck.damageMode === 'one-hit' ? 'Một chạm là chết' : 'Máu bằng trái tim')}</strong></p>
     <label className="create-field" htmlFor="custom-share-link">{t('Link chơi bộ từ')}</label>
     <div className="create-share-row">
       <input ref={linkInput} id="custom-share-link" value={shareUrl} readOnly onFocus={event => event.currentTarget.select()} />
@@ -181,8 +181,8 @@ export function CreateMode({ onClose, onCreated }: { onClose: () => void; onCrea
           <legend className="sr-only">{t('Thông tin bộ từ')}</legend>
           <label className="create-field" htmlFor="create-title">{t('Tên bộ từ')}<input id="create-title" value={title} maxLength={80} placeholder={t('Ví dụ: Từ vựng lớp học')} onChange={event => { setTitle(event.target.value); setErrors([]); }} aria-invalid={errors.some(error => error.field === 'title') || undefined} /></label>
           <label className="create-field" htmlFor="create-language">{t('Ngôn ngữ nghĩa và câu hỏi')}<select id="create-language" value={deckLanguage} onChange={event => setDeckLanguage(event.target.value as CustomDeckInput['language'])}><option value="vi">{t('Tiếng Việt')}</option><option value="en">{t('Tiếng Anh')}</option></select></label>
-          <label className="create-field" htmlFor="create-damageMode">{t('Luật sinh tồn')}<select id="create-damageMode" value={damageMode} onChange={event => { setDamageMode(event.target.value as NonNullable<CustomDeckInput['damageMode']>); setErrors([]); }} aria-describedby="create-damage-help"><option value="health">{t('Có thanh máu')}</option><option value="one-hit">{t('Một chạm là chết')}</option></select></label>
-          <p id="create-damage-help" className="create-rule-help">{t(damageMode === 'one-hit' ? 'Mọi anh hùng có 1 HP. Bất kỳ đòn gây sát thương nào từ quái hoặc Boss đều hạ bạn; hồi máu không thể vượt 1 HP.' : 'Máu và hồi phục theo từng anh hùng: cận chiến 150 HP, đánh xa 100 HP.')}</p>
+          <label className="create-field" htmlFor="create-damageMode">{t('Luật sinh tồn')}<select id="create-damageMode" value={damageMode} onChange={event => { setDamageMode(event.target.value as NonNullable<CustomDeckInput['damageMode']>); setErrors([]); }} aria-describedby="create-damage-help"><option value="health">{t('Máu bằng trái tim')}</option><option value="one-hit">{t('Một chạm là chết')}</option></select></label>
+          <p id="create-damage-help" className="create-rule-help">{t(damageMode === 'one-hit' ? 'Mọi anh hùng có 1 HP. Bất kỳ đòn gây sát thương nào từ quái hoặc Boss đều hạ bạn; hồi máu không thể vượt 1 HP.' : 'Cận chiến có 7 tim (150 HP), đánh xa có 5 tim (100 HP). Có thể hồi máu.')}</p>
         </fieldset>
         <section className="create-questions" aria-labelledby="create-question-title">
           <div className="create-list-heading"><div><h2 id="create-question-title">{t('Câu hỏi')}</h2><p>{t('{0}/{1} câu hỏi', [rows.length, CUSTOM_DECK_MAX_ENTRIES])}</p></div>

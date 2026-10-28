@@ -2,6 +2,7 @@ import type Phaser from 'phaser';
 import { describe, expect, it, vi } from 'vitest';
 import { animationDuration, SPRITE_BY_KEY } from './assets';
 import { AttackEffects } from './attackEffects';
+import { partyColor } from './AlliedHeroes';
 import { attackAnticipationFrame, attackContactFrame, characterHitPoint, projectileOrigin, rangedShotTiming } from './characterAnimation';
 import { ENEMY_CHARACTERS, HERO_CHARACTERS, getHeroCharacter, type CharacterDefinition } from './characterCatalog';
 import { GameEngine } from './engine';
@@ -11,6 +12,8 @@ import type { Enemy, Snapshot } from './types';
 
 vi.mock('phaser', () => ({ default: {
   Scene: class {},
+  Scenes: { Events: { CREATE: 'create' } },
+  Loader: { Events: { FILE_LOAD_ERROR: 'loaderror' } },
   Math: { Clamp: (value: number, min: number, max: number) => Math.min(max, Math.max(min, value)), Linear: (a: number, b: number, t: number) => a + (b - a) * t },
 } }));
 
@@ -21,6 +24,8 @@ class DrawNode {
   x = 0; y = 0; angle = 0; scaleX = 1; scaleY = 1; originX = 0.5; originY = 0.5;
   alpha = 1; tint = 0xffffff; flipX = false; visible = true; destroyed = false;
   width = 0; height = 0; text = ''; texture = { key: '' }; frame = { name: '0' };
+  children: DrawNode[] = []; strokeWidth = 0; strokeColor = 0; fillAlpha = 1;
+  slices: number[] = [];
   setPosition(x: number, y: number): this { this.x = x; this.y = y; return this; }
   setX(x: number): this { this.x = x; return this; }
   setDepth(): this { return this; }
@@ -37,7 +42,7 @@ class DrawNode {
   setFrame(frame: number): this { this.frame.name = String(frame); return this; }
   setText(text: string): this { this.text = text; return this; }
   setFontSize(): this { return this; }
-  setStrokeStyle(): this { return this; }
+  setStrokeStyle(width = 0, color = 0): this { this.strokeWidth = width; this.strokeColor = color; return this; }
   setColor(): this { return this; }
   add(): this { return this; }
   clear(): this { return this; }
@@ -65,7 +70,11 @@ function harness(heroId = 'soldier') {
   const world = new DrawNode();
   Object.assign(scene, { add: {
     sprite, text: (x: number, y: number, text: string) => sprite(x, y).setText(text),
-    ellipse: sprite, rectangle: sprite, container: sprite, graphics: () => new DrawNode(),
+    ellipse: sprite,
+    rectangle: (x: number, y: number, width: number, height: number, _color: number, alpha = 1) => Object.assign(sprite(x, y).setDisplaySize(width, height), { fillAlpha: alpha }),
+    container: (x: number, y: number, children: DrawNode[] = []) => Object.assign(sprite(x, y), { children }),
+    nineslice: (x: number, y: number, key: string, _frame: undefined, width: number, height: number, ...slices: number[]) => Object.assign(sprite(x, y, key).setDisplaySize(width, height), { slices }),
+    graphics: () => new DrawNode(),
   } });
   scene['world'] = world as unknown as Phaser.GameObjects.Container;
   scene['hero'] = sprite(640, 490) as unknown as Phaser.GameObjects.Sprite;
@@ -92,6 +101,39 @@ function harness(heroId = 'soldier') {
 }
 
 describe('tactical and co-op Scene handoff', () => {
+  it('preloads the FantasyUI frame and keeps enemy and world labels within their existing footprint', () => {
+    const { scene, addEnemy } = harness();
+    const image = vi.fn();
+    Object.assign(scene, { load: { image, spritesheet: vi.fn(), on: vi.fn() }, events: { once: vi.fn() } });
+    scene.preload();
+    expect(image).toHaveBeenCalledWith('fantasy-label-panel', '/assets/ui/fantasy/button-dark.png');
+    const { view } = addEnemy(ENEMY_CHARACTERS.find(character => character.enemyKind === 'normal')!);
+    const worldView = scene['createWorldView']({ id: 77, kind: 'barrel', x: 900, radius: 220, state: 'active', charges: 1, progress: 0 });
+    for (const labelView of [view, worldView]) {
+      const children = (labelView.label as unknown as DrawNode).children;
+      expect(children[0]).toMatchObject({ texture: { key: 'fantasy-label-panel' }, width: 238, height: 106, slices: [6, 6, 6, 6] });
+      expect(children[1]).toBe(labelView.plate);
+      expect(children[1]).toMatchObject({ width: 238, height: 106, fillAlpha: 0 });
+      expect(children.slice(2)).toEqual([labelView.descriptor, labelView.prompt, labelView.meaning, labelView.hint]);
+    }
+  });
+
+  it('keeps selected and teammate claim outlines above the FantasyUI frame', () => {
+    const { scene, engine, snapshot, addEnemy } = harness();
+    const { enemy, view } = addEnemy(ENEMY_CHARACTERS.find(character => character.enemyKind === 'normal')!);
+    engine.targetId = enemy.id;
+    scene['renderEnemies'](snapshot());
+    expect(view.plate).toMatchObject({ strokeWidth: 2, strokeColor: 0xf6c372 });
+    engine.targetId = null;
+    const players = [
+      { id: 'self', heroId: 'soldier', x: 640, hp: 100, targetId: null },
+      { id: 'peer', heroId: 'wizard', x: 950, hp: 80, targetId: enemy.id },
+    ];
+    scene['renderEnemies'](snapshot({ party: { selfId: 'self', players } }));
+    expect(view.plate).toMatchObject({ strokeWidth: 2, strokeColor: partyColor(players, 'peer') });
+    expect(view.protectedLabel.text).toContain('đang khóa');
+  });
+
   it('bounds authored fill previews on enemies and barrels while retaining the full clue in the snapshot', () => {
     const { scene, engine, snapshot, addEnemy } = harness();
     const { enemy, view } = addEnemy(ENEMY_CHARACTERS.find(character => character.enemyKind === 'normal')!);

@@ -3,6 +3,7 @@ import { Check } from 'lucide-react';
 import { getHeroCharacter, HERO_CHARACTERS } from '../game/characterCatalog';
 import { getHeroSkill } from '../game/heroSkills';
 import { getHeroCombat } from '../game/heroCombat';
+import { HeartRow } from './CombatFeedback';
 
 export function HeroPicker({ value, onChange, taken = [], disabled = false, maxHp }: { value: string; onChange: (id: string) => void; taken?: readonly string[]; disabled?: boolean; maxHp?: number }) {
   const { t } = useLanguage();
@@ -24,7 +25,7 @@ export function HeroPicker({ value, onChange, taken = [], disabled = false, maxH
     </div>
     <div className="hero-skill-description" aria-live="polite">
       <p className="hero-current"><strong>{t(skill.name)}</strong><span>{skill.threshold}{t(" chữ đúng")}</span></p>
-      <p className="hero-combat-profile">{t('{0} · {1} HP', [t(combat.class === 'melee' ? 'Cận chiến' : 'Đánh xa'), maxHp ?? combat.maxHp])}</p>
+      <div className="hero-combat-profile"><span>{t(combat.class === 'melee' ? 'Cận chiến' : 'Đánh xa')}</span><HeartRow hp={maxHp ?? combat.maxHp} maxHp={maxHp ?? combat.maxHp} compact /></div>
       <p id="hero-picker-help">{t(skill.description)}</p>
       <p className="hero-tactics">{t(skill.tactics)}</p>
     </div>

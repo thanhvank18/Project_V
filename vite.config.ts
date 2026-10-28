@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: { '/api/rooms': { target: 'http://127.0.0.1:3001', ws: true }, '/api/custom-decks': { target: 'http://127.0.0.1:3001' } },
     // Raw art/dictionaries can be locked while copied or edited on Windows.
     // Generated runtime files in src/public still receive normal HMR.
-    watch: { ignored: ['**/zoombie1/**', '**/new_asset/**', '**/Dic/**', '**/Sound/**', '**/assets/**', '**/*.csv', '**/*.aseprite', '**/*.zip'] },
+    watch: { ignored: ['**/zoombie1/**', '**/new_asset/**', '**/UI/**', '**/Dic/**', '**/Sound/**', '**/assets/**', '**/*.csv', '**/*.aseprite', '**/*.zip'] },
   },
   build: { chunkSizeWarningLimit: 1800 },
 });
