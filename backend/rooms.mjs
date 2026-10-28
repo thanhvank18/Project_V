@@ -62,7 +62,8 @@ export class RoomHub {
   }
 
   deckMetadata(deck) {
-    return { id: deck.id, title: deck.title, language: deck.language, createdAt: deck.createdAt, expiresAt: deck.expiresAt, entryCount: deck.entries.length };
+    return { id: deck.id, title: deck.title, language: deck.language, damageMode: deck.damageMode ?? 'health',
+      createdAt: deck.createdAt, expiresAt: deck.expiresAt, entryCount: deck.entries.length };
   }
 
   getDeck(id) {
@@ -175,7 +176,7 @@ export class RoomHub {
       room.engine = new this.Engine(Math.random, { highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: seen }, word => {
         room.seenDuring.add(word.answer); room.pendingSeen.push(word.answer);
         if (!room.customDeck) for (const member of room.members) member.seen.add(word.answer);
-      }, bank);
+      }, bank, { damageMode: room.customDeck?.damageMode ?? 'health' });
       room.engine.configureParty(room.members.map(member => ({ id: member.id, name: member.name, heroId: member.heroId })));
       room.engine.start(message.mode); this.broadcastLobby(room); this.broadcastFrame(room); return;
     }

@@ -21,6 +21,10 @@ describe('custom word pack editor', () => {
       expect(markup).toContain('for="create-answer-1"');
       expect(markup).toContain('for="create-meaning-1"');
       expect(markup).toContain('for="create-language"');
+      expect(markup).toContain('for="create-damageMode"');
+      expect(markup).toContain('aria-describedby="create-damage-help"');
+      expect(markup).toContain('value="health" selected=""');
+      expect(markup).toContain(locale === 'vi' ? 'Một chạm là chết' : 'One hit, game over');
       expect(markup).toContain('accept=".csv,text/csv"');
       expect(markup).toContain('maxLength="18"');
       expect(markup).toContain('value=""');
@@ -52,6 +56,18 @@ describe('custom word pack editor', () => {
     const markup = renderToStaticMarkup(<LanguageProvider><CreatedDeckPanel deck={deck} shareUrl="https://game.example/?deck=abc" onClose={() => {}} onPlay={() => {}} /></LanguageProvider>);
     expect(markup).toContain('Link đã hết hạn và không thể chơi tiếp.');
     expect(markup).toContain('disabled="">Chơi bộ từ này');
+  });
+
+  it('shows the published survival rule in both languages and defaults legacy packs to normal health', () => {
+    vi.useFakeTimers(); vi.setSystemTime(1000);
+    for (const locale of ['vi', 'en'] as const) {
+      language(locale);
+      const markup = renderToStaticMarkup(<LanguageProvider><CreatedDeckPanel deck={{ ...deck, damageMode: 'one-hit' }} shareUrl="https://game.example/?deck=abc" onClose={() => {}} onPlay={() => {}} /></LanguageProvider>);
+      expect(markup).toContain(locale === 'vi' ? 'Luật sinh tồn' : 'Survival rule');
+      expect(markup).toContain(locale === 'vi' ? '<strong>Một chạm là chết</strong>' : '<strong>One hit, game over</strong>');
+    }
+    const legacy = renderToStaticMarkup(<LanguageProvider><CreatedDeckPanel deck={deck} shareUrl="https://game.example/?deck=abc" onClose={() => {}} onPlay={() => {}} /></LanguageProvider>);
+    expect(legacy).toContain('<strong>Health bar</strong>');
   });
 
   it('translates row validation and preserves the referenced duplicate row number', () => {

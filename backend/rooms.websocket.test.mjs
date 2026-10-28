@@ -67,7 +67,7 @@ afterEach(async () => {
 describe('real WebSocket room transport', () => {
   it('shares custom questions through real sockets and closes all peers when the link expires', async () => {
     let now = Date.now();
-    const deck = { id: 'a'.repeat(32), title: 'Our pack', language: 'en', createdAt: now, expiresAt: now + 86_400_000,
+    const deck = { id: 'a'.repeat(32), title: 'Our pack', language: 'en', damageMode: 'one-hit', createdAt: now, expiresAt: now + 86_400_000,
       entries: [{ answer: 'water', meaning: 'A clear liquid.', partOfSpeech: 'noun', level: 1, type: 'fill', sentence: 'I drink ___.' },
         { answer: 'apple', meaning: 'A round fruit.', partOfSpeech: 'noun', level: 1, type: 'translate' }] };
     const { connect, runtime } = await fixture({ now: () => now, customDecks: { get: () => structuredClone(deck) } });
@@ -78,6 +78,8 @@ describe('real WebSocket room transport', () => {
     await guest.wait(message => message.type === 'room' && message.room.players.length === 2);
     host.send({ type: 'start', mode: 'survival' });
     const [a, b] = await Promise.all([host, guest].map(peer => peer.wait(message => message.type === 'frame')));
+    expect(host.room.customDeck.damageMode).toBe('one-hit');
+    expect(a.snapshot).toMatchObject({ hp: 1, maxHp: 1 }); expect(b.snapshot).toMatchObject({ hp: 1, maxHp: 1 });
     expect(a.snapshot.target.id).not.toBe(b.snapshot.target.id);
     expect(a.enemies.map(enemy => enemy.challenge.word.answer).sort()).toEqual(['apple', 'water']);
     expect(a.enemies.find(enemy => enemy.challenge.word.answer === 'water').challenge).toMatchObject({ kind: 'fill', prompt: 'I drink ___.' });

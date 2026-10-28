@@ -546,5 +546,12 @@
   "Dữ liệu JSON chưa hợp lệ.": "The JSON data is invalid.",
   "Bạn tạo bộ từ quá nhanh. Hãy thử lại sau.": "You are creating word packs too quickly. Try again later.",
   "Không lưu được bộ từ. Hãy thử lại.": "Could not save the word pack. Try again.",
-  "Yêu cầu đã bị hủy.": "The request was canceled."
+  "Yêu cầu đã bị hủy.": "The request was canceled.",
+  "Luật sinh tồn": "Survival rule",
+  "Có thanh máu": "Health bar",
+  "Một chạm là chết": "One hit, game over",
+  "Mọi anh hùng có 1 HP. Bất kỳ đòn gây sát thương nào từ quái hoặc Boss đều hạ bạn; hồi máu không thể vượt 1 HP.": "Every hero has 1 HP. Any damaging hit from a monster or Boss defeats you; healing cannot exceed 1 HP.",
+  "Máu và hồi phục theo từng anh hùng: cận chiến 150 HP, đánh xa 100 HP.": "Each hero uses their normal health and healing: melee 150 HP, ranged 100 HP.",
+  "Hãy chọn luật Có thanh máu hoặc Một chạm là chết.": "Choose Health bar or One hit, game over.",
+  "{0} đã cầm cự {1}. Bạn có thể chơi lại bộ câu hỏi này.": "{0} survived {1}. You can replay this word pack."
 }

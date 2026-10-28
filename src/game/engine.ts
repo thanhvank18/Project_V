@@ -1,6 +1,6 @@
 import type {
   AttackImpactEvent, AttackTelegraphEvent, Challenge, ChallengeKind, Enemy, EnemyKind, EnginePort, GameEvent, HeroSkillEvent, ItemKind, Phase,
-  Progress, RunSummary, Snapshot, Word, WordResult, WorldObject, EnemyRole, PartyMember, PartyPlayer,
+  Progress, RunSummary, Snapshot, Word, WordResult, WorldObject, EnemyRole, PartyMember, PartyPlayer, DamageMode,
 } from './types';
 import { answersFor, createChallenge, lootChanceFor, WORDS } from './vocabulary';
 import { cameraTarget, VIEW_WIDTH, WORLD_WIDTH } from './worldLayout';
@@ -23,6 +23,7 @@ export const ENEMY_SPEED: Record<EnemyKind, number> = { normal: 14, runner: 33, 
 const KINDS: ChallengeKind[] = ['scramble', 'missing', 'translate', 'hint'];
 interface Projectile { shotId: number; enemyId: number; challengeId: number; index: number; firedAt: number; due: number; final: boolean; glyph: string; effective: boolean; ownerId?: string }
 type CombatTarget = Enemy | { id: number; kind: 'barrel'; x: number; challenge: Challenge };
+export interface GameEngineOptions { damageMode?: DamageMode }
 
 /** A nearer Tank shields everything farther away on its side, including other Tanks. */
 export function canTargetEnemy(enemies: Enemy[], candidate: Enemy, playerX = PLAYER_X): boolean {
@@ -41,6 +42,7 @@ export class GameEngine implements EnginePort {
   private phase: Phase = 'menu';
   private movement: -1 | 0 | 1 = 0;
   private hp = 100;
+  private readonly damageMode: DamageMode;
   private score = 0;
   private combo = 0;
   private bestCombo = 0;
@@ -137,7 +139,7 @@ export class GameEngine implements EnginePort {
   get players(): readonly PartyPlayer[] {
     this.syncActor();
     return [...this.party.values()].map(actor => ({ ...actor.member, connected: actor.connected,
-      x: actor.state.playerX, hp: actor.state.hp, maxHp: getHeroCombat(actor.member.heroId).maxHp, targetId: actor.state.targetId }));
+      x: actor.state.playerX, hp: actor.state.hp, maxHp: this.playerMaxHp(actor.member.heroId), targetId: actor.state.targetId }));
   }
 
   configureParty(members: readonly PartyMember[]): void {
@@ -149,7 +151,7 @@ export class GameEngine implements EnginePort {
     }
     this.party.clear(); this.retiredActors.clear(); this.claims.clear();
     members.forEach((member, index) => this.party.set(member.id, { member: { ...member }, connected: true,
-      state: createActorState(member.heroId, PLAYER_X + (index - (members.length - 1) / 2) * 72) }));
+      state: this.newActor(member.heroId, PLAYER_X + (index - (members.length - 1) / 2) * 72) }));
     this.actorId = members[0].id;
     Object.assign(this, this.party.get(this.actorId)!.state);
   }
@@ -232,9 +234,17 @@ export class GameEngine implements EnginePort {
   }
 
   constructor(private random: () => number = Math.random, progress?: Progress,
-    private onWordSeen?: (word: Word) => void, bank: readonly Word[] = WORDS) {
+    private onWordSeen?: (word: Word) => void, bank: readonly Word[] = WORDS, options: GameEngineOptions = {}) {
+    this.damageMode = options.damageMode === 'one-hit' ? 'one-hit' : 'health';
+    this.hp = this.playerMaxHp();
     this.deck = new WordDeck(bank, random);
     if (progress) this.setProgress(progress);
+  }
+
+  private playerMaxHp(heroId = this.heroId): number { return this.damageMode === 'one-hit' ? 1 : getHeroCombat(heroId).maxHp; }
+
+  private newActor(heroId: string, x: number): ActorState {
+    return { ...createActorState(heroId, x), hp: this.playerMaxHp(heroId) };
   }
 
   /** Refresh persisted learning history before the next run without recreating the renderer. */
@@ -256,7 +266,7 @@ export class GameEngine implements EnginePort {
     const next = getHeroCharacter(id).id;
     if (next === this.heroId) return;
     this.heroId = next;
-    this.hp = getHeroCombat(next).maxHp;
+    this.hp = this.playerMaxHp(next);
     this.resetHeroSkill();
   }
 
@@ -272,7 +282,7 @@ export class GameEngine implements EnginePort {
     this.playerX = PLAYER_X;
     this.movement = 0;
     this.phase = 'playing';
-    this.hp = getHeroCombat(this.heroId).maxHp;
+    this.hp = this.playerMaxHp();
     this.clearQueuedAttack(); this.combatPaused = false;
     this.score = this.combo = this.bestCombo = this.kills = this.words = this.bossKills = 0;
     this.correctLetters = this.correctKeys = this.wrongKeys = 0;
@@ -303,7 +313,7 @@ export class GameEngine implements EnginePort {
     this.healingProgress = new Map(); this.claims.clear(); this.retiredActors.clear(); this.spawnActorSequence = 0;
     if (this.party.size) {
       [...this.party.values()].forEach((actor, index) => {
-        actor.state = createActorState(actor.member.heroId, PLAYER_X + (index - (this.party.size - 1) / 2) * 72);
+        actor.state = this.newActor(actor.member.heroId, PLAYER_X + (index - (this.party.size - 1) / 2) * 72);
       });
       this.actorId = this.party.keys().next().value!;
       Object.assign(this, this.party.get(this.actorId!)!.state);
@@ -695,7 +705,7 @@ export class GameEngine implements EnginePort {
         break;
       }
       case 'heal':
-        value = Math.min(effect.amount + (this.clock - this.lastMovedAt >= 1000 ? 3 : 0), getHeroCombat(this.heroId).maxHp - this.hp);
+        value = Math.min(effect.amount + (this.clock - this.lastMovedAt >= 1000 ? 3 : 0), this.playerMaxHp() - this.hp);
         this.hp += value;
         break;
       case 'slow':
@@ -741,8 +751,8 @@ export class GameEngine implements EnginePort {
   useItem(item: ItemKind): void {
     if (this.phase !== 'playing' || !this.inventory[item]) return;
     if (item === 'health') {
-      if (this.hp >= getHeroCombat(this.heroId).maxHp) { this.inform('HP đang đầy. Túi cứu thương được giữ lại.'); return; }
-      this.hp = Math.min(getHeroCombat(this.heroId).maxHp, this.hp + 25);
+      if (this.hp >= this.playerMaxHp()) { this.inform('HP đang đầy. Túi cứu thương được giữ lại.'); return; }
+      this.hp = Math.min(this.playerMaxHp(), this.hp + 25);
       this.inform('+25 HP');
     } else if (item === 'freeze') {
       const previousFreeze = this.freezeUntil;
@@ -784,7 +794,7 @@ export class GameEngine implements EnginePort {
     const combat = getHeroCombat(this.heroId);
     const combatTarget = this.combatTarget();
     return {
-      phase: this.phase, hp: this.hp, maxHp: combat.maxHp, playerX: this.playerX, score: this.score, combo: this.combo, bestCombo: this.bestCombo,
+      phase: this.phase, hp: this.hp, maxHp: this.playerMaxHp(), playerX: this.playerX, score: this.score, combo: this.combo, bestCombo: this.bestCombo,
       combat: { class: combat.class, range: combat.range, inRange: !!combatTarget && this.inAttackRange(combatTarget),
         approaching: !this.combatPaused && !this.movement && !!combatTarget && this.approachTargetId === combatTarget.id
           && this.queuedLetters.length > 0 && !this.inAttackRange(combatTarget), queued: this.queuedLetters.length },
@@ -851,13 +861,13 @@ export class GameEngine implements EnginePort {
         if (word) { object.challenge = this.challenge(word, 'translate'); object.state = 'active'; }
       }
       if (object.kind !== 'healing-zone' || object.state === 'used') continue;
-      if (Math.abs(object.x - this.playerX) > object.radius || this.movement || this.lastMovedAt === this.clock || this.hp >= getHeroCombat(this.heroId).maxHp
+      if (Math.abs(object.x - this.playerX) > object.radius || this.movement || this.lastMovedAt === this.clock || this.hp >= this.playerMaxHp()
         || this.clock - this.lastPlayerHurt < 1000) { this.setHealingProgress(object, 0); continue; }
       const previous = this.party.size ? this.healingProgress.get(object.id) ?? 0 : object.progress;
       const progress = Math.min(1, previous + delta / HEAL_DWELL_MS);
       this.setHealingProgress(object, progress);
       if (progress < 1) continue;
-      const value = Math.min(15, getHeroCombat(this.heroId).maxHp - this.hp);
+      const value = Math.min(15, this.playerMaxHp() - this.hp);
       this.hp += value; object.charges--; this.setHealingProgress(object, 0);
       if (!object.charges) {
         object.state = 'used';
@@ -1217,7 +1227,7 @@ export class GameEngine implements EnginePort {
     if (enemy.kind === 'tank') {
       this.bossKills++;
       this.score += 1000;
-      if (this.hp > 0) this.hp = Math.min(getHeroCombat(this.heroId).maxHp, this.hp + 20);
+      if (this.hp > 0) this.hp = Math.min(this.playerMaxHp(), this.hp + 20);
       this.nextBoss = this.clock + 180_000;
       this.emit({ type: 'boss-defeat', enemyId: enemy.id, x: enemy.x });
       this.inform('Tank đã bị hạ! +20 HP · +1000 điểm. Sinh tồn tiếp tục!', 6000);
@@ -1255,6 +1265,7 @@ export class GameEngine implements EnginePort {
       if (effect.kind === 'ward') amount = Math.round(amount * (1 - effect.reduction) * 100) / 100;
     }
     const before = this.hp;
+    if (this.damageMode === 'one-hit' && amount > 0) amount = before;
     this.hp = Math.max(0, this.hp - amount);
     const damage = before - this.hp;
     this.emit({ type: 'player-hurt', duration: 400, enemyId: source.id,

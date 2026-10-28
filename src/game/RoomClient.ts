@@ -14,7 +14,7 @@ export interface RoomState {
   error: string;
   language: Language;
   languagePending?: boolean;
-  customDeck?: Pick<CustomDeck, 'id' | 'title' | 'language' | 'createdAt' | 'expiresAt'> & { entryCount: number };
+  customDeck?: Pick<CustomDeck, 'id' | 'title' | 'language' | 'createdAt' | 'expiresAt' | 'damageMode'> & { entryCount: number };
 }
 const SESSION_KEY = 'zvs-room-session-v1';
 const initialRoom = (language: Language = 'vi'): RoomState => ({ status: 'connecting', pin: '', selfId: '', hostId: '', players: [], error: '', language, languagePending: false });
@@ -65,7 +65,7 @@ export class RoomClient implements EnginePort {
     this.state = initialRoom(language); this.progress = customDeck ? freshProgress() : progress;
     this.sessionKey = customDeck ? `${SESSION_KEY}:deck:${customDeck.id}` : SESSION_KEY;
     if (customDeck) this.state.customDeck = { id: customDeck.id, title: customDeck.title, language, createdAt: customDeck.createdAt,
-      expiresAt: customDeck.expiresAt, entryCount: customDeck.entries.length };
+      expiresAt: customDeck.expiresAt, entryCount: customDeck.entries.length, damageMode: customDeck.damageMode ?? 'health' };
     this.words = new Map(bank.map(word => [word.answer, word]));
     for (const word of bank) for (const key of historyKeysFor(word)) {
       const answers = this.historyAnswers.get(key);
@@ -215,7 +215,8 @@ export class RoomClient implements EnginePort {
   private createLocal(language: Language): GameEngine {
     const local = new GameEngine(Math.random, this.progress, word => {
       this.seen.add(word.answer); this.onWordSeen(this.words.get(word.answer) ?? word);
-    }, this.customDeck ? [...this.words.values()] : vocabularyForLanguage([...this.words.values()], language));
+    }, this.customDeck ? [...this.words.values()] : vocabularyForLanguage([...this.words.values()], language),
+    { damageMode: this.customDeck?.damageMode ?? 'health' });
     local.setHero(this.preferredHero);
     return local;
   }

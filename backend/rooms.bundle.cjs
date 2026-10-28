@@ -8934,9 +8934,11 @@ function canTargetEnemy(enemies, candidate, playerX = PLAYER_X) {
   return candidate.state === "alive" && !enemies.some((enemy) => shieldsFollowers(enemy) && enemy.id !== candidate.id && Math.sign(enemy.x - playerX) === Math.sign(candidate.x - playerX) && Math.abs(enemy.x - playerX) < Math.abs(candidate.x - playerX));
 }
 var GameEngine = class {
-  constructor(random = Math.random, progress, onWordSeen, bank = WORDS) {
+  constructor(random = Math.random, progress, onWordSeen, bank = WORDS, options = {}) {
     this.random = random;
     this.onWordSeen = onWordSeen;
+    this.damageMode = options.damageMode === "one-hit" ? "one-hit" : "health";
+    this.hp = this.playerMaxHp();
     this.deck = new WordDeck(bank, random);
     if (progress) this.setProgress(progress);
   }
@@ -8950,6 +8952,7 @@ var GameEngine = class {
   phase = "menu";
   movement = 0;
   hp = 100;
+  damageMode;
   score = 0;
   combo = 0;
   bestCombo = 0;
@@ -9069,7 +9072,7 @@ var GameEngine = class {
       connected: actor.connected,
       x: actor.state.playerX,
       hp: actor.state.hp,
-      maxHp: getHeroCombat(actor.member.heroId).maxHp,
+      maxHp: this.playerMaxHp(actor.member.heroId),
       targetId: actor.state.targetId
     }));
   }
@@ -9084,7 +9087,7 @@ var GameEngine = class {
     members.forEach((member, index) => this.party.set(member.id, {
       member: { ...member },
       connected: true,
-      state: createActorState(member.heroId, PLAYER_X + (index - (members.length - 1) / 2) * 72)
+      state: this.newActor(member.heroId, PLAYER_X + (index - (members.length - 1) / 2) * 72)
     }));
     this.actorId = members[0].id;
     Object.assign(this, this.party.get(this.actorId).state);
@@ -9165,6 +9168,12 @@ var GameEngine = class {
     });
     return damage;
   }
+  playerMaxHp(heroId = this.heroId) {
+    return this.damageMode === "one-hit" ? 1 : getHeroCombat(heroId).maxHp;
+  }
+  newActor(heroId, x) {
+    return { ...createActorState(heroId, x), hp: this.playerMaxHp(heroId) };
+  }
   /** Refresh persisted learning history before the next run without recreating the renderer. */
   setProgress(progress) {
     if (progress.words !== this.lastResultsSource) {
@@ -9182,7 +9191,7 @@ var GameEngine = class {
     const next = getHeroCharacter(id).id;
     if (next === this.heroId) return;
     this.heroId = next;
-    this.hp = getHeroCombat(next).maxHp;
+    this.hp = this.playerMaxHp(next);
     this.resetHeroSkill();
   }
   resetHeroSkill() {
@@ -9196,7 +9205,7 @@ var GameEngine = class {
     this.playerX = PLAYER_X;
     this.movement = 0;
     this.phase = "playing";
-    this.hp = getHeroCombat(this.heroId).maxHp;
+    this.hp = this.playerMaxHp();
     this.clearQueuedAttack();
     this.combatPaused = false;
     this.score = this.combo = this.bestCombo = this.kills = this.words = this.bossKills = 0;
@@ -9231,7 +9240,7 @@ var GameEngine = class {
     this.spawnActorSequence = 0;
     if (this.party.size) {
       [...this.party.values()].forEach((actor, index) => {
-        actor.state = createActorState(actor.member.heroId, PLAYER_X + (index - (this.party.size - 1) / 2) * 72);
+        actor.state = this.newActor(actor.member.heroId, PLAYER_X + (index - (this.party.size - 1) / 2) * 72);
       });
       this.actorId = this.party.keys().next().value;
       Object.assign(this, this.party.get(this.actorId).state);
@@ -9655,7 +9664,7 @@ var GameEngine = class {
         break;
       }
       case "heal":
-        value = Math.min(effect.amount + (this.clock - this.lastMovedAt >= 1e3 ? 3 : 0), getHeroCombat(this.heroId).maxHp - this.hp);
+        value = Math.min(effect.amount + (this.clock - this.lastMovedAt >= 1e3 ? 3 : 0), this.playerMaxHp() - this.hp);
         this.hp += value;
         break;
       case "slow":
@@ -9728,11 +9737,11 @@ var GameEngine = class {
   useItem(item) {
     if (this.phase !== "playing" || !this.inventory[item]) return;
     if (item === "health") {
-      if (this.hp >= getHeroCombat(this.heroId).maxHp) {
+      if (this.hp >= this.playerMaxHp()) {
         this.inform("HP \u0111ang \u0111\u1EA7y. T\xFAi c\u1EE9u th\u01B0\u01A1ng \u0111\u01B0\u1EE3c gi\u1EEF l\u1EA1i.");
         return;
       }
-      this.hp = Math.min(getHeroCombat(this.heroId).maxHp, this.hp + 25);
+      this.hp = Math.min(this.playerMaxHp(), this.hp + 25);
       this.inform("+25 HP");
     } else if (item === "freeze") {
       const previousFreeze = this.freezeUntil;
@@ -9773,7 +9782,7 @@ var GameEngine = class {
     return {
       phase: this.phase,
       hp: this.hp,
-      maxHp: combat.maxHp,
+      maxHp: this.playerMaxHp(),
       playerX: this.playerX,
       score: this.score,
       combo: this.combo,
@@ -9891,7 +9900,7 @@ var GameEngine = class {
         }
       }
       if (object2.kind !== "healing-zone" || object2.state === "used") continue;
-      if (Math.abs(object2.x - this.playerX) > object2.radius || this.movement || this.lastMovedAt === this.clock || this.hp >= getHeroCombat(this.heroId).maxHp || this.clock - this.lastPlayerHurt < 1e3) {
+      if (Math.abs(object2.x - this.playerX) > object2.radius || this.movement || this.lastMovedAt === this.clock || this.hp >= this.playerMaxHp() || this.clock - this.lastPlayerHurt < 1e3) {
         this.setHealingProgress(object2, 0);
         continue;
       }
@@ -9899,7 +9908,7 @@ var GameEngine = class {
       const progress = Math.min(1, previous + delta / HEAL_DWELL_MS);
       this.setHealingProgress(object2, progress);
       if (progress < 1) continue;
-      const value = Math.min(15, getHeroCombat(this.heroId).maxHp - this.hp);
+      const value = Math.min(15, this.playerMaxHp() - this.hp);
       this.hp += value;
       object2.charges--;
       this.setHealingProgress(object2, 0);
@@ -10352,7 +10361,7 @@ var GameEngine = class {
     if (enemy.kind === "tank") {
       this.bossKills++;
       this.score += 1e3;
-      if (this.hp > 0) this.hp = Math.min(getHeroCombat(this.heroId).maxHp, this.hp + 20);
+      if (this.hp > 0) this.hp = Math.min(this.playerMaxHp(), this.hp + 20);
       this.nextBoss = this.clock + 18e4;
       this.emit({ type: "boss-defeat", enemyId: enemy.id, x: enemy.x });
       this.inform("Tank \u0111\xE3 b\u1ECB h\u1EA1! +20 HP \xB7 +1000 \u0111i\u1EC3m. Sinh t\u1ED3n ti\u1EBFp t\u1EE5c!", 6e3);
@@ -10401,6 +10410,7 @@ var GameEngine = class {
       if (effect.kind === "ward") amount = Math.round(amount * (1 - effect.reduction) * 100) / 100;
     }
     const before = this.hp;
+    if (this.damageMode === "one-hit" && amount > 0) amount = before;
     this.hp = Math.max(0, this.hp - amount);
     const damage = before - this.hp;
     this.emit({
@@ -10611,7 +10621,13 @@ function validateCustomDeck(input) {
   const errors = [...validated.errors];
   if (!title || title.length > 80 || invalidControl(title)) errors.unshift({ field: "title", message: "Title must contain 1\u201380 characters with no control characters." });
   if (input.language !== "vi" && input.language !== "en") errors.unshift({ field: "language", message: "Language must be vi or en." });
-  return errors.length ? { errors } : { data: { title, language: input.language, entries: validated.entries }, errors };
+  if (input.damageMode !== void 0 && input.damageMode !== "health" && input.damageMode !== "one-hit") errors.unshift({ field: "damageMode", message: "Damage mode must be health or one-hit." });
+  return errors.length ? { errors } : { data: {
+    title,
+    language: input.language,
+    entries: validated.entries,
+    damageMode: input.damageMode ?? "health"
+  }, errors };
 }
 function customDeckWords(deck) {
   return deck.entries.map((entry) => ({
@@ -10817,7 +10833,15 @@ var RoomHub = class {
     };
   }
   deckMetadata(deck) {
-    return { id: deck.id, title: deck.title, language: deck.language, createdAt: deck.createdAt, expiresAt: deck.expiresAt, entryCount: deck.entries.length };
+    return {
+      id: deck.id,
+      title: deck.title,
+      language: deck.language,
+      damageMode: deck.damageMode ?? "health",
+      createdAt: deck.createdAt,
+      expiresAt: deck.expiresAt,
+      entryCount: deck.entries.length
+    };
   }
   getDeck(id) {
     if (!this.customDecks) fail("Kh\xF4ng t\xECm th\u1EA5y b\u1ED9 t\u1EEB.", "deck-missing");
@@ -10956,7 +10980,7 @@ var RoomHub = class {
         room.seenDuring.add(word.answer);
         room.pendingSeen.push(word.answer);
         if (!room.customDeck) for (const member of room.members) member.seen.add(word.answer);
-      }, bank);
+      }, bank, { damageMode: room.customDeck?.damageMode ?? "health" });
       room.engine.configureParty(room.members.map((member) => ({ id: member.id, name: member.name, heroId: member.heroId })));
       room.engine.start(message.mode);
       this.broadcastLobby(room);

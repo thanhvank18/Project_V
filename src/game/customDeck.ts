@@ -1,4 +1,4 @@
-import type { LearningLevel, PartOfSpeech, Word } from './types';
+import type { DamageMode, LearningLevel, PartOfSpeech, Word } from './types';
 
 export const CUSTOM_DECK_MAX_ENTRIES = 500;
 export const CUSTOM_DECK_TTL_MS = 24 * 60 * 60 * 1000;
@@ -7,7 +7,7 @@ export interface CustomDeckEntry {
   answer: string; meaning: string; partOfSpeech: PartOfSpeech; level: LearningLevel;
   type: CustomQuestionType; sentence?: string;
 }
-export interface CustomDeckInput { title: string; language: 'vi' | 'en'; entries: CustomDeckEntry[] }
+export interface CustomDeckInput { title: string; language: 'vi' | 'en'; entries: CustomDeckEntry[]; damageMode?: DamageMode }
 export interface CustomDeck extends CustomDeckInput { id: string; createdAt: number; expiresAt: number }
 export interface CustomDeckError { row?: number; field: string; message: string }
 
@@ -57,7 +57,9 @@ export function validateCustomDeck(input: unknown): { data?: CustomDeckInput; er
   const errors = [...validated.errors];
   if (!title || title.length > 80 || invalidControl(title)) errors.unshift({ field: 'title', message: 'Title must contain 1–80 characters with no control characters.' });
   if (input.language !== 'vi' && input.language !== 'en') errors.unshift({ field: 'language', message: 'Language must be vi or en.' });
-  return errors.length ? { errors } : { data: { title, language: input.language as 'vi' | 'en', entries: validated.entries }, errors };
+  if (input.damageMode !== undefined && input.damageMode !== 'health' && input.damageMode !== 'one-hit') errors.unshift({ field: 'damageMode', message: 'Damage mode must be health or one-hit.' });
+  return errors.length ? { errors } : { data: { title, language: input.language as 'vi' | 'en', entries: validated.entries,
+    damageMode: input.damageMode as DamageMode | undefined ?? 'health' }, errors };
 }
 
 /** UTF-8 BOM lets common spreadsheet apps preserve Vietnamese. Examples never start with formula markers. */

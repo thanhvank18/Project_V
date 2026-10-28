@@ -10,6 +10,12 @@ const entry = (overrides: Partial<CustomDeckEntry> = {}): CustomDeckEntry => ({ 
 const deck = (entries = [entry()]): CustomDeckInput => ({ title: 'Fruit lesson', language: 'vi', entries });
 
 describe('Create Mode authoring validation', () => {
+  it('defaults legacy packs to health and preserves explicitly selected damage rules', () => {
+    expect(validateCustomDeck(deck()).data?.damageMode).toBe('health');
+    for (const damageMode of ['health', 'one-hit'] as const) expect(validateCustomDeck({ ...deck(), damageMode }).data?.damageMode).toBe(damageMode);
+    for (const damageMode of [null, '', 'invincible', 1, {}]) expect(validateCustomDeck({ ...deck(), damageMode }).errors)
+      .toContainEqual({ field: 'damageMode', message: 'Damage mode must be health or one-hit.' });
+  });
   it('normalizes title and answers without substituting authored meanings', () => {
     const result = validateCustomDeck({ ...deck(), title: '  My lesson  ', entries: [entry({ answer: ' Apple ', meaning: '  A fruit, chosen by the host.  ' })] });
     expect(result.errors).toEqual([]);

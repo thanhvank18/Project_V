@@ -5,7 +5,7 @@ Create Mode cho phép nhập từ trực tiếp hoặc tải CSV, tạo một li
 ## Tạo và chia sẻ
 
 1. Từ màn bắt đầu, chọn **Tạo bộ câu hỏi**. Có thể mở trực tiếp `/?create=1`.
-2. Nhập tên bộ từ và chọn ngôn ngữ của nghĩa/câu hỏi: Việt hoặc Anh. Đáp án luôn là một từ tiếng Anh.
+2. Nhập tên bộ từ, chọn ngôn ngữ của nghĩa/câu hỏi và **Luật sinh tồn**. Ngôn ngữ là Việt hoặc Anh; đáp án luôn là một từ tiếng Anh.
 3. Nhập đáp án, nghĩa, từ loại, bậc và dạng câu hỏi. **Thêm câu hỏi** tạo dòng mới; nút thùng rác xóa dòng. Danh sách chia 10 câu mỗi trang.
 4. Hoặc chọn **Tải mẫu CSV**, sửa mẫu và **Nhập CSV**. Các dòng nhập được thêm vào danh sách hiện tại; dòng hoàn toàn trống trong bản nháp được bỏ qua khi nhập. File có lỗi bị từ chối toàn bộ, kèm số dòng; bản nháp hiện tại được giữ.
 5. Chọn **Tạo link chơi**. Nếu dữ liệu chưa hợp lệ, bấm lỗi để chuyển đến dòng cần sửa. Đáp án trùng được báo lỗi, không tự loại hoặc đổi nghĩa.
@@ -14,6 +14,13 @@ Create Mode cho phép nhập từ trực tiếp hoặc tải CSV, tạo một li
 Link có dạng `https://<game>/?deck=<id>`. Mọi người có link đều mở được bộ từ, không cần tài khoản. Để chơi **cùng một trận**, mọi người mở cùng link bộ từ rồi nhập PIN phòng của host. Chỉ gửi link sẽ mở bộ từ, không tự ghép tất cả người nhận vào một phòng.
 
 Ngôn ngữ nội dung do người tạo chọn và được cố định khi chơi bộ đó. Game không tự dịch nội dung do host nhập. Mẫu CSV tải xuống dùng nghĩa theo ngôn ngữ đã chọn. Nút VI/EN trong trình tạo đổi ngôn ngữ giao diện; trường ngôn ngữ bộ từ là lựa chọn riêng.
+
+**Luật sinh tồn** áp dụng cho toàn bộ bộ từ, cả chơi riêng và co-op:
+
+- **Có thanh máu** (mặc định): cận chiến 150 HP, đánh xa 100 HP, hồi máu theo giới hạn của anh hùng như game chính.
+- **Một chạm là chết**: mọi anh hùng có 1 HP; bất kỳ đòn từ quái hoặc Boss thực sự gây sát thương đều hạ người chơi. Hồi máu không thể vượt 1 HP. Trong co-op, người bị hạ theo dõi đồng đội và đội chỉ thua khi tất cả đã gục.
+
+Luật được chọn trên web, không nằm trong từng dòng CSV, và được giữ nguyên khi chia sẻ link. Bộ cũ không có trường luật dùng mặc định **Có thanh máu**. API nhận `damageMode: "health"` hoặc `damageMode: "one-hit"`.
 
 ## Dữ liệu và dạng câu hỏi
 

@@ -77,4 +77,16 @@ describe('durable expiring custom word packs', () => {
     const restored = await new CustomDeckStore(directory).init(); stores.push(restored);
     expect(() => restored.get(deck.id)).toThrow('Không tìm thấy');
   });
+
+  it('persists one-hit rules and upgrades an older pack without a mode to health', async () => {
+    const { store, directory } = await fixture();
+    const oneHit = await store.create({ ...input, damageMode: 'one-hit' });
+    const old = await store.create(input); store.close();
+    const { damageMode: _omitted, ...legacy } = old;
+    await writeFile(path.join(directory, `${old.id}.json`), JSON.stringify(legacy));
+    const restored = await new CustomDeckStore(directory).init(); stores.push(restored);
+    expect(restored.get(oneHit.id).damageMode).toBe('one-hit');
+    expect(restored.get(old.id).damageMode).toBe('health');
+    await expect(restored.create({ ...input, damageMode: 'invincible' })).rejects.toMatchObject({ status: 422, code: 'validation' });
+  });
 });

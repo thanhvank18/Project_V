@@ -93,6 +93,18 @@ describe('room client transitions through the public transport', () => {
     expect(port.room.status).toBe('expired'); expect(StubSocket.instances).toHaveLength(0);
   });
 
+  it('applies a published one-hit rule to offline melee heroes and preserves it on replay', () => {
+    const { port } = deckClient(vi.fn(), { damageMode: 'one-hit' });
+    expect(port.room.customDeck?.damageMode).toBe('one-hit');
+    port.playOffline(); port.setHero('swordsman'); port.start();
+    expect(port.snapshot()).toMatchObject({ hp: 1, maxHp: 1 });
+    port.toMenu(); port.start(); expect(port.snapshot()).toMatchObject({ hp: 1, maxHp: 1 });
+    const legacy = deckClient().port;
+    expect(legacy.room.customDeck?.damageMode).toBe('health');
+    legacy.playOffline(); legacy.setHero('swordsman'); legacy.start();
+    expect(legacy.snapshot()).toMatchObject({ hp: 150, maxHp: 150 });
+  });
+
   it('honors server expiry even before the browser clock says the link has expired', () => {
     const { port } = deckClient(); port.connect(); const socket = StubSocket.instances[0]; socket.open();
     socket.receive({ type: 'error', code: 'deck-expired', error: 'Liên kết bộ từ đã hết hạn sau 24 giờ.' });

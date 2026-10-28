@@ -16,6 +16,11 @@ describe('custom deck API boundary', () => {
     expect(() => parseCustomDeckResponse({ deck: { ...response().deck, id: '../bad' } })).toThrow();
     expect(() => parseCustomDeckResponse({ deck: { ...response().deck, createdAt: 1, expiresAt: 2 } })).toThrow('hết hạn');
   });
+  it('keeps the authored survival rule and defaults old shared links to normal health', () => {
+    expect(parseCustomDeckResponse(response()).damageMode).toBe('health');
+    expect(parseCustomDeckResponse({ deck: { ...response().deck, damageMode: 'one-hit' } }).damageMode).toBe('one-hit');
+    expect(() => parseCustomDeckResponse({ deck: { ...response().deck, damageMode: 'invincible' } })).toThrow();
+  });
   it('posts only the validated author content and reads the deck envelope', async () => {
     vi.stubGlobal('location', { origin: 'http://localhost:5174' });
     const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify(response()), { status: 201 }));

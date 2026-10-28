@@ -22,6 +22,23 @@ function fixture() {
 }
 
 describe('custom deck authoritative rooms', () => {
+  it('uses the published damage mode for every co-op hero and ignores client overrides', () => {
+    const hub = new RoomHub(WORDS, { now: () => 1000, customDecks: { get: () => ({ ...structuredClone(deck), damageMode: 'one-hit' }) } });
+    const host = hub.hello({ deckId: deck.id, seen: [], heroId: 'swordsman', damageMode: 'health' }, () => {});
+    const guest = hub.hello({ deckId: deck.id, seen: [], heroId: 'wizard', damageMode: 'health' }, () => {});
+    hub.receive(guest, { type: 'join', pin: host.pin });
+    const room = hub.rooms.get(host.pin);
+    expect(hub.lobby(room, guest).customDeck.damageMode).toBe('one-hit');
+    hub.receive(host, { type: 'start', mode: 'survival', damageMode: 'health' });
+    for (const session of [host, guest]) expect(room.engine.snapshotFor(session.id)).toMatchObject({ hp: 1, maxHp: 1 });
+    expect(() => hub.receive(host, { type: 'command', seq: 0, command: { kind: 'damage-mode', damageMode: 'health' } })).toThrow('không hợp lệ');
+    expect(room.engine.snapshotFor(host.id)).toMatchObject({ hp: 1, maxHp: 1 });
+
+    const normal = hub.hello({ seen: [], heroId: 'swordsman', damageMode: 'one-hit' }, () => {});
+    hub.receive(normal, { type: 'start', mode: 'survival', damageMode: 'one-hit' });
+    expect(hub.rooms.get(normal.pin).engine.snapshotFor(normal.id)).toMatchObject({ hp: 150, maxHp: 150 });
+  });
+
   it('uses the authored bank, ignores global history and locks the authored language', () => {
     const { hub, connect } = fixture(), host = connect();
     const room = hub.rooms.get(host.session.pin);

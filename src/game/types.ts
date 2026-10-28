@@ -15,6 +15,7 @@ export type ItemKind = 'health' | 'freeze' | 'damage' | 'shield';
 export type PartOfSpeech = 'noun' | 'verb' | 'adjective' | 'adverb' | 'preposition' | 'pronoun' | 'conjunction' | 'interjection' | 'determiner' | 'numeral' | 'prefix' | 'suffix' | 'abbreviation' | 'unspecified';
 export type WordDifficulty = 1 | 2 | 3;
 export type LearningLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+export type DamageMode = 'health' | 'one-hit';
 export interface LearningProgress { level: LearningLevel; progress: number; step: 20; nextLevelAt: number | null }
 export interface Word {
   id: string; answer: string; meaning: string; category: string;

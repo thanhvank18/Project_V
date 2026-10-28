@@ -40,8 +40,10 @@ afterEach(async () => {
 describe('public custom deck HTTP API', () => {
   it('creates and fetches immutable public packs without cache and checks hard expiry', async () => {
     const { port, store, advance } = await fixture();
-    const created = await post(port);
+    const created = await post(port, JSON.stringify({ ...input, damageMode: 'one-hit' }));
     expect(created.status).toBe(201); expect(created.body.deck).toMatchObject(input);
+    expect(created.body.deck.damageMode).toBe('one-hit');
+    expect((await post(port)).body.deck.damageMode).toBe('health');
     expect(created.body.deck.expiresAt - created.body.deck.createdAt).toBe(CUSTOM_DECK_TTL);
     const url = created.headers.location;
     const fetched = await call(port, url); expect(fetched.status).toBe(200); expect(fetched.body).toEqual(created.body);
