@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { RoomClient, roomSocketUrl } from './RoomClient';
 import { WORDS } from './vocabulary';
 import type { Snapshot, Word } from './types';
+import type { CustomDeck } from './customDeck';
 describe('multiplayer transport endpoints', () => {
   it('uses same-origin Vite proxy locally and the public API origin on deployment', () => {
     expect(roomSocketUrl('', 'http://127.0.0.1:5174/?a=1')).toBe('ws://127.0.0.1:5174/api/rooms');
@@ -56,6 +57,48 @@ describe('room client transitions through the public transport', () => {
     const port = new RoomClient({ highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: {} }, () => {}, WORDS);
     clients.push(port); return port;
   };
+  const deckClient = (onSeen = vi.fn(), overrides: Partial<CustomDeck> = {}) => {
+    const deck: CustomDeck = { id: 'a'.repeat(32), title: 'Our pack', language: 'en', createdAt: Date.now(), expiresAt: Date.now() + 86_400_000,
+      entries: [{ answer: 'water', meaning: 'A clear liquid.', partOfSpeech: 'noun', level: 1, type: 'fill', sentence: 'I drink ___.' }], ...overrides };
+    const port = new RoomClient({ highScore: 999, runs: 9, totalWords: 99, words: {}, seenWords: { water: 1 } }, onSeen, WORDS, 'vi', deck);
+    clients.push(port); return { port, deck, onSeen };
+  };
+
+  it('isolates a custom pack from global history and scopes its resume token', () => {
+    sessionStorage.setItem('zvs-room-session-v1', 'normal-token');
+    const { port, deck, onSeen } = deckClient(); port.connect();
+    const socket = StubSocket.instances[0]; socket.open();
+    expect(socket.sent[0]).toMatchObject({ type: 'hello', resumeToken: '', seen: [], language: 'en', deckId: deck.id });
+    expect(port.snapshot().vocabulary).toMatchObject({ total: 1, remaining: 1 });
+    socket.receive({ type: 'session', token: 'deck-token' });
+    expect(sessionStorage.getItem('zvs-room-session-v1')).toBe('normal-token');
+    expect(sessionStorage.getItem(`zvs-room-session-v1:deck:${deck.id}`)).toBe('deck-token');
+    socket.receive({ type: 'seen', words: ['water'] }); expect(onSeen).not.toHaveBeenCalled();
+    socket.receive({ type: 'deck-seen', words: ['water'] }); expect(onSeen).toHaveBeenCalledTimes(1);
+    port.setLanguage('vi'); expect(port.room.language).toBe('en');
+    port.playOffline(); port.start();
+    expect(port.enemies[0].challenge.word.meaning).toBe('A clear liquid.');
+    for (const key of 'water') port.typeKey(key);
+    expect(onSeen).toHaveBeenCalledTimes(2);
+    port.toMenu(); expect(port.snapshot().vocabulary.remaining).toBe(1); port.start();
+    expect(port.enemies[0].challenge.word.answer).toBe('water');
+  });
+
+  it('ends offline play and stops reconnecting when a custom link expires', () => {
+    const { port } = deckClient(vi.fn(), { expiresAt: Date.now() + 1000 });
+    port.playOffline(); port.start(); expect(port.snapshot().phase).toBe('playing');
+    vi.advanceTimersByTime(1000);
+    expect(port.room.status).toBe('expired'); expect(port.snapshot().phase).toBe('menu');
+    port.start(); port.playOffline(); port.createRoom(); port.connect();
+    expect(port.room.status).toBe('expired'); expect(StubSocket.instances).toHaveLength(0);
+  });
+
+  it('honors server expiry even before the browser clock says the link has expired', () => {
+    const { port } = deckClient(); port.connect(); const socket = StubSocket.instances[0]; socket.open();
+    socket.receive({ type: 'error', code: 'deck-expired', error: 'Liên kết bộ từ đã hết hạn sau 24 giờ.' });
+    expect(port.room.status).toBe('expired'); expect(socket.readyState).toBe(StubSocket.CLOSED);
+    vi.advanceTimersByTime(5000); expect(StubSocket.instances).toHaveLength(1);
+  });
   function acknowledge(socket: StubSocket, port: RoomClient) {
     socket.receive({ type: 'session', token: 'test-resume-token', nextSeq: 0 });
     socket.receive({ type: 'room', room: { status: 'playing', pin: '123456', selfId: 'self', hostId: 'self', players: members, error: '' } });

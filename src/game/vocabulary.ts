@@ -79,7 +79,7 @@ export function lootChanceFor(word: Word): number {
 }
 
 export const CHALLENGE_NAMES: Record<ChallengeKind, string> = {
-  scramble: 'XẾP CHỮ', missing: 'ĐIỀN CHỮ', translate: 'VIỆT → ANH', hint: 'NGHĨA + GỢI Ý',
+  scramble: 'XẾP CHỮ', missing: 'ĐIỀN CHỮ', translate: 'VIỆT → ANH', hint: 'NGHĨA + GỢI Ý', fill: 'ĐIỀN TỪ',
 };
 
 export function answersFor(word: Word): string[] {
@@ -91,10 +91,13 @@ export function historyKeysFor(word: Word): string[] {
 }
 
 export function createChallenge(word: Word, kind: ChallengeKind, id: number, rng = Math.random): Challenge {
+  if (word.customQuestion && word.customQuestion.type !== 'mixed') kind = word.customQuestion.type;
   const letters = [...word.answer];
   const hint = word.translationHint ?? letters.map((letter, index) => index === 0 || index === letters.length - 1 ? letter : '_').join(' ');
   let prompt = word.meaning;
-  if (kind === 'scramble') {
+  if (kind === 'fill') {
+    prompt = word.customQuestion?.sentence ?? word.meaning;
+  } else if (kind === 'scramble') {
     for (let index = letters.length - 1; index > 0; index--) {
       const other = Math.floor(Math.max(0, Math.min(0.999999, rng())) * (index + 1));
       [letters[index], letters[other]] = [letters[other], letters[index]];

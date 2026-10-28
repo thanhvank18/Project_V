@@ -9,7 +9,7 @@ export interface WorldObject {
   state: 'idle' | 'active' | 'used' | 'open' | 'closed';
   charges: number; progress: number; challenge?: Challenge; resolving?: boolean;
 }
-export type ChallengeKind = 'scramble' | 'missing' | 'translate' | 'hint';
+export type ChallengeKind = 'scramble' | 'missing' | 'translate' | 'hint' | 'fill';
 export type Phase = 'menu' | 'playing' | 'paused' | 'countdown' | 'over';
 export type ItemKind = 'health' | 'freeze' | 'damage' | 'shield';
 export type PartOfSpeech = 'noun' | 'verb' | 'adjective' | 'adverb' | 'preposition' | 'pronoun' | 'conjunction' | 'interjection' | 'determiner' | 'numeral' | 'prefix' | 'suffix' | 'abbreviation' | 'unspecified';
@@ -27,6 +27,8 @@ export interface Word {
   translationHint?: string;
   /** Previous misspelled headwords: history migration only, never accepted answers. */
   historyAliases?: string[];
+  /** Authored Create Mode questions bypass the normal rotating question format. */
+  customQuestion?: { type: 'mixed' | 'translate' | 'missing' | 'scramble' | 'fill'; sentence?: string; language: 'vi' | 'en' };
 }
 export interface Challenge {
   id: number; word: Word; kind: ChallengeKind; prompt: string; hint: string;

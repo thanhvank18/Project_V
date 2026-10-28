@@ -92,6 +92,25 @@ function harness(heroId = 'soldier') {
 }
 
 describe('tactical and co-op Scene handoff', () => {
+  it('bounds authored fill previews on enemies and barrels while retaining the full clue in the snapshot', () => {
+    const { scene, engine, snapshot, addEnemy } = harness();
+    const { enemy, view } = addEnemy(ENEMY_CHARACTERS.find(character => character.enemyKind === 'normal')!);
+    const sentence = `${'A long sentence context '.repeat(5)}___ to complete the lesson.`;
+    enemy.challenge = createChallenge({ ...WORDS[0], customQuestion: { type: 'fill', language: 'en', sentence } }, 'missing', 1);
+    scene['renderEnemies'](snapshot());
+    expect(view.prompt.text).toContain('___');
+    expect(view.prompt.text.length).toBeLessThanOrEqual(42);
+    expect(view.meaning.text).toBe('');
+    expect(enemy.challenge.prompt).toBe(sentence);
+
+    engine.worldObjects = [{ id: 77, kind: 'barrel', x: 900, radius: 220, state: 'active', charges: 1, progress: 0 }];
+    const state = snapshot({ target: { id: -77, kind: 'barrel', worldObjectId: 77, prompt: sentence, hint: '', type: 'fill', length: 5, meaning: 'Quả táo', partOfSpeech: 'noun', difficulty: 1 } });
+    scene['renderEnemies'](state);
+    expect(scene['worldViews'].get(77)!.prompt.text).toContain('___');
+    expect(scene['worldViews'].get(77)!.prompt.text.length).toBeLessThanOrEqual(42);
+    expect(scene['worldViews'].get(77)!.meaning.text).toBe('');
+    expect(state.target?.prompt).toBe(sentence);
+  });
   it('updates cached labels and world captions when language changes without resetting combat', () => {
     const { scene, engine, snapshot, addEnemy } = harness();
     const { enemy, view } = addEnemy(ENEMY_CHARACTERS.find(character => character.enemyKind === 'armored')!);

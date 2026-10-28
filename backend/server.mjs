@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFile, realpath, stat } from 'node:fs/promises';
 import { createServer } from 'node:http';
+import { isIP } from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
@@ -103,8 +104,49 @@ function matchesEtag(header, etag) {
   return !!header && header.split(',').some(value => value.trim() === '*' || value.trim().replace(/^W\//, '') === etag);
 }
 
-export function createRequestHandler(vocabulary, { corsOrigins = '*' } = {}) {
-  return (request, response) => {
+async function readDeckBody(request) {
+  const limit = roomRuntime.CUSTOM_DECK_BODY_LIMIT;
+  if (!/^application\/json(?:\s*;|$)/i.test(request.headers['content-type'] ?? '')) {
+    request.resume();
+    throw Object.assign(new Error('Cần gửi dữ liệu JSON.'), { status: 415, code: 'content-type' });
+  }
+  if (Number(request.headers['content-length']) > limit) {
+    request.resume();
+    throw Object.assign(new Error('Bộ từ vượt giới hạn 1 MiB.'), { status: 413, code: 'too-large' });
+  }
+  const body = await new Promise((resolve, reject) => {
+    const chunks = []; let size = 0;
+    const clean = () => { request.off('data', data); request.off('end', end); request.off('aborted', aborted); request.off('error', failed); };
+    const failed = cause => { clean(); reject(cause); };
+    const aborted = () => failed(Object.assign(new Error('Yêu cầu đã bị hủy.'), { status: 400, code: 'aborted' }));
+    const data = chunk => {
+      size += chunk.length;
+      if (size > limit) { failed(Object.assign(new Error('Bộ từ vượt giới hạn 1 MiB.'), { status: 413, code: 'too-large' })); request.resume(); return; }
+      chunks.push(chunk);
+    };
+    const end = () => { clean(); resolve(Buffer.concat(chunks).toString('utf8')); };
+    request.on('data', data); request.once('end', end); request.once('aborted', aborted); request.once('error', failed);
+  });
+  try { return JSON.parse(body); }
+  catch { throw Object.assign(new Error('Dữ liệu JSON chưa hợp lệ.'), { status: 400, code: 'invalid-json' }); }
+}
+
+export function createRequestHandler(vocabulary, { corsOrigins = '*', customDecks, now = Date.now, trustRailwayProxy = false } = {}) {
+  const rates = new Map(); let window = now(), total = 0;
+  const allowCreate = request => {
+    const current = now();
+    if (current - window >= 60_000) { window = current; total = 0; }
+    for (const [key, record] of rates) if (current - record.at >= 10 * 60_000) rates.delete(key);
+    // Railway replaces X-Real-IP at its ingress. Never trust caller-supplied forwarding headers elsewhere.
+    const forwarded = request.headers['x-real-ip'];
+    const ip = trustRailwayProxy && typeof forwarded === 'string' && isIP(forwarded)
+      ? forwarded : request.socket.remoteAddress ?? 'unknown';
+    const record = rates.get(ip) ?? { at: current, count: 0 };
+    if (total >= 30 || record.count >= 10 || rates.size >= 10_000 && !rates.has(ip)) return false;
+    total++; record.count++; rates.set(ip, record); return true;
+  };
+  return async (request, response) => {
+    request.on('error', () => {}); // An aborted/oversized body may emit an error after the parser has detached.
     response.setHeader('X-Content-Type-Options', 'nosniff');
     response.setHeader('Vary', 'Origin, Accept-Encoding');
     const origin = request.headers.origin;
@@ -114,6 +156,7 @@ export function createRequestHandler(vocabulary, { corsOrigins = '*' } = {}) {
       response.setHeader('Access-Control-Expose-Headers', 'ETag, X-Dictionary-Words');
     }
     const sendJson = (status, value) => {
+      if (response.destroyed || response.writableEnded) return;
       const body = Buffer.from(JSON.stringify(value));
       response.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8',
         'Cache-Control': 'no-store', 'Content-Length': body.length });
@@ -123,22 +166,45 @@ export function createRequestHandler(vocabulary, { corsOrigins = '*' } = {}) {
     let pathname;
     try { pathname = new URL(request.url ?? '/', 'http://vocabulary.invalid').pathname; }
     catch { sendJson(400, { error: 'Invalid request URL' }); return; }
-    if (pathname !== '/health' && pathname !== '/api/vocabulary') {
+    const createDeck = pathname === '/api/custom-decks';
+    const deckMatch = /^\/api\/custom-decks\/([a-f0-9]{32})$/.exec(pathname);
+    if (pathname !== '/health' && pathname !== '/api/vocabulary' && !createDeck && !deckMatch) {
       sendJson(404, { error: 'Not found' }); return;
     }
     if (request.method === 'OPTIONS') {
       const requested = request.headers['access-control-request-method'];
-      if (requested && !['GET', 'HEAD'].includes(requested.toUpperCase())) {
-        response.setHeader('Allow', METHODS);
+      const methods = createDeck ? ['POST'] : ['GET', 'HEAD'];
+      if (requested && !methods.includes(requested.toUpperCase())) {
+        response.setHeader('Allow', createDeck ? 'POST, OPTIONS' : METHODS);
         sendJson(405, { error: 'Method not allowed' }); return;
       }
       response.writeHead(204, {
-        'Access-Control-Allow-Methods': METHODS,
+        'Access-Control-Allow-Methods': createDeck ? 'POST, OPTIONS' : METHODS,
         'Access-Control-Allow-Headers': 'If-None-Match, Content-Type',
         'Access-Control-Max-Age': '86400',
         'Cache-Control': 'no-store',
       });
       response.end(); return;
+    }
+    if (createDeck || deckMatch) {
+      if (createDeck ? request.method !== 'POST' : !['GET', 'HEAD'].includes(request.method)) {
+        response.setHeader('Allow', createDeck ? 'POST, OPTIONS' : METHODS);
+        sendJson(405, { error: 'Method not allowed' }); return;
+      }
+      if (!customDecks) { sendJson(503, { error: 'Kho bộ từ chưa sẵn sàng.', code: 'unavailable' }); return; }
+      try {
+        if (createDeck && !allowCreate(request)) {
+          request.resume(); response.setHeader('Retry-After', '600');
+          sendJson(429, { error: 'Bạn tạo bộ từ quá nhanh. Hãy thử lại sau.', code: 'rate' }); return;
+        }
+        const deck = createDeck ? await customDecks.create(await readDeckBody(request)) : customDecks.get(deckMatch[1]);
+        if (createDeck) response.setHeader('Location', `/api/custom-decks/${deck.id}`);
+        sendJson(createDeck ? 201 : 200, { deck });
+      } catch (cause) {
+        sendJson(cause.status ?? 500, { error: cause.status ? cause.message : 'Không lưu được bộ từ. Hãy thử lại.',
+          code: cause.code ?? 'storage', ...(cause.errors ? { errors: cause.errors } : {}) });
+      }
+      return;
     }
     if (request.method !== 'GET' && request.method !== 'HEAD') {
       response.setHeader('Allow', METHODS);
@@ -170,27 +236,30 @@ export function createRequestHandler(vocabulary, { corsOrigins = '*' } = {}) {
 }
 
 export async function startServer({ port = parsePort(process.env.PORT), root = PROJECT_ROOT,
-  corsOrigins = parseCorsOrigins(process.env.CORS_ORIGINS) } = {}) {
+  corsOrigins = parseCorsOrigins(process.env.CORS_ORIGINS), customDeckDir = process.env.CUSTOM_DECK_DIR ?? path.join(root, 'data', 'custom-decks') } = {}) {
   const english = JSON.parse(await readFile(path.join(root, 'public', 'vocabulary', 'english-definitions.json'), 'utf8'));
   const vocabulary = await loadVocabulary(root, { englishDefinitions: english });
-  const handle = createRequestHandler(vocabulary, { corsOrigins });
+  const customDecks = await new roomRuntime.CustomDeckStore(customDeckDir).init();
+  const handle = createRequestHandler(vocabulary, { corsOrigins, customDecks, trustRailwayProxy: !!process.env.RAILWAY_ENVIRONMENT_ID });
   const server = createServer((request, response) => {
-    try { handle(request, response); }
-    catch (error) {
+    Promise.resolve(handle(request, response)).catch(error => {
       console.error('[vocabulary-api] Request failed:', error.message);
       if (response.headersSent) response.destroy();
       else { response.writeHead(500, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); response.end('{"error":"Request failed"}'); }
-    }
+    });
   });
   const words = JSON.parse(vocabulary.body.toString('utf8')).words;
-  const rooms = roomRuntime.attachRooms(server, words, { corsOrigins });
+  const rooms = roomRuntime.attachRooms(server, words, { corsOrigins, customDecks });
   server.roomHub = rooms.hub;
   server.closeRooms = rooms.close;
+  server.customDecks = customDecks;
+  server.once('close', () => customDecks.close());
   server.requestTimeout = 30_000;
   server.headersTimeout = 10_000;
   await new Promise((resolve, reject) => {
-    server.once('error', reject);
-    server.listen(port, '0.0.0.0', () => { server.off('error', reject); resolve(); });
+    const failed = error => { customDecks.close(); rooms.close(); reject(error); };
+    server.once('error', failed);
+    server.listen(port, '0.0.0.0', () => { server.off('error', failed); resolve(); });
   });
   console.log(`[vocabulary-api] Listening on ${server.address().port}; ${vocabulary.wordCount} words ready`);
   return server;

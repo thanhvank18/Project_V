@@ -6,14 +6,14 @@ import { WORDS } from '../src/game/vocabulary';
 
 const resources = [];
 
-async function fixture() {
+async function fixture(options = {}) {
   const server = createServer((_request, response) => response.end('test'));
-  const runtime = attachRooms(server, WORDS);
+  const runtime = attachRooms(server, WORDS, options);
   const sockets = [];
   resources.push({ server, runtime, sockets });
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
   const url = `ws://127.0.0.1:${server.address().port}/api/rooms`;
-  async function connect(resumeToken = '') {
+  async function connect(resumeToken = '', hello = {}) {
     const socket = new WebSocket(url);
     sockets.push(socket);
     const messages = [];
@@ -47,7 +47,7 @@ async function fixture() {
         socket.close(); await closed;
       },
     };
-    client.send({ type: 'hello', seen: [], heroId: 'soldier', resumeToken });
+    client.send({ type: 'hello', seen: [], heroId: 'soldier', resumeToken, ...hello });
     client.session = await client.wait(message => message.type === 'session');
     client.seq = client.session.nextSeq ?? 0;
     client.room = (await client.wait(message => message.type === 'room')).room;
@@ -65,6 +65,31 @@ afterEach(async () => {
 });
 
 describe('real WebSocket room transport', () => {
+  it('shares custom questions through real sockets and closes all peers when the link expires', async () => {
+    let now = Date.now();
+    const deck = { id: 'a'.repeat(32), title: 'Our pack', language: 'en', createdAt: now, expiresAt: now + 86_400_000,
+      entries: [{ answer: 'water', meaning: 'A clear liquid.', partOfSpeech: 'noun', level: 1, type: 'fill', sentence: 'I drink ___.' },
+        { answer: 'apple', meaning: 'A round fruit.', partOfSpeech: 'noun', level: 1, type: 'translate' }] };
+    const { connect, runtime } = await fixture({ now: () => now, customDecks: { get: () => structuredClone(deck) } });
+    const host = await connect('', { deckId: deck.id, seen: ['water', 'apple'] });
+    const guest = await connect('', { deckId: deck.id });
+    expect(host.room.customDeck).toMatchObject({ id: deck.id, entryCount: 2 });
+    guest.send({ type: 'join', pin: host.room.pin });
+    await guest.wait(message => message.type === 'room' && message.room.players.length === 2);
+    host.send({ type: 'start', mode: 'survival' });
+    const [a, b] = await Promise.all([host, guest].map(peer => peer.wait(message => message.type === 'frame')));
+    expect(a.snapshot.target.id).not.toBe(b.snapshot.target.id);
+    expect(a.enemies.map(enemy => enemy.challenge.word.answer).sort()).toEqual(['apple', 'water']);
+    expect(a.enemies.find(enemy => enemy.challenge.word.answer === 'water').challenge).toMatchObject({ kind: 'fill', prompt: 'I drink ___.' });
+    expect(host.messages.some(message => message.type === 'seen')).toBe(false);
+    const closed = [host, guest].map(peer => new Promise(resolve => peer.socket.once('close', code => resolve(code))));
+    now = deck.expiresAt; runtime.hub.step(25);
+    const expired = await Promise.all([host, guest].map(peer => peer.wait(message => message.type === 'room' && message.room.status === 'expired')));
+    expect(expired.every(message => message.room.players.length === 0)).toBe(true);
+    expect(await Promise.all(closed)).toEqual([4004, 4004]);
+    expect(runtime.hub.rooms.size).toBe(0); expect(runtime.hub.sessions.size).toBe(0);
+  });
+
   it('joins four peers with unique heroes, rejects a fifth peer and non-host start, and protects state', async () => {
     const { connect } = await fixture();
     const host = await connect();

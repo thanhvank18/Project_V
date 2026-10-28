@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import '@fontsource/bungee/400.css';
 import '@fontsource/be-vietnam-pro/400.css';
 import '@fontsource/be-vietnam-pro/500.css';
@@ -13,6 +13,19 @@ import { LanguagePicker, LanguageProvider, useLanguage } from './ui/LanguageCont
 import './ui/styles.css';
 
 const root = createRoot(document.getElementById('root')!);
+const CreateMode = lazy(() => import('./ui/CreateMode').then(module => ({ default: module.CreateMode })));
+const CustomDeckGame = lazy(() => import('./ui/CustomDeckGame').then(module => ({ default: module.CustomDeckGame })));
+const goHome = () => location.assign(location.pathname);
+const goCreate = () => location.assign(`${location.pathname}?create=1`);
+
+function GameRoute() {
+  const { t } = useLanguage();
+  const query = new URLSearchParams(location.search);
+  return <Suspense fallback={<main className="dictionary-loading" role="status">{t('Đang tải…')}</main>}>
+    {query.get('create') === '1' ? <CreateMode onClose={goHome} onCreated={deck => location.assign(`${location.pathname}?deck=${encodeURIComponent(deck.id)}`)} />
+      : query.has('deck') ? <CustomDeckGame id={query.get('deck')!} onHome={goHome} onCreate={goCreate} /> : <Bootstrap />}
+  </Suspense>;
+}
 
 function Bootstrap() {
   const { t } = useLanguage();
@@ -27,7 +40,7 @@ function Bootstrap() {
       .catch(() => { if (!disposed) setFailed(true); });
     return () => { disposed = true; };
   }, [attempt]);
-  if (loaded) return <App initialProgress={loaded.progress} wordBank={loaded.words} />;
+  if (loaded) return <App initialProgress={loaded.progress} wordBank={loaded.words} onCreateMode={goCreate} />;
   return <main className="dictionary-loading">
     <LanguagePicker />
     <div role={failed ? 'alert' : 'status'}>
@@ -38,4 +51,4 @@ function Bootstrap() {
   </main>;
 }
 
-root.render(<LanguageProvider><Bootstrap /></LanguageProvider>);
+root.render(<LanguageProvider><GameRoute /></LanguageProvider>);

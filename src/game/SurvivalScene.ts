@@ -4,7 +4,7 @@ import { AttackEffects } from './attackEffects';
 import { flightPoint, glyphScaleForDistance, lowHealthVisuals } from './combatVisuals';
 import { actionElapsedMs, attackAnticipationFrame, attackContactFrame, attackRecoveryFrame, bossPhaseTint, characterHitPoint, characterShadow, characterVisualHeight, deathVisuals, gaitPhaseAfterDistance, heldRecoveryStart, heroAnimationKey, projectileOrigin, rangedShotTiming, resetDeathPose } from './characterAnimation';
 import { getEnemyCharacter, getHeroCharacter, type CharacterDefinition } from './characterCatalog';
-import { layoutEnemyLabels, type EnemyLabelRequest } from './enemyLabelLayout';
+import { compactFillPrompt, layoutEnemyLabels, type EnemyLabelRequest } from './enemyLabelLayout';
 import { HeroAttackEffects } from './HeroAttackEffects';
 import { TacticalWorldEffects, type TelegraphVisual, type RoleVisual } from './TacticalWorldEffects';
 import { AlliedHeroes, partyColor, partyName } from './AlliedHeroes';
@@ -376,8 +376,8 @@ export class SurvivalScene extends Phaser.Scene {
     const width = isBoss ? 260 : 238;
     const plate = this.add.rectangle(0, 0, width, 106, 0x12252f, 0.97).setStrokeStyle(1, 0x6e8490, 0.65);
     const descriptor = this.add.text(-width / 2 + 13, -43, '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#a5b8bd', resolution: 2 });
-    const prompt = this.add.text(0, -16, '', { fontFamily: FONT, fontSize: '19px', fontStyle: 'bold', color: '#f4f1df', align: 'center', wordWrap: { width: width - 24 }, resolution: 2 }).setOrigin(0.5);
-    const meaning = this.add.text(0, 12, '', { fontFamily: FONT, fontSize: '13px', color: '#d1ded2', align: 'center', wordWrap: { width: width - 24 }, resolution: 2 }).setOrigin(0.5);
+    const prompt = this.add.text(0, -16, '', { fontFamily: FONT, fontSize: '19px', fontStyle: 'bold', color: '#f4f1df', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(0.5);
+    const meaning = this.add.text(0, 12, '', { fontFamily: FONT, fontSize: '13px', color: '#d1ded2', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(0.5);
     const hint = this.add.text(0, 35, '', { fontFamily: FONT, fontSize: '12px', color: '#9ed6c2', align: 'center', resolution: 2 }).setOrigin(0.5);
     const label = this.add.container(enemy.x, 290, [plate, descriptor, prompt, meaning, hint]).setDepth(20);
     const protectedLabel = this.add.text(enemy.x, GROUND - (isBoss ? 207 : 128), '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#b8def3', stroke: '#172b3b', strokeThickness: 4, resolution: 2 }).setOrigin(0.5).setDepth(21).setVisible(false);
@@ -515,15 +515,16 @@ export class SurvivalScene extends Phaser.Scene {
         const role = enemy.role === 'shield' ? this.text('HỘ VỆ', 'GUARD') : enemy.role === 'ranged' ? this.text('XẠ THỦ', 'RANGED') : enemy.role === 'summoner' ? this.text('TRIỆU HỒI', 'SUMMONER') : '';
         view.descriptor.setText(`${localizeText(PART_OF_SPEECH_LABELS[word.partOfSpeech], this.options.language ?? 'vi')}${role ? ` · ${role}` : ''}${enemy.kind === 'armored' ? ` · ${this.text('GIÁP', 'ARMOR')} ${enemy.hp}/${enemy.maxHp}` : isBoss ? ` · ${this.text('GIAI ĐOẠN', 'PHASE')} ${enemy.bossPhase}` : ''}`);
         const isMeaningPrompt = enemy.challenge.prompt.trim().toLocaleLowerCase(this.options.language ?? 'vi') === word.meaning.trim().toLocaleLowerCase(this.options.language ?? 'vi');
+        const isFill = enemy.challenge.kind === 'fill';
         // Above-head labels stay compact; the selected dock retains the full dictionary definition.
         const shortMeaning = word.meaning.length > 46 ? `${word.meaning.slice(0, 43).replace(/\s+\S*$/, '')}…` : word.meaning;
         let prompt = enemy.challenge.prompt.replace(/\s*\/\s*/g, word.answer.length > 10 ? '' : ' · ');
         if (word.answer.length > 12 && enemy.challenge.kind === 'missing') prompt = prompt.replace(/ /g, '');
-        view.prompt.setFontSize(isMeaningPrompt || word.answer.length > 12 ? 16 : 19);
-        view.prompt.setText(isMeaningPrompt ? shortMeaning : prompt);
-        view.meaning.setText(isMeaningPrompt ? '' : shortMeaning);
+        view.prompt.setFontSize(isFill || isMeaningPrompt || word.answer.length > 12 ? 16 : 19);
+        view.prompt.setText(isFill ? compactFillPrompt(enemy.challenge.prompt) : isMeaningPrompt ? shortMeaning : prompt);
+        view.meaning.setText(isFill || isMeaningPrompt ? '' : shortMeaning);
         view.hint.setText(word.answer.length > 12 ? visibleHint.replace(/ /g, '') : visibleHint);
-        view.prompt.y = isMeaningPrompt ? -5 : -20;
+        view.prompt.y = isFill || isMeaningPrompt ? -5 : -20;
         view.meaning.y = 12;
         view.hint.y = isMeaningPrompt ? 28 : 35;
         view.plate.setStrokeStyle(target || owner ? 2 : 1, target ? 0xf6c372 : owner ? partyColor(snapshot.party!.players, owner.id) : KIND_COLORS[enemy.kind], target || owner ? 1 : 0.5);
@@ -587,8 +588,8 @@ export class SurvivalScene extends Phaser.Scene {
     const width = 238;
     const plate = this.add.rectangle(0, 0, width, 106, 0x12252f, .97).setStrokeStyle(2, 0xf6c372, .9);
     const descriptor = this.add.text(-width / 2 + 13, -43, '', { fontFamily: FONT, fontSize: '11px', color: '#f6c372', resolution: 2 });
-    const prompt = this.add.text(0, -20, '', { fontFamily: FONT, fontSize: '19px', fontStyle: 'bold', color: '#f4f1df', align: 'center', wordWrap: { width: width - 24 }, resolution: 2 }).setOrigin(.5);
-    const meaning = this.add.text(0, 12, '', { fontFamily: FONT, fontSize: '13px', color: '#d1ded2', align: 'center', wordWrap: { width: width - 24 }, resolution: 2 }).setOrigin(.5);
+    const prompt = this.add.text(0, -20, '', { fontFamily: FONT, fontSize: '19px', fontStyle: 'bold', color: '#f4f1df', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(.5);
+    const meaning = this.add.text(0, 12, '', { fontFamily: FONT, fontSize: '13px', color: '#d1ded2', align: 'center', wordWrap: { width: width - 24, useAdvancedWrap: true }, maxLines: 2, resolution: 2 }).setOrigin(.5);
     const hint = this.add.text(0, 35, '', { fontFamily: FONT, fontSize: '12px', color: '#9ed6c2', resolution: 2 }).setOrigin(.5);
     const label = this.add.container(0, 292, [plate, descriptor, prompt, meaning, hint]).setDepth(20).setVisible(false);
     const caption = this.inWorld(this.add.text(object.x, GROUND + 34, '', { fontFamily: FONT, fontSize: '11px', fontStyle: 'bold', color: '#d7e5ce', stroke: '#172b36', strokeThickness: 4, resolution: 2 }).setOrigin(.5).setDepth(21));
@@ -613,11 +614,13 @@ export class SurvivalScene extends Phaser.Scene {
       if (!selected || !snapshot.target) continue;
       const target = snapshot.target;
       const isMeaning = target.prompt.trim().toLocaleLowerCase(this.options.language ?? 'vi') === target.meaning.trim().toLocaleLowerCase(this.options.language ?? 'vi');
+      const isFill = target.type === 'fill';
       const shortMeaning = target.meaning.length > 46 ? `${target.meaning.slice(0, 43).replace(/\s+\S*$/, '')}…` : target.meaning;
       view.descriptor.setText(`${localizeText(PART_OF_SPEECH_LABELS[target.partOfSpeech], this.options.language ?? 'vi')} · ${this.text('THÙNG NỔ', 'BARREL')}`);
-      view.prompt.setText(isMeaning ? shortMeaning : target.prompt);
-      view.prompt.setFontSize(isMeaning || target.length > 12 ? 16 : 19);
-      view.meaning.setText(isMeaning ? '' : shortMeaning);
+      view.prompt.setText(isFill ? compactFillPrompt(target.prompt) : isMeaning ? shortMeaning : target.prompt);
+      view.prompt.setFontSize(isFill || isMeaning || target.length > 12 ? 16 : 19);
+      view.prompt.y = isFill || isMeaning ? -5 : -20;
+      view.meaning.setText(isFill || isMeaning ? '' : shortMeaning);
       view.hint.setText(target.hint);
       requests.push({ id: -object.id, width: 238, desiredX: sx, boss: false, selected: true });
     }

@@ -3,7 +3,10 @@ import { WebSocketServer, WebSocket } from 'ws';
 import { GameEngine } from '../src/game/engine.ts';
 import { HERO_CHARACTERS } from '../src/game/characterCatalog.ts';
 import { vocabularyForLanguage } from '../src/game/englishDictionary.ts';
+import { customDeckWords } from '../src/game/customDeck.ts';
 export { mergeEnglishDefinitions } from '../src/game/englishDictionary.ts';
+export { validateCustomDeck, customDeckWords } from '../src/game/customDeck.ts';
+export { CustomDeckStore, CUSTOM_DECK_BODY_LIMIT } from './custom-decks.mjs';
 
 const HEROES = HERO_CHARACTERS.map(hero => hero.id);
 const ITEMS = new Set(['health', 'freeze', 'damage', 'shield']);
@@ -13,8 +16,9 @@ const fail = (message, code = 'invalid') => { throw Object.assign(new Error(mess
 
 /** A single authoritative simulation per room. Browser packets contain intentions only. */
 export class RoomHub {
-  constructor(words, { now = Date.now, Engine = GameEngine, maxRooms = 32 } = {}) {
+  constructor(words, { now = Date.now, Engine = GameEngine, maxRooms = 32, customDecks } = {}) {
     this.words = words; this.now = now; this.Engine = Engine; this.maxRooms = maxRooms;
+    this.customDecks = customDecks;
     this.rooms = new Map(); this.sessions = new Map(); this.allowedWords = new Set(words.map(word => word.answer));
   }
 
@@ -22,15 +26,19 @@ export class RoomHub {
     if (message.language !== undefined && !['vi', 'en'].includes(message.language)) fail('Ngôn ngữ không hợp lệ.');
     if (!Array.isArray(message.seen) || message.seen.length > 100_000
       || message.seen.some(word => typeof word !== 'string' || !/^[a-z]{3,18}$/.test(word))) fail('Lịch sử từ không hợp lệ.');
-    const old = typeof message.resumeToken === 'string' ? this.sessions.get(message.resumeToken) : undefined;
+    const deckId = message.deckId ?? '';
+    if (typeof deckId !== 'string') fail('Bộ từ không hợp lệ.');
+    const deck = deckId ? this.getDeck(deckId) : null;
+    const candidate = typeof message.resumeToken === 'string' ? this.sessions.get(message.resumeToken) : undefined;
+    const old = candidate?.deckId === deckId ? candidate : undefined;
     const session = old && this.rooms.has(old.pin) ? old : {
       id: randomUUID(), token: randomUUID(), heroId: HEROES.includes(message.heroId) ? message.heroId : 'soldier',
-      language: message.language ?? 'vi',
+      language: deck?.language ?? message.language ?? 'vi', deckId,
       seen: new Set(), pin: '', connected: true, disconnectedAt: 0, attempts: [], tokens: 100, rateAt: this.now(), lastMoveAt: 0,
     };
     if (session.connected && session.send) session.send({ type: 'replaced', error: 'Phiên này đã được mở ở kết nối khác.' });
     session.send = send; session.connected = true; session.disconnectedAt = 0;
-    for (const word of message.seen) if (this.allowedWords.has(word)) session.seen.add(word);
+    if (!deckId) for (const word of message.seen) if (this.allowedWords.has(word)) session.seen.add(word);
     this.sessions.set(session.token, session);
     send({ type: 'session', token: session.token, selfId: session.id, nextSeq: (session.lastSeq ?? -1) + 1 });
     if (!session.pin) {
@@ -40,7 +48,7 @@ export class RoomHub {
     else {
       const room = this.rooms.get(session.pin);
       room.engine?.setPartyConnected(session.id, true);
-      if (room.seenDuring.size) send({ type: 'seen', words: [...room.seenDuring] });
+      if (room.seenDuring.size) send({ type: deckId ? 'deck-seen' : 'seen', words: [...room.seenDuring] });
       this.broadcastLobby(room); this.sendFrame(room, session, []);
     }
     return session;
@@ -49,7 +57,34 @@ export class RoomHub {
   lobby(room, session) {
     return { status: room.engine && room.engine.snapshotFor(session.id).phase !== 'menu' ? 'playing' : 'lobby',
       pin: room.pin, selfId: session.id, hostId: room.hostId, language: room.language,
-      players: room.members.map(member => ({ id: member.id, name: member.name, heroId: member.heroId, connected: member.connected })), error: '' };
+      players: room.members.map(member => ({ id: member.id, name: member.name, heroId: member.heroId, connected: member.connected })), error: '',
+      ...(room.customDeck ? { customDeck: this.deckMetadata(room.customDeck) } : {}) };
+  }
+
+  deckMetadata(deck) {
+    return { id: deck.id, title: deck.title, language: deck.language, createdAt: deck.createdAt, expiresAt: deck.expiresAt, entryCount: deck.entries.length };
+  }
+
+  getDeck(id) {
+    if (!this.customDecks) fail('Không tìm thấy bộ từ.', 'deck-missing');
+    return this.customDecks.get(id);
+  }
+
+  expireRoom(room) {
+    this.rooms.delete(room.pin);
+    room.engine = null;
+    for (const member of room.members) {
+      this.sessions.delete(member.token); member.pin = ''; member.connected = false;
+      member.send({ type: 'room', room: { ...this.lobby(room, member), status: 'expired', players: [], error: 'Liên kết bộ từ đã hết hạn sau 24 giờ.' } });
+      member.send({ type: 'error', code: 'deck-expired', error: 'Liên kết bộ từ đã hết hạn sau 24 giờ.' });
+    }
+    room.members = []; room.customDeck = null;
+  }
+
+  assertActive(room) {
+    if (room.customDeck && room.customDeck.expiresAt <= this.now()) {
+      this.expireRoom(room); fail('Liên kết bộ từ đã hết hạn sau 24 giờ.', 'deck-expired');
+    }
   }
 
   broadcastLobby(room) {
@@ -57,11 +92,12 @@ export class RoomHub {
   }
 
   createRoom(session) {
+    const customDeck = session.deckId ? this.getDeck(session.deckId) : null;
     if (this.rooms.size >= this.maxRooms && !(this.rooms.get(session.pin)?.members.length === 1)) fail('Máy chủ đang đủ phòng. Hãy thử lại sau.', 'capacity');
     this.leave(session);
     let pin;
     do { pin = String(randomInt(100000, 1000000)); } while (this.rooms.has(pin));
-    const room = { pin, hostId: session.id, language: session.language, members: [session], engine: null, seenDuring: new Set(),
+    const room = { pin, hostId: session.id, language: customDeck?.language ?? session.language, customDeck, members: [session], engine: null, seenDuring: new Set(),
       pendingSeen: [], touchedAt: this.now(), tickCount: 0, match: 0 };
     session.pin = pin; session.name = 'Người chơi 1';
     this.rooms.set(pin, room); this.broadcastLobby(room);
@@ -88,6 +124,7 @@ export class RoomHub {
     session.tokens--;
     let room = this.rooms.get(session.pin);
     if (!room) fail('Phòng đã đóng. Hãy tạo phòng mới.', 'missing');
+    this.assertActive(room);
     room.touchedAt = now;
     if (message.type === 'create' || message.type === 'join') {
       session.attempts = session.attempts.filter(time => now - time < 60_000);
@@ -97,6 +134,8 @@ export class RoomHub {
       if (typeof message.pin !== 'string' || !/^\d{6}$/.test(message.pin)) fail('Mã phòng phải gồm 6 chữ số.');
       const next = this.rooms.get(message.pin);
       if (!next) fail('Không tìm thấy phòng với mã này.', 'missing');
+      this.assertActive(next);
+      if ((next.customDeck?.id ?? '') !== session.deckId) fail('Phòng dùng bộ từ khác. Hãy mở cùng liên kết bộ từ.', 'deck-scope');
       if (next === room) return;
       if (next.engine && next.engine.snapshot().phase !== 'menu') fail('Phòng đang chơi. Hãy đợi trận kết thúc.', 'started');
       if (next.members.length >= 4) fail('Phòng đã đủ 4 người.', 'full');
@@ -116,6 +155,7 @@ export class RoomHub {
     }
     if (message.type === 'language') {
       if (room.hostId !== session.id) fail('Chỉ chủ phòng đổi ngôn ngữ.', 'host-only');
+      if (room.customDeck) fail('Ngôn ngữ đã được cố định cho bộ từ này.', 'deck-language');
       if (room.engine && room.engine.snapshot().phase !== 'menu') fail('Chỉ đổi ngôn ngữ trước trận.');
       if (!['vi', 'en'].includes(message.language)) fail('Ngôn ngữ không hợp lệ.');
       if (message.language === 'en' && !this.words.some(word => word.englishMeaning)) fail('Kho từ tiếng Anh chưa sẵn sàng.');
@@ -128,13 +168,13 @@ export class RoomHub {
       if (!['survival', 'boss'].includes(message.mode)) fail('Chế độ không hợp lệ.');
       if (room.engine && ['playing', 'paused', 'countdown'].includes(room.engine.snapshot().phase)) fail('Trận đang diễn ra.');
       if (room.members.some(member => !member.connected)) fail('Hãy đợi đồng đội kết nối lại.');
-      const bank = vocabularyForLanguage(this.words, room.language);
+      const bank = room.customDeck ? customDeckWords(this.getDeck(room.customDeck.id)) : vocabularyForLanguage(this.words, room.language);
       if (!bank.length) fail('Kho từ tiếng Anh chưa sẵn sàng.');
-      const seen = Object.fromEntries([...new Set(room.members.flatMap(member => [...member.seen]))].map(word => [word, 1]));
+      const seen = room.customDeck ? {} : Object.fromEntries([...new Set(room.members.flatMap(member => [...member.seen]))].map(word => [word, 1]));
       room.seenDuring.clear(); room.pendingSeen = []; room.match++;
       room.engine = new this.Engine(Math.random, { highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: seen }, word => {
         room.seenDuring.add(word.answer); room.pendingSeen.push(word.answer);
-        for (const member of room.members) member.seen.add(word.answer);
+        if (!room.customDeck) for (const member of room.members) member.seen.add(word.answer);
       }, bank);
       room.engine.configureParty(room.members.map(member => ({ id: member.id, name: member.name, heroId: member.heroId })));
       room.engine.start(message.mode); this.broadcastLobby(room); this.broadcastFrame(room); return;
@@ -185,7 +225,7 @@ export class RoomHub {
     if (!room.engine) return;
     const events = room.engine.drainEvents();
     for (const member of room.members) if (member.connected) {
-      if (room.pendingSeen.length) member.send({ type: 'seen', words: room.pendingSeen });
+      if (room.pendingSeen.length) member.send({ type: room.customDeck ? 'deck-seen' : 'seen', words: room.pendingSeen });
       this.sendFrame(room, member, events);
     }
     room.pendingSeen = [];
@@ -197,6 +237,7 @@ export class RoomHub {
       if (!session.connected && now - session.disconnectedAt >= GRACE_MS) { this.leave(session); this.sessions.delete(session.token); }
     }
     for (const room of this.rooms.values()) {
+      if (room.customDeck && room.customDeck.expiresAt <= now) { this.expireRoom(room); continue; }
       if (!room.engine) continue;
       for (const member of room.members) if (now - member.lastMoveAt > 1200) room.engine.commandAs(member.id, () => room.engine.setMovement(0));
       room.engine.step(Math.min(100, Math.max(0, delta)));
@@ -205,8 +246,8 @@ export class RoomHub {
   }
 }
 
-export function attachRooms(server, words, { corsOrigins = '*', now = Date.now } = {}) {
-  const hub = new RoomHub(words, { now });
+export function attachRooms(server, words, { corsOrigins = '*', now = Date.now, customDecks } = {}) {
+  const hub = new RoomHub(words, { now, customDecks });
   const wss = new WebSocketServer({ noServer: true, maxPayload: 2 * 1024 * 1024, perMessageDeflate: false });
   const connectionRates = new Map();
   server.on('upgrade', (request, socket, head) => {
@@ -227,6 +268,7 @@ export function attachRooms(server, words, { corsOrigins = '*', now = Date.now }
       if (ws.bufferedAmount > 1024 * 1024) { ws.close(1013, 'Connection too slow'); return; }
       ws.send(wire(value));
       if (value.type === 'replaced') ws.close(4001, 'Session replaced');
+      if (value.type === 'room' && value.room.status === 'expired') ws.close(4004, 'Deck expired');
     };
     const helloTimeout = setTimeout(() => { if (!session) ws.close(1008, 'Hello required'); }, 10_000);
     helloTimeout.unref();

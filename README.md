@@ -4,6 +4,8 @@ React + TypeScript + Phaser 4.2.1. Giao diện tiếng Việt hoặc tiếng Anh
 
 [Chơi ngay](https://project-v-swart.vercel.app) · [API health](https://projectv-production.up.railway.app/health) · [Hướng dẫn triển khai](DEPLOYMENT.md)
 
+**Create Mode:** tạo bộ câu hỏi riêng bằng form hoặc CSV, có dạng điền từ vào câu, rồi chia sẻ link chơi dùng trong 24 giờ. Bộ tự tạo hỗ trợ chơi riêng/co-op và có thể chơi lại đến khi hết hạn. Xem [hướng dẫn Create Mode](CREATE_MODE.md) để dùng mẫu CSV và cấu hình volume Railway lưu bộ từ qua lần deploy.
+
 ## Chạy trên máy
 
 Yêu cầu Node.js 22.12+ và pnpm. Tại thư mục dự án:

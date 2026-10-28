@@ -7,6 +7,16 @@ export interface EnemyLabelRequest {
 }
 export interface EnemyLabelPlacement { id: number; x: number; y: number }
 
+/** Keep the blank visible in an above-head preview; the dock provides the full authored sentence. */
+export function compactFillPrompt(sentence: string, limit = 42): string {
+  const line = sentence.replace(/\s+/g, ' ').trim();
+  if (line.length <= limit) return line;
+  const blank = line.indexOf('___');
+  const start = Math.max(0, Math.min(line.length - (limit - 2), blank - Math.floor((limit - 5) / 2)));
+  const end = Math.min(line.length, start + limit - 2);
+  return `${start > 0 ? '…' : ''}${line.slice(start, end).trim()}${end < line.length ? '…' : ''}`;
+}
+
 const EDGE = 18;
 const GAP = 12;
 const WIDTH = 1280;

@@ -2,6 +2,7 @@ import { useLanguage, LanguagePicker } from './LanguageContext';
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { BookOpen, Crosshair, Heart, Keyboard, Maximize2, Minimize2, Music2, Pause, Play, RotateCcw, Shield, SkipForward, Skull, Sparkles, Star, Trophy, Volume2, VolumeX, X, Zap } from 'lucide-react';
 import { RoomClient } from '../game/RoomClient';
+import type { CustomDeck } from '../game/customDeck';
 import { getHeroCharacter } from '../game/characterCatalog';
 import { getHeroCombat } from '../game/heroCombat';
 import { CombatStatus, HealthMeter } from './CombatFeedback';
@@ -59,20 +60,20 @@ function Modal({ title, onClose, children, className = '' }: { title: string; on
   </dialog>;
 }
 
-export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Progress; wordBank?: readonly Word[] }) {
+export function App({ initialProgress, wordBank = WORDS, customDeck, onCreateMode, onDeckExpired }: { initialProgress: Progress; wordBank?: readonly Word[]; customDeck?: CustomDeck; onCreateMode?: () => void; onDeckExpired?: () => void }) {
   const { t, language, locale, setLanguage } = useLanguage();
   const [seenWords, setSeenWords] = useState(() => new Set([...Object.keys(initialProgress.seenWords ?? {}), ...Object.keys(initialProgress.words)]));
   const [engine] = useState(() => new RoomClient(initialProgress, word => {
-    markWordSeen(word);
+    if (!customDeck) markWordSeen(word);
     setSeenWords(previous => new Set(previous).add(word.answer));
-  }, wordBank, language));
+  }, wordBank, customDeck?.language ?? language, customDeck));
   const [snapshot, setSnapshot] = useState<Snapshot>(() => engine.snapshot());
   const [room, setRoom] = useState(() => engine.room);
   const [teamRun, setTeamRun] = useState(false);
   const [progress, setProgress] = useState(initialProgress);
   const [ready, setReady] = useState(false);
   const [loadError, setLoadError] = useState('');
-  const [saveError, setSaveError] = useState(getStorageWarning);
+  const [saveError, setSaveError] = useState(() => customDeck ? '' : getStorageWarning());
   const [settings, setSettings] = useState(() => { const s = readSettings(); return { muted: s.muted ?? false, reducedMotion: s.reducedMotion ?? matchMedia('(prefers-reduced-motion: reduce)').matches, heroId: getHeroCharacter(s.heroId).id, musicVolume: s.musicVolume ?? 0.25, sfxVolume: s.sfxVolume ?? 0.6 }; });
   const [audioState, setAudioState] = useState<AudioState>({ title: '', index: 0, total: 0, playing: false, status: 'waiting' });
   const [panel, setPanel] = useState<'help' | 'collection' | 'audio' | null>(null);
@@ -81,7 +82,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
   const [collectionLevel, setCollectionLevel] = useState('');
   const [collectionPage, setCollectionPage] = useState(0);
   const [onlyFavorites, setOnlyFavorites] = useState(false);
-  const [favoriteState] = useState(readWordFavorites);
+  const [favoriteState] = useState(() => customDeck ? { words: new Set<string>(), available: true } : readWordFavorites());
   const [favorites, setFavorites] = useState(favoriteState.words);
   const [favoriteWarning, setFavoriteWarning] = useState(favoriteState.available ? '' : 'Chưa đọc được danh sách yêu thích đã lưu.');
   const pronunciation = useWordSpeech(`${snapshot.phase}:${panel ?? 'none'}`);
@@ -97,6 +98,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
   optionsRef.current = { ...settings, language };
 
   useEffect(() => { engine.setLanguage(language); setSnapshot(engine.snapshot()); }, [engine, language]);
+  useEffect(() => { if (room.status === 'expired') onDeckExpired?.(); }, [room.status, onDeckExpired]);
   useEffect(() => {
     if (!room.languagePending && (room.status === 'lobby' || room.status === 'playing')) setLanguage(room.language);
   }, [room.language, room.languagePending, room.status, room.error, setLanguage]);
@@ -128,14 +130,15 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
     try { localStorage.setItem('zvs-settings-v1', JSON.stringify(settings)); } catch { /* Settings are optional. */ }
   }, [settings, engine, language]);
 
-  useEffect(() => { setSaveError(getStorageWarning()); }, [seenWords]);
+  useEffect(() => { if (!customDeck) setSaveError(getStorageWarning()); }, [seenWords, customDeck]);
 
   useEffect(() => {
     const summary = snapshot.summary;
     if (!summary || saved.current.has(summary.id)) return;
     saved.current.add(summary.id);
+    if (customDeck) return;
     void saveRun(summary).then(next => { setProgress(next); engine.setProgress(next); setSaveError(getStorageWarning()); }).catch(() => setSaveError('Trình duyệt chưa lưu được tiến trình. Bạn vẫn có thể chơi tiếp trong phiên này.'));
-  }, [snapshot.summary, engine]);
+  }, [snapshot.summary, engine, customDeck]);
 
   useEffect(() => {
     const pause = () => { engine.pause(); setSnapshot(engine.snapshot()); };
@@ -174,8 +177,8 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
     const next = new Set(favorites);
     if (next.has(word)) next.delete(word); else next.add(word);
     setFavorites(next);
-    setFavoriteWarning(saveWordFavorites(next) ? '' : 'Yêu thích chỉ được giữ trong phiên này vì trình duyệt chưa lưu được.');
-  }, [favorites]);
+    if (!customDeck) setFavoriteWarning(saveWordFavorites(next) ? '' : 'Yêu thích chỉ được giữ trong phiên này vì trình duyệt chưa lưu được.');
+  }, [favorites, customDeck]);
   const onKey = (event: KeyboardEvent<HTMLDivElement>) => {
     if (engine.snapshot().phase !== 'playing' || panel) return;
     if (engine.snapshot().hp <= 0 && event.key !== 'Escape') { event.preventDefault(); return; }
@@ -241,7 +244,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
       </a>
       <p className="header-tagline">Learn English.<br /><strong>Live another day.</strong></p>
       <div className="header-actions">
-        <LanguagePicker disabled={Boolean(room.languagePending) || snapshot.phase !== 'menu' || room.status === 'connecting' || room.status === 'disconnected' || (room.status === 'lobby' && room.selfId !== room.hostId)} title={t(room.status === 'lobby' && room.selfId !== room.hostId ? 'Chủ phòng chọn ngôn ngữ trước trận.' : 'Đổi ngôn ngữ trước khi bắt đầu trận.')} />
+        <LanguagePicker disabled={Boolean(customDeck) || Boolean(room.languagePending) || snapshot.phase !== 'menu' || room.status === 'connecting' || room.status === 'disconnected' || (room.status === 'lobby' && room.selfId !== room.hostId)} title={t(customDeck ? 'Ngôn ngữ do người tạo bộ câu hỏi chọn.' : room.status === 'lobby' && room.selfId !== room.hostId ? 'Chủ phòng chọn ngôn ngữ trước trận.' : 'Đổi ngôn ngữ trước khi bắt đầu trận.')} />
         <span className="record"><Trophy size={18} /><span>{t("Kỷ lục")}<strong>{progress.highScore.toLocaleString(locale)}</strong></span></span>
         <button className="icon-button" onClick={() => setSettings(s => ({ ...s, muted: !s.muted }))} aria-pressed={settings.muted} aria-label={settings.muted ? t("Bật âm thanh") : t("Tắt âm thanh")} title={settings.muted ? t("Bật âm thanh") : t("Tắt âm thanh")}>{settings.muted ? <VolumeX size={20} /> : <Volume2 size={20} />}</button>
         <button className={`icon-button ${settings.reducedMotion ? 'selected' : ''}`} onClick={() => setSettings(s => ({ ...s, reducedMotion: !s.reducedMotion }))} aria-pressed={settings.reducedMotion} aria-label={t("Giảm chuyển động")} title={t("Giảm chuyển động")}><Sparkles size={20} /></button>
@@ -249,6 +252,11 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
         <button className="text-button collection-link" onClick={() => showPanel('collection')}><BookOpen size={17} />{t(" Từ đã gặp")}</button>
       </div>
     </header>
+
+    {(customDeck || (!playing && onCreateMode)) && <div className="custom-deck-bar">
+      {customDeck ? <div><strong>{customDeck.title}</strong><span>{t('Hết hạn {0}', [new Date(customDeck.expiresAt).toLocaleString(locale)])}</span></div> : <span>{t('Chơi với bộ từ của bạn')}</span>}
+      <div>{customDeck && <a href={location.pathname}>{t('Về game chính')}</a>}{!playing && onCreateMode && <button className="text-button" onClick={onCreateMode}>{t('Tạo bộ câu hỏi')}</button>}</div>
+    </div>}
 
     <section className="game-wrap" aria-label={t("Khu vực trò chơi")}>
       <div className="game-meta"><span><span className="status-dot" /> {playing ? t(getDistrictAt(snapshot.playerX).name).toLocaleUpperCase(locale) : t("THÀNH PHỐ BỎ HOANG")}</span>{playing ? <div className="learning-progress" title={t("Bậc {0}: {1}", [snapshot.learning.level, t(LEARNING_LEVEL_LABELS[snapshot.learning.level])])}>
@@ -263,7 +271,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
         {snapshot.phase === 'menu' && ready && <div className="menu-screen">
           <div className="menu-copy has-lobby">
             <MultiplayerLobby room={room} onJoin={pin => engine.joinRoom(pin)} onCreate={() => engine.createRoom()} onOffline={() => engine.playOffline()} />
-            {snapshot.vocabulary.remaining > 0 ? <button className="button primary start-button" disabled={!canStart} onClick={() => start('survival')}><Crosshair size={21} /> {room.status === 'lobby' && room.selfId !== room.hostId ? t("Chờ chủ phòng bắt đầu") : t("Bắt đầu sinh tồn")}</button> : <button className="button primary start-button" onClick={() => showPanel('collection')}><BookOpen size={21} />{t(" Xem từ đã gặp")}</button>}
+            {customDeck || snapshot.vocabulary.remaining > 0 ? <button className="button primary start-button" disabled={!canStart} onClick={() => start('survival')}><Crosshair size={21} /> {room.status === 'lobby' && room.selfId !== room.hostId ? t("Chờ chủ phòng bắt đầu") : t("Bắt đầu sinh tồn")}</button> : <button className="button primary start-button" onClick={() => showPanel('collection')}><BookOpen size={21} />{t(" Xem từ đã gặp")}</button>}
             <div className="menu-secondary"><button className="text-button" disabled={!canStart || !snapshot.vocabulary.bossReady} title={snapshot.vocabulary.bossReady ? t("Đấu Tank với các từ dài chưa gặp") : t("Cần ít nhất 9 từ dài chưa gặp để đấu Tank")} onClick={() => start('boss')}><Shield size={17} />{t(" Tập đấu Boss")}</button><button className="text-button" onClick={() => showPanel('help')}><Keyboard size={18} />{t(" Cách chơi")}</button></div>
           </div>
           <HeroPicker value={acknowledgedHero ?? settings.heroId} taken={takenHeroes} disabled={room.status === 'connecting' || room.status === 'disconnected'} onChange={heroId => { if (room.status === 'offline') setSettings(current => ({ ...current, heroId })); else engine.setHero(heroId); }} />
@@ -314,7 +322,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
       <div className="game-footer"><div><button className="text-button" onClick={() => showPanel('help')}>{t("Hướng dẫn")}</button><button className="icon-button" onClick={() => void toggleFullscreen()} aria-label={fullscreen ? t("Thoát toàn màn hình") : t("Toàn màn hình")}>{fullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}</button></div></div>
     </section>
 
-    <footer className="page-footer"><span>{t("Prototype · Tiến trình chỉ lưu trên trình duyệt này.")}</span></footer>
+    <footer className="page-footer"><span>{t(customDeck ? 'Bộ tự tạo có thể chơi lại trong thời hạn của link.' : 'Prototype · Tiến trình chỉ lưu trên trình duyệt này.')}</span></footer>
     {saveError && <p className="storage-notice" role="status">{t(saveError)}</p>}
 
     {snapshot.phase === 'paused' && !panel && <Modal title={room.status === 'disconnected' || room.status === 'connecting' ? t("Đang mất kết nối phòng") : t("Nghỉ lấy hơi.")} onClose={room.status === 'disconnected' || room.status === 'connecting' ? () => engine.connect() : resume} className="pause-modal">
@@ -344,7 +352,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
     </Modal>}
     {panel === 'help' && <Modal title={t("Sống sót bằng từ vựng")} onClose={() => setPanel(null)}><GameHelp /><button className="button primary" onClick={() => setPanel(null)}>{t("Đã hiểu")}</button></Modal>}
     {panel === 'collection' && <Modal title={t("Từ đã gặp")} onClose={() => setPanel(null)}>
-      <p className="modal-intro">{encounteredWords.length.toLocaleString(locale)}/{wordBank.length.toLocaleString(locale)}{t(" từ trong sổ của bạn · ")}{progress.runs}{t(" trận đã lưu. Từ được ghi nhớ ngay khi xuất hiện; thống kê của trận được lưu khi kết thúc.")}</p>
+      <p className="modal-intro">{customDeck ? t('{0}/{1} từ đã gặp trong phiên này.', [encounteredWords.length, wordBank.length]) : <>{encounteredWords.length.toLocaleString(locale)}/{wordBank.length.toLocaleString(locale)}{t(" từ trong sổ của bạn · ")}{progress.runs}{t(" trận đã lưu. Từ được ghi nhớ ngay khi xuất hiện; thống kê của trận được lưu khi kết thúc.")}</>}</p>
       <div className="collection-search"><label htmlFor="collection-search">{t("Tìm từ hoặc nghĩa")}</label><input id="collection-search" type="search" value={collectionQuery} onChange={event => { setCollectionQuery(event.target.value); setCollectionPage(0); }} placeholder={t("Nhập từ tiếng Anh hoặc nghĩa tiếng Việt…")} /></div>
       <div className="collection-filters">
         <label>{t("Từ loại")}<select value={collectionPos} onChange={event => { setCollectionPos(event.target.value); setCollectionPage(0); }}><option value="">{t("Tất cả từ loại")}</option>{Object.entries(PART_OF_SPEECH_LABELS).map(([value, label]) => <option key={value} value={value}>{t(label)}</option>)}</select></label>
@@ -355,7 +363,7 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
       {collectionWords.length ? <><LearningPanel words={visibleCollection} results={collectionResults} {...learningActions} /><div className="collection-pagination"><button className="text-button" disabled={page === 0} onClick={() => { pronunciation.stop(); setCollectionPage(page - 1); }}>{t("← Trước")}</button><span>{t("Trang ")}{page + 1}/{collectionPages} · {collectionWords.length.toLocaleString(locale)}{t(" từ")}</span><button className="text-button" disabled={page + 1 === collectionPages} onClick={() => { pronunciation.stop(); setCollectionPage(page + 1); }}>{t("Sau →")}</button></div></> : <div className="empty-state"><BookOpen size={36} /><strong>{collectionFiltered ? t("Chưa tìm thấy từ phù hợp.") : t("Trang sổ còn trống.")}</strong><p>{collectionFiltered ? t("Thử từ khác hoặc đổi bộ lọc từ loại, độ khó, yêu thích.") : t("Từ sẽ được thêm vào đây ngay khi xuất hiện trong trận.")}</p></div>}
     </Modal>}
     {snapshot.phase === 'over' && summary && !panel && <Modal title={vocabularyComplete ? t("Đã hoàn thành kho từ!") : t("Một trận nữa nhé?")} onClose={home} className="summary-modal">
-      <p className="modal-intro">{vocabularyComplete ? teamRun ? t("Cả đội đã hoàn tất kho từ của phòng và dọn sạch đợt cuối. Chiến thắng!") : t("Bạn đã gặp đủ {0} từ trong từ điển của game và dọn sạch đợt cuối. Bạn đã chiến thắng!", [snapshot.vocabulary.total.toLocaleString(locale)]) : t("{0} đã cầm cự {1}. Còn {2} từ mới{3}.", [teamRun ? t("Cả đội") : t("Bạn"), formatTime(summary.durationMs), snapshot.vocabulary.remaining.toLocaleString(locale), teamRun ? t(" trong kho của phòng") : t(" cho hành trình tiếp theo")])}</p>
+      <p className="modal-intro">{vocabularyComplete ? customDeck ? t('Đã hoàn thành toàn bộ {0} câu trong bộ này!', [snapshot.vocabulary.total]) : teamRun ? t("Cả đội đã hoàn tất kho từ của phòng và dọn sạch đợt cuối. Chiến thắng!") : t("Bạn đã gặp đủ {0} từ trong từ điển của game và dọn sạch đợt cuối. Bạn đã chiến thắng!", [snapshot.vocabulary.total.toLocaleString(locale)]) : t("{0} đã cầm cự {1}. Còn {2} từ mới{3}.", [teamRun ? t("Cả đội") : t("Bạn"), formatTime(summary.durationMs), snapshot.vocabulary.remaining.toLocaleString(locale), teamRun ? t(" trong kho của phòng") : t(" cho hành trình tiếp theo")])}</p>
       {room.error && <p className="lobby-feedback" role="status">{t(room.error)}</p>}
       <div className="result-score"><Trophy size={24} /><strong>{summary.score.toLocaleString(locale)}</strong><span>{teamRun ? t("điểm cả đội") : t("điểm")}</span></div>
       <div className="result-stats"><div><strong>{summary.kills}</strong><span>{teamRun ? t("quái cả đội hạ") : 'zombie'}</span></div><div><strong>{summary.words}</strong><span>{teamRun ? t("từ cả đội") : t("từ hoàn thành")}</span></div><div><strong>{Math.round(summary.accuracy)}%</strong><span>{teamRun ? t("chính xác đội") : t("chính xác")}</span></div><div><strong>{Math.round(summary.wpm)}</strong><span>{teamRun ? t("WPM cả đội") : 'WPM'}</span></div><div><strong>{summary.bestCombo}</strong><span>{teamRun ? t("combo đội") : t("combo cao nhất")}</span></div></div>
@@ -363,8 +371,8 @@ export function App({ initialProgress, wordBank = WORDS }: { initialProgress: Pr
       <LearningPanel words={wordBank} results={summary.results} runReview {...learningActions} />
       {learningStatus}
       <button className="text-button" onClick={() => showPanel('collection')}><BookOpen size={17} />{t(" Mở sổ từ đã gặp")}</button>
-      <div className="summary-actions">{snapshot.vocabulary.remaining > 0 ? <button className="button primary" disabled={!canReplay} onClick={() => start('survival')}><RotateCcw size={18} /> {canReplay ? t("Chơi trận mới") : t("Chờ chủ phòng chơi tiếp")}</button> : <button className="button primary" onClick={() => showPanel('collection')}><BookOpen size={18} />{t(" Xem từ đã gặp")}</button>}<button className="button secondary" onClick={home}>{online ? room.selfId === room.hostId ? t("Về sảnh phòng") : t("Rời phòng") : t("Về màn bắt đầu")}</button></div>
-      <p className="save-caption">{(saveError && t(saveError)) || t("{0} được lưu trên trình duyệt này. WPM = {1}ký tự đúng có hiệu lực ÷ 5 ÷ phút chơi.", [teamRun ? t("Kết quả chung của đội") : t("Kết quả"), teamRun ? t("tổng ") : ''])}</p>
+      <div className="summary-actions">{customDeck || snapshot.vocabulary.remaining > 0 ? <button className="button primary" disabled={!canReplay} onClick={() => start('survival')}><RotateCcw size={18} /> {canReplay ? t("Chơi trận mới") : t("Chờ chủ phòng chơi tiếp")}</button> : <button className="button primary" onClick={() => showPanel('collection')}><BookOpen size={18} />{t(" Xem từ đã gặp")}</button>}<button className="button secondary" onClick={home}>{online ? room.selfId === room.hostId ? t("Về sảnh phòng") : t("Rời phòng") : t("Về màn bắt đầu")}</button></div>
+      <p className="save-caption">{customDeck ? t('Bạn có thể luyện lại toàn bộ bộ câu hỏi đến khi link hết hạn.') : (saveError && t(saveError)) || t("{0} được lưu trên trình duyệt này. WPM = {1}ký tự đúng có hiệu lực ÷ 5 ÷ phút chơi.", [teamRun ? t("Kết quả chung của đội") : t("Kết quả"), teamRun ? t("tổng ") : ''])}</p>
     </Modal>}
   </main>;
 }

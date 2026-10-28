@@ -4,18 +4,21 @@ import { historyKeysFor } from './vocabulary';
 import type { Language } from '../i18n';
 import { vocabularyForLanguage } from './englishDictionary';
 import { localizeSnapshot } from './localization';
+import { customDeckWords, type CustomDeck } from './customDeck';
 import type { Enemy, EnginePort, GameEvent, ItemKind, Progress, Snapshot, Word, WorldObject } from './types';
 
 export interface RoomState {
-  status: 'connecting' | 'lobby' | 'playing' | 'disconnected' | 'offline';
+  status: 'connecting' | 'lobby' | 'playing' | 'disconnected' | 'offline' | 'expired';
   pin: string; selfId: string; hostId: string;
   players: { id: string; name: string; heroId: string; connected: boolean }[];
   error: string;
   language: Language;
   languagePending?: boolean;
+  customDeck?: Pick<CustomDeck, 'id' | 'title' | 'language' | 'createdAt' | 'expiresAt'> & { entryCount: number };
 }
 const SESSION_KEY = 'zvs-room-session-v1';
 const initialRoom = (language: Language = 'vi'): RoomState => ({ status: 'connecting', pin: '', selfId: '', hostId: '', players: [], error: '', language, languagePending: false });
+const freshProgress = (): Progress => ({ highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: {} });
 
 export function roomSocketUrl(apiUrl = import.meta.env.VITE_API_URL, locationUrl = location.href): string {
   const url = new URL(apiUrl?.trim() || locationUrl);
@@ -54,9 +57,15 @@ export class RoomClient implements EnginePort {
   private timeout?: ReturnType<typeof setTimeout>;
   private movement: -1 | 0 | 1 = 0;
   private progress: Progress;
+  private expiryTimer?: ReturnType<typeof setTimeout>;
+  private sessionKey: string;
 
-  constructor(progress: Progress, private onWordSeen: (word: Word) => void, bank: readonly Word[], language: Language = 'vi') {
-    this.state = initialRoom(language); this.progress = progress;
+  constructor(progress: Progress, private onWordSeen: (word: Word) => void, bank: readonly Word[], language: Language = 'vi', private customDeck?: CustomDeck) {
+    if (customDeck) { language = customDeck.language; bank = customDeckWords(customDeck); }
+    this.state = initialRoom(language); this.progress = customDeck ? freshProgress() : progress;
+    this.sessionKey = customDeck ? `${SESSION_KEY}:deck:${customDeck.id}` : SESSION_KEY;
+    if (customDeck) this.state.customDeck = { id: customDeck.id, title: customDeck.title, language, createdAt: customDeck.createdAt,
+      expiresAt: customDeck.expiresAt, entryCount: customDeck.entries.length };
     this.words = new Map(bank.map(word => [word.answer, word]));
     for (const word of bank) for (const key of historyKeysFor(word)) {
       const answers = this.historyAnswers.get(key);
@@ -64,7 +73,8 @@ export class RoomClient implements EnginePort {
     }
     this.local = this.createLocal(language);
     this.setProgress(progress);
-    try { this.resumeToken = sessionStorage.getItem(SESSION_KEY) ?? ''; } catch { /* Reconnection remains optional. */ }
+    try { this.resumeToken = sessionStorage.getItem(this.sessionKey) ?? ''; } catch { /* Reconnection remains optional. */ }
+    this.watchExpiry();
   }
 
   get room(): RoomState { return this.state; }
@@ -88,13 +98,16 @@ export class RoomClient implements EnginePort {
     this.socket.send(JSON.stringify(message)); return true;
   }
   private command(command: object): void {
+    if (!this.activeDeck()) return;
     if (!this.remote || this.remote.phase !== 'playing' || this.localPaused || this.state.status !== 'playing') return;
     this.send({ type: 'command', seq: this.sequence++, command });
   }
 
   connect(): void {
+    if (!this.activeDeck()) return;
     if (this.socket && (this.socket.readyState === WebSocket.OPEN || this.socket.readyState === WebSocket.CONNECTING)) return;
     this.disposed = false; clearTimeout(this.retryTimer); clearTimeout(this.timeout);
+    this.watchExpiry();
     this.update({ status: 'connecting', error: '' });
     let socket: WebSocket;
     try { socket = new WebSocket(roomSocketUrl()); }
@@ -102,7 +115,8 @@ export class RoomClient implements EnginePort {
     this.socket = socket;
     socket.onopen = () => {
       if (this.socket !== socket) return;
-      this.send({ type: 'hello', resumeToken: this.resumeToken, heroId: this.preferredHero, seen: [...this.seen], language: this.state.language });
+      this.send({ type: 'hello', resumeToken: this.resumeToken, heroId: this.preferredHero, seen: this.customDeck ? [] : [...this.seen],
+        language: this.state.language, ...(this.customDeck ? { deckId: this.customDeck.id } : {}) });
     };
     socket.onmessage = event => {
       if (this.socket !== socket || this.disposed) return;
@@ -112,6 +126,7 @@ export class RoomClient implements EnginePort {
     socket.onerror = () => { /* onclose owns reconnection and the visible message. */ };
     socket.onclose = event => {
       if (this.socket !== socket || this.disposed || this.state.status === 'offline') return;
+      if (event.code === 4004) { this.expireDeck(); return; }
       this.socket = null; this.movement = 0; this.pendingLanguage = null; clearInterval(this.heartbeat); clearTimeout(this.timeout);
       this.update({ status: 'disconnected', languagePending: false, error: event.code === 4001 ? 'Phiên này đang mở ở kết nối khác.' : 'Mất kết nối. Đang thử nối lại; trận vẫn tiếp tục trên máy chủ.' });
       if (event.code !== 4001 && this.reconnects++ < 6) this.retryTimer = setTimeout(() => this.connect(), Math.min(3000, this.reconnects * 500));
@@ -124,17 +139,23 @@ export class RoomClient implements EnginePort {
   private receive(message: Record<string, any>): void {
     if (message.type === 'session') {
       this.resumeToken = message.token; this.sequence = Math.max(this.sequence, message.nextSeq ?? 0);
-      try { sessionStorage.setItem(SESSION_KEY, this.resumeToken); } catch { /* No credential is required to keep this socket open. */ }
+      try { sessionStorage.setItem(this.sessionKey, this.resumeToken); } catch { /* No credential is required to keep this socket open. */ }
       return;
     }
-    if (message.type === 'error') { this.pendingHero = ''; this.pendingLanguage = null; this.update({ error: String(message.error), languagePending: false }); return; }
+    if (message.type === 'error') {
+      if (this.customDeck && ['deck-expired', 'deck-missing'].includes(message.code)) { this.expireDeck(String(message.error)); return; }
+      this.pendingHero = ''; this.pendingLanguage = null; this.update({ error: String(message.error), languagePending: false }); return;
+    }
     if (message.type === 'replaced') { this.disposed = true; this.update({ status: 'disconnected', error: String(message.error) }); return; }
     if (message.type === 'room') {
       clearTimeout(this.timeout); this.reconnects = 0;
       const room = message.room as RoomState;
+      if (room.status === 'expired') { this.expireDeck(room.error); return; }
+      if ((room.customDeck?.id ?? '') !== (this.customDeck?.id ?? '')) { this.expireDeck('Phòng dùng bộ từ khác. Hãy mở cùng liên kết bộ từ.'); return; }
       room.language = room.language === 'en' ? 'en' : 'vi';
       if (room.language !== this.state.language) this.local = this.createLocal(room.language);
       const changedRoom = room.pin !== this.state.pin;
+      if (this.customDeck && (changedRoom || room.status === 'lobby' || this.remote?.phase === 'over')) this.seen.clear();
       if (changedRoom || room.language === this.pendingLanguage || room.hostId !== room.selfId) this.pendingLanguage = null;
       const hero = room.players.find(player => player.id === room.selfId)?.heroId;
       if (hero) { this.preferredHero = hero; this.pendingHero = ''; }
@@ -146,7 +167,8 @@ export class RoomClient implements EnginePort {
       }
       this.update({ ...room, languagePending: this.pendingLanguage !== null }); return;
     }
-    if (message.type === 'seen' && Array.isArray(message.words)) {
+    if ((message.type === 'seen' || message.type === 'deck-seen') && Array.isArray(message.words)) {
+      if (this.customDeck ? message.type !== 'deck-seen' : message.type !== 'seen') return;
       for (const answer of message.words) {
         const word = this.words.get(answer);
         if (!word || this.seen.has(answer)) continue;
@@ -170,6 +192,7 @@ export class RoomClient implements EnginePort {
   }
 
   setProgress(progress: Progress): void {
+    if (this.customDeck) { this.progress = freshProgress(); this.local.setProgress(this.progress); return; }
     this.progress = progress;
     this.local.setProgress(progress);
     for (const key of [...Object.keys(progress.seenWords ?? {}), ...Object.keys(progress.words)]) {
@@ -177,6 +200,7 @@ export class RoomClient implements EnginePort {
     }
   }
   setLanguage(language: Language): void {
+    if (this.customDeck) return;
     if (!['vi', 'en'].includes(language) || (language === this.state.language && !this.pendingLanguage)) return;
     if ((this.remote && this.remote.phase !== 'menu') || this.state.status === 'playing' || (this.state.status === 'lobby' && this.state.hostId !== this.state.selfId)) return;
     if (this.state.status === 'offline' && this.local.snapshot().phase !== 'menu') return;
@@ -191,7 +215,7 @@ export class RoomClient implements EnginePort {
   private createLocal(language: Language): GameEngine {
     const local = new GameEngine(Math.random, this.progress, word => {
       this.seen.add(word.answer); this.onWordSeen(this.words.get(word.answer) ?? word);
-    }, vocabularyForLanguage([...this.words.values()], language));
+    }, this.customDeck ? [...this.words.values()] : vocabularyForLanguage([...this.words.values()], language));
     local.setHero(this.preferredHero);
     return local;
   }
@@ -205,10 +229,15 @@ export class RoomClient implements EnginePort {
     if (!this.send({ type: 'hero', heroId })) this.pendingHero = '';
   }
   start(mode: 'survival' | 'boss' = 'survival'): void {
-    if (this.state.status === 'offline') this.local.start(mode);
+    if (!this.activeDeck()) return;
+    if (this.state.status === 'offline') {
+      if (this.customDeck) { this.seen.clear(); this.local = this.createLocal(this.state.language); }
+      this.local.start(mode);
+    }
     else { this.localPaused = false; this.send({ type: 'start', mode }); }
   }
   setMovement(direction: -1 | 0 | 1): void {
+    if (!this.activeDeck()) return;
     if (this.state.status === 'offline') this.local.setMovement(direction);
     else { this.movement = direction; this.command({ kind: 'move', direction }); }
   }
@@ -217,13 +246,14 @@ export class RoomClient implements EnginePort {
     else this.command({ kind: 'cancel-approach' });
   }
   step(deltaMs: number): void {
+    if (!this.activeDeck()) return;
     if (this.state.status === 'offline') this.local.step(deltaMs);
     else if (this.remote?.phase === 'playing') this.displayClock = Math.min(this.remoteClock + 50, this.displayClock + deltaMs);
   }
-  typeKey(key: string): void { if (this.state.status === 'offline') this.local.typeKey(key); else this.command({ kind: 'type', key }); }
-  cycleTarget(direction = 1): void { if (this.state.status === 'offline') this.local.cycleTarget(direction); else this.command({ kind: 'cycle', direction: direction < 0 ? -1 : 1 }); }
-  useItem(item: ItemKind): void { if (this.state.status === 'offline') this.local.useItem(item); else this.command({ kind: 'item', item }); }
-  interactWorld(): void { if (this.state.status === 'offline') this.local.interactWorld(); else this.command({ kind: 'interact' }); }
+  typeKey(key: string): void { if (!this.activeDeck()) return; if (this.state.status === 'offline') this.local.typeKey(key); else this.command({ kind: 'type', key }); }
+  cycleTarget(direction = 1): void { if (!this.activeDeck()) return; if (this.state.status === 'offline') this.local.cycleTarget(direction); else this.command({ kind: 'cycle', direction: direction < 0 ? -1 : 1 }); }
+  useItem(item: ItemKind): void { if (!this.activeDeck()) return; if (this.state.status === 'offline') this.local.useItem(item); else this.command({ kind: 'item', item }); }
+  interactWorld(): void { if (!this.activeDeck()) return; if (this.state.status === 'offline') this.local.interactWorld(); else this.command({ kind: 'interact' }); }
   pause(): void {
     if (this.state.status === 'offline') this.local.pause();
     else if (this.remote?.phase === 'playing') {
@@ -236,7 +266,10 @@ export class RoomClient implements EnginePort {
   }
   resume(): void { if (this.state.status === 'offline') this.local.resume(); else if (this.state.status === 'playing') this.localPaused = false; }
   toMenu(): void {
-    if (this.state.status === 'offline') this.local.toMenu();
+    if (this.state.status === 'offline') {
+      if (this.customDeck) this.local = this.createLocal(this.state.language);
+      this.local.toMenu();
+    }
     else if (this.remote?.phase === 'over' && this.state.hostId === this.state.selfId) this.returnToLobby();
     else this.createRoom();
   }
@@ -251,22 +284,42 @@ export class RoomClient implements EnginePort {
     if (this.state.status === 'offline') return this.local.drainEvents();
     const events = this.events; this.events = []; return events;
   }
-  joinRoom(pin: string): void { this.send({ type: 'join', pin: pin.trim() }); }
+  joinRoom(pin: string): void { if (this.activeDeck()) this.send({ type: 'join', pin: pin.trim() }); }
   createRoom(): void {
+    if (!this.activeDeck()) return;
     if (this.socket?.readyState === WebSocket.OPEN && !this.disposed) this.send({ type: 'create' });
     else { this.resumeToken = ''; this.reconnects = 0; this.connect(); }
   }
   playOffline(): void {
+    if (!this.activeDeck()) return;
     this.dispose(); this.remote = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
     this.local.toMenu(); this.local.setHero(this.preferredHero);
     this.syncLocalSeen();
-    this.update({ ...initialRoom(this.state.language), status: 'offline' });
+    this.update({ ...initialRoom(this.state.language), status: 'offline' }); this.watchExpiry();
   }
   dispose(): void {
     this.disposed = true; clearInterval(this.heartbeat); clearTimeout(this.retryTimer); clearTimeout(this.timeout);
+    clearTimeout(this.expiryTimer);
     this.socket?.close(); this.socket = null; this.movement = 0;
   }
   private syncLocalSeen(): void {
+    if (this.customDeck) { this.local.setProgress(freshProgress()); return; }
     this.local.setProgress({ highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: Object.fromEntries([...this.seen].map(answer => [answer, 1])) });
+  }
+
+  private activeDeck(): boolean {
+    if (this.state.status === 'expired') return false;
+    if (this.customDeck && Date.now() >= this.customDeck.expiresAt) { this.expireDeck(); return false; }
+    return true;
+  }
+  private watchExpiry(): void {
+    clearTimeout(this.expiryTimer);
+    if (this.customDeck && this.activeDeck()) this.expiryTimer = setTimeout(() => this.expireDeck(), Math.max(0, this.customDeck.expiresAt - Date.now()));
+  }
+  private expireDeck(error = 'Liên kết bộ từ đã hết hạn sau 24 giờ.'): void {
+    this.dispose(); this.local.toMenu(); this.remote = null; this.remoteEnemies = []; this.remoteObjects = []; this.events = [];
+    this.resumeToken = ''; this.localPaused = false;
+    try { sessionStorage.removeItem(this.sessionKey); } catch { /* Storage is optional. */ }
+    this.update({ status: 'expired', players: [], pin: '', error, languagePending: false });
   }
 }

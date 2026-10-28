@@ -946,26 +946,26 @@ var require_receiver = __commonJS({
         }
         const buf = this.consume(2);
         if ((buf[0] & 48) !== 0) {
-          const error = this.createError(
+          const error2 = this.createError(
             RangeError,
             "RSV2 and RSV3 must be clear",
             true,
             1002,
             "WS_ERR_UNEXPECTED_RSV_2_3"
           );
-          cb(error);
+          cb(error2);
           return;
         }
         const compressed = (buf[0] & 64) === 64;
         if (compressed && !this._extensions[PerMessageDeflate2.extensionName]) {
-          const error = this.createError(
+          const error2 = this.createError(
             RangeError,
             "RSV1 must be clear",
             true,
             1002,
             "WS_ERR_UNEXPECTED_RSV_1"
           );
-          cb(error);
+          cb(error2);
           return;
         }
         this._fin = (buf[0] & 128) === 128;
@@ -973,109 +973,109 @@ var require_receiver = __commonJS({
         this._payloadLength = buf[1] & 127;
         if (this._opcode === 0) {
           if (compressed) {
-            const error = this.createError(
+            const error2 = this.createError(
               RangeError,
               "RSV1 must be clear",
               true,
               1002,
               "WS_ERR_UNEXPECTED_RSV_1"
             );
-            cb(error);
+            cb(error2);
             return;
           }
           if (!this._fragmented) {
-            const error = this.createError(
+            const error2 = this.createError(
               RangeError,
               "invalid opcode 0",
               true,
               1002,
               "WS_ERR_INVALID_OPCODE"
             );
-            cb(error);
+            cb(error2);
             return;
           }
           this._opcode = this._fragmented;
         } else if (this._opcode === 1 || this._opcode === 2) {
           if (this._fragmented) {
-            const error = this.createError(
+            const error2 = this.createError(
               RangeError,
               `invalid opcode ${this._opcode}`,
               true,
               1002,
               "WS_ERR_INVALID_OPCODE"
             );
-            cb(error);
+            cb(error2);
             return;
           }
           this._compressed = compressed;
         } else if (this._opcode > 7 && this._opcode < 11) {
           if (!this._fin) {
-            const error = this.createError(
+            const error2 = this.createError(
               RangeError,
               "FIN must be set",
               true,
               1002,
               "WS_ERR_EXPECTED_FIN"
             );
-            cb(error);
+            cb(error2);
             return;
           }
           if (compressed) {
-            const error = this.createError(
+            const error2 = this.createError(
               RangeError,
               "RSV1 must be clear",
               true,
               1002,
               "WS_ERR_UNEXPECTED_RSV_1"
             );
-            cb(error);
+            cb(error2);
             return;
           }
           if (this._payloadLength > 125 || this._opcode === 8 && this._payloadLength === 1) {
-            const error = this.createError(
+            const error2 = this.createError(
               RangeError,
               `invalid payload length ${this._payloadLength}`,
               true,
               1002,
               "WS_ERR_INVALID_CONTROL_PAYLOAD_LENGTH"
             );
-            cb(error);
+            cb(error2);
             return;
           }
         } else {
-          const error = this.createError(
+          const error2 = this.createError(
             RangeError,
             `invalid opcode ${this._opcode}`,
             true,
             1002,
             "WS_ERR_INVALID_OPCODE"
           );
-          cb(error);
+          cb(error2);
           return;
         }
         if (!this._fin && !this._fragmented) this._fragmented = this._opcode;
         this._masked = (buf[1] & 128) === 128;
         if (this._isServer) {
           if (!this._masked) {
-            const error = this.createError(
+            const error2 = this.createError(
               RangeError,
               "MASK must be set",
               true,
               1002,
               "WS_ERR_EXPECTED_MASK"
             );
-            cb(error);
+            cb(error2);
             return;
           }
         } else if (this._masked) {
-          const error = this.createError(
+          const error2 = this.createError(
             RangeError,
             "MASK must be clear",
             true,
             1002,
             "WS_ERR_UNEXPECTED_MASK"
           );
-          cb(error);
+          cb(error2);
           return;
         }
         if (this._payloadLength === 126) this._state = GET_PAYLOAD_LENGTH_16;
@@ -1110,14 +1110,14 @@ var require_receiver = __commonJS({
         const buf = this.consume(8);
         const num = buf.readUInt32BE(0);
         if (num > Math.pow(2, 53 - 32) - 1) {
-          const error = this.createError(
+          const error2 = this.createError(
             RangeError,
             "Unsupported WebSocket frame: payload length > 2^53 - 1",
             false,
             1009,
             "WS_ERR_UNSUPPORTED_DATA_PAYLOAD_LENGTH"
           );
-          cb(error);
+          cb(error2);
           return;
         }
         this._payloadLength = num * Math.pow(2, 32) + buf.readUInt32BE(4);
@@ -1133,14 +1133,14 @@ var require_receiver = __commonJS({
         if (this._payloadLength && this._opcode < 8) {
           this._totalPayloadLength += this._payloadLength;
           if (this._totalPayloadLength > this._maxPayload && this._maxPayload > 0) {
-            const error = this.createError(
+            const error2 = this.createError(
               RangeError,
               "Max payload size exceeded",
               false,
               1009,
               "WS_ERR_UNSUPPORTED_MESSAGE_LENGTH"
             );
-            cb(error);
+            cb(error2);
             return;
           }
         }
@@ -1183,14 +1183,14 @@ var require_receiver = __commonJS({
           return;
         }
         if (this._maxFragments > 0 && ++this._numFragments > this._maxFragments) {
-          const error = this.createError(
+          const error2 = this.createError(
             RangeError,
             "Too many message fragments",
             false,
             1008,
             "WS_ERR_TOO_MANY_BUFFERED_PARTS"
           );
-          cb(error);
+          cb(error2);
           return;
         }
         if (this._compressed) {
@@ -1218,14 +1218,14 @@ var require_receiver = __commonJS({
           if (buf.length) {
             this._messageLength += buf.length;
             if (this._messageLength > this._maxPayload && this._maxPayload > 0) {
-              const error = this.createError(
+              const error2 = this.createError(
                 RangeError,
                 "Max payload size exceeded",
                 false,
                 1009,
                 "WS_ERR_UNSUPPORTED_MESSAGE_LENGTH"
               );
-              cb(error);
+              cb(error2);
               return;
             }
             this._fragments.push(buf);
@@ -1277,14 +1277,14 @@ var require_receiver = __commonJS({
         } else {
           const buf = concat(fragments, messageLength);
           if (!this._skipUTF8Validation && !isValidUTF8(buf)) {
-            const error = this.createError(
+            const error2 = this.createError(
               Error,
               "invalid UTF-8 sequence",
               true,
               1007,
               "WS_ERR_INVALID_UTF8"
             );
-            cb(error);
+            cb(error2);
             return;
           }
           if (this._state === INFLATING || this._allowSynchronousEvents) {
@@ -1316,14 +1316,14 @@ var require_receiver = __commonJS({
           } else {
             const code = data.readUInt16BE(0);
             if (!isValidStatusCode(code)) {
-              const error = this.createError(
+              const error2 = this.createError(
                 RangeError,
                 `invalid status code ${code}`,
                 true,
                 1002,
                 "WS_ERR_INVALID_CLOSE_CODE"
               );
-              cb(error);
+              cb(error2);
               return;
             }
             const buf = new FastBuffer(
@@ -1332,14 +1332,14 @@ var require_receiver = __commonJS({
               data.length - 2
             );
             if (!this._skipUTF8Validation && !isValidUTF8(buf)) {
-              const error = this.createError(
+              const error2 = this.createError(
                 Error,
                 "invalid UTF-8 sequence",
                 true,
                 1007,
                 "WS_ERR_INVALID_UTF8"
               );
-              cb(error);
+              cb(error2);
               return;
             }
             this._loop = false;
@@ -2053,10 +2053,10 @@ var require_event_target = __commonJS({
             callListener(handler, this, event);
           };
         } else if (type === "error") {
-          wrapper = function onError(error) {
+          wrapper = function onError(error2) {
             const event = new ErrorEvent("error", {
-              error,
-              message: error.message
+              error: error2,
+              message: error2.message
             });
             event[kTarget] = this;
             callListener(handler, this, event);
@@ -2273,7 +2273,7 @@ var require_websocket = __commonJS({
     var http = require("http");
     var net = require("net");
     var tls = require("tls");
-    var { randomBytes, createHash } = require("crypto");
+    var { randomBytes: randomBytes2, createHash } = require("crypto");
     var { Duplex, Readable } = require("stream");
     var { URL } = require("url");
     var PerMessageDeflate2 = require_permessage_deflate();
@@ -2824,7 +2824,7 @@ var require_websocket = __commonJS({
         }
       }
       const defaultPort = isSecure ? 443 : 80;
-      const key = randomBytes(16).toString("base64");
+      const key = randomBytes2(16).toString("base64");
       const request = isSecure ? https.request : http.request;
       const protocolSet = /* @__PURE__ */ new Set();
       let perMessageDeflate;
@@ -3207,7 +3207,7 @@ var require_stream = __commonJS({
         const data = !isBinary && duplex._readableState.objectMode ? msg.toString() : msg;
         if (!duplex.push(data)) ws.pause();
       });
-      ws.once("error", function error(err) {
+      ws.once("error", function error2(err) {
         if (duplex.destroyed) return;
         terminateOnDestroy = false;
         duplex.destroy(err);
@@ -3223,7 +3223,7 @@ var require_stream = __commonJS({
           return;
         }
         let called = false;
-        ws.once("error", function error(err2) {
+        ws.once("error", function error2(err2) {
           called = true;
           callback(err2);
         });
@@ -3720,12 +3720,16 @@ var require_websocket_server = __commonJS({
 // backend/rooms.mjs
 var rooms_exports = {};
 __export(rooms_exports, {
+  CUSTOM_DECK_BODY_LIMIT: () => CUSTOM_DECK_BODY_LIMIT,
+  CustomDeckStore: () => CustomDeckStore,
   RoomHub: () => RoomHub,
   attachRooms: () => attachRooms,
-  mergeEnglishDefinitions: () => mergeEnglishDefinitions
+  customDeckWords: () => customDeckWords,
+  mergeEnglishDefinitions: () => mergeEnglishDefinitions,
+  validateCustomDeck: () => validateCustomDeck
 });
 module.exports = __toCommonJS(rooms_exports);
-var import_node_crypto = require("node:crypto");
+var import_node_crypto2 = require("node:crypto");
 
 // node_modules/.pnpm/ws@8.22.0/node_modules/ws/wrapper.mjs
 var import_stream = __toESM(require_stream(), 1);
@@ -4001,10 +4005,13 @@ function historyKeysFor(word) {
   return [...new Set([...answersFor(word), ...word.historyAliases ?? []].map((value) => value.trim().toLowerCase()))];
 }
 function createChallenge(word, kind, id, rng = Math.random) {
+  if (word.customQuestion && word.customQuestion.type !== "mixed") kind = word.customQuestion.type;
   const letters = [...word.answer];
   const hint = word.translationHint ?? letters.map((letter, index) => index === 0 || index === letters.length - 1 ? letter : "_").join(" ");
   let prompt = word.meaning;
-  if (kind === "scramble") {
+  if (kind === "fill") {
+    prompt = word.customQuestion?.sentence ?? word.meaning;
+  } else if (kind === "scramble") {
     for (let index = letters.length - 1; index > 0; index--) {
       const other = Math.floor(Math.max(0, Math.min(0.999999, rng())) * (index + 1));
       [letters[index], letters[other]] = [letters[other], letters[index]];
@@ -8859,10 +8866,10 @@ function createWorldObjects() {
 var insideLane = (x, from, to, radius) => x >= Math.min(from, to) - radius && x <= Math.max(from, to) + radius;
 function clipAtGate(from, to, objects) {
   let result = to;
-  for (const object of objects) {
-    if (object.kind !== "gate" || object.state !== "closed" || from === object.x) continue;
-    if (from < object.x && result >= object.x) result = object.x - 4;
-    if (from > object.x && result <= object.x) result = object.x + 4;
+  for (const object2 of objects) {
+    if (object2.kind !== "gate" || object2.state !== "closed" || from === object2.x) continue;
+    if (from < object2.x && result >= object2.x) result = object2.x - 4;
+    if (from > object2.x && result <= object2.x) result = object2.x + 4;
   }
   return result;
 }
@@ -9567,7 +9574,7 @@ var GameEngine = class {
     if (this.input.length > 0) return;
     const alive = [
       ...this.enemies.filter((enemy) => this.targetAvailable(enemy.id) && (!this.party.size || Math.abs(enemy.x - this.playerX) <= 1e3) && canTargetEnemy(this.enemies, enemy, this.playerX)),
-      ...this.worldObjects.filter((object) => object.kind === "barrel" && object.state === "active" && !object.resolving && this.targetAvailable(-object.id) && Math.abs(object.x - this.playerX) < 760).map((object) => ({ id: -object.id, x: object.x }))
+      ...this.worldObjects.filter((object2) => object2.kind === "barrel" && object2.state === "active" && !object2.resolving && this.targetAvailable(-object2.id) && Math.abs(object2.x - this.playerX) < 760).map((object2) => ({ id: -object2.id, x: object2.x }))
     ].sort((left, right) => left.x - right.x);
     if (!alive.length) return;
     const previous = alive.findIndex((enemy) => enemy.id === this.targetId);
@@ -9834,7 +9841,7 @@ var GameEngine = class {
         multiplier: 1 + this.momentum * 0.1,
         remaining: Math.max(0, this.momentumUntil - this.clock)
       },
-      world: { nearby: this.nearbyWorld(), healingProgress: this.party.size ? Math.max(0, ...this.healingProgress.values()) : this.worldObjects.find((object) => object.kind === "healing-zone" && object.progress > 0)?.progress ?? 0 },
+      world: { nearby: this.nearbyWorld(), healingProgress: this.party.size ? Math.max(0, ...this.healingProgress.values()) : this.worldObjects.find((object2) => object2.kind === "healing-zone" && object2.progress > 0)?.progress ?? 0 },
       ...this.actorId && this.party.has(this.actorId) ? { party: { selfId: this.actorId, players: [...this.players] } } : {},
       hero: {
         id: this.heroId,
@@ -9853,70 +9860,70 @@ var GameEngine = class {
     return events;
   }
   getWorldTarget() {
-    return this.worldObjects.find((object) => -object.id === this.targetId && object.kind === "barrel" && this.targetAvailable(-object.id) && object.state === "active" && !object.resolving && object.challenge && Math.abs(object.x - this.playerX) < 800);
+    return this.worldObjects.find((object2) => -object2.id === this.targetId && object2.kind === "barrel" && this.targetAvailable(-object2.id) && object2.state === "active" && !object2.resolving && object2.challenge && Math.abs(object2.x - this.playerX) < 800);
   }
   nearbyWorld() {
-    const object = this.worldObjects.filter((entry) => entry.kind !== "barrel" && entry.state !== "used" && Math.abs(entry.x - this.playerX) <= entry.radius).sort((a, b) => Math.abs(a.x - this.playerX) - Math.abs(b.x - this.playerX))[0];
-    return object ? {
-      id: object.id,
-      kind: object.kind,
-      state: object.state,
-      charges: object.charges,
-      label: object.kind === "gate" ? object.state === "closed" ? "M\u1EDF c\u1ED5ng" : "\u0110\xF3ng c\u1ED5ng ch\u1EB7n qu\xE1i" : "D\u1EEBng l\u1EA1i \u0111\u1EC3 h\u1ED3i m\xE1u"
+    const object2 = this.worldObjects.filter((entry) => entry.kind !== "barrel" && entry.state !== "used" && Math.abs(entry.x - this.playerX) <= entry.radius).sort((a, b) => Math.abs(a.x - this.playerX) - Math.abs(b.x - this.playerX))[0];
+    return object2 ? {
+      id: object2.id,
+      kind: object2.kind,
+      state: object2.state,
+      charges: object2.charges,
+      label: object2.kind === "gate" ? object2.state === "closed" ? "M\u1EDF c\u1ED5ng" : "\u0110\xF3ng c\u1ED5ng ch\u1EB7n qu\xE1i" : "D\u1EEBng l\u1EA1i \u0111\u1EC3 h\u1ED3i m\xE1u"
     } : null;
   }
   interactWorld() {
     if (this.phase !== "playing" || this.input) return;
     const nearby = this.nearbyWorld();
-    const object = this.worldObjects.find((entry) => entry.id === nearby?.id && entry.kind === "gate");
-    if (!object) return;
-    object.state = object.state === "open" ? "closed" : "open";
-    this.emit({ type: "world-interact", worldObjectId: object.id, worldKind: object.kind, x: object.x, state: object.state });
-    this.inform(object.state === "closed" ? "\u0110\xE3 \u0111\xF3ng c\u1ED5ng. Qu\xE1i b\u1ECB ch\u1EB7n; Boss c\xF3 th\u1EC3 ph\xE1 qua." : "\u0110\xE3 m\u1EDF c\u1ED5ng.");
+    const object2 = this.worldObjects.find((entry) => entry.id === nearby?.id && entry.kind === "gate");
+    if (!object2) return;
+    object2.state = object2.state === "open" ? "closed" : "open";
+    this.emit({ type: "world-interact", worldObjectId: object2.id, worldKind: object2.kind, x: object2.x, state: object2.state });
+    this.inform(object2.state === "closed" ? "\u0110\xE3 \u0111\xF3ng c\u1ED5ng. Qu\xE1i b\u1ECB ch\u1EB7n; Boss c\xF3 th\u1EC3 ph\xE1 qua." : "\u0110\xE3 m\u1EDF c\u1ED5ng.");
   }
   updateWorld(delta) {
-    for (const object of this.worldObjects) {
-      if (object.kind === "barrel" && object.state === "idle" && this.words >= 6 && this.deck.availability.remaining > 2 && Math.abs(object.x - this.playerX) <= 550) {
+    for (const object2 of this.worldObjects) {
+      if (object2.kind === "barrel" && object2.state === "idle" && this.words >= 6 && this.deck.availability.remaining > 2 && Math.abs(object2.x - this.playerX) <= 550) {
         const word = this.allocateWords(1)?.[0];
         if (word) {
-          object.challenge = this.challenge(word, "translate");
-          object.state = "active";
+          object2.challenge = this.challenge(word, "translate");
+          object2.state = "active";
         }
       }
-      if (object.kind !== "healing-zone" || object.state === "used") continue;
-      if (Math.abs(object.x - this.playerX) > object.radius || this.movement || this.lastMovedAt === this.clock || this.hp >= getHeroCombat(this.heroId).maxHp || this.clock - this.lastPlayerHurt < 1e3) {
-        this.setHealingProgress(object, 0);
+      if (object2.kind !== "healing-zone" || object2.state === "used") continue;
+      if (Math.abs(object2.x - this.playerX) > object2.radius || this.movement || this.lastMovedAt === this.clock || this.hp >= getHeroCombat(this.heroId).maxHp || this.clock - this.lastPlayerHurt < 1e3) {
+        this.setHealingProgress(object2, 0);
         continue;
       }
-      const previous = this.party.size ? this.healingProgress.get(object.id) ?? 0 : object.progress;
+      const previous = this.party.size ? this.healingProgress.get(object2.id) ?? 0 : object2.progress;
       const progress = Math.min(1, previous + delta / HEAL_DWELL_MS);
-      this.setHealingProgress(object, progress);
+      this.setHealingProgress(object2, progress);
       if (progress < 1) continue;
       const value = Math.min(15, getHeroCombat(this.heroId).maxHp - this.hp);
       this.hp += value;
-      object.charges--;
-      this.setHealingProgress(object, 0);
-      if (!object.charges) {
-        object.state = "used";
-        for (const actor of this.party.values()) actor.state.healingProgress.delete(object.id);
+      object2.charges--;
+      this.setHealingProgress(object2, 0);
+      if (!object2.charges) {
+        object2.state = "used";
+        for (const actor of this.party.values()) actor.state.healingProgress.delete(object2.id);
       }
       this.emit({
         type: "world-interact",
-        worldObjectId: object.id,
-        worldKind: object.kind,
-        state: object.state,
-        x: object.x,
+        worldObjectId: object2.id,
+        worldKind: object2.kind,
+        state: object2.state,
+        x: object2.x,
         value
       });
     }
   }
-  setHealingProgress(object, progress) {
+  setHealingProgress(object2, progress) {
     if (!this.party.size) {
-      object.progress = progress;
+      object2.progress = progress;
       return;
     }
-    this.healingProgress.set(object.id, progress);
-    object.progress = Math.max(0, ...[...this.party.values()].map((actor) => actor.state.healingProgress.get(object.id) ?? 0));
+    this.healingProgress.set(object2.id, progress);
+    object2.progress = Math.max(0, ...[...this.party.values()].map((actor) => actor.state.healingProgress.get(object2.id) ?? 0));
   }
   changeMomentum(change) {
     const previous = this.momentum;
@@ -9925,11 +9932,11 @@ var GameEngine = class {
     if (change > 0) this.momentumUntil = this.clock + MOMENTUM_LIFETIME;
     if (previous !== this.momentum) this.emit({ type: "momentum", value: this.momentum, duration: MOMENTUM_LIFETIME, x: this.playerX });
   }
-  explodeBarrel(object) {
-    object.state = "used";
-    object.resolving = false;
-    object.charges = 0;
-    const targets = this.enemies.filter((enemy) => enemy.kind !== "tank" && Math.abs(enemy.x - object.x) <= BARREL_RADIUS);
+  explodeBarrel(object2) {
+    object2.state = "used";
+    object2.resolving = false;
+    object2.charges = 0;
+    const targets = this.enemies.filter((enemy) => enemy.kind !== "tank" && Math.abs(enemy.x - object2.x) <= BARREL_RADIUS);
     for (const enemy of targets) {
       this.blockEnemy(enemy, "stun", 1200);
       if (enemy.hp > 1 && enemy.state === "alive") {
@@ -9942,15 +9949,15 @@ var GameEngine = class {
     this.pushEnemies(targets, 90);
     this.emit({
       type: "world-explosion",
-      worldObjectId: object.id,
+      worldObjectId: object2.id,
       worldKind: "barrel",
-      x: object.x,
+      x: object2.x,
       radius: BARREL_RADIUS,
       duration: 1200,
       targets: targets.map((enemy) => ({ enemyId: enemy.id, x: enemy.x }))
     });
-    this.bornAt.delete(object.challenge.id);
-    this.revealed.delete(object.challenge.id);
+    this.bornAt.delete(object2.challenge.id);
+    this.revealed.delete(object2.challenge.id);
   }
   getTarget() {
     return this.enemies.find((enemy) => enemy.id === this.targetId && this.targetAvailable(enemy.id) && canTargetEnemy(this.enemies, enemy, this.playerX));
@@ -9988,7 +9995,7 @@ var GameEngine = class {
       const time = (entry) => Math.max(0, Math.abs(entry.x - this.playerX) - (entry.kind === "tank" ? 180 : 92)) / entry.speed;
       return time(a) - time(b);
     })[0];
-    const barrel = this.worldObjects.find((object) => object.kind === "barrel" && this.targetAvailable(-object.id) && object.state === "active" && !object.resolving && Math.abs(object.x - this.playerX) < 760);
+    const barrel = this.worldObjects.find((object2) => object2.kind === "barrel" && this.targetAvailable(-object2.id) && object2.state === "active" && !object2.resolving && Math.abs(object2.x - this.playerX) < 760);
     this.chooseTarget(enemy?.id ?? (barrel ? -barrel.id : null));
   }
   rand() {
@@ -10183,21 +10190,21 @@ var GameEngine = class {
   }
   resolveProjectile(shot) {
     if (shot.enemyId < 0) {
-      const object = this.worldObjects.find((entry) => entry.id === -shot.enemyId && entry.challenge?.id === shot.challengeId && entry.state === "active");
-      if (!object) return;
+      const object2 = this.worldObjects.find((entry) => entry.id === -shot.enemyId && entry.challenge?.id === shot.challengeId && entry.state === "active");
+      if (!object2) return;
       if (shot.effective) this.emit({
         type: "hit",
         shotId: shot.shotId,
         challengeId: shot.challengeId,
-        worldObjectId: object.id,
+        worldObjectId: object2.id,
         worldKind: "barrel",
-        x: object.x,
+        x: object2.x,
         glyph: shot.glyph,
         duration: 0,
         firedAt: shot.firedAt,
         impactAt: this.clock
       });
-      if (shot.final) this.explodeBarrel(object);
+      if (shot.final) this.explodeBarrel(object2);
       return;
     }
     const enemy = this.enemies.find((entry) => entry.id === shot.enemyId && entry.challenge.id === shot.challengeId);
@@ -10415,7 +10422,7 @@ var GameEngine = class {
   }
   checkVocabularyComplete() {
     if (this.phase !== "playing" || this.enemies.length || this.projectiles.length) return;
-    if (this.worldObjects.some((object) => object.kind === "barrel" && object.state === "active")) return;
+    if (this.worldObjects.some((object2) => object2.kind === "barrel" && object2.state === "active")) return;
     if (this.deck.availability.remaining > 0) return;
     this.finishRun("vocabulary-complete");
   }
@@ -10535,6 +10542,200 @@ function vocabularyForLanguage(words, language) {
   return bank;
 }
 
+// src/game/customDeck.ts
+var CUSTOM_DECK_MAX_ENTRIES = 500;
+var CUSTOM_DECK_TTL_MS = 24 * 60 * 60 * 1e3;
+var PARTS = /* @__PURE__ */ new Set([
+  "noun",
+  "verb",
+  "adjective",
+  "adverb",
+  "preposition",
+  "pronoun",
+  "conjunction",
+  "interjection",
+  "determiner",
+  "numeral",
+  "prefix",
+  "suffix",
+  "abbreviation",
+  "unspecified"
+]);
+var TYPES = /* @__PURE__ */ new Set(["mixed", "translate", "missing", "scramble", "fill"]);
+var object = (value) => !!value && typeof value === "object" && !Array.isArray(value);
+var text = (value) => typeof value === "string" ? value.trim() : "";
+var invalidControl = (value) => /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(value);
+function validateEntries(input, rows) {
+  const errors = [], entries = [];
+  if (!Array.isArray(input) || input.length < 1 || input.length > CUSTOM_DECK_MAX_ENTRIES) {
+    return { entries, errors: [{ field: "entries", message: "Use between 1 and 500 questions." }] };
+  }
+  const answers = /* @__PURE__ */ new Map();
+  for (const [index, value] of input.entries()) {
+    const row = rows?.[index] ?? index + 1, before = errors.length;
+    const error2 = (field, message) => errors.push({ row, field, message });
+    if (!object(value)) {
+      error2("entry", "Question must be an object.");
+      continue;
+    }
+    const answer = text(value.answer).toLowerCase(), meaning = text(value.meaning), sentence = text(value.sentence);
+    if (!/^[a-z]{1,18}$/.test(answer)) error2("answer", "Answer must contain 1\u201318 English letters, with no spaces.");
+    else if (answers.has(answer)) error2("answer", `Duplicate answer; first used in row ${answers.get(answer)}.`);
+    else answers.set(answer, row);
+    if (typeof value.meaning !== "string" && value.meaning !== void 0) error2("meaning", "Meaning must be text.");
+    if (meaning.length > 400 || invalidControl(meaning)) error2("meaning", "Meaning must be at most 400 characters with no control characters.");
+    if (!PARTS.has(value.partOfSpeech)) error2("partOfSpeech", "Choose a valid part of speech.");
+    if (!Number.isInteger(value.level) || Number(value.level) < 1 || Number(value.level) > 10) error2("level", "Level must be a whole number from 1 to 10.");
+    if (!TYPES.has(value.type)) error2("type", "Type must be mixed, translate, missing, scramble, or fill.");
+    if (value.sentence !== void 0 && typeof value.sentence !== "string") error2("sentence", "Sentence must be text.");
+    if (sentence.length > 300 || invalidControl(sentence)) error2("sentence", "Sentence must be at most 300 characters with no control characters.");
+    if (value.type === "fill") {
+      const blanks = sentence.match(/_+/g) ?? [];
+      if (blanks.length !== 1 || blanks[0] !== "___") error2("sentence", "Fill-in-the-blank questions need exactly one ___ placeholder.");
+      if (!sentence.replace("___", "").trim()) error2("sentence", "Add sentence context around the blank.");
+    } else if (!meaning) error2("meaning", "Add a meaning or definition.");
+    if (errors.length === before) entries.push({
+      answer,
+      meaning: meaning || sentence,
+      partOfSpeech: value.partOfSpeech,
+      level: value.level,
+      type: value.type,
+      ...sentence ? { sentence } : {}
+    });
+  }
+  return { entries: errors.length ? [] : entries, errors };
+}
+function validateCustomDeck(input) {
+  if (!object(input)) return { errors: [{ field: "deck", message: "Deck must be an object." }] };
+  const title = text(input.title), validated = validateEntries(input.entries);
+  const errors = [...validated.errors];
+  if (!title || title.length > 80 || invalidControl(title)) errors.unshift({ field: "title", message: "Title must contain 1\u201380 characters with no control characters." });
+  if (input.language !== "vi" && input.language !== "en") errors.unshift({ field: "language", message: "Language must be vi or en." });
+  return errors.length ? { errors } : { data: { title, language: input.language, entries: validated.entries }, errors };
+}
+function customDeckWords(deck) {
+  return deck.entries.map((entry) => ({
+    id: `custom-${entry.answer}`,
+    answer: entry.answer,
+    meaning: entry.meaning,
+    englishMeaning: entry.meaning,
+    category: deck.title,
+    partOfSpeech: entry.partOfSpeech,
+    difficulty: entry.level <= 3 ? 1 : entry.level <= 6 ? 2 : 3,
+    learningLevel: entry.level,
+    customQuestion: { type: entry.type, language: deck.language, ...entry.sentence ? { sentence: entry.sentence } : {} }
+  }));
+}
+
+// backend/custom-decks.mjs
+var import_node_crypto = require("node:crypto");
+var import_promises = require("node:fs/promises");
+var import_node_path = __toESM(require("node:path"), 1);
+var CUSTOM_DECK_TTL = 24 * 60 * 60 * 1e3;
+var CUSTOM_DECK_BODY_LIMIT = 1024 * 1024;
+var ID = /^[a-f0-9]{32}$/;
+var error = (message, code, status, details) => Object.assign(new Error(message), { code, status, ...details ? { errors: details } : {} });
+var CustomDeckStore = class {
+  constructor(directory, { now = Date.now, maxDecks = 1e3, maxBytes = 100 * 1024 * 1024, cleanupMs = 6e4 } = {}) {
+    this.directory = import_node_path.default.resolve(directory);
+    this.now = now;
+    this.maxDecks = maxDecks;
+    this.maxBytes = maxBytes;
+    this.cleanupMs = cleanupMs;
+    this.decks = /* @__PURE__ */ new Map();
+    this.bytes = 0;
+    this.pending = Promise.resolve();
+  }
+  async init() {
+    await (0, import_promises.mkdir)(this.directory, { recursive: true });
+    for (const entry of await (0, import_promises.readdir)(this.directory, { withFileTypes: true })) {
+      if (!entry.isFile() || !/^[a-f0-9]{32}\.json$/.test(entry.name)) continue;
+      const file = import_node_path.default.join(this.directory, entry.name);
+      try {
+        const info = await (0, import_promises.lstat)(file);
+        if (!info.isFile() || info.size > CUSTOM_DECK_BODY_LIMIT) continue;
+        const deck = JSON.parse(await (0, import_promises.readFile)(file, "utf8"));
+        const parsed = validateCustomDeck(deck);
+        if (!parsed.data || !ID.test(deck.id) || `${deck.id}.json` !== entry.name || !Number.isSafeInteger(deck.createdAt) || !Number.isSafeInteger(deck.expiresAt) || deck.expiresAt - deck.createdAt !== CUSTOM_DECK_TTL || deck.createdAt > this.now()) continue;
+        if (deck.expiresAt <= this.now()) {
+          await (0, import_promises.rm)(file, { force: true });
+          continue;
+        }
+        if (this.decks.size >= this.maxDecks || this.bytes + info.size > this.maxBytes) continue;
+        this.decks.set(deck.id, { deck: { ...parsed.data, id: deck.id, createdAt: deck.createdAt, expiresAt: deck.expiresAt }, bytes: info.size });
+        this.bytes += info.size;
+      } catch (cause) {
+        if (cause.code !== "ENOENT" && !(cause instanceof SyntaxError)) throw cause;
+      }
+    }
+    this.timer = setInterval(() => {
+      this.cleanup().catch(() => {
+      });
+    }, this.cleanupMs);
+    this.timer.unref();
+    return this;
+  }
+  create(input) {
+    const operation = this.pending.then(async () => {
+      const parsed = validateCustomDeck(input);
+      if (!parsed.data) throw error("B\u1ED9 t\u1EEB ch\u01B0a h\u1EE3p l\u1EC7.", "validation", 422, parsed.errors);
+      await this.cleanup();
+      const createdAt = this.now();
+      const deck = { ...parsed.data, id: (0, import_node_crypto.randomBytes)(16).toString("hex"), createdAt, expiresAt: createdAt + CUSTOM_DECK_TTL };
+      const body = JSON.stringify(deck), bytes = Buffer.byteLength(body);
+      if (bytes > CUSTOM_DECK_BODY_LIMIT) throw error("B\u1ED9 t\u1EEB v\u01B0\u1EE3t gi\u1EDBi h\u1EA1n 1 MiB.", "too-large", 413);
+      if (this.decks.size >= this.maxDecks || this.bytes + bytes > this.maxBytes) throw error("Kho b\u1ED9 t\u1EEB \u0111ang \u0111\u1EA7y. H\xE3y th\u1EED l\u1EA1i sau.", "capacity", 503);
+      const temporary = import_node_path.default.join(this.directory, `${deck.id}.tmp`), file = import_node_path.default.join(this.directory, `${deck.id}.json`);
+      try {
+        await (0, import_promises.writeFile)(temporary, body, { flag: "wx", mode: 384 });
+        await (0, import_promises.rename)(temporary, file);
+      } catch (cause) {
+        await (0, import_promises.rm)(temporary, { force: true }).catch(() => {
+        });
+        throw cause;
+      }
+      this.decks.set(deck.id, { deck, bytes });
+      this.bytes += bytes;
+      return structuredClone(deck);
+    });
+    this.pending = operation.catch(() => {
+    });
+    return operation;
+  }
+  get(id) {
+    if (typeof id !== "string" || !ID.test(id)) throw error("Kh\xF4ng t\xECm th\u1EA5y b\u1ED9 t\u1EEB.", "deck-missing", 404);
+    const stored = this.decks.get(id);
+    if (!stored) throw error("Kh\xF4ng t\xECm th\u1EA5y b\u1ED9 t\u1EEB ho\u1EB7c li\xEAn k\u1EBFt \u0111\xE3 h\u1EBFt h\u1EA1n.", "deck-missing", 404);
+    if (stored.deck.expiresAt <= this.now()) {
+      this.remove(id).catch(() => {
+      });
+      throw error("Li\xEAn k\u1EBFt b\u1ED9 t\u1EEB \u0111\xE3 h\u1EBFt h\u1EA1n sau 24 gi\u1EDD.", "deck-expired", 410);
+    }
+    return structuredClone(stored.deck);
+  }
+  async remove(id) {
+    const stored = this.decks.get(id);
+    if (!stored) return;
+    this.decks.delete(id);
+    this.bytes -= stored.bytes;
+    await (0, import_promises.rm)(import_node_path.default.join(this.directory, `${id}.json`), { force: true });
+  }
+  async cleanup() {
+    for (const [id, stored] of this.decks) if (stored.deck.expiresAt <= this.now()) await this.remove(id);
+    for (const entry of await (0, import_promises.readdir)(this.directory, { withFileTypes: true })) {
+      if (!entry.isFile() || !/^[a-f0-9]{32}\.(json|tmp)$/.test(entry.name)) continue;
+      const id = entry.name.slice(0, 32);
+      if (this.decks.has(id)) continue;
+      const file = import_node_path.default.join(this.directory, entry.name);
+      const info = await (0, import_promises.lstat)(file).catch(() => null);
+      if (info?.isFile() && this.now() - info.mtimeMs > CUSTOM_DECK_TTL) await (0, import_promises.rm)(file, { force: true });
+    }
+  }
+  close() {
+    clearInterval(this.timer);
+  }
+};
+
 // backend/rooms.mjs
 var HEROES = HERO_CHARACTERS.map((hero) => hero.id);
 var ITEMS = /* @__PURE__ */ new Set(["health", "freeze", "damage", "shield"]);
@@ -10544,11 +10745,12 @@ var fail = (message, code = "invalid") => {
   throw Object.assign(new Error(message), { code });
 };
 var RoomHub = class {
-  constructor(words, { now = Date.now, Engine = GameEngine, maxRooms = 32 } = {}) {
+  constructor(words, { now = Date.now, Engine = GameEngine, maxRooms = 32, customDecks } = {}) {
     this.words = words;
     this.now = now;
     this.Engine = Engine;
     this.maxRooms = maxRooms;
+    this.customDecks = customDecks;
     this.rooms = /* @__PURE__ */ new Map();
     this.sessions = /* @__PURE__ */ new Map();
     this.allowedWords = new Set(words.map((word) => word.answer));
@@ -10556,12 +10758,17 @@ var RoomHub = class {
   hello(message, send) {
     if (message.language !== void 0 && !["vi", "en"].includes(message.language)) fail("Ng\xF4n ng\u1EEF kh\xF4ng h\u1EE3p l\u1EC7.");
     if (!Array.isArray(message.seen) || message.seen.length > 1e5 || message.seen.some((word) => typeof word !== "string" || !/^[a-z]{3,18}$/.test(word))) fail("L\u1ECBch s\u1EED t\u1EEB kh\xF4ng h\u1EE3p l\u1EC7.");
-    const old = typeof message.resumeToken === "string" ? this.sessions.get(message.resumeToken) : void 0;
+    const deckId = message.deckId ?? "";
+    if (typeof deckId !== "string") fail("B\u1ED9 t\u1EEB kh\xF4ng h\u1EE3p l\u1EC7.");
+    const deck = deckId ? this.getDeck(deckId) : null;
+    const candidate = typeof message.resumeToken === "string" ? this.sessions.get(message.resumeToken) : void 0;
+    const old = candidate?.deckId === deckId ? candidate : void 0;
     const session = old && this.rooms.has(old.pin) ? old : {
-      id: (0, import_node_crypto.randomUUID)(),
-      token: (0, import_node_crypto.randomUUID)(),
+      id: (0, import_node_crypto2.randomUUID)(),
+      token: (0, import_node_crypto2.randomUUID)(),
       heroId: HEROES.includes(message.heroId) ? message.heroId : "soldier",
-      language: message.language ?? "vi",
+      language: deck?.language ?? message.language ?? "vi",
+      deckId,
       seen: /* @__PURE__ */ new Set(),
       pin: "",
       connected: true,
@@ -10575,21 +10782,23 @@ var RoomHub = class {
     session.send = send;
     session.connected = true;
     session.disconnectedAt = 0;
-    for (const word of message.seen) if (this.allowedWords.has(word)) session.seen.add(word);
+    if (!deckId) {
+      for (const word of message.seen) if (this.allowedWords.has(word)) session.seen.add(word);
+    }
     this.sessions.set(session.token, session);
     send({ type: "session", token: session.token, selfId: session.id, nextSeq: (session.lastSeq ?? -1) + 1 });
     if (!session.pin) {
       try {
         this.createRoom(session);
-      } catch (error) {
+      } catch (error2) {
         this.sessions.delete(session.token);
         session.connected = false;
-        throw error;
+        throw error2;
       }
     } else {
       const room = this.rooms.get(session.pin);
       room.engine?.setPartyConnected(session.id, true);
-      if (room.seenDuring.size) send({ type: "seen", words: [...room.seenDuring] });
+      if (room.seenDuring.size) send({ type: deckId ? "deck-seen" : "seen", words: [...room.seenDuring] });
       this.broadcastLobby(room);
       this.sendFrame(room, session, []);
     }
@@ -10603,23 +10812,52 @@ var RoomHub = class {
       hostId: room.hostId,
       language: room.language,
       players: room.members.map((member) => ({ id: member.id, name: member.name, heroId: member.heroId, connected: member.connected })),
-      error: ""
+      error: "",
+      ...room.customDeck ? { customDeck: this.deckMetadata(room.customDeck) } : {}
     };
+  }
+  deckMetadata(deck) {
+    return { id: deck.id, title: deck.title, language: deck.language, createdAt: deck.createdAt, expiresAt: deck.expiresAt, entryCount: deck.entries.length };
+  }
+  getDeck(id) {
+    if (!this.customDecks) fail("Kh\xF4ng t\xECm th\u1EA5y b\u1ED9 t\u1EEB.", "deck-missing");
+    return this.customDecks.get(id);
+  }
+  expireRoom(room) {
+    this.rooms.delete(room.pin);
+    room.engine = null;
+    for (const member of room.members) {
+      this.sessions.delete(member.token);
+      member.pin = "";
+      member.connected = false;
+      member.send({ type: "room", room: { ...this.lobby(room, member), status: "expired", players: [], error: "Li\xEAn k\u1EBFt b\u1ED9 t\u1EEB \u0111\xE3 h\u1EBFt h\u1EA1n sau 24 gi\u1EDD." } });
+      member.send({ type: "error", code: "deck-expired", error: "Li\xEAn k\u1EBFt b\u1ED9 t\u1EEB \u0111\xE3 h\u1EBFt h\u1EA1n sau 24 gi\u1EDD." });
+    }
+    room.members = [];
+    room.customDeck = null;
+  }
+  assertActive(room) {
+    if (room.customDeck && room.customDeck.expiresAt <= this.now()) {
+      this.expireRoom(room);
+      fail("Li\xEAn k\u1EBFt b\u1ED9 t\u1EEB \u0111\xE3 h\u1EBFt h\u1EA1n sau 24 gi\u1EDD.", "deck-expired");
+    }
   }
   broadcastLobby(room) {
     for (const member of room.members) if (member.connected) member.send({ type: "room", room: this.lobby(room, member) });
   }
   createRoom(session) {
+    const customDeck = session.deckId ? this.getDeck(session.deckId) : null;
     if (this.rooms.size >= this.maxRooms && !(this.rooms.get(session.pin)?.members.length === 1)) fail("M\xE1y ch\u1EE7 \u0111ang \u0111\u1EE7 ph\xF2ng. H\xE3y th\u1EED l\u1EA1i sau.", "capacity");
     this.leave(session);
     let pin;
     do {
-      pin = String((0, import_node_crypto.randomInt)(1e5, 1e6));
+      pin = String((0, import_node_crypto2.randomInt)(1e5, 1e6));
     } while (this.rooms.has(pin));
     const room = {
       pin,
       hostId: session.id,
-      language: session.language,
+      language: customDeck?.language ?? session.language,
+      customDeck,
       members: [session],
       engine: null,
       seenDuring: /* @__PURE__ */ new Set(),
@@ -10654,6 +10892,7 @@ var RoomHub = class {
     session.tokens--;
     let room = this.rooms.get(session.pin);
     if (!room) fail("Ph\xF2ng \u0111\xE3 \u0111\xF3ng. H\xE3y t\u1EA1o ph\xF2ng m\u1EDBi.", "missing");
+    this.assertActive(room);
     room.touchedAt = now;
     if (message.type === "create" || message.type === "join") {
       session.attempts = session.attempts.filter((time) => now - time < 6e4);
@@ -10666,6 +10905,8 @@ var RoomHub = class {
       if (typeof message.pin !== "string" || !/^\d{6}$/.test(message.pin)) fail("M\xE3 ph\xF2ng ph\u1EA3i g\u1ED3m 6 ch\u1EEF s\u1ED1.");
       const next = this.rooms.get(message.pin);
       if (!next) fail("Kh\xF4ng t\xECm th\u1EA5y ph\xF2ng v\u1EDBi m\xE3 n\xE0y.", "missing");
+      this.assertActive(next);
+      if ((next.customDeck?.id ?? "") !== session.deckId) fail("Ph\xF2ng d\xF9ng b\u1ED9 t\u1EEB kh\xE1c. H\xE3y m\u1EDF c\xF9ng li\xEAn k\u1EBFt b\u1ED9 t\u1EEB.", "deck-scope");
       if (next === room) return;
       if (next.engine && next.engine.snapshot().phase !== "menu") fail("Ph\xF2ng \u0111ang ch\u01A1i. H\xE3y \u0111\u1EE3i tr\u1EADn k\u1EBFt th\xFAc.", "started");
       if (next.members.length >= 4) fail("Ph\xF2ng \u0111\xE3 \u0111\u1EE7 4 ng\u01B0\u1EDDi.", "full");
@@ -10691,6 +10932,7 @@ var RoomHub = class {
     }
     if (message.type === "language") {
       if (room.hostId !== session.id) fail("Ch\u1EC9 ch\u1EE7 ph\xF2ng \u0111\u1ED5i ng\xF4n ng\u1EEF.", "host-only");
+      if (room.customDeck) fail("Ng\xF4n ng\u1EEF \u0111\xE3 \u0111\u01B0\u1EE3c c\u1ED1 \u0111\u1ECBnh cho b\u1ED9 t\u1EEB n\xE0y.", "deck-language");
       if (room.engine && room.engine.snapshot().phase !== "menu") fail("Ch\u1EC9 \u0111\u1ED5i ng\xF4n ng\u1EEF tr\u01B0\u1EDBc tr\u1EADn.");
       if (!["vi", "en"].includes(message.language)) fail("Ng\xF4n ng\u1EEF kh\xF4ng h\u1EE3p l\u1EC7.");
       if (message.language === "en" && !this.words.some((word) => word.englishMeaning)) fail("Kho t\u1EEB ti\u1EBFng Anh ch\u01B0a s\u1EB5n s\xE0ng.");
@@ -10704,16 +10946,16 @@ var RoomHub = class {
       if (!["survival", "boss"].includes(message.mode)) fail("Ch\u1EBF \u0111\u1ED9 kh\xF4ng h\u1EE3p l\u1EC7.");
       if (room.engine && ["playing", "paused", "countdown"].includes(room.engine.snapshot().phase)) fail("Tr\u1EADn \u0111ang di\u1EC5n ra.");
       if (room.members.some((member) => !member.connected)) fail("H\xE3y \u0111\u1EE3i \u0111\u1ED3ng \u0111\u1ED9i k\u1EBFt n\u1ED1i l\u1EA1i.");
-      const bank = vocabularyForLanguage(this.words, room.language);
+      const bank = room.customDeck ? customDeckWords(this.getDeck(room.customDeck.id)) : vocabularyForLanguage(this.words, room.language);
       if (!bank.length) fail("Kho t\u1EEB ti\u1EBFng Anh ch\u01B0a s\u1EB5n s\xE0ng.");
-      const seen = Object.fromEntries([...new Set(room.members.flatMap((member) => [...member.seen]))].map((word) => [word, 1]));
+      const seen = room.customDeck ? {} : Object.fromEntries([...new Set(room.members.flatMap((member) => [...member.seen]))].map((word) => [word, 1]));
       room.seenDuring.clear();
       room.pendingSeen = [];
       room.match++;
       room.engine = new this.Engine(Math.random, { highScore: 0, runs: 0, totalWords: 0, words: {}, seenWords: seen }, (word) => {
         room.seenDuring.add(word.answer);
         room.pendingSeen.push(word.answer);
-        for (const member of room.members) member.seen.add(word.answer);
+        if (!room.customDeck) for (const member of room.members) member.seen.add(word.answer);
       }, bank);
       room.engine.configureParty(room.members.map((member) => ({ id: member.id, name: member.name, heroId: member.heroId })));
       room.engine.start(message.mode);
@@ -10774,7 +11016,7 @@ var RoomHub = class {
     if (!room.engine) return;
     const events = room.engine.drainEvents();
     for (const member of room.members) if (member.connected) {
-      if (room.pendingSeen.length) member.send({ type: "seen", words: room.pendingSeen });
+      if (room.pendingSeen.length) member.send({ type: room.customDeck ? "deck-seen" : "seen", words: room.pendingSeen });
       this.sendFrame(room, member, events);
     }
     room.pendingSeen = [];
@@ -10788,6 +11030,10 @@ var RoomHub = class {
       }
     }
     for (const room of this.rooms.values()) {
+      if (room.customDeck && room.customDeck.expiresAt <= now) {
+        this.expireRoom(room);
+        continue;
+      }
       if (!room.engine) continue;
       for (const member of room.members) if (now - member.lastMoveAt > 1200) room.engine.commandAs(member.id, () => room.engine.setMovement(0));
       room.engine.step(Math.min(100, Math.max(0, delta)));
@@ -10795,8 +11041,8 @@ var RoomHub = class {
     }
   }
 };
-function attachRooms(server, words, { corsOrigins = "*", now = Date.now } = {}) {
-  const hub = new RoomHub(words, { now });
+function attachRooms(server, words, { corsOrigins = "*", now = Date.now, customDecks } = {}) {
+  const hub = new RoomHub(words, { now, customDecks });
   const wss = new import_websocket_server.default({ noServer: true, maxPayload: 2 * 1024 * 1024, perMessageDeflate: false });
   const connectionRates = /* @__PURE__ */ new Map();
   server.on("upgrade", (request, socket, head) => {
@@ -10826,6 +11072,7 @@ function attachRooms(server, words, { corsOrigins = "*", now = Date.now } = {}) 
       }
       ws.send(wire(value));
       if (value.type === "replaced") ws.close(4001, "Session replaced");
+      if (value.type === "room" && value.room.status === "expired") ws.close(4004, "Deck expired");
     };
     const helloTimeout = setTimeout(() => {
       if (!session) ws.close(1008, "Hello required");
@@ -10844,8 +11091,8 @@ function attachRooms(server, words, { corsOrigins = "*", now = Date.now } = {}) 
           session = hub.hello(message, send);
           clearTimeout(helloTimeout);
         } else hub.receive(session, message);
-      } catch (error) {
-        send({ type: "error", error: error.code ? error.message : "Kh\xF4ng x\u1EED l\xFD \u0111\u01B0\u1EE3c thao t\xE1c. H\xE3y th\u1EED l\u1EA1i.", code: error.code ?? "invalid" });
+      } catch (error2) {
+        send({ type: "error", error: error2.code ? error2.message : "Kh\xF4ng x\u1EED l\xFD \u0111\u01B0\u1EE3c thao t\xE1c. H\xE3y th\u1EED l\u1EA1i.", code: error2.code ?? "invalid" });
         if (!session) ws.close(1008, "Unable to join");
       }
     });
@@ -10884,7 +11131,11 @@ function attachRooms(server, words, { corsOrigins = "*", now = Date.now } = {}) 
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  CUSTOM_DECK_BODY_LIMIT,
+  CustomDeckStore,
   RoomHub,
   attachRooms,
-  mergeEnglishDefinitions
+  customDeckWords,
+  mergeEnglishDefinitions,
+  validateCustomDeck
 });
