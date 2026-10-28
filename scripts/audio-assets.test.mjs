@@ -2,7 +2,10 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { inspectMp3, firstFrames } from './import-audio-assets.mjs';
-import { MUSIC_TRACKS, AUDIO_CUES } from '../src/game/audioCatalog.ts';
+import { MUSIC_TRACKS } from '../src/game/audioCatalog.ts';
+import originalCatalog from '../src/game/audioCatalog.generated.json';
+
+const AUDIO_CUES = originalCatalog.sfx;
 
 const read = relative => readFileSync(new URL(`../${relative}`, import.meta.url));
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');

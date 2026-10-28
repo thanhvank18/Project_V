@@ -1,0 +1,623 @@
+{
+  "version": 1,
+  "sourceDirectory": "Sound/Helton Yan's Pixel Combat - Single Files",
+  "selection": "Accepted combat categories only; supplied names and PCM inspection, no auditory review.",
+  "processing": "96kHz stereo PCM24 to 48kHz mono PCM16; 255-tap anti-alias FIR; silence trim; bounded tails; 1ms/30ms fades; peak ceiling -3dBFS.",
+  "music": "Existing six-track playlist unchanged.",
+  "sourceCount": 32,
+  "bytes": 2533076,
+  "sfx": {
+    "attack-sword": [
+      {
+        "url": "/audio/combat/attack-sword-01.wav",
+        "volume": 0.23,
+        "duration": 0.554083
+      },
+      {
+        "url": "/audio/combat/attack-sword-02.wav",
+        "volume": 0.23,
+        "duration": 0.546
+      },
+      {
+        "url": "/audio/combat/attack-sword-03.wav",
+        "volume": 0.22,
+        "duration": 0.65
+      },
+      {
+        "url": "/audio/combat/attack-sword-04.wav",
+        "volume": 0.22,
+        "duration": 0.65
+      }
+    ],
+    "attack-axe": [
+      {
+        "url": "/audio/combat/attack-axe-01.wav",
+        "volume": 0.26,
+        "duration": 0.75
+      },
+      {
+        "url": "/audio/combat/attack-axe-02.wav",
+        "volume": 0.26,
+        "duration": 0.75
+      }
+    ],
+    "attack-arrow": [
+      {
+        "url": "/audio/combat/attack-arrow-01.wav",
+        "volume": 0.23,
+        "duration": 0.45
+      },
+      {
+        "url": "/audio/combat/attack-arrow-02.wav",
+        "volume": 0.23,
+        "duration": 0.45
+      },
+      {
+        "url": "/audio/combat/attack-arrow-03.wav",
+        "volume": 0.23,
+        "duration": 0.45
+      }
+    ],
+    "attack-magic": [
+      {
+        "url": "/audio/combat/attack-magic-01.wav",
+        "volume": 0.19,
+        "duration": 0.7
+      },
+      {
+        "url": "/audio/combat/attack-magic-02.wav",
+        "volume": 0.19,
+        "duration": 0.7
+      },
+      {
+        "url": "/audio/combat/attack-magic-03.wav",
+        "volume": 0.19,
+        "duration": 0.7
+      }
+    ],
+    "guard": [
+      {
+        "url": "/audio/combat/guard-01.wav",
+        "volume": 0.35,
+        "duration": 0.728542
+      },
+      {
+        "url": "/audio/combat/guard-02.wav",
+        "volume": 0.35,
+        "duration": 0.790667
+      },
+      {
+        "url": "/audio/combat/guard-03.wav",
+        "volume": 0.35,
+        "duration": 0.9
+      },
+      {
+        "url": "/audio/combat/guard-04.wav",
+        "volume": 0.35,
+        "duration": 0.9
+      }
+    ],
+    "heal": [
+      {
+        "url": "/audio/combat/heal-01.wav",
+        "volume": 0.34,
+        "duration": 1.657604
+      },
+      {
+        "url": "/audio/combat/heal-02.wav",
+        "volume": 0.3,
+        "duration": 2.5
+      }
+    ],
+    "frost": [
+      {
+        "url": "/audio/combat/frost-01.wav",
+        "volume": 0.32,
+        "duration": 1.064917
+      },
+      {
+        "url": "/audio/combat/frost-02.wav",
+        "volume": 0.32,
+        "duration": 1.029313
+      }
+    ],
+    "volley": [
+      {
+        "url": "/audio/combat/volley-01.wav",
+        "volume": 0.3,
+        "duration": 1.2
+      },
+      {
+        "url": "/audio/combat/volley-02.wav",
+        "volume": 0.3,
+        "duration": 1.2
+      }
+    ],
+    "player-hurt": [
+      {
+        "url": "/audio/combat/player-hurt-01.wav",
+        "volume": 0.42,
+        "duration": 0.298292
+      },
+      {
+        "url": "/audio/combat/player-hurt-02.wav",
+        "volume": 0.42,
+        "duration": 0.298938
+      },
+      {
+        "url": "/audio/combat/player-hurt-03.wav",
+        "volume": 0.4,
+        "duration": 0.282479
+      },
+      {
+        "url": "/audio/combat/player-hurt-04.wav",
+        "volume": 0.4,
+        "duration": 0.28175
+      }
+    ],
+    "boss-slam": [
+      {
+        "url": "/audio/combat/boss-slam-01.wav",
+        "volume": 0.46,
+        "duration": 1.292396
+      },
+      {
+        "url": "/audio/combat/boss-slam-02.wav",
+        "volume": 0.46,
+        "duration": 1.273625
+      },
+      {
+        "url": "/audio/combat/boss-slam-03.wav",
+        "volume": 0.42,
+        "duration": 1.277917
+      },
+      {
+        "url": "/audio/combat/boss-slam-04.wav",
+        "volume": 0.42,
+        "duration": 0.985417
+      }
+    ],
+    "jam": [
+      {
+        "url": "/audio/combat/jam-01.wav",
+        "volume": 0.25,
+        "duration": 0.574875
+      },
+      {
+        "url": "/audio/combat/jam-02.wav",
+        "volume": 0.25,
+        "duration": 0.484729
+      }
+    ],
+    "impact": [
+      {
+        "url": "/audio/combat/player-hurt-01.wav",
+        "volume": 0.14,
+        "duration": 0.298292
+      },
+      {
+        "url": "/audio/combat/player-hurt-02.wav",
+        "volume": 0.14,
+        "duration": 0.298938
+      }
+    ]
+  },
+  "sources": [
+    {
+      "cue": "attack-sword",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_MELEE-Sword Slash_HY_PC-001.wav",
+      "sourceSha256": "83435da9887d5dfa4218edabc302b21bb270cf777753f85b55e4645b1c6b9009",
+      "sourceBytes": 1850082,
+      "trimStart": 0.0,
+      "trimEnd": 0.554073,
+      "url": "/audio/combat/attack-sword-01.wav",
+      "volume": 0.23,
+      "duration": 0.554083,
+      "sha256": "c34257c21d87f6934c25e1bfb49beb481ad14839bb76967f386ee44c05308016",
+      "bytes": 53236
+    },
+    {
+      "cue": "attack-sword",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_MELEE-Sword Slash_HY_PC-002.wav",
+      "sourceSha256": "28c2477ec4ec64989fd6455fbff7ae6820a76096f90a10a08b6781d3b14670a4",
+      "sourceBytes": 1850082,
+      "trimStart": 0.0,
+      "trimEnd": 0.546,
+      "url": "/audio/combat/attack-sword-02.wav",
+      "volume": 0.23,
+      "duration": 0.546,
+      "sha256": "ba3d5ad2471cf3eb132ad56774e6eeb69d0809ae5710f06bfb873dbf7a4cb50f",
+      "bytes": 52460
+    },
+    {
+      "cue": "attack-sword",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_MELEE-Bit Sword_HY_PC-001.wav",
+      "sourceSha256": "47f52a4a8d7cbc24707490d966248ef209f6136c11d6e2b3c0a85ef296f92229",
+      "sourceBytes": 1850058,
+      "trimStart": 0.0,
+      "trimEnd": 0.65,
+      "url": "/audio/combat/attack-sword-03.wav",
+      "volume": 0.22,
+      "duration": 0.65,
+      "sha256": "fb1cb3246b59d40705b2f8c8a183edbe7841c5a619affa254b66cb72eb89b264",
+      "bytes": 62444
+    },
+    {
+      "cue": "attack-sword",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_MELEE-Bit Sword_HY_PC-002.wav",
+      "sourceSha256": "0218ed96014d4bfb9407b5502287f012f5d455d5174a6301425d088affe36bb4",
+      "sourceBytes": 1850066,
+      "trimStart": 0.0,
+      "trimEnd": 0.65,
+      "url": "/audio/combat/attack-sword-04.wav",
+      "volume": 0.22,
+      "duration": 0.65,
+      "sha256": "0352bd14caa740286487aecc95e07dbb1ccd5c5c9812804aadaca99853ff4af1",
+      "bytes": 62444
+    },
+    {
+      "cue": "attack-axe",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNImpt_MELEE-Homerunner_HY_PC-001.wav",
+      "sourceSha256": "939459a878482b030083de59a7465f7cdce9d99c114adc4fef2db29d5bfc5681",
+      "sourceBytes": 1849472,
+      "trimStart": 0.0,
+      "trimEnd": 0.75,
+      "url": "/audio/combat/attack-axe-01.wav",
+      "volume": 0.26,
+      "duration": 0.75,
+      "sha256": "d1ffd3014aa3b0bd3c63d5206d7dd0b645b30e71b128bde4843f14c68dd0de84",
+      "bytes": 72044
+    },
+    {
+      "cue": "attack-axe",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNImpt_MELEE-Homerunner_HY_PC-002.wav",
+      "sourceSha256": "9a0760cffc40aabb602665c75dbc787ead6524a1936b2a31aa8be8bf2e08faeb",
+      "sourceBytes": 1849480,
+      "trimStart": 0.0,
+      "trimEnd": 0.75,
+      "url": "/audio/combat/attack-axe-02.wav",
+      "volume": 0.26,
+      "duration": 0.75,
+      "sha256": "eac54478251cac878d73d1136969c74917430a8cdc7dab192ce0a04d1760e539",
+      "bytes": 72044
+    },
+    {
+      "cue": "attack-arrow",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_PROJECTILE-High Whoosh_HY_PC-001.wav",
+      "sourceSha256": "b5190c25d5151da89917c3b3639b381d0e50e9d3a5e75c3f3d8971c42db1b881",
+      "sourceBytes": 1850206,
+      "trimStart": 0.0,
+      "trimEnd": 0.45,
+      "url": "/audio/combat/attack-arrow-01.wav",
+      "volume": 0.23,
+      "duration": 0.45,
+      "sha256": "803a3ed9d868ac276acb64263e341a056336e64b2c1f92f198f98448b0277e85",
+      "bytes": 43244
+    },
+    {
+      "cue": "attack-arrow",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_PROJECTILE-High Whoosh_HY_PC-002.wav",
+      "sourceSha256": "3f270e11f4c0f62b11838c1b32de2dba3862a8bb3fb2b29f7d63dd08ade808e0",
+      "sourceBytes": 1850206,
+      "trimStart": 0.0,
+      "trimEnd": 0.45,
+      "url": "/audio/combat/attack-arrow-02.wav",
+      "volume": 0.23,
+      "duration": 0.45,
+      "sha256": "07fcbe3702b48b563f0c228b502abae907509b2edab4695c290c3ff3390ddef5",
+      "bytes": 43244
+    },
+    {
+      "cue": "attack-arrow",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_PROJECTILE-High Whoosh_HY_PC-003.wav",
+      "sourceSha256": "6ca7f2e7851c2ca7782c51ead363674f1a89023e01b8b7c5af28790270cdffbb",
+      "sourceBytes": 1850206,
+      "trimStart": 0.0,
+      "trimEnd": 0.45,
+      "url": "/audio/combat/attack-arrow-03.wav",
+      "volume": 0.23,
+      "duration": 0.45,
+      "sha256": "ac1f2f6593a13aabfcb92dac03aecfdfa8f4603bf2ec9ca86e98ea6c27aa52f6",
+      "bytes": 43244
+    },
+    {
+      "cue": "attack-magic",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_PROJECTILE-Water Bolt_HY_PC-001.wav",
+      "sourceSha256": "11073884342fb3bad455907768a3cf43ba6273a1f9ed5afd361094e4bc039408",
+      "sourceBytes": 2063338,
+      "trimStart": 0.0,
+      "trimEnd": 0.7,
+      "url": "/audio/combat/attack-magic-01.wav",
+      "volume": 0.19,
+      "duration": 0.7,
+      "sha256": "5c58a650fa1cf1227dc3a03afc0c7bc2c15c2850195bbe835c5b59f54bc6b65e",
+      "bytes": 67244
+    },
+    {
+      "cue": "attack-magic",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_PROJECTILE-Water Bolt_HY_PC-002.wav",
+      "sourceSha256": "efd563d82db69895a7ce6fb6df7eb3dac4e004d02172ad97b9566f67105312d0",
+      "sourceBytes": 1938100,
+      "trimStart": 0.0,
+      "trimEnd": 0.7,
+      "url": "/audio/combat/attack-magic-02.wav",
+      "volume": 0.19,
+      "duration": 0.7,
+      "sha256": "def7c701210a5bba08519af5f8360b8cb1ac3d87ff09395c53fd356c5db30485",
+      "bytes": 67244
+    },
+    {
+      "cue": "attack-magic",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_PROJECTILE-Water Bolt_HY_PC-003.wav",
+      "sourceSha256": "0faa847247c4fe6a3ffa73ac618df6a006c3de61f29ef1b80d34913eb49f2606",
+      "sourceBytes": 1983322,
+      "trimStart": 0.0,
+      "trimEnd": 0.7,
+      "url": "/audio/combat/attack-magic-03.wav",
+      "volume": 0.19,
+      "duration": 0.7,
+      "sha256": "98fc4d430e1043ee834e057a786df88d82a97007ea71fef4c94eb469cf232a40",
+      "bytes": 67244
+    },
+    {
+      "cue": "guard",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_MELEE-Sword Parry_HY_PC-001.wav",
+      "sourceSha256": "41d570cc52e60e2158d604edd12c1e1999107c239aee50ab4ee8ae0a9340bf4c",
+      "sourceBytes": 1850156,
+      "trimStart": 0.0,
+      "trimEnd": 0.728542,
+      "url": "/audio/combat/guard-01.wav",
+      "volume": 0.35,
+      "duration": 0.728542,
+      "sha256": "bd89735d5701ed442bb4f32b30c76a42c7279d86719ccc964dfeef434743040f",
+      "bytes": 69984
+    },
+    {
+      "cue": "guard",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_MELEE-Sword Parry_HY_PC-002.wav",
+      "sourceSha256": "f3061abac5ad5c0e86653385555e5fc3d736a9179d8bfdaa090387b95772e293",
+      "sourceBytes": 1850164,
+      "trimStart": 0.0,
+      "trimEnd": 0.790667,
+      "url": "/audio/combat/guard-02.wav",
+      "volume": 0.35,
+      "duration": 0.790667,
+      "sha256": "a5d0b7f62e730397d93a034cfb652b85a2f718338e978dec6987df7a6d4bac79",
+      "bytes": 75948
+    },
+    {
+      "cue": "guard",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_MELEE-Sword Deflect_HY_PC-001.wav",
+      "sourceSha256": "a99d72aa98f2a026352b15626f8497ad6095656065374b02cc00435145031527",
+      "sourceBytes": 1850122,
+      "trimStart": 0.0,
+      "trimEnd": 0.9,
+      "url": "/audio/combat/guard-03.wav",
+      "volume": 0.35,
+      "duration": 0.9,
+      "sha256": "84a3b6cdf484e6e2e2c1184ee7c7b4798cea206731ff686ac11fc4a6c32fa8e7",
+      "bytes": 86444
+    },
+    {
+      "cue": "guard",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_MELEE-Sword Deflect_HY_PC-002.wav",
+      "sourceSha256": "e6c6afc61d286b89a8677a74873ddc27f218e62830e083f9f152e5128e1222e4",
+      "sourceBytes": 1850122,
+      "trimStart": 0.0,
+      "trimEnd": 0.9,
+      "url": "/audio/combat/guard-04.wav",
+      "volume": 0.35,
+      "duration": 0.9,
+      "sha256": "44ef66574cf95ce1edf309835d739e424f05e3841c9465f0e1f60eddfe0f9e5b",
+      "bytes": 86444
+    },
+    {
+      "cue": "heal",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/MAGAngl_BUFF-Simple Heal_HY_PC-001.wav",
+      "sourceSha256": "b8fbf023e0811d3b00e1dd0dbf3fcd95075bfa1966d6214b45c1392fc4effa53",
+      "sourceBytes": 1977096,
+      "trimStart": 0.0,
+      "trimEnd": 1.657594,
+      "url": "/audio/combat/heal-01.wav",
+      "volume": 0.34,
+      "duration": 1.657604,
+      "sha256": "6e4b44daafeddad1ffe2db7d588d418fdd1d5230a187c1b95a9a521d64a028e0",
+      "bytes": 159174
+    },
+    {
+      "cue": "heal",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/MAGAngl_BUFF-Healing Gusts_HY_PC-001.wav",
+      "sourceSha256": "89d950f87c6d167dcf5fa8cb045d9460714d270d85db5a7639069ae08a2a88a5",
+      "sourceBytes": 2533952,
+      "trimStart": 0.0,
+      "trimEnd": 2.5,
+      "url": "/audio/combat/heal-02.wav",
+      "volume": 0.3,
+      "duration": 2.5,
+      "sha256": "d09009c9e5308320895c87e4318ce0768a3aa6f1f1d688f29472ef06a3eace57",
+      "bytes": 240044
+    },
+    {
+      "cue": "frost",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_SKILL IMPACT-Glassy Sprites_HY_PC-001.wav",
+      "sourceSha256": "b857eaf5526ff027117337d5a523b429ee9edbf49b36510d611be3f61b25378e",
+      "sourceBytes": 1850248,
+      "trimStart": 0.0,
+      "trimEnd": 1.064906,
+      "url": "/audio/combat/frost-01.wav",
+      "volume": 0.32,
+      "duration": 1.064917,
+      "sha256": "499c36e2ff9cc88e94bb9d297d3ab23144b705117a1d596b2a8a520dfbe84d38",
+      "bytes": 102276
+    },
+    {
+      "cue": "frost",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_SKILL IMPACT-Glassy Sprites_HY_PC-002.wav",
+      "sourceSha256": "97b7080e6cd2e83a1969c58fc0308e2b34814accb244526ce3aa9f2720d707ef",
+      "sourceBytes": 1850256,
+      "trimStart": 0.0,
+      "trimEnd": 1.029302,
+      "url": "/audio/combat/frost-02.wav",
+      "volume": 0.32,
+      "duration": 1.029313,
+      "sha256": "8f52e2c21a0756484840a44ddd671dab5ab31cb2c3bc108d283756551b59cbdb",
+      "bytes": 98858
+    },
+    {
+      "cue": "volley",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_SKILL RELEASE-Thousand Needles_HY_PC-001.wav",
+      "sourceSha256": "1a7fd35b9140eb0ade943467452730452e6d94f5997a41a78b8184f0dcdb667c",
+      "sourceBytes": 2153702,
+      "trimStart": 0.0,
+      "trimEnd": 1.2,
+      "url": "/audio/combat/volley-01.wav",
+      "volume": 0.3,
+      "duration": 1.2,
+      "sha256": "016931d186434529cd7fa6d9c10ba464b120fc1cf7e931085b72e3f58fcd1995",
+      "bytes": 115244
+    },
+    {
+      "cue": "volley",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNMisc_SKILL RELEASE-Thousand Needles_HY_PC-002.wav",
+      "sourceSha256": "2ee0b505faabdbf9598bdf257126f205679e8f617578af0f6a559f522f9ec583",
+      "sourceBytes": 2149552,
+      "trimStart": 0.0,
+      "trimEnd": 1.2,
+      "url": "/audio/combat/volley-02.wav",
+      "volume": 0.3,
+      "duration": 1.2,
+      "sha256": "e7190b02caf3596725f276e850c923a078fbb668b5b1b46e4969fed4e3cc52c9",
+      "bytes": 115244
+    },
+    {
+      "cue": "player-hurt",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/FGHTImpt_HIT-Smack_HY_PC-001.wav",
+      "sourceSha256": "b922bde3418f19b57f92a16e4053e7bf52276a2a1b8e63da9771aae413259fe3",
+      "sourceBytes": 1849924,
+      "trimStart": 0.0,
+      "trimEnd": 0.298292,
+      "url": "/audio/combat/player-hurt-01.wav",
+      "volume": 0.42,
+      "duration": 0.298292,
+      "sha256": "dce2ca8be15efca33a9941714b31ab116aa02d3d694c242faf839ddd78747f03",
+      "bytes": 28680
+    },
+    {
+      "cue": "player-hurt",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/FGHTImpt_HIT-Smack_HY_PC-002.wav",
+      "sourceSha256": "8b49b8cf4ba8ecae86d5d57a4b742ae5c4dd47bcb5034892728387e0899c1084",
+      "sourceBytes": 1849932,
+      "trimStart": 0.0,
+      "trimEnd": 0.298938,
+      "url": "/audio/combat/player-hurt-02.wav",
+      "volume": 0.42,
+      "duration": 0.298938,
+      "sha256": "bd675339447c134ba98e4cdaa163a524630ae746234a510b419cfb5fb458e331",
+      "bytes": 28742
+    },
+    {
+      "cue": "player-hurt",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/FGHTImpt_HIT-Strong Smack_HY_PC-001.wav",
+      "sourceSha256": "91f006ac1132839af703fb3d9357c8335cca67350ee1285e1632cc9ac0481951",
+      "sourceBytes": 1849892,
+      "trimStart": 0.0,
+      "trimEnd": 0.282469,
+      "url": "/audio/combat/player-hurt-03.wav",
+      "volume": 0.4,
+      "duration": 0.282479,
+      "sha256": "38b15965487484174bc10d7abe64b941faaea6aabfac4f65b20bd5b876ce9221",
+      "bytes": 27162
+    },
+    {
+      "cue": "player-hurt",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/FGHTImpt_HIT-Strong Smack_HY_PC-002.wav",
+      "sourceSha256": "7d9b06290c130635a17731c0e76fcb6465c45f50393629b5b6f580e570e2a83c",
+      "sourceBytes": 1849900,
+      "trimStart": 0.0,
+      "trimEnd": 0.28174,
+      "url": "/audio/combat/player-hurt-04.wav",
+      "volume": 0.4,
+      "duration": 0.28175,
+      "sha256": "cc056e2b8fe75d56afd1af732ce70f00c4e40c2cb9e0f9a795ca7f67788a9992",
+      "bytes": 27092
+    },
+    {
+      "cue": "boss-slam",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNImpt_EXPLOSION-Bass Hit_HY_PC-001.wav",
+      "sourceSha256": "8fc6956160afe02aeda933075c542b3731af27c246674b7037e096c647da0196",
+      "sourceBytes": 1849566,
+      "trimStart": 0.0,
+      "trimEnd": 1.292385,
+      "url": "/audio/combat/boss-slam-01.wav",
+      "volume": 0.46,
+      "duration": 1.292396,
+      "sha256": "ce2a24dc29c24425449c94684d332a82d4255701318029c21b0c86339b945480",
+      "bytes": 124114
+    },
+    {
+      "cue": "boss-slam",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNImpt_EXPLOSION-Bass Hit_HY_PC-002.wav",
+      "sourceSha256": "28f3a35152291241a4fd864f3572eb890e9e4cafc969045d1144f475ce9a09e3",
+      "sourceBytes": 1849574,
+      "trimStart": 0.0,
+      "trimEnd": 1.273615,
+      "url": "/audio/combat/boss-slam-02.wav",
+      "volume": 0.46,
+      "duration": 1.273625,
+      "sha256": "ad4a80c139255e4d7eb8c410a370a319fe2be344284a4b6dd0beab951f6a51de",
+      "bytes": 122312
+    },
+    {
+      "cue": "boss-slam",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNImpt_EXPLOSION-Thud_HY_PC-001.wav",
+      "sourceSha256": "01fbe627677c2e8eac3d15e6f54e2743fca6dde99a1061934fe22af921469d90",
+      "sourceBytes": 1849478,
+      "trimStart": 0.0,
+      "trimEnd": 1.277917,
+      "url": "/audio/combat/boss-slam-03.wav",
+      "volume": 0.42,
+      "duration": 1.277917,
+      "sha256": "7431a628060550b12b2e173a7f1c0b473cc8f82b331697d9fa01afefb36dd457",
+      "bytes": 122724
+    },
+    {
+      "cue": "boss-slam",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/DSGNImpt_EXPLOSION-Thud_HY_PC-002.wav",
+      "sourceSha256": "c3cdeabbe99547cbd4c15c6a9ab0d9560c8e060d1079a276f157d8595532d595",
+      "sourceBytes": 1849486,
+      "trimStart": 0.0,
+      "trimEnd": 0.985406,
+      "url": "/audio/combat/boss-slam-04.wav",
+      "volume": 0.42,
+      "duration": 0.985417,
+      "sha256": "e2487f97c5f2df35c040fbe31d8a564b8d04a0bb9277a92c07724e857c49cc27",
+      "bytes": 94644
+    },
+    {
+      "cue": "jam",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/UIMisc_INTERFACE-Denied_HY_PC-001.wav",
+      "sourceSha256": "9d81f044279728304f278dedbb3922cc69da8a9ca81ec0067435077eeff26585",
+      "sourceBytes": 1850020,
+      "trimStart": 0.0,
+      "trimEnd": 0.574865,
+      "url": "/audio/combat/jam-01.wav",
+      "volume": 0.25,
+      "duration": 0.574875,
+      "sha256": "eee5fd0d5af24cb4fe0dd72a3147c8035e094ca2bacaf710619679e67c46520d",
+      "bytes": 55232
+    },
+    {
+      "cue": "jam",
+      "localFile": "Sound/Helton Yan's Pixel Combat - Single Files/UIMisc_INTERFACE-Denied_HY_PC-002.wav",
+      "sourceSha256": "598f3dd141ddfa17affdbbac9933361fdcb849fa988d4bcfcd6a8c5db1100010",
+      "sourceBytes": 1850020,
+      "trimStart": 0.0,
+      "trimEnd": 0.484719,
+      "url": "/audio/combat/jam-02.wav",
+      "volume": 0.25,
+      "duration": 0.484729,
+      "sha256": "e8ead0b97f5aab7f463d90c746fefab6e7a5aed4935330ae126f51ec6933d3b3",
+      "bytes": 46578
+    }
+  ]
+}

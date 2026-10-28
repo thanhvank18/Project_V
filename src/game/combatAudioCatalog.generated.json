@@ -1,0 +1,198 @@
+{
+  "sfx": {
+    "attack-sword": [
+      {
+        "url": "/audio/combat/attack-sword-01.wav",
+        "volume": 0.23,
+        "duration": 0.554083
+      },
+      {
+        "url": "/audio/combat/attack-sword-02.wav",
+        "volume": 0.23,
+        "duration": 0.546
+      },
+      {
+        "url": "/audio/combat/attack-sword-03.wav",
+        "volume": 0.22,
+        "duration": 0.65
+      },
+      {
+        "url": "/audio/combat/attack-sword-04.wav",
+        "volume": 0.22,
+        "duration": 0.65
+      }
+    ],
+    "attack-axe": [
+      {
+        "url": "/audio/combat/attack-axe-01.wav",
+        "volume": 0.26,
+        "duration": 0.75
+      },
+      {
+        "url": "/audio/combat/attack-axe-02.wav",
+        "volume": 0.26,
+        "duration": 0.75
+      }
+    ],
+    "attack-arrow": [
+      {
+        "url": "/audio/combat/attack-arrow-01.wav",
+        "volume": 0.23,
+        "duration": 0.45
+      },
+      {
+        "url": "/audio/combat/attack-arrow-02.wav",
+        "volume": 0.23,
+        "duration": 0.45
+      },
+      {
+        "url": "/audio/combat/attack-arrow-03.wav",
+        "volume": 0.23,
+        "duration": 0.45
+      }
+    ],
+    "attack-magic": [
+      {
+        "url": "/audio/combat/attack-magic-01.wav",
+        "volume": 0.19,
+        "duration": 0.7
+      },
+      {
+        "url": "/audio/combat/attack-magic-02.wav",
+        "volume": 0.19,
+        "duration": 0.7
+      },
+      {
+        "url": "/audio/combat/attack-magic-03.wav",
+        "volume": 0.19,
+        "duration": 0.7
+      }
+    ],
+    "guard": [
+      {
+        "url": "/audio/combat/guard-01.wav",
+        "volume": 0.35,
+        "duration": 0.728542
+      },
+      {
+        "url": "/audio/combat/guard-02.wav",
+        "volume": 0.35,
+        "duration": 0.790667
+      },
+      {
+        "url": "/audio/combat/guard-03.wav",
+        "volume": 0.35,
+        "duration": 0.9
+      },
+      {
+        "url": "/audio/combat/guard-04.wav",
+        "volume": 0.35,
+        "duration": 0.9
+      }
+    ],
+    "heal": [
+      {
+        "url": "/audio/combat/heal-01.wav",
+        "volume": 0.34,
+        "duration": 1.657604
+      },
+      {
+        "url": "/audio/combat/heal-02.wav",
+        "volume": 0.3,
+        "duration": 2.5
+      }
+    ],
+    "frost": [
+      {
+        "url": "/audio/combat/frost-01.wav",
+        "volume": 0.32,
+        "duration": 1.064917
+      },
+      {
+        "url": "/audio/combat/frost-02.wav",
+        "volume": 0.32,
+        "duration": 1.029313
+      }
+    ],
+    "volley": [
+      {
+        "url": "/audio/combat/volley-01.wav",
+        "volume": 0.3,
+        "duration": 1.2
+      },
+      {
+        "url": "/audio/combat/volley-02.wav",
+        "volume": 0.3,
+        "duration": 1.2
+      }
+    ],
+    "player-hurt": [
+      {
+        "url": "/audio/combat/player-hurt-01.wav",
+        "volume": 0.42,
+        "duration": 0.298292
+      },
+      {
+        "url": "/audio/combat/player-hurt-02.wav",
+        "volume": 0.42,
+        "duration": 0.298938
+      },
+      {
+        "url": "/audio/combat/player-hurt-03.wav",
+        "volume": 0.4,
+        "duration": 0.282479
+      },
+      {
+        "url": "/audio/combat/player-hurt-04.wav",
+        "volume": 0.4,
+        "duration": 0.28175
+      }
+    ],
+    "boss-slam": [
+      {
+        "url": "/audio/combat/boss-slam-01.wav",
+        "volume": 0.46,
+        "duration": 1.292396
+      },
+      {
+        "url": "/audio/combat/boss-slam-02.wav",
+        "volume": 0.46,
+        "duration": 1.273625
+      },
+      {
+        "url": "/audio/combat/boss-slam-03.wav",
+        "volume": 0.42,
+        "duration": 1.277917
+      },
+      {
+        "url": "/audio/combat/boss-slam-04.wav",
+        "volume": 0.42,
+        "duration": 0.985417
+      }
+    ],
+    "jam": [
+      {
+        "url": "/audio/combat/jam-01.wav",
+        "volume": 0.25,
+        "duration": 0.574875
+      },
+      {
+        "url": "/audio/combat/jam-02.wav",
+        "volume": 0.25,
+        "duration": 0.484729
+      }
+    ],
+    "impact": [
+      {
+        "url": "/audio/combat/player-hurt-01.wav",
+        "volume": 0.14,
+        "duration": 0.298292
+      },
+      {
+        "url": "/audio/combat/player-hurt-02.wav",
+        "volume": 0.14,
+        "duration": 0.298938
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+Sky artwork: CraftPix.net, supplied by the project owner.
+Original pack license files link to https://craftpix.net/file-licenses/
+Section 2: FREEBIE PRODUCTS. Assets are included as part of this game.
+No standalone asset redistribution or artwork export is provided.
+Selected source paths and hashes: manifest.json.

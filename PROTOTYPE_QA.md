@@ -1,5 +1,11 @@
 # Kiểm tra prototype — cập nhật 25/10/2026
 
+## Combat audio và bầu trời — 28/10/2026
+
+- `pnpm build` đạt. 55 kiểm thử thuộc 6 suite audio, audio assets, sky cycle và backdrop đều đạt. Bao gồm shot + skill cùng tick, ưu tiên hurt/slam khi đủ tám voice, giới hạn ba tải/giải mã, vòng tám trời, mốc 20 giây, fade 1,8 giây, reset, pause và reduced motion.
+- Browser local: chơi Kiếm sĩ, hoàn thành `ago`, `bring`, `flower`; bật âm thanh; không ghi nhận lỗi console. Quan sát hoàng hôn ở đầu trận, trời tím sau 20 giây và trời đêm sau 40 giây. Chạy qua Công viên vẫn giữ tiền cảnh trước bầu trời. Proof: `.impeccable/review/sky-combat-local.png`.
+- Test PCM xác nhận 32 WAV, tổng 2.533.076 byte, mono48kHz16bit, peak có giới hạn và đầu/cuối về0. Phiên công cụ không nghe được audio nên chưa đánh giá âm sắc trực tiếp. Lượt browser có mất focus/tự pause; không dùng số FPS của lượt này làm benchmark.
+
 ## Âm thanh từ Sound và playlist — 25/10/2026
 
 - **471/471 kiểm thử đạt, 26 suite**; TypeScript và production build Vite đạt. Trong đó 16 kiểm thử vòng đời audio, 6 kiểm thử metadata/MPEG/catalog/bản sao MP3 và 3 kiểm thử định tuyến sự kiện combat. Bao gồm hết bài và quay vòng, hết bài đồng thời pause/blur, pending play cũ, lỗi autoplay không lặp retry, tất cả bài lỗi, mute/seek, giới hạn voice và cleanup tải/giải mã.

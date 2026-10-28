@@ -1,14 +1,13 @@
-import { AUDIO_CATALOG, type AudioCue, type AudioSample, type AudioTrack } from './audioCatalog';
+import { AUDIO_CATALOG, audioSamples, type AudioCatalog, type AudioCue, type AudioSample } from './audioCatalog';
 import type { Phase } from './types';
 
-export type { AudioCue } from './audioCatalog';
+export type { AudioCatalog, AudioCue } from './audioCatalog';
 export interface AudioState {
   title: string; index: number; total: number; playing: boolean;
   status: 'waiting' | 'playing' | 'paused' | 'unavailable';
 }
 export const INITIAL_AUDIO_STATE: AudioState = { title: '', index: 0, total: 0, playing: false, status: 'waiting' };
 export interface AudioConfiguration { muted: boolean; musicVolume?: number; sfxVolume?: number }
-export interface AudioCatalog { music: readonly AudioTrack[]; sfx: Readonly<Partial<Record<AudioCue, AudioSample>>> }
 export interface GameAudioDependencies {
   catalog?: AudioCatalog;
   createAudio?: () => HTMLAudioElement;
@@ -20,10 +19,13 @@ export interface GameAudioDependencies {
 }
 
 const MAX_VOICES = 8;
+const MAX_SAMPLE_LOADS = 3;
 const MAX_SAMPLE_BYTES = 8 * 1024 * 1024;
 const MIN_INTERVAL: Record<AudioCue, number> = {
   letter: 40, jam: 120, impact: 55, kill: 100, 'player-hurt': 220,
   'boss-slam': 500, pickup: 160, skill: 300, 'game-over': 1500, victory: 1500,
+  'attack-sword': 65, 'attack-axe': 90, 'attack-arrow': 55, 'attack-magic': 80,
+  guard: 180, heal: 300, frost: 300, volley: 250,
 };
 const TONES: Record<AudioCue, { frequency: number; end: number; seconds: number; gain: number; type: OscillatorType }> = {
   letter: { frequency: 660, end: 420, seconds: .045, gain: .055, type: 'triangle' },
@@ -36,7 +38,17 @@ const TONES: Record<AudioCue, { frequency: number; end: number; seconds: number;
   skill: { frequency: 280, end: 920, seconds: .3, gain: .12, type: 'triangle' },
   'game-over': { frequency: 320, end: 65, seconds: .65, gain: .12, type: 'triangle' },
   victory: { frequency: 390, end: 1200, seconds: .65, gain: .12, type: 'sine' },
+  'attack-sword': { frequency: 500, end: 140, seconds: .07, gain: .055, type: 'triangle' },
+  'attack-axe': { frequency: 220, end: 65, seconds: .12, gain: .07, type: 'triangle' },
+  'attack-arrow': { frequency: 780, end: 420, seconds: .045, gain: .045, type: 'triangle' },
+  'attack-magic': { frequency: 520, end: 800, seconds: .09, gain: .045, type: 'sine' },
+  guard: { frequency: 820, end: 240, seconds: .12, gain: .09, type: 'triangle' },
+  heal: { frequency: 520, end: 1040, seconds: .3, gain: .09, type: 'sine' },
+  frost: { frequency: 920, end: 360, seconds: .25, gain: .08, type: 'sine' },
+  volley: { frequency: 780, end: 280, seconds: .14, gain: .07, type: 'triangle' },
 };
+const isAttackCue = (cue: AudioCue) => cue.startsWith('attack-');
+const voicePriority = (cue: AudioCue) => cue === 'player-hurt' || cue === 'boss-slam' ? 2 : cue === 'guard' ? 1 : 0;
 const clamp = (value: number, fallback: number) => Number.isFinite(value) ? Math.min(1, Math.max(0, value)) : fallback;
 
 /** One streamed music element and one lazily unlocked context for bounded, short effects. */
@@ -65,10 +77,12 @@ export class GameAudio {
   private contextTransition: 'resume' | 'suspend' | null = null;
   private state: AudioState = { ...INITIAL_AUDIO_STATE };
   private lastCue = new Map<AudioCue, number>();
+  private samplePositions = new Map<AudioCue, number>();
   private voices = new Map<number, { cue: AudioCue; stop: () => void }>();
   private voiceId = 0;
   private buffers = new Map<string, AudioBuffer | null>();
   private loads = new Map<string, AbortController>();
+  private pendingSamples = new Map<string, AudioSample>();
 
   constructor(private readonly onState?: (state: AudioState) => void, private readonly deps: GameAudioDependencies = {}) {
     this.catalog = deps.catalog ?? AUDIO_CATALOG;
@@ -134,7 +148,9 @@ export class GameAudio {
       } catch { /* Streaming music can still work without Web Audio. */ }
     }
     // Only the tiny effect catalog is decoded after a gesture; songs always remain streamed.
-    if (this.context) for (const sample of Object.values(this.catalog.sfx)) this.loadSample(sample);
+    if (this.context) for (const entry of Object.values(this.catalog.sfx)) {
+      for (const sample of audioSamples(entry)) this.loadSample(sample);
+    }
     this.reconcile();
   }
 
@@ -151,9 +167,23 @@ export class GameAudio {
     if (!this.canPlayCue(cue) || !context || context.state !== 'running' || !this.master) return;
     const now = this.now();
     if (now - (this.lastCue.get(cue) ?? -Infinity) < MIN_INTERVAL[cue]) return;
-    if (this.voices.size >= MAX_VOICES || (cue === 'letter' && [...this.voices.values()].filter(voice => voice.cue === cue).length >= 2)) return;
+    const voices = [...this.voices.values()];
+    if (cue === 'letter' && voices.filter(voice => voice.cue === cue).length >= 2) return;
+    if (isAttackCue(cue) && voices.filter(voice => isAttackCue(voice.cue)).length >= 3) return;
+    if (cue === 'impact' && voices.filter(voice => voice.cue === cue).length >= 2) return;
+    if (this.voices.size >= MAX_VOICES) {
+      // Hurt and slam feedback must remain audible even in a four-player typing burst.
+      const priority = voicePriority(cue);
+      const replace = voices.filter(voice => voicePriority(voice.cue) < priority)
+        .sort((a, b) => voicePriority(a.cue) - voicePriority(b.cue))[0];
+      if (!replace) return;
+      replace.stop();
+    }
     this.lastCue.set(cue, now);
-    const sample = this.catalog.sfx[cue];
+    const samples = audioSamples(this.catalog.sfx[cue]);
+    const position = this.samplePositions.get(cue) ?? 0;
+    const sample = samples.length ? samples[position % samples.length] : undefined;
+    if (samples.length) this.samplePositions.set(cue, (position + 1) % samples.length);
     const buffer = sample ? this.buffers.get(sample.url) : undefined;
     if (sample && buffer === undefined) this.loadSample(sample);
     // A first-use load never queues a late impact. A quiet synthesized cue covers it immediately.
@@ -177,7 +207,7 @@ export class GameAudio {
     } else {
       const tone = TONES[cue];
       const node = source as OscillatorNode;
-      const momentum = cue === 'letter' && Number.isFinite(opts.momentum) ? Math.max(0, Math.min(5, opts.momentum!)) : 0;
+      const momentum = (cue === 'letter' || isAttackCue(cue)) && Number.isFinite(opts.momentum) ? Math.max(0, Math.min(5, opts.momentum!)) : 0;
       const pitch = 1 + momentum * .03;
       node.type = tone.type;
       node.frequency.setValueAtTime(tone.frequency * pitch, at);
@@ -222,7 +252,7 @@ export class GameAudio {
     }
     this.stopVoices();
     for (const controller of this.loads.values()) controller.abort();
-    this.loads.clear(); this.buffers.clear();
+    this.loads.clear(); this.pendingSamples.clear(); this.buffers.clear(); this.samplePositions.clear();
     this.master?.disconnect();
     void this.context?.close().catch(() => {});
   }
@@ -361,6 +391,20 @@ export class GameAudio {
   private stopVoices(): void { for (const voice of [...this.voices.values()]) voice.stop(); }
 
   private loadSample(sample: AudioSample): void {
+    if (this.destroyed || !this.context || this.loads.has(sample.url) || this.buffers.has(sample.url) || this.pendingSamples.has(sample.url)) return;
+    this.pendingSamples.set(sample.url, sample);
+    this.pumpSampleLoads();
+  }
+
+  private pumpSampleLoads(): void {
+    while (!this.destroyed && this.loads.size < MAX_SAMPLE_LOADS && this.pendingSamples.size) {
+      const sample = this.pendingSamples.values().next().value!;
+      this.pendingSamples.delete(sample.url);
+      this.fetchSample(sample);
+    }
+  }
+
+  private fetchSample(sample: AudioSample): void {
     const context = this.context;
     if (!context || this.loads.has(sample.url) || this.buffers.has(sample.url)) return;
     const controller = new AbortController();
@@ -378,6 +422,6 @@ export class GameAudio {
     }).then(buffer => {
       if (!this.destroyed) this.buffers.set(sample.url, buffer.duration <= 12 ? buffer : null);
     }).catch(() => { if (!this.destroyed) this.buffers.set(sample.url, null); })
-      .finally(() => this.loads.delete(sample.url));
+      .finally(() => { this.loads.delete(sample.url); this.pumpSampleLoads(); });
   }
 }

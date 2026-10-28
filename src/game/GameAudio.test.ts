@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { GameAudio, type AudioCatalog, type AudioState } from './GameAudio';
+import { audioCueForEvent } from './combatAudio';
 
 const catalog: AudioCatalog = {
   music: [0, 1, 2].map(index => ({ id: `song-${index}`, title: `Song ${index}`, url: `/music/${index}.mp3`, duration: 180 })),
@@ -252,6 +253,80 @@ describe('streamed music lifecycle', () => {
 });
 
 describe('bounded short effects', () => {
+  it.each(['archer', 'armored-axeman', 'lancer', 'swordsman'])('plays the %s skill activated in the same tick as its charging shot', async heroId => {
+    const h = setup(); await h.start();
+    h.audio.play(audioCueForEvent({ type: 'shot', heroId })!);
+    h.audio.play(audioCueForEvent({ type: 'hero-skill', heroId, skillPhase: 'activate' })!);
+    expect(h.context.oscillators).toHaveLength(2);
+    expect(h.context.oscillators.every(source => source.start.mock.calls.length === 1)).toBe(true);
+    h.audio.destroy();
+  });
+
+  it('rotates recorded variants without immediate repeats and shares each decoded file across cues', async () => {
+    const variants = [0, .1, .2].map((start, index) => ({ url: `/sfx/sword-${index}.wav`, start, duration: .3 }));
+    const h = setup({ music: catalog.music, sfx: { 'attack-sword': variants, impact: variants[0] } });
+    await h.start();
+    expect(h.fetchData).toHaveBeenCalledTimes(3);
+    for (let index = 0; index < 5; index++) {
+      h.audio.play('attack-sword'); h.context.sources.at(-1)!.end(); h.advance(100);
+    }
+    expect(h.context.sources.map(source => source.start.mock.calls[0])).toEqual([
+      [10, 0, .3], [10, .1, .3], [10, .2, .3], [10, 0, .3], [10, .1, .3],
+    ]);
+    h.audio.play('impact');
+    expect(h.fetchData).toHaveBeenCalledTimes(3);
+    expect(h.context.decodeAudioData).toHaveBeenCalledTimes(3);
+    h.audio.destroy();
+  });
+
+  it('limits overlapping hero attacks across classes so multiplayer typing leaves room for feedback', async () => {
+    const h = setup(); await h.start();
+    for (const cue of ['attack-sword', 'attack-axe', 'attack-arrow', 'attack-magic'] as const) h.audio.play(cue);
+    expect(h.context.oscillators).toHaveLength(3);
+    for (let index = 0; index < 3; index++) { h.audio.play('impact'); h.advance(100); }
+    expect(h.context.oscillators).toHaveLength(5);
+    h.context.oscillators[0].end(); h.audio.play('attack-magic');
+    expect(h.context.oscillators).toHaveLength(6);
+    h.audio.destroy();
+  });
+
+  it('makes room for hurt and boss slams without increasing the eight-voice limit or stopping music', async () => {
+    const h = setup(); await h.start();
+    for (const cue of ['letter', 'letter', 'impact', 'impact', 'jam', 'kill', 'pickup', 'skill'] as const) {
+      h.audio.play(cue); h.advance(100);
+    }
+    const active = () => [...h.context.oscillators, ...h.context.sources].filter(node => !node.disconnect.mock.calls.length);
+    expect(active()).toHaveLength(8);
+    h.audio.play('player-hurt');
+    expect(h.context.oscillators[0].disconnect).toHaveBeenCalled();
+    expect(active()).toHaveLength(8);
+    const hurt = h.context.oscillators.at(-1)!;
+    h.audio.play('boss-slam');
+    expect(h.context.sources.at(-1)!.start).toHaveBeenCalledWith(10, 0, .5);
+    expect(hurt.disconnect).not.toHaveBeenCalled();
+    expect(active()).toHaveLength(8);
+    expect(h.media.paused).toBe(false);
+    h.audio.destroy();
+  });
+
+  it('bounds sample downloads and decoding, and cancels queued samples on teardown', async () => {
+    const h = setup({ music: [], sfx: { 'attack-sword': Array.from({ length: 8 }, (_, index) => ({ url: `/sfx/${index}.wav` })) } });
+    const requests = Array.from({ length: 8 }, () => deferred<ArrayBuffer>());
+    let request = 0;
+    h.fetchData.mockImplementation(() => requests[request++].promise);
+    await h.start();
+    expect(h.fetchData).toHaveBeenCalledTimes(3);
+    requests[0].resolve(new ArrayBuffer(10)); await flush();
+    expect(h.fetchData).toHaveBeenCalledTimes(4);
+    expect(h.context.decodeAudioData).toHaveBeenCalledOnce();
+    h.audio.destroy();
+    for (const pending of requests) pending.resolve(new ArrayBuffer(10));
+    await flush();
+    expect(h.fetchData).toHaveBeenCalledTimes(4);
+    expect(h.context.decodeAudioData).toHaveBeenCalledOnce();
+    expect(h.fetchData.mock.calls.slice(1).every(call => call[1].aborted)).toBe(true);
+  });
+
   it('rate limits repeated letters, caps simultaneous voices, pans and cleans up finished sources', async () => {
     const h = setup(); await h.start();
     for (let key = 0; key < 10; key++) h.audio.play('letter', { pan: 10 });

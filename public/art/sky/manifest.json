@@ -1,0 +1,96 @@
+{
+  "source": "User-provided CraftPix New free backgrounds packs",
+  "license": "https://craftpix.net/file-licenses/",
+  "licenseSection": "2. FREEBIE PRODUCTS",
+  "intervalMs": 20000,
+  "transitionMs": 1800,
+  "skies": [
+    {
+      "id": "ember-clouds",
+      "key": "sky-ember-clouds",
+      "url": "/art/sky/ember-clouds.png",
+      "width": 576,
+      "height": 324,
+      "source": "sky/New free backgrounds part2/background 2/orig.png",
+      "sourceSha256": "cbfdf083e22ab01eff85c22463c153d67288ac608849c95cf20034470cf702c3",
+      "bytes": 14083
+    },
+    {
+      "id": "violet-dusk",
+      "key": "sky-violet-dusk",
+      "url": "/art/sky/violet-dusk.png",
+      "width": 576,
+      "height": 324,
+      "source": "sky/New free backgrounds part4/background 2/orig.png",
+      "sourceSha256": "c41e6d361896ef172bb8e9fa6a95863a5730037203623492071c262a7bc819bb",
+      "bytes": 19856
+    },
+    {
+      "id": "midnight",
+      "key": "sky-midnight",
+      "url": "/art/sky/midnight.png",
+      "width": 576,
+      "height": 324,
+      "source": "sky/New free backgrounds part1/background 1/orig.png",
+      "sourceSha256": "259164556960e338cd66feaa8163eb0815631781d651e2749ee727c3ff78e3df",
+      "bytes": 17397
+    },
+    {
+      "id": "moonlit-clouds",
+      "key": "sky-moonlit-clouds",
+      "url": "/art/sky/moonlit-clouds.png",
+      "width": 576,
+      "height": 324,
+      "source": "sky/New free backgrounds part1/background 3/orig.png",
+      "sourceSha256": "8b9eba0d1a33c8caf0058534d892dd27a020cf432448698963e07ab3e524e712",
+      "bytes": 16600
+    },
+    {
+      "id": "soft-dawn",
+      "key": "sky-soft-dawn",
+      "url": "/art/sky/soft-dawn.png",
+      "width": 576,
+      "height": 324,
+      "source": "sky/New free backgrounds part4/background 1/orig.png",
+      "sourceSha256": "20582ea7c80932684d3ab805186ef9ad5efdfea262f03d6be78b5e699522438e",
+      "bytes": 17816
+    },
+    {
+      "id": "day-clouds",
+      "key": "sky-day-clouds",
+      "url": "/art/sky/day-clouds.png",
+      "width": 576,
+      "height": 324,
+      "source": "sky/New free backgrounds part2/background 1/orig.png",
+      "sourceSha256": "63f5e1bd66d6f7c3c247302939b03a53da67e0b202e5a8205a2c9601a393c0c2",
+      "bytes": 13760
+    },
+    {
+      "id": "blue-sky",
+      "key": "sky-blue-sky",
+      "url": "/art/sky/blue-sky.png",
+      "width": 576,
+      "height": 324,
+      "source": "sky/New free backgrounds part3/background 3/orig.png",
+      "sourceSha256": "8ddfb2908c346bc1dd2bdef1557c7ac04af7da84781a5dea8ff47278d85aa1ed",
+      "bytes": 14782
+    },
+    {
+      "id": "overcast",
+      "key": "sky-overcast",
+      "url": "/art/sky/overcast.png",
+      "width": 576,
+      "height": 324,
+      "source": "sky/New free backgrounds part4/background 3/orig.png",
+      "sourceSha256": "0912f76d4e860aacb76a94ee4f17cdeb514a80300ac208cd703ad75a52d5e0a1",
+      "bytes": 14599
+    }
+  ],
+  "foreground": {
+    "url": "/art/sky/city-foreground.png",
+    "source": "public/art/background.png",
+    "sourceSha256": "8a6b107524d289a88efde8bbb8d8f7943293750fbbfebe357eaea4bc09e588aa",
+    "width": 1672,
+    "height": 941
+  }
+}

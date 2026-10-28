@@ -1,5 +1,6 @@
 import type Phaser from 'phaser';
 import characterCatalog from './characterCatalog.generated.json';
+import skyCatalog from './skyCatalog.generated.json';
 
 export interface SpriteAsset {
   key: string;
@@ -33,7 +34,7 @@ export const SPRITES: SpriteAsset[] = [
 export const SPRITE_BY_KEY = new Map(SPRITES.map(asset => [asset.key, asset]));
 
 export function preloadArt(scene: Phaser.Scene): void {
-  scene.load.image('city', '/art/background.png');
+  scene.load.image('city', skyCatalog.foreground.url);
   for (const asset of SPRITES) {
     scene.load.spritesheet(asset.key, asset.path, { frameWidth: asset.size, frameHeight: asset.size });
   }

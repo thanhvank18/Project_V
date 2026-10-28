@@ -67,6 +67,8 @@ Nhân vật bắt đầu tại x=640, có thể di chuyển trái/phải bằng 
 
 Tuyến đường prototype đi qua phố cũ, công viên, ga bỏ hoang, bờ sông và nhà máy, dùng lại pixel art hiện có cùng đạo cụ pixel dựng bằng mã để nhận biết từng vùng. Đây là thế giới hữu hạn 6400 px, không phải sinh địa hình vô hạn. Nghĩa địa, phòng thí nghiệm và hoang mạc vẫn là hướng phát triển sau. Parallax/thời tiết chỉ thêm khi không gây nhiễu đọc.
 
+Cập nhật 28/10: bầu trời dùng tám nền mây từ các pack CraftPix trong `sky/`, luân phiên hoàng hôn, tím chiều, đêm, trăng, bình minh, mây ban ngày, trời xanh và âm u. Đổi nền sau mỗi 20 giây theo đồng hồ trận, hòa trộn nhẹ giữa hai nền; không di chuyển mây liên tục hay chớp sáng. Nhà cửa, cây và mặt đường giữ ở lớp phía trước. `scripts/import-sky-assets.py` tái tạo asset runtime cùng skyline matte có tọa độ rõ ràng; file gốc giữ nguyên. Nguồn và thông tin giấy phép nằm trong `public/art/sky/manifest.json` và `LICENSE.txt`.
+
 ## Bố cục HUD đã thống nhất
 
 ```text

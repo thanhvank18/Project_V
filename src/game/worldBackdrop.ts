@@ -7,7 +7,8 @@ export function createWorldBackdrop(scene: Phaser.Scene, language: Language = 'v
   const root = scene.add.container(0, 0);
   const surfaces: Phaser.GameObjects.Image[] = [];
   for (let i = 0; i < 5; i++) {
-    // Mirroring alternate panels makes both adjoining edge pixels identical.
+    // Only city/road pixels remain: the sky renders independently behind this
+    // transparent foreground. Mirrored edge pixels keep neighbouring panels joined.
     const panel = scene.add.image(i * 1280 + 640, 360, 'city').setDisplaySize(1280, 720).setFlipX(i % 2 === 1);
     root.add(panel);
     surfaces.push(panel);

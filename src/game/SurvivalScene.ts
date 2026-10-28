@@ -14,6 +14,7 @@ import { GameAudio, type AudioState } from './GameAudio';
 import { audioCueForEvent } from './combatAudio';
 import { BOSS_SLAM_RANGE, canTargetEnemy, WORLD_WIDTH } from './engine';
 import { createWorldBackdrop } from './worldBackdrop';
+import { preloadSky, RotatingSky } from './RotatingSky';
 import { CHARGE_RADIUS, RANGED_RADIUS } from './tacticalRules';
 import { PART_OF_SPEECH_LABELS } from './vocabulary';
 import type { Enemy, EnginePort, GameEvent, ItemKind, Snapshot, WorldObject } from './types';
@@ -97,6 +98,7 @@ export class SurvivalScene extends Phaser.Scene {
   private hero!: Phaser.GameObjects.Sprite;
   private heroCharacter: CharacterDefinition;
   private world!: Phaser.GameObjects.Container;
+  private sky?: RotatingSky;
   private dizziness!: Phaser.GameObjects.Graphics;
   private shields!: Phaser.GameObjects.Graphics;
   private hazards!: Phaser.GameObjects.Graphics;
@@ -159,6 +161,7 @@ export class SurvivalScene extends Phaser.Scene {
       this.loadErrors.push(file.key);
     });
     preloadArt(this);
+    preloadSky(this);
     this.load.image(LABEL_PANEL_KEY, '/assets/ui/fantasy/button-dark.png');
   }
 
@@ -167,6 +170,7 @@ export class SurvivalScene extends Phaser.Scene {
     this.gameAudio = new GameAudio(this.onAudioState);
     this.gameAudio.configure(this.options);
     this.gameAudio.setPhase(this.engine.snapshot().phase);
+    this.sky = new RotatingSky(this);
     this.world = this.add.container(0, 0).setDepth(0);
     this.inWorld(createWorldBackdrop(this, this.options.language, (label, source) => this.districtLabels.push({ label, source })).setDepth(-3));
     // A quiet vignette reserves contrast for the upper HUD and lower typing area.
@@ -235,6 +239,7 @@ export class SurvivalScene extends Phaser.Scene {
     const dt = Math.min(Math.max(delta, 0), 50);
     this.engine.step(dt);
     const snapshot = this.engine.snapshot();
+    this.sky?.render(this.engine.clock, this.options.reducedMotion);
     this.gameAudio?.setPhase(snapshot.phase);
     this.notifyElapsed += dt;
     if (this.engine.clock < this.lastEngineClock || (snapshot.phase === 'playing' && before.phase === 'menu') || (snapshot.phase === 'menu' && this.lastPhase !== 'menu')) this.resetVisuals();
@@ -660,7 +665,7 @@ export class SurvivalScene extends Phaser.Scene {
     const enemy = this.engine.enemies.find(item => item.id === event.enemyId);
     const view = event.enemyId !== undefined ? this.enemies.get(event.enemyId) : undefined;
     const x = event.x ?? enemy?.x ?? view?.lastX ?? this.engine.playerX;
-    const cue = audioCueForEvent(event);
+    const cue = audioCueForEvent(event, actor?.heroId ?? this.heroCharacter.id);
     const soundX = event.type === 'shot' ? event.sourceX ?? actor?.x ?? this.engine.playerX : x;
     if (cue) this.gameAudio?.play(cue, { pan: Phaser.Math.Clamp((soundX - this.engine.playerX) / 640, -0.7, 0.7), momentum: ownEvent ? snapshot.momentum?.level ?? 0 : 0 });
     if (event.type === 'shot') {

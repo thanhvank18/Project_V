@@ -31,3 +31,9 @@ Không chạy build/test cùng lúc khi so sánh. Giữ cùng trình duyệt, k�
 - Tests bảo vệ nội suy/authority, Boss charge, vòng đời phòng, cache/culling/khôi phục texture và nhãn chữ. Browser đã kiểm tra chạy qua vùng bản đồ, nhập từ và giữ hình FantasyUI.
 
 Nếu còn spike khi bắn liên tục, bước điều tra tiếp theo là cấp phát/hủy texture chữ và garbage collection; chưa thay bằng pooling khi chưa có phép đo xác nhận.
+
+## Bầu trời và combat audio — 28/10
+
+- Tám ảnh trời 576×324 dùng khoảng 5,7 MiB RGBA khi giải mã, tổng PNG 129 KB. Chỉ có một ảnh nền và tối đa một ảnh overlay khi hòa trộn; đổi texture theo mốc 20 giây. Thành phố alpha thay texture cũ cùng kích thước; phong cảnh tĩnh vẫn dùng cache/culling cũ.
+- Combat chỉ đóng gói 32 WAV đã trim (~2,42 MiB), tải/giải mã tối đa ba file cùng lúc. Một URL chỉ giải mã một lần kể cả dùng ở nhiều cue. Giữ tám voice tối đa, giới hạn đòn thường và dành ưu tiên cho bị thương/Boss; nhạc tiếp tục stream.
+- Browser xác nhận chuyển bầu trời và đi qua Công viên. Cửa sổ kiểm tra có các lần mất focus/tự pause và khoảng frame gần một giây, nên không dùng lượt này để kết luận hay cam kết 60 FPS. Không đo được GPU time hoặc thẩm âm trong phiên công cụ này.
